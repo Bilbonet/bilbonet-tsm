@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Task search view -->
+    <record id="tsm_task_search_view" model="ir.ui.view">
+        <field name="name">tsm.task.search.view</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <search string="Tasks">
+                <field name="name" string="Tasks"/>
+                <field name="partner_id"/>
+                <field name="project_id"/>
+                <field name="user_id"/>
+                <field name="stage_id"/>
+                <filter string="My Tasks" name="my_tasks" domain="[('user_id','=',uid)]"/>
+                <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>
+                <separator/>
+                <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="project" context="{'group_by':'project_id'}"/>
+                    <filter string="Assigned to" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="Customer" name="customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Task Form view -->
+    <record id="tsm_task_form_view" model="ir.ui.view">
+        <field name="name">tsm.task.form</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <form string="Task"  class="o_form_project_tasks">
+                <header>
+                    <button name="action_assign_to_me" string="Assign to Me" type="object" class="oe_highlight"
+                            attrs="{'invisible' : [('user_id', '!=', False)]}"/>
+                    <field name="stage_id" widget="statusbar" clickable="True"
+                           options="{'fold_field': 'fold'}"/>
+                </header>
+                <sheet string="Task">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" groups="base.group_user"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1 class="o_row">
+                            <field name="priority" widget="priority"/>
+                            <field name="name" placeholder="Task Title..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" domain="[('active', '=', True)]"/>
+                            <field name="user_id"
+                                class="o_task_user_field"
+                                options='{"no_open": True}'/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="date_deadline"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="description_page" string="Description">
+                            <field name="description" type="html"/>
+                            <div class="oe_clear"/>
+                        </page>
+                        <page name="extra_info" string="Extra Info">
+                            <group>
+                                <group>
+                                    <field name="sequence" groups="base.group_no_one"/>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                </group>
+                                <group>
+                                    <field name="date_assign" groups="base.group_no_one"/>
+                                    <field name="date_last_stage_update" groups="base.group_no_one"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!-- Task Kanban View -->
+    <record id="tsm_task_kanban_view" model="ir.ui.view">
+        <field name="name">tsm.task.kanban</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
+                <field name="color"/>
+                <field name="priority"/>
+                <field name="stage_id" options='{"group_by_tooltip": {"description": "Stage Description", "legend_priority": "Use of stars"}}'/>
+                <field name="user_id"/>
+                <field name="description"/>
+                <field name="sequence"/>
+                <field name="date_deadline"/>
+                <field name="message_needaction_counter"/>
+                <field name="active"/>
+                <field name="legend_blocked"/>
+                <field name="legend_normal"/>
+                <field name="legend_done"/>
+                <progressbar field="kanban_state" colors='{"done": "success", "blocked": "danger"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title"><field name="name"/></strong><br/>
+                                        <small class="o_kanban_record_subtitle text-muted">
+                                            <field name="project_id" invisible="context.get('default_project_id', False)"/>
+                                            <t t-if="record.date_deadline.raw_value and record.date_deadline.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
+                                            <span t-attf-class="#{red || ''}"><i><field name="date_deadline"/></i></span>
+                                        </small>
+                                    </div>
+                                    <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                        <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                            <span class="fa fa-ellipsis-v" aria-hidden="true"/>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <li t-if="widget.editable"><a type="set_cover">Set Cover Image</a></li>
+                                            <li t-if="widget.editable"><a type="edit">Edit Task</a></li>
+                                            <li t-if="widget.deletable"><a type="delete">Delete</a></li>
+                                            <li class="divider"></li>
+                                            <li class="dropdown-header">Record's Colour</li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority"/>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                        <t t-if="record.message_needaction_counter.raw_value">
+                                            <span class='oe_kanban_mail_new' title='Unread Messages'><i class='fa fa-comments'/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                        </t>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"/>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- Task Tree view -->
+    <record id="tsm_task_tree_view" model="ir.ui.view">
+        <field name="name">tsm.task.tree</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="date_deadline and (date_deadline&lt;current_date)" string="Tasks">
+                <field name="sequence" invisible="not context.get('seq_visible', False)"/>
+                <field name="name"/>
+                <field name="project_id" invisible="context.get('user_invisible', False)"/>
+                <field name="user_id" invisible="context.get('user_invisible', False)"/>
+                <field name="date_deadline" invisible="context.get('deadline_visible',True)"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action Tasks -->
+    <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="tsm_task_kanban_view"/>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_my_tasks': 1}</field>
+        <field name="search_view_id" ref="tsm_task_search_view"/>
+        <field name="view_id" ref="tsm_task_kanban_view"/>
+        <field name="help" type="html">
+            <p>
+                Technical Support Management allows you to manage the pipeline of your tasks efficiently.
+                You can track progress, discuss on tasks, attach documents, etc.
+            </p>
+        </field>
+    </record>
+    <record id="tsm_task_action_from_partner" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="tsm_task_search_view"/>
+    </record>
+    <!-- Menu Tasks -->
+    <menuitem id="tsm_task_menu" action="tsm_task_action_from_menu"
+        name="Tasks"
+        parent="tsm_base.tsm_main_menu"
+        sequence="1"/>
+
+
+
+    <!-- Task Types Form view -->
+    <record id="tsm_task_type_form" model="ir.ui.view">
+        <field name="name">tsm.task.type.form</field>
+        <field name="model">tsm.task.type</field>
+        <field name="arch" type="xml">
+            <form string="Task Stage">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="fold"/>
+                            <field name="sequence" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <group string="Stage Description and Tooltips">
+                        <p class="text-muted" colspan="2">
+                            At each stage employees can block or make task ready for next stage.
+                            You can define here labels that will be displayed for the state instead
+                            of the default labels.
+                        </p>
+                        <label for="legend_normal" string=" " class="o_status oe_project_kanban_legend"/>
+                        <field name="legend_normal" nolabel="1"/>
+                        <label for="legend_blocked" string=" " class="o_status o_status_red oe_project_kanban_legend"/>
+                        <field name="legend_blocked" nolabel="1"/>
+                        <label for="legend_done" string=" " class="o_status o_status_green oe_project_kanban_legend"/>
+                        <field name="legend_done" nolabel="1"/>
+
+                        <p class="text-muted" colspan="2">
+                            You can also give a tooltip about the use of the stars available in the kanban and form views.
+                        </p>
+                        <label for="legend_priority" string=" " class="fa fa-star fa-lg o_star_on oe_project_kanban_legend"/>
+                        <field name="legend_priority" nolabel="1"/>
+
+                        <p class="text-muted" colspan="2">
+                            You can also add a description to help your coworkers understand the meaning and purpose of the stage.
+                        </p>
+                        <field name="description" placeholder="Add a description..." nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Task Types Tree view -->
+    <record id="tsm_task_type_tree" model="ir.ui.view">
+        <field name="name">tsm.task.type.tree</field>
+        <field name="model">tsm.task.type</field>
+        <field name="arch" type="xml">
+            <tree string="Task Stage">
+                <field name="sequence" widget="handle" groups="base.group_no_one"/>
+                <field name="name"/>
+                <field name="fold"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action Task Stages -->
+    <record id="tsm_task_type_open_action" model="ir.actions.act_window">
+        <field name="name">TSM Task Stages</field>
+        <field name="res_model">tsm.task.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="tsm_task_type_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a stage in the task pipeline.</p>
+            <p>Define the steps that will be used in the task, up to the closing of the task.
+            You will use these stages in order to track the progress in solving a task.</p>
+        </field>
+    </record>
+    <!-- Menu Config Task Stages -->
+    <menuitem id="tsm_config_type_menu" action="tsm_task_type_open_action"
+              name="Stages"
+              parent="tsm_base.tsm_config_menu"
+              sequence="2"
+              groups="base.group_no_one"/>
+
+
+    <!-- Tags -->
+    <record id="tsm_task_tags_search_view" model="ir.ui.view">
+        <field name="name">TSM Task Tags Seacrh</field>
+        <field name="model">tsm.task.tags</field>
+        <field name="arch" type="xml">
+            <search string="Tags">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record id="tsm_task_tags_form_view" model="ir.ui.view">
+        <field name="name">TSM Task Tags Form</field>
+        <field name="model">tsm.task.tags</field>
+        <field name="arch" type="xml">
+            <form string="Tags">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="tsm_task_tags_action" model="ir.actions.act_window">
+        <field name="name">TSM Task Tags</field>
+        <field name="res_model">tsm.task.tags</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new tag.
+            </p>
+        </field>
+    </record>
+    <menuitem id="tsm_config_task_tags_menu" action="tsm_task_tags_action"
+              name="Tags"
+              parent="tsm_base.tsm_config_menu"
+              sequence="3"
+              groups="base.group_no_one"/>
+
+</odoo>

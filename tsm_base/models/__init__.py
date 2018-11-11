@@ -1,0 +1,6 @@
+# Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from . import tsm_project
+from . import tsm_task
+from . import res_partner

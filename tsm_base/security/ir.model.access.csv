@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tsm_project_user,tsm.project.user,model_tsm_project,tsm_base.group_tsm_user,1,0,0,0
+access_tsm_project_manager,tsm.project.manager,model_tsm_project,tsm_base.group_tsm_manager,1,1,1,1
+access_tsm_task_user,tsm.task.user,model_tsm_task,tsm_base.group_tsm_user,1,1,1,1
+access_tsm_task_type_user,tsm.task.type.user,model_tsm_task_type,tsm_base.group_tsm_user,1,0,0,0
+access_tsm_task_type_manager,tsm.task.type.manager,model_tsm_task_type,tsm_base.group_tsm_manager,1,1,1,1
+access_tsm_task_tags_user,tsm.task.tags.user,model_tsm_task_tags,,1,0,0,0
+access_tsm_task_tags_manager,tsm.task.tags.manager,model_tsm_task_tags,tsm_base.group_tsm_manager,1,1,1,1
