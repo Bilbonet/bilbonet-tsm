@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menus -->
+    <menuitem id="tsm_main_menu"
+              name="T.S.M"
+              web_icon="tsm_base,static/description/icon.png"/>
+
+    <menuitem id="menu_tsm_search"
+              name="Search"
+              parent="tsm_main_menu"
+              groups="base.group_no_one,tsm_base.group_tsm_user"
+              sequence="4"/>
+
+    <menuitem id="tsm_config_menu"
+              name="Configuration"
+              parent="tsm_main_menu"
+              groups="tsm_base.group_tsm_manager"
+              sequence="100"/>
+
+    <!-- Project Kanvan view tasks action -->
+    <record id="tsm_project_task_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot,graph</field>
+        <field name="context">{
+            'default_group_by': 'stage_id',
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
+            }</field>
+        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Here, you can create new task
+            </p>
+            <p>
+                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+            </p>
+        </field>
+    </record>
+
+    <!-- Project Form view -->
+    <record id="tsm_project_form_view" model="ir.ui.view">
+        <field name="name">tsm.project.form</field>
+        <field name="model">tsm.project</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <sheet string="Project">
+                    <div class="oe_button_box" name="button_box" groups="base.group_user">
+                        <button class="oe_stat_button" type="action"
+                            name="%(tsm_project_task_action)d" icon="fa-tasks">
+                            <field string="Tasks" name="task_count" widget="statinfo"/>
+                        </button>
+                        <button name="toggle_active" type="object"
+                                confirm="(Un)archiving a project automatically (un)archives its tasks. Do you want to proceed?"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Project Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" string="Project Manager"
+                                   attrs="{'readonly':[('active','=',False)]}"/>
+                            <field name="partner_id" string="Customer"
+                                   attrs="{'readonly':[('active','=',False)]}"/>
+                        </group>
+                        <group>
+                            <field name="privacy_visibility" widget="radio"/>
+                            <field name="sequence" groups="base.group_no_one"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="description_page" string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!-- Project Search view -->
+    <record id="tsm_project_filter_view" model="ir.ui.view">
+        <field name="name">tsm.project.select</field>
+        <field name="model">tsm.project</field>
+        <field name="arch" type="xml">
+            <search string="Search Project">
+                <field name="name" string="Project Name"/>
+                <field name="description" string="Project Description"/>
+                <field name="user_id" string="Project Manager"/>
+                <field name="partner_id" string="Contact" filter_domain="[('partner_id', 'child_of', self)]"/>
+                <filter name="my_projects" string="My Projects" domain="[('user_id','=',uid)]"/>
+                <filter name="my_favorites" string="My Favorites" domain="[('favorite_user_ids', 'in', uid)]"/>
+                <separator/>
+                <filter string="Followed by Me" domain="[('message_is_follower','=',True)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Manager" name="Manager" context="{'group_by':'user_id'}"/>
+                    <filter string="Contact" name="Partner" context="{'group_by':'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Project Tree view -->
+    <record id="tsm_project_tree_view" model="ir.ui.view">
+        <field name="name">tsm.project.tree</field>
+        <field name="model">tsm.project</field>
+        <field name="arch" type="xml">
+            <tree decoration-bf="active == True" decoration-muted="active == False" string="Projects">
+                <field name="sequence" widget="handle"/>
+                <field name="active" invisible="1"/>
+                <field name="name" string="Project Name"/>
+                <field name="user_id" string="Project Manager"/>
+                <field name="partner_id" string="Contact"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Project Kanban view -->
+    <record id="tsm_project_kanban_view" model="ir.ui.view">
+        <field name="name">tsm.project.kanban</field>
+        <field name="model">tsm.project</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="task_count"/>
+                <field name="task_needaction_count"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
+                            <div class="o_project_kanban_main">
+                                <div class="o_kanban_card_content">
+                                    <div class="o_kanban_primary_left">
+                                        <div class="o_primary">
+                                            <span><t t-esc="record.name.value"/></span>
+                                            <span t-if="record.partner_id.value">
+                                                <strong><t t-esc="record.partner_id.value"/></strong>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_card_manage_pane" groups="tsm_base.group_tsm_manager">
+                                    <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                        <div>
+                                            <a type="edit">Settings</a>
+                                        </div>
+                                    </div>
+                                    <div class="o_project_kanban_colorpicker">
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <a class="o_kanban_manage_toggle_button o_left" href="#" groups="tsm_base.group_tsm_manager"><i class="fa fa-ellipsis-v" /></a>
+                                <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
+                            </div>
+
+                            <div class="o_project_kanban_boxes">
+                                <a class="o_project_kanban_box" name="%(tsm_project_task_action)d" type="action">
+                                    <div>
+                                        <span class="o_value"><t t-esc="record.task_count.value"/></span>
+                                        <span class="o_label">Tasks</span>
+                                        <button t-if="record.task_needaction_count.raw_value" class="btn-link o_needaction" name="%(tsm_project_task_action)d" type="action" context="{'search_default_message_needaction': 1}">
+                                            <t t-esc="record.task_needaction_count.raw_value"/>
+                                        </button>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- Action Projects -->
+    <record id="tsm_project_open_all_action" model="ir.actions.act_window">
+        <field name="name">T.S.M: Projects</field>
+        <field name="res_model">tsm.project</field>
+        <field name="view_type">form</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="tsm_project_kanban_view"/>
+        <field name="context">{'search_default_my_projects': 1}</field>
+        <field name="search_view_id" ref="tsm_project_filter_view"/>
+        <field name="target">main</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new project.
+            </p>
+        </field>
+    </record>
+    <!-- Menu Projects -->
+    <menuitem id="tsm_project_menu" name="Projects" parent="tsm_main_menu"
+              action="tsm_project_open_all_action" sequence="3"/>
+
+</odoo>
