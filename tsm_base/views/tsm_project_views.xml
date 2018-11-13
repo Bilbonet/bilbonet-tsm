@@ -1,42 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Menus -->
-    <menuitem id="tsm_main_menu"
-              name="T.S.M"
+    <menuitem id="tsm_main_menu" name="T.S.M"
               web_icon="tsm_base,static/description/icon.png"/>
 
-    <menuitem id="menu_tsm_search"
-              name="Search"
+    <menuitem id="menu_tsm_search" name="Search"
               parent="tsm_main_menu"
               groups="base.group_no_one,tsm_base.group_tsm_user"
               sequence="4"/>
 
-    <menuitem id="tsm_config_menu"
-              name="Configuration"
+    <menuitem id="tsm_config_menu" name="Configuration"
               parent="tsm_main_menu"
               groups="tsm_base.group_tsm_manager"
               sequence="100"/>
-
-    <!-- Project Kanvan view tasks action -->
-    <record id="tsm_project_task_action" model="ir.actions.act_window">
-        <field name="name">Tasks</field>
-        <field name="res_model">tsm.task</field>
-        <field name="view_mode">kanban,tree,form,calendar,pivot,graph</field>
-        <field name="context">{
-            'default_group_by': 'stage_id',
-            'search_default_project_id': [active_id],
-            'default_project_id': active_id,
-            }</field>
-        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Here, you can create new task
-            </p>
-            <p>
-                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
-            </p>
-        </field>
-    </record>
 
     <!-- Project Form view -->
     <record id="tsm_project_form_view" model="ir.ui.view">
@@ -46,10 +22,6 @@
             <form string="Project">
                 <sheet string="Project">
                     <div class="oe_button_box" name="button_box" groups="base.group_user">
-                        <button class="oe_stat_button" type="action"
-                            name="%(tsm_project_task_action)d" icon="fa-tasks">
-                            <field string="Tasks" name="task_count" widget="statinfo"/>
-                        </button>
                         <button name="toggle_active" type="object"
                                 confirm="(Un)archiving a project automatically (un)archives its tasks. Do you want to proceed?"
                                 class="oe_stat_button" icon="fa-archive">
@@ -164,17 +136,7 @@
                                 <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
                             </div>
 
-                            <div class="o_project_kanban_boxes">
-                                <a class="o_project_kanban_box" name="%(tsm_project_task_action)d" type="action">
-                                    <div>
-                                        <span class="o_value"><t t-esc="record.task_count.value"/></span>
-                                        <span class="o_label">Tasks</span>
-                                        <button t-if="record.task_needaction_count.raw_value" class="btn-link o_needaction" name="%(tsm_project_task_action)d" type="action" context="{'search_default_message_needaction': 1}">
-                                            <t t-esc="record.task_needaction_count.raw_value"/>
-                                        </button>
-                                    </div>
-                                </a>
-                            </div>
+
 
                         </div>
                     </t>
