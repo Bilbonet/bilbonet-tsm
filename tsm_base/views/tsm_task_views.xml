@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Task search view -->
+
+    <!-- Tasks views -->
     <record id="tsm_task_search_view" model="ir.ui.view">
         <field name="name">tsm.task.search.view</field>
         <field name="model">tsm.task</field>
@@ -16,6 +17,7 @@
                 <separator/>
                 <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
                 <separator/>
+                <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
                 <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Project" name="project" context="{'group_by':'project_id'}"/>
@@ -26,7 +28,6 @@
             </search>
         </field>
     </record>
-    <!-- Task Form view -->
     <record id="tsm_task_form_view" model="ir.ui.view">
         <field name="name">tsm.task.form</field>
         <field name="model">tsm.task</field>
@@ -92,7 +93,6 @@
             </form>
         </field>
     </record>
-    <!-- Task Kanban View -->
     <record id="tsm_task_kanban_view" model="ir.ui.view">
         <field name="name">tsm.task.kanban</field>
         <field name="model">tsm.task</field>
@@ -164,7 +164,6 @@
             </kanban>
         </field>
     </record>
-    <!-- Task Tree view -->
     <record id="tsm_task_tree_view" model="ir.ui.view">
         <field name="name">tsm.task.tree</field>
         <field name="model">tsm.task</field>
@@ -178,7 +177,7 @@
             </tree>
         </field>
     </record>
-    <!-- Action Tasks -->
+    <!-- Tasks Actions -->
     <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
         <field name="name">Tasks</field>
         <field name="res_model">tsm.task</field>
@@ -201,15 +200,14 @@
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="tsm_task_search_view"/>
     </record>
-    <!-- Menu Tasks -->
+    <!-- Tasks Menus -->
     <menuitem id="tsm_task_menu" action="tsm_task_action_from_menu"
         name="Tasks"
         parent="tsm_base.tsm_main_menu"
         sequence="1"/>
 
 
-
-    <!-- Task Types Form view -->
+    <!-- Task Types -->
     <record id="tsm_task_type_form" model="ir.ui.view">
         <field name="name">tsm.task.type.form</field>
         <field name="model">tsm.task.type</field>
@@ -253,7 +251,6 @@
             </form>
         </field>
     </record>
-    <!-- Task Types Tree view -->
     <record id="tsm_task_type_tree" model="ir.ui.view">
         <field name="name">tsm.task.type.tree</field>
         <field name="model">tsm.task.type</field>
@@ -266,7 +263,6 @@
             </tree>
         </field>
     </record>
-    <!-- Action Task Stages -->
     <record id="tsm_task_type_open_action" model="ir.actions.act_window">
         <field name="name">TSM Task Stages</field>
         <field name="res_model">tsm.task.type</field>
@@ -280,7 +276,6 @@
             You will use these stages in order to track the progress in solving a task.</p>
         </field>
     </record>
-    <!-- Menu Config Task Stages -->
     <menuitem id="tsm_config_type_menu" action="tsm_task_type_open_action"
               name="Stages"
               parent="tsm_base.tsm_config_menu"
@@ -288,7 +283,7 @@
               groups="base.group_no_one"/>
 
 
-    <!-- Tags -->
+    <!-- Task Tags -->
     <record id="tsm_task_tags_search_view" model="ir.ui.view">
         <field name="name">TSM Task Tags Seacrh</field>
         <field name="model">tsm.task.tags</field>
@@ -324,5 +319,50 @@
               parent="tsm_base.tsm_config_menu"
               sequence="3"
               groups="base.group_no_one"/>
+
+
+    <!-- Project views -->
+    <record id="tsm_tasks_from_project_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{
+            'default_group_by': 'stage_id',
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
+            }</field>
+        <field name="search_view_id" ref="tsm_task_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Here, you can create new task
+            </p>
+            <p>
+                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+            </p>
+        </field>
+    </record>
+    <template id="tsm_tasks_from_project_kanban_view" inherit_id="tsm_project_kanban_view" name="tsm.tasks.from.project.kanban.view">
+        <xpath expr="//div[hasclass('o_kanban_card_manage_pane')]" position="before">
+            <div class="o_project_kanban_boxes">
+                <a class="o_project_kanban_box" name="%(tsm_tasks_from_project_action)d" type="action">
+                    <div>
+                        <span class="o_value"><t t-esc="record.task_count.value"/></span>
+                        <span class="o_label">Tasks</span>
+                        <button t-if="record.task_needaction_count.raw_value" class="btn-link o_needaction" name="%(tsm_tasks_from_project_action)d" type="action" context="{'search_default_message_needaction': 1}">
+                            <t t-esc="record.task_needaction_count.raw_value"/>
+                        </button>
+                    </div>
+                </a>
+            </div>
+        </xpath>
+    </template>
+    <template id="tsm_tasks_from_project_form_view" inherit_id="tsm_project_form_view" name="tsm.tasks.from.project.form.view">
+        <xpath expr="//div[@name='button_box']" position="inside">
+            <button class="oe_stat_button" type="action"
+                    name="%(tsm_tasks_from_project_action)d" icon="fa-tasks">
+                <field string="Tasks" name="task_count" widget="statinfo"/>
+            </button>
+        </xpath>
+    </template>
 
 </odoo>
