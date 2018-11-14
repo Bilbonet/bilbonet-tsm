@@ -21,4 +21,4 @@ class ResPartner(models.Model):
                     for data in fetch_data
         )
         for partner in self:
-            partner.task_count = result.get(partner.id, 0)
+            partner.tsm_task_count = result.get(partner.id, 0)

@@ -11,7 +11,8 @@
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button" type="action" name="%(tsm_task_action_from_partner)d"
-                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id}" attrs="{'invisible': [('tsm_task_count', '=', 0)]}"
+                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id}"
+                        attrs="{'invisible': [('tsm_task_count', '=', 0)]}"
                         icon="fa-tasks">
                     <field  string="Tasks" name="tsm_task_count" widget="statinfo"/>
                 </button>
