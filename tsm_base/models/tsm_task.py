@@ -43,12 +43,6 @@ class TsmTask(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "priority desc, sequence, id desc"
 
-    def _get_default_partner(self):
-        if 'default_project_id' in self.env.context:
-            default_project_id = self.env
-            ['tsm.project'].browse(self.env.context['default_project_id'])
-            return default_project_id.exists().partner_id
-
     def _get_default_stage_id(self):
         """ Gives default stage_id """
         id = self.env['tsm.task.type'].search([], order='sequence', limit=1)
@@ -99,7 +93,6 @@ class TsmTask(models.Model):
     date_start = fields.Datetime(string='Starting Date',
                                  default=fields.Datetime.now,
                                  index=True, copy=False)
-    date_end = fields.Datetime(string='Ending Date', index=True, copy=False)
     date_assign = fields.Datetime(string='Assigning Date', index=True,
                                   copy=False, readonly=True)
     date_deadline = fields.Date(string='Deadline', index=True, copy=False)
@@ -109,6 +102,7 @@ class TsmTask(models.Model):
         index=True,
         copy=False,
         readonly=True)
+    date_end = fields.Datetime(string='Ending Date', index=True, copy=False)
     legend_blocked = fields.Char(related='stage_id.legend_blocked',
                                  string='Kanban Blocked Explanation',
                                  readonly=True, related_sudo=False)
@@ -140,7 +134,7 @@ class TsmTask(models.Model):
                               index=True, track_visibility='always')
     partner_id = fields.Many2one('res.partner',
                                  string='Customer',
-                                 default=_get_default_partner,
+                                 # default=_get_default_partner,
                                  required=True)
     company_id = fields.Many2one(
         'res.company',
@@ -157,6 +151,17 @@ class TsmTask(models.Model):
                 task.kanban_state_label = task.legend_blocked
             else:
                 task.kanban_state_label = task.legend_done
+
+    @api.onchange('project_id')
+    def _onchange_project(self):
+        if self.project_id:
+            if self.project_id.partner_id:
+                self.partner_id = self.project_id.partner_id
+
+    @api.onchange('user_id')
+    def _onchange_user(self):
+        if self.user_id:
+            self.date_start = fields.Datetime.now()
 
     # ------------------------------------------------
     # CRUD overrides
@@ -190,6 +195,7 @@ class TsmTask(models.Model):
 
     def action_assign_to_me(self):
         self.write({'user_id': self.env.user.id})
+
 
 class TsmTaskTags(models.Model):
     """ Tags of tasks """

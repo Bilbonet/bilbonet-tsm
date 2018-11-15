@@ -62,6 +62,7 @@
                             <field name="partner_id"/>
                         </group>
                         <group>
+                            <field name="date_start"/>
                             <field name="date_deadline"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                         </group>
@@ -80,6 +81,7 @@
                                 <group>
                                     <field name="date_assign" groups="base.group_no_one"/>
                                     <field name="date_last_stage_update" groups="base.group_no_one"/>
+                                    <field name="date_end" groups="base.group_no_one"/>
                                 </group>
                             </group>
                         </page>
