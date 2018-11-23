@@ -136,6 +136,18 @@ class TsmTask(models.Model):
                                  string='Customer',
                                  # default=_get_default_partner,
                                  required=True)
+    privacy_visibility = fields.Selection([
+        ('followers', 'On invitation only'),
+        ('employees', 'Visible by all employees'),
+    ],
+        string='Privacy', required=True,
+        default='followers',
+        help="Holds visibility of the tasks "
+             "that belong to the current project:\n"
+             "- On invitation only: Employees may only "
+             "see the followed project, tasks\n"
+             "- Visible by all employees: Employees "
+             "may see all project, tasks\n")
     company_id = fields.Many2one(
         'res.company',
         string='Company',
