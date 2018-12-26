@@ -11,10 +11,9 @@
         'tsm_base',
     ],
     'data': [
-        'views/account_analytic_line_view.xml',
-        'views/project_task_view.xml',
+        'views/tsm_project_view.xml',
+        'views/tsm_task_view.xml',
     ],
     'license': 'AGPL-3',
     'installable': True,
-    'post_init_hook': 'post_init_hook',
 }
