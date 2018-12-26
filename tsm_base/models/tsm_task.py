@@ -36,6 +36,10 @@ class TsmTaskType(models.Model):
         string='Folded in Kanban',
         help='This stage is folded in the kanban view when there are no '
              'records in that stage to display.')
+    closed = fields.Boolean(
+        help="Tasks in this stage are considered closed.",
+        default=False,
+    )
 
 class TsmTask(models.Model):
     _name = "tsm.task"
