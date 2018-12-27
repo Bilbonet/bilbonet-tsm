@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_tsm_time_tracking"
+            name="Timesheet"
+            parent="tsm_base.tsm_main_menu"
+            sequence="5"/>
+
+
+         <!--
+            Timesheet line Views
+        -->
+        <record id="tsm_task_timesheet_line_tree" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <tree editable="top" string="Timesheet Activities" import="false">
+                    <field name="date_time"/>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
+                    <field name="amount" string="Time (Hours)" sum="Total time" widget="float_time"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="tsm_task_timesheet_line_search" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.search</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <search string="Timesheet">
+                    <field name="date_time"/>
+                    <field name="user_id"/>
+                    <field name="project_id"/>
+                    <field name="task_id"/>
+                    <field name="name"/>
+                    <filter name="mine" string="My Timesheets" domain="[('user_id', '=', uid)]"/>
+                    <separator/>
+                    <filter name="week" string="This Week"
+                            domain="[
+                                '&amp;',
+                                ('date_time', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                ('date_time', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter name="month" string="This Month"
+                            domain="[
+                                '&amp;',
+                                ('date_time', '>=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                ('date_time', '&lt;=', (context_today() + relativedelta(months=1, day=1, days=-1)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="User" name="groupby_user" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Project" name="groupby_project" domain="[]" context="{'group_by':'project_id'}"/>
+                        <filter string="Task" name="groupby_task" domain="[]" context="{'group_by':'task_id'}"/>
+                        <filter string="Timesheet Month" name="groupby_date" domain="[]" context="{'group_by':'date_time'}" help="Timesheet by Month"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--
+            Menus and Actions
+        -->
+        <record id="tsm_task_timesheet_line_act" model="ir.actions.act_window">
+            <field name="name">My Timesheets</field>
+            <field name="res_model">tsm.task.timesheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="context">{"search_default_week":1}</field>
+            <field name="search_view_id" ref="tsm_task_timesheet_line_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record activities.
+              </p><p>
+                You can register and track your workings hours by project every
+                day. Every time spent on a project will become a cost and can be re-invoiced to
+                customers if required.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="tsm_task_timesheet_menu_activity_mine"
+            name="My Timesheets"
+            parent="menu_tsm_time_tracking"
+            action="tsm_task_timesheet_line_act"/>
+
+    </data>
+</odoo>
