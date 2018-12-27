@@ -135,9 +135,6 @@
                                 <a class="o_kanban_manage_toggle_button o_left" href="#" groups="tsm_base.group_tsm_manager"><i class="fa fa-ellipsis-v" /></a>
                                 <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
                             </div>
-
-
-
                         </div>
                     </t>
                 </templates>
