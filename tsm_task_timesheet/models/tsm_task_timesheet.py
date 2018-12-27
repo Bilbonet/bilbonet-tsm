@@ -1,7 +1,7 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import _, api, exceptions, fields, models
+from odoo import _, api, fields, models
 from datetime import datetime
 
 
@@ -16,6 +16,17 @@ class TsmTaskTimesheet(models.Model):
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
     project_id = fields.Many2one('tsm.project', 'Project',
                                  domain=[('allow_timesheets', '=', True)])
-    employee_id = fields.Many2one('hr.employee', "Employee")
+    user_id = fields.Many2one('res.users',
+                              string='Assigned to',
+                              default=lambda self: self.env.uid,
+                              required=True,
+                              index=True, track_visibility='always')
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
 
+    @api.multi
+    def button_end_work(self):
+        end_date = datetime.now()
+        for line in self:
+            date = fields.Datetime.from_string(line.date_time)
+            line.amount = (end_date - date).total_seconds() / 3600
+        return True
