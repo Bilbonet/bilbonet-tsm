@@ -14,14 +14,27 @@ class TsmTaskTimesheet(models.Model):
     name = fields.Char(string='Brief description', required=True)
     amount = fields.Float('Quantity', default=0.0)
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
-    project_id = fields.Many2one('tsm.project', 'Project',
-                                 domain=[('allow_timesheets', '=', True)])
+    project_id = fields.Many2one('tsm.project', 'Project')
     user_id = fields.Many2one('res.users',
                               string='Assigned to',
                               default=lambda self: self.env.uid,
                               required=True,
                               index=True, track_visibility='always')
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
+
+    @api.onchange('project_id')
+    def onchange_project_id(self):
+        # reset task when changing project
+        self.task_id = False
+        # force domain on task when project is set
+        if self.project_id:
+            return {'domain': {
+                'task_id': [('project_id', '=', self.project_id.id)]
+            }}
+        else:
+            return {'domain': {
+                'task_id': [('project_id', '=', False)]
+            }}
 
     @api.multi
     def button_end_work(self):
