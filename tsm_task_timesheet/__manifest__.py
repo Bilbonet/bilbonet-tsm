@@ -11,7 +11,7 @@
         'tsm_base',
     ],
     'data': [
-        'views/tsm_project_view.xml',
+        'security/ir.model.access.csv',
         'views/tsm_task_view.xml',
     ],
     'license': 'AGPL-3',

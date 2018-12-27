@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="tsm_task_form_timesheet_view" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.form</field>
+            <field name="model">tsm.task</field>
+            <field name="inherit_id" ref="tsm_base.tsm_task_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='description_page']" position="after">
+                    <page string="Timesheets">
+                    <field name="timesheet_ids" context="{'default_project_id': project_id}">
+                        <tree editable="bottom" string="Timesheet Activities" default_order="date_time">
+                            <field name="date_time"/>
+                            <field name="user_id" required="1"/>
+                            <field name="name"/>
+                            <field name="amount" string="Duration" widget="float_time"/>
+                            <button name="button_end_work"
+                                    string="Stop"
+                                    type="object"
+                                    icon="fa-stop-circle"
+                                    attrs="{'invisible': [('amount', '>', 0)]}"/>
+                            <field name="project_id"/>
+                        </tree>
+                    </field>
+                    <group>
+                     <group class="oe_subtotal_footer oe_right" name="project_hours">
+                        <field name="total_hours" widget="float_time" class="oe_subtotal_footer_separator" readonly="1"/>
+                     </group>
+                    </group>
+                </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_tree2_inherited" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.tree</field>
+            <field name="model">tsm.task</field>
+            <field name="inherit_id" ref="tsm_base.tsm_task_tree_view" />
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="total_hours" widget="float_time" sum="Total Hours" readonly="1"/>
+                    <field name="stage_id"/>
+                </field>
+            </field>
+        </record>
+
 
     </data>
 </odoo>
