@@ -25,4 +25,3 @@ class TsmTask(models.Model):
     def _onchange_project_timesheet(self):
         for t in self.timesheet_ids:
             t.project_id = self.project_id.id
-
