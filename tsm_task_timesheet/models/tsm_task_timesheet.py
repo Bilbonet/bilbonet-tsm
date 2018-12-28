@@ -1,7 +1,7 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import _, api, fields, models
+from odoo import _, api, exceptions, fields, models
 from datetime import datetime
 
 
@@ -10,6 +10,13 @@ class TsmTaskTimesheet(models.Model):
     _description = 'Spent time in tasks'
     _order = 'date_time desc, id desc'
 
+    company_id = fields.Many2one('res.company', string='Company',
+                                 required=True,
+                                 default=lambda self: self.env.user.company_id)
+    active = fields.Boolean('Active',
+                    help="If the active field is set to False, it will allow "
+                         "you to hide the account without removing it.",
+                    default=True)
     date_time = fields.Datetime(default=fields.Datetime.now, string='Date')
     name = fields.Char(string='Brief description', required=True)
     amount = fields.Float('Quantity', default=0.0)
@@ -43,3 +50,32 @@ class TsmTaskTimesheet(models.Model):
             date = fields.Datetime.from_string(line.date_time)
             line.amount = (end_date - date).total_seconds() / 3600
         return True
+
+    @api.multi
+    def button_open_task(self):
+        for line in self.filtered('task_id'):
+            stage = self.env['tsm.task.type'].search(
+                    [('closed', '=', False)], limit=1)
+            if stage:
+                line.task_id.write({'stage_id': stage.id})
+
+    @api.multi
+    def button_close_task(self):
+        for line in self.filtered('task_id'):
+            stage = self.env['tsm.task.type'].search(
+                [('closed', '=', True)], limit=1,
+            )
+            if not stage:  # pragma: no cover
+                raise exceptions.UserError(
+                    _("There isn't any stage with closed check. Please "
+                      "mark any.")
+                )
+            line.task_id.write({'stage_id': stage.id})
+
+    @api.multi
+    def toggle_closed(self):
+        self.ensure_one()
+        if self.closed:
+            self.button_open_task()
+        else:
+            self.button_close_task()

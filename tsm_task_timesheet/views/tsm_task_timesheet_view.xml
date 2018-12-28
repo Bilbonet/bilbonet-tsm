@@ -11,20 +11,6 @@
          <!--
             Timesheet line Views
         -->
-        <record id="tsm_task_timesheet_line_tree" model="ir.ui.view">
-            <field name="name">TSM timesheet tsm.task.timesheet.line</field>
-            <field name="model">tsm.task.timesheet</field>
-            <field name="arch" type="xml">
-                <tree editable="top" string="Timesheet Activities" import="false">
-                    <field name="date_time"/>
-                    <field name="name"/>
-                    <field name="project_id"/>
-                    <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
-                    <field name="amount" string="Time (Hours)" sum="Total time" widget="float_time"/>
-                </tree>
-            </field>
-        </record>
-
         <record id="tsm_task_timesheet_line_search" model="ir.ui.view">
             <field name="name">TSM timesheet tsm.task.timesheet.line.search</field>
             <field name="model">tsm.task.timesheet</field>
@@ -58,6 +44,130 @@
                 </search>
             </field>
         </record>
+        <record id="tsm_task_timesheet_line_tree" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.tree</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <tree editable="top" string="Timesheet Activities" import="false">
+                    <field name="date_time"/>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
+                    <field name="amount" string="Time (Hours)" sum="Total time" widget="float_time"/>
+                    <button name="button_end_work"
+                        string="Stop"
+                        type="object"
+                        icon="fa-stop-circle"
+                        attrs="{'invisible': [('amount', '>', 0)]}"
+                    />
+                    <field name="closed" invisible="1"/>
+                    <button name="button_close_task"
+                            string="Close task"
+                            type="object"
+                            icon="fa-folder-o"
+                            attrs="{'invisible': ['|', ('closed', '=', True), ('task_id', '=', False)]}"
+                    />
+                    <button name="button_open_task"
+                            string="Open task"
+                            type="object"
+                            icon="fa-folder-open-o"
+                            attrs="{'invisible': ['|', ('closed', '=', False), ('task_id', '=', False)]}"
+                    />
+                </tree>
+            </field>
+        </record>
+        <record id="tsm_task_timesheet_line_form" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.form</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="priority">1</field>
+            <field name="inherit_id" eval="False"/>
+            <field name="arch" type="xml">
+                <form string="Time Entry">
+                    <sheet string="Time Entry">
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_closed" type="object"
+                                    confirm="Open/Close timesheet line automatically open/close its tasks. Do you want to proceed?"
+                                    class="oe_stat_button" icon="fa-folder">
+                                <field name="closed" widget="boolean_button" options='{"terminology": {
+                                    "string_true": "Closed",
+                                    "hover_true": "Open task",
+                                    "string_false": "Open",
+                                    "hover_false": "Close task"
+                                }}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_time"/>
+                                <field name="project_id"/>
+                                <field name="task_id" required="1" domain="[('project_id', '=', project_id)]"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <label for="amount" string="Duration"/>
+                                <div>
+                                    <field name="amount" class="oe_inline" string="Duration" widget="float_time"/>
+                                    <button name="button_end_work"
+                                            string="Stop"
+                                            type="object"
+                                            icon="fa-stop-circle"
+                                            attrs="{'invisible': [('amount', '>', 0)]}"
+                                            class="btn btn-link"
+                                    />
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="tsm_task_timesheet_line_kanban" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.kanban</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="date_time"/>
+                    <field name="user_id"/>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="task_id" domain="[('project_id', '=', project_id)]"/>
+                    <field name="amount"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="40" height="40" class="oe_kanban_avatar pull-left"/>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div>
+                                            <strong><t t-esc="record.project_id.value"/></strong>
+                                        </div>
+                                        <div class="text-muted">
+                                            <span>
+                                                <t t-esc="record.name.value"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt4 mb4"/>
+                                <span>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <t t-esc="record.date_time.value"/>
+                                </span>
+                                <span class="pull-right">
+                                    <strong>Duration: </strong><field name="amount" widget="float_time"/>
+                                </span>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
 
         <!--
             Menus and Actions
@@ -78,6 +188,27 @@
                 customers if required.
               </p>
             </field>
+        </record>
+
+        <record id="tsm_task_timesheet_line_view_tree_act" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence" eval="4"/>
+            <field name="view_id" ref="tsm_task_timesheet_line_tree"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
+        </record>
+
+        <record id="tsm_task_timesheet_line_view_form_act" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence" eval="5"/>
+            <field name="view_id" ref="tsm_task_timesheet_line_form"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
+        </record>
+
+        <record id="tsm_task_timesheet_line_view_kanban_act" model="ir.actions.act_window.view">
+            <field name="view_mode">kanban</field>
+            <field name="sequence">3</field>
+            <field name="view_id" ref="tsm_task_timesheet_line_kanban"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
         </record>
 
         <menuitem id="tsm_task_timesheet_menu_activity_mine"

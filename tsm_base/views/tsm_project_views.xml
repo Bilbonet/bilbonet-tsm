@@ -14,7 +14,9 @@
               groups="tsm_base.group_tsm_manager"
               sequence="100"/>
 
-    <!-- Project Form view -->
+    <!--
+        Project Views
+    -->
     <record id="tsm_project_form_view" model="ir.ui.view">
         <field name="name">tsm.project.form</field>
         <field name="model">tsm.project</field>
@@ -60,7 +62,6 @@
             </form>
         </field>
     </record>
-    <!-- Project Search view -->
     <record id="tsm_project_filter_view" model="ir.ui.view">
         <field name="name">tsm.project.select</field>
         <field name="model">tsm.project</field>
@@ -83,7 +84,6 @@
             </search>
         </field>
     </record>
-    <!-- Project Tree view -->
     <record id="tsm_project_tree_view" model="ir.ui.view">
         <field name="name">tsm.project.tree</field>
         <field name="model">tsm.project</field>
@@ -97,7 +97,6 @@
             </tree>
         </field>
     </record>
-    <!-- Project Kanban view -->
     <record id="tsm_project_kanban_view" model="ir.ui.view">
         <field name="name">tsm.project.kanban</field>
         <field name="model">tsm.project</field>
@@ -142,8 +141,9 @@
         </field>
     </record>
 
-
-    <!-- Action Projects -->
+    <!--
+        Menus and Actions
+    -->
     <record id="tsm_project_open_all_action" model="ir.actions.act_window">
         <field name="name">T.S.M: Projects</field>
         <field name="res_model">tsm.project</field>
@@ -160,7 +160,7 @@
             </p>
         </field>
     </record>
-    <!-- Menu Projects -->
+
     <menuitem id="tsm_project_menu" name="Projects" parent="tsm_main_menu"
               action="tsm_project_open_all_action" sequence="3"/>
 
