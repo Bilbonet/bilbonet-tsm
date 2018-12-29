@@ -2,7 +2,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import _, api, exceptions, fields, models
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class TsmTaskTimesheet(models.Model):
@@ -28,6 +28,19 @@ class TsmTaskTimesheet(models.Model):
                               required=True,
                               index=True, track_visibility='always')
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
+    date_time_stop = fields.Datetime(compute='_get_stop_date_time',
+                                     string='End date time for calendar view',
+                                     store=True,
+                                     readonly=True)
+
+    @api.one
+    @api.depends('date_time')
+    def _get_stop_date_time(self):
+        for line in self:
+            line.date_time_stop = \
+                datetime.strptime(line.date_time,
+                                  "%Y-%m-%d %H:%M:%S") + timedelta(
+                    seconds=line.amount*3600)
 
     @api.onchange('project_id')
     def onchange_project_id(self):

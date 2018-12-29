@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_tsm_task_timesheet_reports"
+            name="Reporting"
+            parent="tsm_base.tsm_main_menu"
+            groups="tsm_base.group_tsm_manager"
+            sequence="6"/>
+
+         <!--
+            Timesheet Reports: Views
+        -->
+        <record id="tsm_task_timesheet_line_pivot" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.pivot</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <pivot string="Timesheet">
+                    <field name="user_id" type="row"/>
+                    <field name="date_time" interval="month" type="col"/>
+                    <field name="amount" type="measure" widget="float_time"/>
+                </pivot>
+            </field>
+        </record>
+
+         <!--
+            Timesheet Reports By User: Menus and Actions
+        -->
+        <record id="tsm_task_timesheet_report_by_user_act" model="ir.actions.act_window">
+            <field name="name">By User</field>
+            <field name="res_model">tsm.task.timesheet</field>
+            <field name="domain"></field>
+            <field name="context">{'search_default_groupby_user':1,}</field>
+            <field name="search_view_id" ref="tsm_task_timesheet_line_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record activities.
+              </p><p>
+                You can register and track your workings hours by tasks every day.
+              </p>
+            </field>
+        </record>
+
+        <record id="tsm_task_timesheet_report_view_pivot_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="tsm_task_timesheet_line_pivot"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_report_by_user_act"/>
+        </record>
+
+        <record id="tsm_task_timesheet_report_view_tree_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tsm_task_timesheet.tsm_task_timesheet_line_tree"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_report_by_user_act"/>
+        </record>
+
+        <menuitem id="menu_tsm_task_timesheet_reports_timesheet"
+            name="Timesheet"
+            parent="menu_tsm_task_timesheet_reports"
+            groups="tsm_base.group_tsm_manager"
+            sequence="10"/>
+
+        <menuitem id="menu_tsm_task_timesheet_reports_user"
+            name="By User"
+            parent="menu_tsm_task_timesheet_reports_timesheet"
+            groups="tsm_base.group_tsm_manager"
+            action="tsm_task_timesheet_report_by_user_act"
+            sequence="10"/>
+
+
+         <!--
+            Timesheet Reports By Task: Menus and Actions
+        -->
+        <record id="tsm_task_timesheet_report_by_task_act" model="ir.actions.act_window">
+            <field name="name">By Task</field>
+            <field name="res_model">tsm.task.timesheet</field>
+            <field name="domain"></field>
+            <field name="context">{'search_default_groupby_task':1,}</field>
+            <field name="search_view_id" ref="tsm_task_timesheet_line_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record activities.
+              </p><p>
+                You can register and track your workings hours by tasks every day.
+              </p>
+            </field>
+        </record>
+
+        <record id="tsm_timesheet_action_view_report_by_task_pivot" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="tsm_task_timesheet_line_pivot"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_report_by_task_act"/>
+        </record>
+
+        <menuitem id="menu_tsm_task_timesheet_reports_task"
+            name="By Task"
+            parent="menu_tsm_task_timesheet_reports_timesheet"
+            groups="tsm_base.group_tsm_manager"
+            action="tsm_task_timesheet_report_by_task_act"
+            sequence="15"/>
+
+    </data>
+</odoo>
