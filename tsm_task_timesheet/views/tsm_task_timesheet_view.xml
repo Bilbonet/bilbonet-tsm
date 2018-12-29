@@ -9,8 +9,40 @@
 
 
          <!--
-            Timesheet line Views
+            Timesheet My lines: Views
         -->
+        <record id="tsm_task_timesheet_line_tree" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.tree</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <tree editable="top" string="Timesheet Activities" import="false">
+                    <field name="date_time"/>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
+                    <field name="amount" string="Time (Hours)" sum="Total time" widget="float_time"/>
+                    <button name="button_end_work"
+                        string="Stop"
+                        type="object"
+                        icon="fa-stop-circle"
+                        attrs="{'invisible': [('amount', '>', 0)]}"
+                    />
+                    <field name="closed" invisible="1"/>
+                    <button name="button_close_task"
+                            string="Close task"
+                            type="object"
+                            icon="fa-folder-o"
+                            attrs="{'invisible': ['|', ('closed', '=', True), ('task_id', '=', False)]}"
+                    />
+                    <button name="button_open_task"
+                            string="Open task"
+                            type="object"
+                            icon="fa-folder-open-o"
+                            attrs="{'invisible': ['|', ('closed', '=', False), ('task_id', '=', False)]}"
+                    />
+                </tree>
+            </field>
+        </record>
         <record id="tsm_task_timesheet_line_search" model="ir.ui.view">
             <field name="name">TSM timesheet tsm.task.timesheet.line.search</field>
             <field name="model">tsm.task.timesheet</field>
@@ -42,38 +74,6 @@
                         <filter string="Timesheet Month" name="groupby_date" domain="[]" context="{'group_by':'date_time'}" help="Timesheet by Month"/>
                     </group>
                 </search>
-            </field>
-        </record>
-        <record id="tsm_task_timesheet_line_tree" model="ir.ui.view">
-            <field name="name">TSM timesheet tsm.task.timesheet.line.tree</field>
-            <field name="model">tsm.task.timesheet</field>
-            <field name="arch" type="xml">
-                <tree editable="top" string="Timesheet Activities" import="false">
-                    <field name="date_time"/>
-                    <field name="name"/>
-                    <field name="project_id"/>
-                    <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
-                    <field name="amount" string="Time (Hours)" sum="Total time" widget="float_time"/>
-                    <button name="button_end_work"
-                        string="Stop"
-                        type="object"
-                        icon="fa-stop-circle"
-                        attrs="{'invisible': [('amount', '>', 0)]}"
-                    />
-                    <field name="closed" invisible="1"/>
-                    <button name="button_close_task"
-                            string="Close task"
-                            type="object"
-                            icon="fa-folder-o"
-                            attrs="{'invisible': ['|', ('closed', '=', True), ('task_id', '=', False)]}"
-                    />
-                    <button name="button_open_task"
-                            string="Open task"
-                            type="object"
-                            icon="fa-folder-open-o"
-                            attrs="{'invisible': ['|', ('closed', '=', False), ('task_id', '=', False)]}"
-                    />
-                </tree>
             </field>
         </record>
         <record id="tsm_task_timesheet_line_form" model="ir.ui.view">
@@ -168,9 +168,19 @@
                 </kanban>
             </field>
         </record>
+        <record id="tsm_task_timesheet_line_calendar" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.line.calendar</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="arch" type="xml">
+                <calendar string="Timesheets" date_start="date_time" date_stop="date_time_stop" color="user_id">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                </calendar>
+            </field>
+        </record>
 
         <!--
-            Menus and Actions
+            Timesheet My lines: Menus and Actions
         -->
         <record id="tsm_task_timesheet_line_act" model="ir.actions.act_window">
             <field name="name">My Timesheets</field>
@@ -211,10 +221,89 @@
             <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
         </record>
 
+        <record id="tsm_task_timesheet_line_view_calendar_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="8"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="tsm_task_timesheet_line_calendar"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
+        </record>
+
         <menuitem id="tsm_task_timesheet_menu_activity_mine"
             name="My Timesheets"
             parent="menu_tsm_time_tracking"
             action="tsm_task_timesheet_line_act"/>
+
+         <!--
+            Timesheet All lines: Views
+        -->
+        <record id="tsm_task_timesheet_all_line_tree" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.all.line.tree</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="inherit_id" ref="tsm_task_timesheet_line_tree"/>
+            <field name="mode">primary</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_time']" position="after">
+                    <field name="user_id" required="1" options='{"no_open": True}'/>
+                </xpath>
+            </field>
+        </record>
+        <record id="tsm_task_timesheet_all_line_form" model="ir.ui.view">
+            <field name="name">TSM timesheet tsm.task.timesheet.all.line.tree</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="inherit_id" ref="tsm_task_timesheet_line_form"/>
+            <field name="mode">primary</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_time']" position="after">
+                    <field name="user_id" required="1" options='{"no_open": True}'/>
+                </xpath>
+            </field>
+        </record>
+
+         <!--
+            Timesheet All lines: Menus and Actions
+        -->
+
+        <record id="tsm_task_timesheet_all_line_act" model="ir.actions.act_window">
+            <field name="name">All Timesheets</field>
+            <field name="res_model">tsm.task.timesheet</field>
+            <field name="search_view_id" ref="tsm_task_timesheet_line_search"/>
+            <field name="domain"></field>
+            <field name="context">{
+                'search_default_week':1,
+                'search_default_groupby_user':1,
+                'search_default_groupby_project':1,
+                'search_default_groupby_task':1
+            }</field>
+        </record>
+
+        <record id="tsm_task_timesheet_all_line_view_tree_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="4"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tsm_task_timesheet_all_line_tree"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_all_line_act"/>
+        </record>
+
+        <record id="tsm_task_timesheet_all_line_view_form_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tsm_task_timesheet_all_line_form"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_all_line_act"/>
+        </record>
+
+        <record id="tsm_task_timesheet_all_line_view_calendar_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="8"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="tsm_task_timesheet_line_calendar"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_all_line_act"/>
+        </record>
+
+        <menuitem id="tsm_task_timesheet_menu_activity_all"
+            name="All Timesheets"
+            parent="menu_tsm_time_tracking"
+            groups="tsm_base.group_tsm_manager"
+            action="tsm_task_timesheet_all_line_act"/>
 
     </data>
 </odoo>

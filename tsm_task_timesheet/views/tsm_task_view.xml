@@ -19,7 +19,7 @@
                                     type="object"
                                     icon="fa-stop-circle"
                                     attrs="{'invisible': [('amount', '>', 0)]}"/>
-                            <field name="project_id"/>
+                            <field name="project_id" invisible="1"/>
                         </tree>
                     </field>
                     <group>
