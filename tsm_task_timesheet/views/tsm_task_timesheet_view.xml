@@ -292,6 +292,13 @@
             <field name="act_window_id" ref="tsm_task_timesheet_all_line_act"/>
         </record>
 
+        <record id="tsm_task_timesheet_all_line_view_kanban_act" model="ir.actions.act_window.view">
+            <field name="sequence">3</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="tsm_task_timesheet_line_kanban"/>
+            <field name="act_window_id" ref="tsm_task_timesheet_all_line_act"/>
+        </record>
+
         <record id="tsm_task_timesheet_all_line_view_calendar_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="8"/>
             <field name="view_mode">calendar</field>
