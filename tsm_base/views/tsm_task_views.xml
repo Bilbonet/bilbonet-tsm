@@ -223,11 +223,11 @@
                     <group>
                         <group>
                             <field name="name"/>
+                            <field name="sequence" groups="base.group_no_one"/>
                         </group>
                         <group>
                             <field name="fold"/>
                             <field name="closed"/>
-                            <field name="sequence" groups="base.group_no_one"/>
                         </group>
                     </group>
                     <group string="Stage Description and Tooltips">
