@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="tsm_task_sale_order_form_view" model="ir.ui.view">
+            <field name="name">TSM Task tasm.task.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='client_order_ref']" position="after">
+                    <field  name="tsm_task_id" readonly="1"  attrs="{'invisible': [('tsm_task_id', '=', False)]}"/>
+                </xpath>
+           </field>
+        </record>
+    </data>
+</odoo>
