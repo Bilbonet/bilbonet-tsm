@@ -46,7 +46,8 @@ class TsmTask(models.Model):
         sale = self.sale_id
         currency = (
                 self.partner_id.property_product_pricelist.currency_id or
-                self.company_currency)
+                self.company_currency or
+                self.env.user.company_id.currency_id)
         self.sale_amount = sale.currency_id.compute(
                                 sale.amount_untaxed, currency)
 
