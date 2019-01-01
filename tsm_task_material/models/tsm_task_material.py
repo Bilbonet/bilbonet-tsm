@@ -13,24 +13,27 @@ class TsmTaskMaterial(models.Model):
 
     task_id = fields.Many2one(comodel_name='project.task',
                               string='Task', ondelete='cascade',
-                              required=True, )
+                              required=True)
     product_id = fields.Many2one(comodel_name='product.product',
-                                 string='Product', required=True, )
-    name = fields.Text(string='Description', )
-    quantity = fields.Float(string='Quantity', default=1.0, required=True, )
+                                 string='Product', required=True)
+    name = fields.Text(string='Description')
+    quantity = fields.Float(string='Quantity', default=1.0, required=True)
     product_uom_id = fields.Many2one(comodel_name='product.uom',
-                                     string='Unit of Measure', )
-    price_unit = fields.Float(string='Unit Price', default=0.0, required=True, )
+                                     string='Unit of Measure')
+    price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
     price_subtotal = fields.Float(compute='_compute_price_subtotal',
                                   digits=dp.get_precision('Account'),
-                                  string='Sub Total', )
+                                  string='Sub Total')
     discount = fields.Float(string='Discount (%)',
-                            digits=dp.get_precision('Discount'),
-                            help='Discount that is applied in generated sale orders.'
-                                 ' It should be less or equal to 100',
-                            )
+                    digits=dp.get_precision('Discount'),
+                    help='Discount that is applied in generated sale orders.'
+                        ' It should be less or equal to 100')
     sequence = fields.Integer(string="Sequence", default=10,
-                              help="Sequence of the line in the list of materials", )
+                    help="Sequence of the line in the list of materials")
+    company_currency = fields.Many2one('res.currency',
+                            related='task_id.company_id.currency_id',
+                            readonly=True,
+                            help='Utility field to express amount currency')
 
     @api.multi
     @api.depends('quantity', 'price_unit', 'discount')

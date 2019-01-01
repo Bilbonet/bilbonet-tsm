@@ -57,9 +57,10 @@
                                 <field name="name" required="True" />
                                 <field name="quantity"/>
                                 <field name="product_uom_id" required="True" />
-                                <field name="price_unit" />
+                                <field name="price_unit" widget="monetary" options="{'currency_field': 'company_currency'}"/>
                                 <field name="discount" />
-                                <field name="price_subtotal" sum="Total Amount"/>
+                                <field name="price_subtotal" sum="Total Amount" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                <field name="company_currency" invisible="1"/>
                             </tree>
                         </field>
                     </page>
