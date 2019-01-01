@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="tsm_task_form_time_pack_view" model="ir.ui.view">
+            <field name="name">TSM Time Pack tsm.task.form</field>
+            <field name="model">tsm.task</field>
+            <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_form_timesheet_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='timesheet_ids']//field[@name='project_id']" position="after">
+                    <field name="timepack_id" options="{'no_create': True}"/>
+                    <field name="discount_time"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
