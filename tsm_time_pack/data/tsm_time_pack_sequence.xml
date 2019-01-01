@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+        <record id="tsm_time_pack_sequence" model="ir.sequence">
+            <field name="name">TSM Time Pack code</field>
+            <field name="code">tsm.time.pack</field>
+            <field eval="4" name="padding" />
+            <field name="prefix">TP</field>
+        </record>
+
+</odoo>

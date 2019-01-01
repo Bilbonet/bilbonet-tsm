@@ -8,7 +8,7 @@ class TsmTimePack(models.Model):
     _name = "tsm.time.pack"
     _description = "Packs of time to spent in tasks timesheet"
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'id desc'
+    _order = 'date_start, id desc'
 
     company_id = fields.Many2one(
         'res.company',
@@ -17,8 +17,10 @@ class TsmTimePack(models.Model):
     active = fields.Boolean(default=True,
         help="If the active field is set to False, it will allow you to hide"
         " the time pack without removing it.")
+    code = fields.Char(string='Time Pack Number',
+                       required=True, default="/", readonly=True)
     name = fields.Char(string='Time Pack Title', track_visibility='always',
-                       required=True, index=True)
+                       index=True)
     description = fields.Html(
         string='Time Pack Description', sanitize=True,
         strip_style=False, translate=False,
@@ -64,10 +66,40 @@ class TsmTimePack(models.Model):
         store=True, string='Total Hours Spent',
         help="Computed as: Time Spent in tasks.")
     complimentary_hours = fields.Float(compute='_hours_get',
-        store=True, string='Complimentari Hours.',
+        store=True, string='Complimentary Hours.',
         help="Hours spent but not discounted in time pack.")
     progress = fields.Float(compute='_hours_get',
         store=True, string='Progress', group_operator="avg")
+
+    _sql_constraints = [
+        ('tsm_time_pack_unique_code', 'UNIQUE (code)',
+         _('The code must be unique!')),
+    ]
+
+    @api.model
+    def create(self, vals):
+        if vals.get('code', '/') == '/':
+            vals['code'] = \
+                self.env['ir.sequence'].next_by_code('tsm.time.pack')
+        return super(TsmTimePack, self).create(vals)
+
+    @api.multi
+    def copy(self, default=None):
+        if default is None:
+            default = {}
+        default['code'] = self.env['ir.sequence'].next_by_code('tsm.time.pack')
+        return super(TsmTimePack, self).copy(default)
+
+    @api.multi
+    def name_get(self):
+        result = super(TsmTimePack, self).name_get()
+        new_result = []
+
+        for tp in result:
+            rec = self.browse(tp[0])
+            name = '[%s] %s' % (rec.code, tp[1])
+            new_result.append((rec.id, name))
+        return new_result
 
     @api.depends('timesheet_ids.amount', 'timesheet_ids.discount_time',
                  'contrated_hours', 'consumed_hours')
@@ -83,13 +115,9 @@ class TsmTimePack(models.Model):
             timesheet_consu = time.sudo().mapped('timesheet_ids').filtered(
                      lambda x: x.discount_time)
             time.consumed_hours = sum(timesheet_consu.mapped('amount'))
-            time.complimentary_hours = time.total_hours_spent - time.consumed_hours
+            time.complimentary_hours = \
+                time.total_hours_spent - time.consumed_hours
             time.remaining_hours = time.contrated_hours - time.consumed_hours
-
-
-            # task.total_hours = max(task.planned_hours, task.effective_hours)
-            # task.total_hours_spent = task.effective_hours + task.children_hours
-
 
             if time.contrated_hours > 0.0:
                 time.progress = round(
