@@ -56,10 +56,19 @@ class TsmTask(models.Model):
         This function returns an action that display the order
         given sale order id.
         '''
-        action = self.env.ref('sale.action_orders').read()[0]
-        action['views'] = [(self.env.ref('sale.view_order_form').id, 'form')]
-        action['res_id'] = self.sale_id.id
-        return action
+        # action = self.env.ref('sale.action_orders').read()[0]
+        # action['views'] = [(self.env.ref('sale.view_order_form').id, 'form')]
+        # action['res_id'] = self.sale_id.id
+        # return action
+
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "views": [[False, "form"]],
+            "res_id": self.sale_id.id,
+            "context": {"create": False, "show_sale": True},
+        }
 
     @api.model
     def _prepare_sale_line(self, line, sale_id):

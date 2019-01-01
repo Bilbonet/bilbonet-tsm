@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "TSM Task Material",
-    "summary": "Record products spent in a Task",
+    "summary": "Record products spent in a Task and create Sale Orders",
     "version": "11.0.1.0.0",
     "category": "Management",
     "author": "Jesus Ramiro,",

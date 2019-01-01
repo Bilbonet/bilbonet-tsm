@@ -5,7 +5,7 @@
             name="Reporting"
             parent="tsm_base.tsm_main_menu"
             groups="tsm_base.group_tsm_manager"
-            sequence="6"/>
+            sequence="7"/>
 
          <!--
             Timesheet Reports: Views
