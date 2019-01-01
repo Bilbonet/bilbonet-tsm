@@ -41,6 +41,7 @@ class TsmTaskType(models.Model):
         default=False,
     )
 
+
 class TsmTask(models.Model):
     _name = "tsm.task"
     _description = "Tech Support Management Task"
@@ -138,7 +139,6 @@ class TsmTask(models.Model):
                               index=True, track_visibility='always')
     partner_id = fields.Many2one('res.partner',
                                  string='Customer',
-                                 # default=_get_default_partner,
                                  required=True)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
@@ -155,8 +155,7 @@ class TsmTask(models.Model):
     company_id = fields.Many2one(
         'res.company',
         string='Company',
-        default=lambda self: self.env['res.company']._company_default_get()
-    )
+        default=lambda self: self.env['res.company']._company_default_get())
 
     @api.depends('stage_id', 'kanban_state')
     def _compute_kanban_state_label(self):
