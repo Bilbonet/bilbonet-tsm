@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="col-xs-10">
                                         <div>
-                                            <strong><t t-esc="record.project_id.value"/></strong>
+                                            <strong><t t-esc="record.task_id.value"/></strong>
                                         </div>
                                         <div class="text-muted">
                                             <span>

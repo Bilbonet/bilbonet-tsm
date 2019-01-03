@@ -92,6 +92,8 @@
                     <field name="name"/>
                     <field name="contrated_hours" string="Contrated (Hours)" sum="Total time" widget="float_time"/>
                     <field name="consumed_hours" string="Consumed (Hours)" sum="Consumed Time" widget="float_time"/>
+                    <field name="progress" widget="progressbar"/>
+                    <field name="complimentary_hours" string="Comple. (Hours)" sum="Complementary Time" widget="float_time"/>
                 </tree>
             </field>
         </record>
@@ -111,6 +113,50 @@
                 </search>
             </field>
         </record>
+        <record id="tsm_time_pack_mine_kanban_view" model="ir.ui.view">
+            <field name="name">TSM Time Pack tsm.time.pack.main.kanban</field>
+            <field name="model">tsm.time.pack</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="date_start"/>
+                    <field name="user_id"/>
+                     <field name="code"/>
+                    <field name="name"/>
+                    <field name="contrated_hours"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="40" height="40" class="oe_kanban_avatar pull-left"/>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div>
+                                            <strong>[<t t-esc="record.code.value"/>] </strong>
+                                            <t t-esc="record.name.value"/>
+                                        </div>
+                                        <div class="text-muted">
+                                            <span style="font-size:1.7em;">
+                                                <strong><font color="#f00"><field name="remaining_hours" widget="float_time"/></font></strong>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt4 mb4"/>
+                                <span>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <t t-esc="record.date_start.value"/>
+                                </span>
+                                <span class="pull-right">
+                                    <strong>Contrated Hours: </strong><field name="contrated_hours" widget="float_time"/>
+                                </span>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
          <!--
             My Time Packs: Menus & Actions
         -->
@@ -125,6 +171,26 @@
                     Click to add a time pack.</p>
             </field>
         </record>
+        <record id="tsm_time_pack_mine_tree_act" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence" eval="4"/>
+            <field name="view_id" ref="tsm_time_pack_tree_view"/>
+            <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
+        </record>
+        <record id="tsm_time_pack_mine_form_act" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence" eval="5"/>
+            <field name="view_id" ref="tsm_time_pack_form_view"/>
+            <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
+        </record>
+
+        <record id="tsm_time_pack_mine_kanban_act" model="ir.actions.act_window.view">
+            <field name="view_mode">kanban</field>
+            <field name="sequence" eval="6"/>
+            <field name="view_id" ref="tsm_time_pack_mine_kanban_view"/>
+            <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
+        </record>
+
         <menuitem id="tsm_time_pack_mine_menu"
             name="My Time Packs"
             parent="tsm_time_pack_menu"
@@ -165,13 +231,11 @@
         <record id="tsm_time_pack_all_act" model="ir.actions.act_window">
             <field name="name">All Time Packages</field>
             <field name="res_model">tsm.time.pack</field>
-            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="tsm_time_pack_search_view"/>
             <field name="domain"></field>
-            <field name="view_id" ref="tsm_time_pack_search_view"/>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Click to add a time pack.</p>
-            </field>
+            <field name="context">{
+                'search_default_groupby_user':1
+            }</field>
         </record>
 
         <record id="tsm_time_pack_all_view_tree_act" model="ir.actions.act_window.view">
@@ -185,6 +249,13 @@
             <field name="sequence" eval="4"/>
             <field name="view_mode">form</field>
             <field name="view_id" ref="tsm_time_pack_all_form_view"/>
+            <field name="act_window_id" ref="tsm_time_pack_all_act"/>
+        </record>
+
+        <record id="tsm_time_pack_all_view_kanban_act" model="ir.actions.act_window.view">
+            <field name="sequence" eval="6"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="tsm_time_pack_mine_kanban_view"/>
             <field name="act_window_id" ref="tsm_time_pack_all_act"/>
         </record>
 
