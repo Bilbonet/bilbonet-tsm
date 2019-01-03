@@ -11,7 +11,7 @@ class TsmTaskMaterial(models.Model):
     _description = "TSM Task Material Used"
     _order = "sequence,id"
 
-    task_id = fields.Many2one(comodel_name='project.task',
+    task_id = fields.Many2one(comodel_name='tsm.task',
                               string='Task', ondelete='cascade',
                               required=True)
     product_id = fields.Many2one(comodel_name='product.product',
