@@ -61,7 +61,7 @@ class TsmTimePack(models.Model):
              "to discount time.")
     remaining_hours = fields.Float(compute='_hours_get',
         store=True, string='Remaining Hours',
-        help="Computed as: Contrated hours - Cosumed hours")
+        help="Computed as: Contrated hours - Consumed hours")
     total_hours_spent = fields.Float(compute='_hours_get',
         store=True, string='Total Hours Spent',
         help="Computed as: Time Spent in tasks.")
@@ -97,7 +97,10 @@ class TsmTimePack(models.Model):
 
         for tp in result:
             rec = self.browse(tp[0])
-            name = '[%s] %s' % (rec.code, tp[1])
+            if tp[1] != 'False':
+                name = '[%s] %s' % (rec.code, tp[1])
+            else:
+                name = '[%s]' % (rec.code)
             new_result.append((rec.id, name))
         return new_result
 
