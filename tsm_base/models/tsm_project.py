@@ -97,6 +97,7 @@ class TsmProject(models.Model):
         string='Company',
         default=lambda self: self.env['res.company']._company_default_get()
     )
+    task_ids = fields.One2many('tsm.task', 'project_id', string='Tasks')
     task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
     task_needaction_count = fields.Integer(
         compute='_compute_task_needaction_count', string="Tasks")
