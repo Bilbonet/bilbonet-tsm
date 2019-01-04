@@ -20,5 +20,6 @@
         "views/tsm_time_pack_view.xml",
         "views/tsm_task_view.xml",
         "views/tsm_task_timesheet_view.xml",
+        "report/tsm_time_pack_report.xml",
     ],
 }
