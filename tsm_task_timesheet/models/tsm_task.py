@@ -17,7 +17,7 @@ class TsmTask(models.Model):
 
     total_hours = fields.Float(compute='_hours_get', store=True,
                             string='Total Spent Hours',
-                            help="Computed as: Time Spent + Remaining Time.")
+                            help="Computed as: Sum Time Spent in tasks.")
     timesheet_ids = fields.One2many('tsm.task.timesheet',
                                     'task_id', 'Timesheets')
 

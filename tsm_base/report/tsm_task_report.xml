@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+    <report
+        id="tsm_task_report_action"
+        name="tsm_base.tsm_task_report_document"
+        model="tsm.task"
+        string="Print Task"
+        report_type="qweb-pdf"
+        paperformat="tsm_base.tsm_paper_format_report"/>
+
+    <template id="tsm_task_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="tsm_base.tsm_report_layout">
+                    <div class="page">
+                        <div class="row" name="head_report">
+                        <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                            <tr>
+                                <td>Cliente:</td>
+                                <td><span t-field="o.partner_id"/></td>
+                                <td>Telefono:</td>
+                                <td>
+                                    <span t-field="o.partner_id.phone"/> /
+                                    <span t-field="o.partner_id.mobile"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dirección:</td>
+                                <td>
+                                    <span t-field="o.partner_id.street"/>
+                                    <span t-field="o.partner_id.street2"/>
+                                    <p>
+                                    <span t-field="o.partner_id.zip"/> -
+                                    <span t-field="o.partner_id.city"/> -
+                                    <span t-field="o.partner_id.state_id"/>
+                                    </p>
+                                </td>
+                                <td>@mail:</td>
+                                <td><span t-field="o.partner_id.email"/></td>
+                            </tr>
+                        </table>
+                        <table class="table table-condensed" style="margin-top:-10px;">
+                            <tr class="success">
+                                <td>
+                                    Tarea: <span t-field="o.code"/> -
+                                    <span t-field="o.name"/>
+                                </td>
+                                <td>
+                                    Fecha: <span t-field="o.date_start"/>
+                                </td>
+                                <td>
+                                    Técnico: <span t-field="o.user_id.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <span t-field="o.description"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>

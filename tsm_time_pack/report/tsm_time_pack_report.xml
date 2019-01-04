@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="tsm_time_pack_report_document" inherit_id="tsm_base.tsm_task_report_document">
+        <xpath expr="//div[@name='head_report']" position="after">
+            <div class="row" t-if="len(o.timesheet_ids) > 0">
+                <table class="table table-condensed table-striped">
+                    <thead style="background-color: #3498DB;font-size:0.8em;" >
+                        <tr class="text-center">
+                            <th colspan="3" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
+                            <th t-foreach="o.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id" class="text-right" style="color:#fff;">Bolsa Horas</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                        <tr t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="t" >
+                            <td style="font-size:0.7em;">
+                                <span t-field="t.date_time"
+                                      t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                            </td>
+                            <td style="font-size:0.7em;">
+                                <span t-field="t.name"/>
+                            </td>
+                            <td style="font-size:0.7em;" class="text-right">
+                                <span t-field="t.amount"
+                                      t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                            </td>
+                            <td t-if="t.timepack_id" style="font-size:0.7em;" class="text-right">
+                                <span t-field="t.timepack_id.code"/>
+                                <span t-if="t.discount_time == True">Descuenta</span>
+                                <span t-if="t.discount_time == False">NO Descuenta</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-size:0.8em;">
+                        <tr>
+                            <th colspan="3" class="text-right">
+                                <span t-field="o.total_hours"
+                                      t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

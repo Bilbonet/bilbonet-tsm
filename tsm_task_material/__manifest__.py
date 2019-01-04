@@ -17,5 +17,6 @@
         "security/ir.model.access.csv",
         "views/tsm_task_view.xml",
         "views/sale_order_view.xml",
+        "report/tsm_task_material_report.xml",
     ],
 }
