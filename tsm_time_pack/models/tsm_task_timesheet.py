@@ -1,8 +1,8 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import models, fields
-
+from odoo import api, models, fields, _
+from datetime import datetime, timedelta
 
 class TsmTaskTimesheet(models.Model):
     _inherit = "tsm.task.timesheet"
@@ -13,3 +13,25 @@ class TsmTaskTimesheet(models.Model):
         string="Discount Time",
         help="Indicate if discount the time from the time pack")
 
+    @api.onchange('timepack_id', 'discount_time')
+    def _onchange_timepack(self):
+        self.timepack_id._hours_get()
+        if self.timepack_id.progress > 90:
+            contrated_hours = (datetime(2000,1,1)+timedelta(
+                seconds=self.timepack_id.contrated_hours*3600)
+                ).strftime('%H:%M')
+            consumed_hours = (datetime(2000,1,1)+timedelta(
+                seconds=self.timepack_id.consumed_hours*3600)
+                ).strftime('%H:%M')
+
+            message = _(
+                'Hours Contrated: %s'
+                '\nHours Consumed:  %s'
+                '\nProgress: %s %%') \
+                % (contrated_hours, consumed_hours, self.timepack_id.progress)
+            warning_mess = {
+                'title': _("Alert Time Pack %s") % self.timepack_id.code,
+                'message': message
+            }
+            return {'warning': warning_mess}
+        return {}

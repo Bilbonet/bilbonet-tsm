@@ -2,6 +2,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
+from odoo.addons import decimal_precision as dp
+from odoo.exceptions import ValidationError
 
 
 class TsmTimePack(models.Model):
@@ -53,6 +55,7 @@ class TsmTimePack(models.Model):
              "may see all time packs\n")
     contrated_hours = fields.Float(
         string='Contrated Hours',
+        default=0.0, required=True,
         help='Time contracted by the client for support and it can be '
              'consumed in tasks and timesheet.')
     consumed_hours = fields.Float(compute='_hours_get',
@@ -70,6 +73,39 @@ class TsmTimePack(models.Model):
         help="Hours spent but not discounted in time pack.")
     progress = fields.Float(compute='_hours_get',
         store=True, string='Progress', group_operator="avg")
+    product_id = fields.Many2one(comodel_name='product.product',
+                                 string='Product')
+    description_sale = fields.Text(string='Description Sale')
+    quantity = fields.Float(string='Quantity', default=1.0, required=True)
+    product_uom_id = fields.Many2one(comodel_name='product.uom',
+                                     string='Unit of Measure')
+    price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
+    discount = fields.Float(string='Discount (%)',
+                    digits=dp.get_precision('Discount'),
+                    help='Discount that is applied in generated sale orders.'
+                        ' It should be less or equal to 100')
+    price_subtotal = fields.Float(compute='_compute_price_subtotal',
+                                  digits=dp.get_precision('Account'),
+                                  string='Sub Total')
+    sale_autoconfirm = fields.Boolean(
+                    string='Sale autoconfirm',
+                    default=True,
+                    help='If it is checked the sale order will be created '
+                         'and confirmed automatically',
+                    )
+    company_currency = fields.Many2one('res.currency',
+                            related='company_id.currency_id',
+                            readonly=True,
+                            help='Utility field to express amount currency')
+    sale_id = fields.Many2one(comodel_name='sale.order',
+                              copy=False,
+                              string='Sale Order',
+                              )
+    sale_amount = fields.Monetary(compute='_compute_sale_amount',
+                                  string="Amount of The Order",
+                                  help="Untaxed Total of The Order",
+                                  currency_field='company_currency',
+                                  )
 
     _sql_constraints = [
         ('tsm_time_pack_unique_code', 'UNIQUE (code)',
@@ -104,9 +140,33 @@ class TsmTimePack(models.Model):
             new_result.append((rec.id, name))
         return new_result
 
+    @api.depends('sale_id')
+    def _compute_sale_amount(self):
+        sale = self.sale_id
+        currency = (
+                self.partner_id.property_product_pricelist.currency_id or
+                self.company_currency or
+                self.env.user.company_id.currency_id)
+        self.sale_amount = sale.currency_id.compute(
+                                sale.amount_untaxed, currency)
+
+    def action_view_order(self):
+        '''
+        This function returns an action that display the order
+        given sale order id.
+        '''
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "views": [[False, "form"]],
+            "res_id": self.sale_id.id,
+            "context": {"create": False, "show_sale": True},
+        }
+
+    #@api.onchange('timesheet_ids.amount', 'timesheet_ids.discount_time')
     @api.depends('timesheet_ids.amount', 'timesheet_ids.discount_time',
-                 'contrated_hours', 'consumed_hours')
-    @api.onchange('timesheet_ids.amount', 'timesheet_ids.discount_time')
+                 'contrated_hours')
     def _hours_get(self):
         for time in self.sorted(key='id', reverse=True):
             '''use "sudo" here to allow task user (without timesheet 
@@ -128,3 +188,119 @@ class TsmTimePack(models.Model):
                 )
             else:
                 time.progress = 0.0
+
+    #==========================
+    #== Product & Sale Order ==
+    #==========================
+    @api.depends('quantity', 'price_unit', 'discount')
+    def _compute_price_subtotal(self):
+        subtotal = self.quantity * self.price_unit
+        discount = self.discount / 100
+        subtotal *= 1 - discount
+        self.price_subtotal = subtotal
+
+    @api.constrains('quantity')
+    def _check_quantity(self):
+        if not self.quantity > 0.0:
+            raise ValidationError(
+                'Quantity of hours contrated must be greater than 0.')
+        else:
+            self.contrated_hours = self.quantity
+
+    @api.constrains('discount')
+    def _check_discount(self):
+        if self.discount > 100:
+            raise ValidationError("Discount should be less or equal to 100")
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if self.product_id:
+            vals = {}
+            if not self.product_uom_id or (
+                    self.product_id.uom_id.category_id.id !=
+                    self.product_uom_id.category_id.id):
+                vals['product_uom_id'] = self.product_id.uom_id
+
+            partner = self.env.user.partner_id
+            product = self.product_id.with_context(
+                lang=partner.lang,
+                partner=partner.id,
+                uom=self.product_uom_id.id
+            )
+
+            description_sale = product.name
+            if product.description_sale:
+                description_sale += '\n' + product.description_sale
+            vals['description_sale'] = description_sale
+
+            vals['price_unit'] = product.list_price
+            self.update(vals)
+
+    def _prepare_sale_line(self, sale_id):
+        sale_line = self.env['sale.order.line'].new({
+            'order_id': sale_id,
+            'product_id': self.product_id.id,
+            'product_uom': self.product_uom_id.id,
+        })
+
+        '''Get other sale line values from product onchange'''
+        sale_line.product_id_change()
+        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
+
+        sale_line_vals.update({
+            'name': self.description_sale,
+            'price_unit': self.price_unit,
+            'product_uom_qty': self.quantity,
+            'discount': self.discount,
+            'tsm_time_pack_id': self.id,
+        })
+
+        return sale_line_vals
+
+    def _prepare_sale(self):
+        self.ensure_one()
+        if not self.partner_id or not self.product_id:
+            raise ValidationError(_("You must first select a Customer "
+                                    "and product for Time Pack: %s") % self.code)
+
+        currency = (
+                self.partner_id.property_product_pricelist.currency_id or
+                self.company_currency)
+
+        sale = self.env['sale.order'].new({
+            'partner_id': self.partner_id,
+            'currency_id': currency.id,
+            'date_order': fields.Date.today(),
+            'company_id': self.company_id.id,
+            'user_id': self.user_id.id,
+            'origin': self.name_get()[0][1],
+            'tsm_time_pack_id': self.id,
+        })
+
+        '''Get other sale values from partner onchange'''
+        sale.onchange_partner_id()
+
+        return sale._convert_to_write(sale._cache)
+
+    def create_sale(self):
+        """
+        Create Sale order from Time Pack
+        :return: Sele Order created
+        """
+        self.ensure_one()
+        sale_vals = self._prepare_sale()
+        sale = self.env['sale.order'].create(sale_vals)
+
+        sale_line_vals = self._prepare_sale_line(sale.id)
+        if sale_line_vals:
+            self.env['sale.order.line'].create(sale_line_vals)
+
+        '''Update Time Pack with the values from the sale order'''
+        vals = {'sale_id': sale.id}
+        self.update(vals)
+
+        ''' Autoconfirm sale order if it's checked'''
+        if self.sale_autoconfirm:
+            sale.action_confirm()
+
+        return sale
