@@ -17,9 +17,11 @@
     "data": [
         "data/tsm_time_pack_sequence.xml",
         "security/ir.model.access.csv",
-        "views/tsm_time_pack_view.xml",
         "views/tsm_task_view.xml",
         "views/tsm_task_timesheet_view.xml",
+        'views/product_view.xml',
+        'views/sale_order_view.xml',
+        "views/tsm_time_pack_view.xml",
         "report/tsm_time_pack_report.xml",
     ],
 }
