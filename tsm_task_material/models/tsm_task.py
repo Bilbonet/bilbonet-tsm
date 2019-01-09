@@ -76,18 +76,21 @@ class TsmTask(models.Model):
         sale_line = self.env['sale.order.line'].new({
             'order_id': sale_id,
             'product_id': line.product_id.id,
-            'name': line.name,
-            'price_unit': line.price_unit,
-            'product_uom_qty': line.quantity,
             'product_uom': line.product_uom_id.id,
-            'discount': line.discount,
-            'tsm_task_id': line.task_id.id,
-            'tsm_task_material_id': line.id,
         })
 
         '''Get other sale line values from product onchange'''
         sale_line.product_id_change()
         sale_line_vals = sale_line._convert_to_write(sale_line._cache)
+
+        sale_line_vals.update({
+            'name': line.name,
+            'price_unit': line.price_unit,
+            'product_uom_qty': line.quantity,
+            'discount': line.discount,
+            'tsm_task_id': line.task_id.id,
+            'tsm_task_material_id': line.id,
+        })
 
         return sale_line_vals
 
