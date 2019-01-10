@@ -1,7 +1,7 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class TsmProject(models.Model):
@@ -92,6 +92,9 @@ class TsmProject(models.Model):
     description = fields.Html(string='Project Description', sanitize=True,
         strip_style=False, translate=False,
         help="Details, notes and aclarations about the project.")
+    date_start = fields.Datetime(string='Starting Date',
+                                 default=fields.Datetime.now,
+                                 index=True, copy=False)
     company_id = fields.Many2one(
         'res.company',
         string='Company',
