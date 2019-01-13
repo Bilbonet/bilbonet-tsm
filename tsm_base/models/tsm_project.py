@@ -1,7 +1,7 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class TsmProject(models.Model):
@@ -105,3 +105,14 @@ class TsmProject(models.Model):
     task_needaction_count = fields.Integer(
         compute='_compute_task_needaction_count', string="Tasks")
 
+    @api.multi
+    def write(self, vals):
+        # directly compute is_favorite to dodge allow write access right
+        if 'is_favorite' in vals:
+            vals.pop('is_favorite')
+            self._fields['is_favorite'].determine_inverse(self)
+        res = super(TsmProject, self).write(vals) if vals else True
+        if 'active' in vals:
+            # archiving/unarchiving a project does it on its tasks, too
+            self.mapped('task_ids').write({'active': vals['active']})
+        return res
