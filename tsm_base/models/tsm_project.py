@@ -114,5 +114,6 @@ class TsmProject(models.Model):
         res = super(TsmProject, self).write(vals) if vals else True
         if 'active' in vals:
             # archiving/unarchiving a project does it on its tasks, too
-            self.mapped('task_ids').write({'active': vals['active']})
+            self.with_context(active_test=False).mapped('task_ids').write(
+                                                {'active': vals['active']})
         return res

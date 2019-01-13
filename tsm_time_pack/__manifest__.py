@@ -22,6 +22,7 @@
         'views/product_view.xml',
         'views/sale_order_view.xml',
         "views/tsm_time_pack_view.xml",
+        "report/tsm_time_pack_task_report.xml",
         "report/tsm_time_pack_report.xml",
     ],
 }
