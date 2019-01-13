@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook/page[@name='description_page']" position="after">
                     <page string="Timesheets">
-                        <field name="timesheet_ids" context="{'default_project_id': project_id}">
+                        <field name="timesheet_ids">
                             <tree editable="bottom" string="Timesheet Activities" default_order="date_time">
                                 <field name="date_time"/>
                                 <field name="user_id" required="1" options="{'no_create': True}"/>
