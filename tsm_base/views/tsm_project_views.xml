@@ -73,6 +73,7 @@
                 <field name="user_id" string="Project Manager"/>
                 <field name="partner_id" string="Contact" filter_domain="[('partner_id', 'child_of', self)]"/>
                 <filter name="my_projects" string="My Projects" domain="[('user_id','=',uid)]"/>
+                <separator/>
                 <filter name="my_favorites" string="My Favorites" domain="[('favorite_user_ids', 'in', uid)]"/>
                 <separator/>
                 <filter string="Followed by Me" domain="[('message_is_follower','=',True)]"/>
@@ -152,7 +153,7 @@
         <field name="domain">[]</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="view_id" ref="tsm_project_kanban_view"/>
-        <field name="context">{'search_default_my_projects': 1}</field>
+        <field name="context">{'search_default_my_projects': 1, 'search_default_my_favorites': 1}</field>
         <field name="search_view_id" ref="tsm_project_filter_view"/>
         <field name="target">main</field>
         <field name="help" type="html">
