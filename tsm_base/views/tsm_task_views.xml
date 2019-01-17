@@ -333,6 +333,7 @@
         <field name="name">Tasks</field>
         <field name="res_model">tsm.task</field>
         <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">['|',('active', '=', True), ('active', '=', False)]</field>
         <field name="context">{
             'default_group_by': 'stage_id',
             'search_default_project_id': [active_id],
@@ -376,7 +377,7 @@
             <xpath expr="//button[@name='toggle_active']" position="before">
                 <button class="oe_stat_button" type="action"
                         name="%(tsm_tasks_from_project_action)d" icon="fa-tasks">
-                    <field string="Tasks" name="task_count" widget="statinfo"/>
+                    <field string="Tasks" name="task_count" widget="statinfo" context="{'active_test': False}"/>
                 </button>
             </xpath>
         </field>
