@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tsm_tech_asset_user,tsm.tech.asset.user,model_tsm_tech_asset,tsm_base.group_tsm_user,1,1,1,1
+access_tsm_tech_asset_type_user,tsm.tech.asset.type.user,model_tsm_tech_asset_type,tsm_base.group_tsm_user,1,0,0,0
+access_tsm_tech_asset_type_manager,tsm.tech.asset.type.manager,model_tsm_tech_asset_type,tsm_base.group_tsm_manager,1,1,1,1
+

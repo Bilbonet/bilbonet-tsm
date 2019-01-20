@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="tsm_task_tech_asset_form_view" model="ir.ui.view">
+        <field name="name">TSM Task Tech Asset</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="asset_ids" widget="many2many_tags" domain="[('partner_id', '=', partner_id)]" options="{'no_create_edit': True}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

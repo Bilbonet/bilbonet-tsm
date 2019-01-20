@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--
+       Asset: Views
+    -->
+    <record id="tsm_tech_assets_form_view" model="ir.ui.view">
+        <field name="name">TSM Tech Assets tsm.tech.assets.form</field>
+        <field name="model">tsm.tech.asset</field>
+        <field name="arch" type="xml">
+            <form string="Tech Assets" class="o_form_project_tasks">
+                <sheet string="Asset">
+                    <div class="oe_button_box" name="button_box">
+
+                <button class="oe_stat_button" type="action"
+                        name="%(tsm_tasks_from_tech_asset_action)d" icon="fa-tasks">
+                    <field string="Tasks" name="task_count" widget="statinfo" context="{'active_test': False}"/>
+                </button>
+
+                        <button name="toggle_active" type="object" groups="base.group_user"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1 class="o_row">
+                            <field name="priority" widget="priority"/>
+                            <field name="name" placeholder="Asset Title..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="type_id" options="{'no_open': True}"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="notes" string="Notes">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h4>Technical Notes:</h4>
+                                    <field name="tech_notes" type="html"/>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h4>Configuration Notes:</h4>
+                                    <field name="config_notes" type="html"/>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="tsm_tech_assets_tree_view" model="ir.ui.view">
+        <field name="name">TSM Tech Assets tsm.tech.assets.tree</field>
+        <field name="model">tsm.tech.asset</field>
+        <field name="arch" type="xml">
+            <tree decoration-bf="active == True" decoration-muted="active == False" string="Tech Assets">
+                <field name="sequence" widget="handle"/>
+                <field name="active" invisible="1"/>
+                <field name="type_id" string="Asset Type"/>
+                <field name="name" string="Asset Title"/>
+                <field name="partner_id" string="Client"/>
+                <field name="user_id" string="Responsible"/>
+                <field name="date" string="Date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="tsm_tech_assets_search_view" model="ir.ui.view">
+        <field name="name">Tsm Tech Assets Search</field>
+        <field name="model">tsm.tech.asset</field>
+        <field name="arch" type="xml">
+            <search string="Tech Assets">
+                <field name="name" string="Asset Name"/>
+                <field name="partner_id"/>
+                <field name="type_id" string="Asset Type"/>
+                <field name="user_id"/>
+                <filter string="My Assets" name="my_assets" domain="[('user_id','=',uid)]"/>
+                <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>
+                <separator/>
+                <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
+                <separator/>
+                <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Responsible" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="Customer" name="customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="Type" name="Type" context="{'group_by':'type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!--
+        Asset: Menus and Actions
+    -->
+    <record id="tsm_tech_assets_open_all_action" model="ir.actions.act_window">
+        <field name="name">T.S.M: Tech Assets</field>
+        <field name="res_model">tsm.tech.asset</field>
+        <field name="view_type">form</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="tsm_tech_assets_tree_view"/>
+        <field name="target">main</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new tech asset.
+            </p>
+        </field>
+    </record>
+    <menuitem id="tsm_tech_assets_menu" name="Tech Assets" parent="tsm_base.tsm_main_menu"
+              action="tsm_tech_assets_open_all_action" sequence="7"/>
+
+
+    <!--
+        Asset Types: views
+    -->
+    <record id="tsm_tech_asset_type_search_view" model="ir.ui.view">
+        <field name="name">TSM Tech Asset Types Seacrh</field>
+        <field name="model">tsm.tech.asset.type</field>
+        <field name="arch" type="xml">
+            <search string="Types">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record id="tsm_tech_asset_type_form_view" model="ir.ui.view">
+        <field name="name">TSM Tech Asset Type Form</field>
+        <field name="model">tsm.tech.asset.type</field>
+        <field name="arch" type="xml">
+            <form string="Types">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="tsm_tech_asset_type_action" model="ir.actions.act_window">
+        <field name="name">TSM Tech Asset Types</field>
+        <field name="res_model">tsm.tech.asset.type</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new type of tech asset.
+            </p>
+        </field>
+    </record>
+    <menuitem id="tsm_config_tech_asset_type_menu" action="tsm_tech_asset_type_action"
+              name="Tech Asset Types"
+              parent="tsm_base.tsm_config_menu"
+              sequence="4"
+              groups="base.group_no_one"/>
+
+    <!--
+        Tasks From Asset
+    -->
+     <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('asset_ids', 'in', [active_id]), '|',('active', '=', True), ('active', '=', False)]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Here, you can create new task
+            </p>
+            <p>
+                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+            </p>
+        </field>
+    </record>
+
+</odoo>
