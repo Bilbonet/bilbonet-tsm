@@ -32,7 +32,7 @@
         <field name="name">tsm.task.form</field>
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
-            <form string="Task"  class="o_form_project_tasks">
+            <form string="Task" class="o_form_project_tasks">
                 <header>
                     <button name="action_assign_to_me" string="Assign to Me" type="object" class="oe_highlight"
                             attrs="{'invisible' : [('user_id', '!=', False)]}"/>
@@ -176,6 +176,7 @@
         <field name="arch" type="xml">
             <tree decoration-danger="date_deadline and (date_deadline&lt;current_date)" string="Tasks">
                 <field name="sequence" invisible="not context.get('seq_visible', False)"/>
+                <field name="date_start" widget="date"/>
                 <field name="name"/>
                 <field name="project_id" invisible="context.get('user_invisible', False)"/>
                 <field name="user_id" invisible="context.get('user_invisible', False)"/>
