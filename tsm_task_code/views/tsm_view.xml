@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <odoo>
 
-    <record model="ir.ui.view" id="tsm_task_code_form_view">
+    <record id="tsm_task_code_form_view" model="ir.ui.view">
         <field name="name">TSM task.code.form</field>
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
@@ -13,7 +13,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="tsm_task_code_tree_view">
+    <record id="tsm_task_code_tree_view" model="ir.ui.view">
         <field name="name">TSM task.code.tree</field>
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_base.tsm_task_tree_view"/>
@@ -24,7 +24,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="tsm_task_code_kanban_view">
+    <record id="tsm_task_code_kanban_view" model="ir.ui.view">
         <field name="name">TSM task.code.kanban</field>
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_base.tsm_task_kanban_view"/>
@@ -35,7 +35,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="tsm_task_code_search_view">
+    <record id="tsm_task_code_search_view" model="ir.ui.view">
         <field name="name">TSM task.code.search</field>
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_base.tsm_task_search_view"/>
