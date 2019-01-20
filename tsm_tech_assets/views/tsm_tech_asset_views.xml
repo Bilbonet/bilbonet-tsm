@@ -1,5 +1,24 @@
 <?xml version="1.0"?>
 <odoo>
+    <!-- Tasks From Asset -->
+     <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('asset_ids', 'in', [active_id]), '|',('active', '=', True), ('active', '=', False)]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Here, you can create new task
+            </p>
+            <p>
+                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+            </p>
+        </field>
+    </record>
+
+
     <!--
        Asset: Views
     -->
@@ -159,25 +178,5 @@
               parent="tsm_base.tsm_config_menu"
               sequence="4"
               groups="base.group_no_one"/>
-
-    <!--
-        Tasks From Asset
-    -->
-     <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
-        <field name="name">Tasks</field>
-        <field name="res_model">tsm.task</field>
-        <field name="view_mode">tree,kanban,form</field>
-        <field name="domain">[('asset_ids', 'in', [active_id]), '|',('active', '=', True), ('active', '=', False)]</field>
-        <field name="context">{}</field>
-        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Here, you can create new task
-            </p>
-            <p>
-                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
-            </p>
-        </field>
-    </record>
 
 </odoo>
