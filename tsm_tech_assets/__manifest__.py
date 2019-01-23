@@ -12,6 +12,7 @@
         'tsm_base',
     ],
     'data': [
+        'data/tsm_tech_asset_sequence.xml',
         'security/ir.model.access.csv',
         'views/tsm_tech_asset_views.xml',
         'views/tsm_task_view.xml',

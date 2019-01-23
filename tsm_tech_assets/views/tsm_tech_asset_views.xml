@@ -29,12 +29,10 @@
             <form string="Tech Assets" class="o_form_project_tasks">
                 <sheet string="Asset">
                     <div class="oe_button_box" name="button_box">
-
-                <button class="oe_stat_button" type="action"
-                        name="%(tsm_tasks_from_tech_asset_action)d" icon="fa-tasks">
-                    <field string="Tasks" name="task_count" widget="statinfo" context="{'active_test': False}"/>
-                </button>
-
+                        <button class="oe_stat_button" type="action"
+                                name="%(tsm_tasks_from_tech_asset_action)d" icon="fa-tasks">
+                            <field string="Tasks" name="task_count" widget="statinfo" context="{'active_test': False}"/>
+                        </button>
                         <button name="toggle_active" type="object" groups="base.group_user"
                                 class="oe_stat_button" icon="fa-archive">
                             <field name="active" widget="boolean_button"
@@ -44,6 +42,10 @@
                     <div class="oe_title">
                         <h1 class="o_row">
                             <field name="priority" widget="priority"/>
+                            <field name="code"/>
+
+                        </h1>
+                        <h1>
                             <field name="name" placeholder="Asset Title..."/>
                         </h1>
                     </div>
@@ -87,6 +89,7 @@
             <tree decoration-bf="active == True" decoration-muted="active == False" string="Tech Assets">
                 <field name="sequence" widget="handle"/>
                 <field name="active" invisible="1"/>
+                <field name="code"/>
                 <field name="type_id" string="Asset Type"/>
                 <field name="name" string="Asset Title"/>
                 <field name="partner_id" string="Client"/>
@@ -104,6 +107,7 @@
                 <field name="partner_id"/>
                 <field name="type_id" string="Asset Type"/>
                 <field name="user_id"/>
+                <field name="code" string="Asset Code"/>
                 <filter string="My Assets" name="my_assets" domain="[('user_id','=',uid)]"/>
                 <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>
                 <separator/>
