@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <record id="tsm_tech_asset_sequence" model="ir.sequence">
+        <field name="name">TSM Tech Asset code</field>
+        <field name="code">tsm.tech.asset</field>
+        <field name="prefix">AS/%(y)s</field>
+        <field eval="4" name="padding" />
+        <field eval="1" name="number_increment"/>
+        <field eval="1" name="number_next"/>
+    </record>
+</odoo>

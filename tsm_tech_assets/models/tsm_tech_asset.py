@@ -15,9 +15,15 @@ class TsmTechAsset(models.Model):
             ('asset_ids', 'in', self.id)], count=True)
         self.task_count = tasks
 
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        default=lambda self: self.env['res.company']._company_default_get())
     active = fields.Boolean(default=True,
         help="If the active field is set to False, it will allow you to hide"
         " the asset without removing it.")
+    code = fields.Char(string='Tech Asset Code',
+                       default="/", required=True)
     sequence = fields.Integer(string='Sequence', index=True, default=10,
         help="Gives the sequence order when displaying a list of assets.")
     priority = fields.Selection([
@@ -27,11 +33,6 @@ class TsmTechAsset(models.Model):
     date = fields.Datetime(string='Date',
                            default=fields.Datetime.now,
                            index=True, copy=False)
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
-        default=lambda self: self.env['res.company']._company_default_get())
-
     name = fields.Char(string='Asset Title', track_visibility='always',
                        required=True, index=True)
     tech_notes = fields.Html(
@@ -57,6 +58,19 @@ class TsmTechAsset(models.Model):
                                  track_visibility='onchange',
                                  change_default=True)
     task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
+
+    # _sql_constraints = [
+    #     ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
+    #      _('The code must be unique!')),
+    # ]
+
+    @api.model
+    def create(self, vals):
+        if vals.get('code', '/') == '/':
+            vals['code'] = \
+                self.env['ir.sequence'].next_by_code('tsm.tech.asset')
+        return super(TsmTechAsset, self).create(vals)
+
 
 class TsmTechAssetType(models.Model):
     _name = "tsm.tech.asset.type"
