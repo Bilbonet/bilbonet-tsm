@@ -120,7 +120,7 @@ class TsmTask(models.Model):
     name = fields.Char(string='Task Title', track_visibility='always',
                        required=True, index=True)
     description = fields.Html(
-        string='Project Description', sanitize=True,
+        string='Task Description', sanitize=True,
         strip_style=False, translate=False,
         help="Details, notes and aclarations about the task.")
     project_id = fields.Many2one('tsm.project',
