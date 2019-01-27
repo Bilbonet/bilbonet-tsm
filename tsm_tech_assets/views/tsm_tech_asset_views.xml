@@ -43,7 +43,6 @@
                         <h1 class="o_row">
                             <field name="priority" widget="priority"/>
                             <field name="code"/>
-
                         </h1>
                         <h1>
                             <field name="name" placeholder="Asset Title..."/>
@@ -86,15 +85,20 @@
         <field name="name">TSM Tech Assets tsm.tech.assets.tree</field>
         <field name="model">tsm.tech.asset</field>
         <field name="arch" type="xml">
-            <tree decoration-bf="active == True" decoration-muted="active == False" string="Tech Assets">
+            <tree string="Tech Assets" decoration-muted="active == False"
+                  decoration-bf="priority == '1'"
+                  decoration-danger="activity_state != False">
                 <field name="sequence" widget="handle"/>
-                <field name="active" invisible="1"/>
                 <field name="code"/>
+                <field name="priority" widget="priority" invisible="1"/>
                 <field name="type_id" string="Asset Type"/>
                 <field name="name" string="Asset Title"/>
                 <field name="partner_id" string="Client"/>
                 <field name="user_id" string="Responsible"/>
-                <field name="date" string="Date"/>
+                <field name="date" string="Date" widget="date"/>
+                <field name="task_count" string="Tasks"/>
+                <field name="active" invisible="1"/>
+                <field name="activity_state" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -103,17 +107,18 @@
         <field name="model">tsm.tech.asset</field>
         <field name="arch" type="xml">
             <search string="Tech Assets">
-                <field name="name" string="Asset Name"/>
                 <field name="partner_id"/>
+                <field name="name" string="Asset Name"/>
                 <field name="type_id" string="Asset Type"/>
                 <field name="user_id"/>
                 <field name="code" string="Asset Code"/>
                 <filter string="My Assets" name="my_assets" domain="[('user_id','=',uid)]"/>
+                <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
                 <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>
                 <separator/>
-                <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
-                <separator/>
+                <filter string="My Activities" name="activities_my" domain="[('activity_ids.user_id', '=', uid)]"/>
                 <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                <separator/>
                 <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Responsible" name="User" context="{'group_by':'user_id'}"/>

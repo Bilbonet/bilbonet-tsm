@@ -16,7 +16,7 @@
             <field name="model">tsm.task.timesheet</field>
             <field name="arch" type="xml">
                 <tree editable="top" string="Timesheet Activities" import="false">
-                    <field name="date_time"/>
+                    <field name="date_time" string="Date Time"/>
                     <field name="name"/>
                     <field name="project_id"/>
                     <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
@@ -49,6 +49,7 @@
             <field name="arch" type="xml">
                 <search string="Timesheet">
                     <field name="date_time"/>
+                    <field name="task_partner_id"/>
                     <field name="user_id"/>
                     <field name="project_id"/>
                     <field name="task_id"/>
@@ -136,6 +137,7 @@
                     <field name="project_id"/>
                     <field name="task_id" domain="[('project_id', '=', project_id)]"/>
                     <field name="amount"/>
+                    <field name="task_partner_id"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_global_click">
@@ -155,6 +157,9 @@
                                     </div>
                                 </div>
                                 <hr class="mt4 mb4"/>
+                                <div>
+                                    <small class="text-primary"><field name="task_partner_id"/></small>
+                                </div>
                                 <span>
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                     <t t-esc="record.date_time.value"/>

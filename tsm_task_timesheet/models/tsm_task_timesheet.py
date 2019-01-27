@@ -32,6 +32,8 @@ class TsmTaskTimesheet(models.Model):
                                      string='End date time for calendar view',
                                      store=True,
                                      readonly=True)
+    task_partner_id = fields.Many2one(related='task_id.partner_id',
+                                       store=True, string='Customer')
 
     @api.one
     @api.depends('date_time')

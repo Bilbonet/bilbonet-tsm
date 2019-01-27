@@ -1,7 +1,7 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class TsmTechAsset(models.Model):
@@ -11,9 +11,10 @@ class TsmTechAsset(models.Model):
     _order = "priority desc, sequence, id desc"
 
     def _compute_task_count(self):
-        tasks = self.env['tsm.task'].search([
-            ('asset_ids', 'in', self.id)], count=True)
-        self.task_count = tasks
+        for asset in self:
+            asset.task_count = self.env['tsm.task'].search(
+                [('asset_ids', 'in', asset.id)], count=True
+            )
 
     company_id = fields.Many2one(
         'res.company',
@@ -59,10 +60,10 @@ class TsmTechAsset(models.Model):
                                  change_default=True)
     task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
 
-    # _sql_constraints = [
-    #     ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
-    #      _('The code must be unique!')),
-    # ]
+    _sql_constraints = [
+        ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
+         _('The code must be unique!')),
+    ]
 
     @api.model
     def create(self, vals):

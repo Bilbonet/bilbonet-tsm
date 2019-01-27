@@ -96,6 +96,8 @@
                 <field name="name" string="Project Name"/>
                 <field name="user_id" string="Project Manager"/>
                 <field name="partner_id" string="Contact"/>
+                <field name="date_start" widget="date"/>
+                <field name="task_count" string="Tasks"/>
             </tree>
         </field>
     </record>
