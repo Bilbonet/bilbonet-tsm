@@ -62,7 +62,8 @@
                                         <field name="remaining_hours" widget="float_time" readonly="1"/>
                                     </group>
                                     <group>
-                                        <field name="progress" widget="progressbar"/>
+                                        <!--<field name="progress" widget="progressbar"/>-->
+                                        <field name="progress" nolabel="1" widget="gauge" style="width:120px;height:90px;cursor:pointer;"/>
                                     </group>
                                 </group>
                                 <field name="timesheet_ids">

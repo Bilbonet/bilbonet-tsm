@@ -15,49 +15,82 @@
                 <t t-call="tsm_base.tsm_report_layout">
                     <div class="page">
                         <div class="row" name="head_report">
-                        <table class="table table-bordered table-condensed" style="margin-top:0px;">
-                            <tr>
-                                <td>Cliente:</td>
-                                <td><span t-field="o.partner_id"/></td>
-                                <td>Telefono:</td>
-                                <td>
-                                    <span t-field="o.partner_id.phone"/> /
-                                    <span t-field="o.partner_id.mobile"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Dirección:</td>
-                                <td>
-                                    <span t-field="o.partner_id.street"/>
-                                    <span t-field="o.partner_id.street2"/>
-                                    <p>
-                                    <span t-field="o.partner_id.zip"/> -
-                                    <span t-field="o.partner_id.city"/> -
-                                    <span t-field="o.partner_id.state_id"/>
-                                    </p>
-                                </td>
-                                <td>@mail:</td>
-                                <td><span t-field="o.partner_id.email"/></td>
-                            </tr>
-                        </table>
-                        <div class="well well-sm text-center">
-                            <h1>Resumen Bolsa Horas: <span t-field="o.code"/></h1>
-                            <span t-field="o.name"/>
+                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                                <tr>
+                                    <td>Cliente:</td>
+                                    <td><span t-field="o.partner_id"/></td>
+                                    <td>Telefono:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.phone"/> /
+                                        <span t-field="o.partner_id.mobile"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.street"/>
+                                        <span t-field="o.partner_id.street2"/>
+                                        <p>
+                                        <span t-field="o.partner_id.zip"/> -
+                                        <span t-field="o.partner_id.city"/> -
+                                        <span t-field="o.partner_id.state_id"/>
+                                        </p>
+                                    </td>
+                                    <td>@mail:</td>
+                                    <td><span t-field="o.partner_id.email"/></td>
+                                </tr>
+                            </table>
+                            <div class="well well-sm text-center">
+                                <h1>Resumen Bolsa Horas: <span t-field="o.code"/></h1>
+                                <span t-field="o.name"/>
+                            </div>
+                            <table class="table table-condensed" style="margin-top:-10px;">
+                                <tr class="success">
+                                    <td>
+                                        Fecha Inicio: <span t-field="o.date_start"/>
+                                    </td>
+                                    <td>
+                                        Técnico Asignado: <span t-field="o.user_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <table class="table table-condensed" style="margin-top:-10px;">
-                            <tr class="success">
-                                <td>
-                                    Fecha Inicio: <span t-field="o.date_start"/>
-                                </td>
-                                <td>
-                                    Técnico Asignado: <span t-field="o.user_id.name"/>
-                                </td>
-                            </tr>
-                        </table>
-                        Contratadas: <span t-field="o.contrated_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/><br/>
-                        Consumidas: <span t-field="o.consumed_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/><br/>
-                        Saldo: <span t-field="o.remaining_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/><br/>
-                        Cortesia: <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <td>Contratadas:</td>
+                                        <td class="text-right">
+                                            <!--<span t-esc="'{0:,.0f}'.format(o.contrated_hours)"/> horas-->
+                                            <span t-field="o.contrated_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                        </td>
+                                    </tr>
+
+                                    <tr class="danger">
+                                        <td>Consumidas:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black">
+                                        <td>Saldo:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-5">
+                                <table t-if="o.complimentary_hours" class="table table-condensed">
+                                    <tr>
+                                        <td>Cortesia:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="row" t-if="len(o.timesheet_ids) > 0">
