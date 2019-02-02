@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-
+    <!-- Report Time Pack Summary  -->
     <report
         id="tsm_time_pack_report_summary_action"
         name="tsm_time_pack.tsm_time_pack_report_summary_document"
@@ -40,20 +40,20 @@
                                     <td><span t-field="o.partner_id.email"/></td>
                                 </tr>
                             </table>
-                            <div class="well well-sm text-center">
-                                <h1>Resumen Bolsa Horas: <span t-field="o.code"/></h1>
-                                <span t-field="o.name"/>
-                            </div>
-                            <table class="table table-condensed" style="margin-top:-10px;">
-                                <tr class="success">
+                            <table class="table table-condensed" style="margin-top:30px;margin-bottom:-5px;">
+                                <tr>
                                     <td>
                                         Fecha Inicio: <span t-field="o.date_start"/>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         Técnico Asignado: <span t-field="o.user_id.name"/>
                                     </td>
                                 </tr>
                             </table>
+                            <div class="well well-sm text-center">
+                                <h1>Resumen Bolsa Horas: <span t-field="o.code"/></h1>
+                                <span t-field="o.name"/>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -139,4 +139,173 @@
         </t>
     </template>
 
+    <!-- Report Time Pack Detailed  -->
+    <report
+        id="tsm_time_pack_report_detailed_action"
+        name="tsm_time_pack.tsm_time_pack_report_detailed_document"
+        model="tsm.time.pack"
+        string="Print Time Pack Detailed"
+        report_type="qweb-pdf"
+        paperformat="tsm_base.tsm_paper_format_report"/>
+
+    <template id="tsm_time_pack_report_detailed_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="tsm_base.tsm_report_layout">
+                    <div class="page">
+                        <div class="row" name="head_report">
+                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                                <tr>
+                                    <td>Cliente:</td>
+                                    <td><span t-field="o.partner_id"/></td>
+                                    <td>Telefono:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.phone"/> /
+                                        <span t-field="o.partner_id.mobile"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.street"/>
+                                        <span t-field="o.partner_id.street2"/>
+                                        <p>
+                                        <span t-field="o.partner_id.zip"/> -
+                                        <span t-field="o.partner_id.city"/> -
+                                        <span t-field="o.partner_id.state_id"/>
+                                        </p>
+                                    </td>
+                                    <td>@mail:</td>
+                                    <td><span t-field="o.partner_id.email"/></td>
+                                </tr>
+                            </table>
+                            <table class="table table-condensed" style="margin-top:30px;margin-bottom:-5px;">
+                                <tr>
+                                    <td>
+                                        Fecha Inicio: <span t-field="o.date_start"/>
+                                    </td>
+                                    <td class="text-right">
+                                        Técnico Asignado: <span t-field="o.user_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="well well-sm text-center">
+                                <h1>Resumen Bolsa Horas: <span t-field="o.code"/></h1>
+                                <span t-field="o.name"/>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:30px;">
+                            <div class="col-xs-5">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <td>Contratadas:</td>
+                                        <td class="text-right">
+                                            <!--<span t-esc="'{0:,.0f}'.format(o.contrated_hours)"/> horas-->
+                                            <span t-field="o.contrated_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                        </td>
+                                    </tr>
+
+                                    <tr class="danger">
+                                        <td>Consumidas:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black">
+                                        <td>Saldo:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-5">
+                                <table t-if="o.complimentary_hours" class="table table-condensed">
+                                    <tr>
+                                        <td>Cortesia:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <p style="page-break-after:always;"></p>
+                        <!-- Tareas -->
+                        <t t-set="timesheet_tasks" t-value="[]"/>
+                        <t t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="tt">
+                            <t t-set="timesheet_tasks" t-value="timesheet_tasks+[tt.task_id]"/>
+                        </t>
+
+                        <div class="row" t-if="len(timesheet_tasks) > 0">
+                            <t t-foreach="set(timesheet_tasks)" t-as="task">
+                                <!-- Tarea -->
+                                <table class="table table-condensed">
+                                    <tr class="success">
+                                        <td>
+                                            Tarea: <span t-field="task.code"/> -
+                                            <span t-field="task.name"/>
+                                        </td>
+                                        <td>
+                                            Fecha: <span t-field="task.date_start"/>
+                                        </td>
+                                        <td>
+                                            Técnico: <span t-field="task.user_id.name"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <span t-field="task.description"/>
+                                <!-- /Task -->
+                                <!-- Timesheets -->
+                                <t t-set="total" t-value="0" />
+                                <table class="table table-condensed table-striped">
+                                    <thead style="background-color: #3498DB;font-size:0.8em;" >
+                                        <tr class="text-center">
+                                            <th colspan="5" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
+                                        </tr>
+                                     </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="t" >
+                                        <t t-if="task.id==t.task_id.id">
+                                            <t t-set="total" t-value="total+t.amount"/>
+                                            <td style="font-size:0.7em;">
+                                                <span t-field="t.date_time"
+                                                      t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                                            </td>
+                                            <td style="font-size:0.7em;">
+                                                <span t-field="t.task_id"/>
+                                            </td>
+                                            <td style="font-size:0.7em;">
+                                                <span t-field="t.name"/>
+                                            </td>
+                                            <td style="font-size:0.7em;" class="text-right">
+                                                <span t-field="t.amount"
+                                                      t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                            </td>
+                                            <td style="font-size:0.7em;" class="text-right">
+                                                <span t-if="t.discount_time == True">Descuenta</span>
+                                                <span t-if="t.discount_time == False">NO Descuenta</span>
+                                            </td>
+                                        </t>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot style="font-size:0.8em;">
+                                        <tr>
+                                            <th colspan="4" class="text-right">
+                                                <t t-esc="total" t-esc-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <!-- /Timesheet -->
+                            <p style="page-break-after:always;"></p>
+                            </t>
+                        </div>
+                        <!-- /Tareas -->
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
 </odoo>
