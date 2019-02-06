@@ -4,52 +4,27 @@
 from odoo import api, models, fields, _
 from datetime import datetime, timedelta
 
+
 class TsmTaskTimesheet(models.Model):
     _inherit = "tsm.task.timesheet"
 
-    # @api.model
-    # def _default_timepack(self):
-    #     time_pack_data = self.env['tsm.time.pack'].search(
-    #         ['partner_id', '=', self.task_partner_id], limit=1
-    #     )
-    #     return False
-    #
-    #     # if time_pack_data:
-    #     #     return time_pack_data.id
-    #
-    #     # return self.env['tsm.time.pack'].search(
-    #     #     [], limit=1
-    #     # )
-
-
-    #     if not self.task_id:
-    #         return {'domain': {'timepack_id': []}}
-    #
-    #     time_pack_data = self.env['tsm.time.pack'].search(
-    #             ['partner_id', '=', self.task_id.partner_id], limit=1
-    #     )
-    #     if time_pack_data:
-    #         self.timepack_id = time_pack_data.id
-    # @api.model
-    # def create(self, values):
-    #     time_pack_data = self.env['tsm.time.pack'].search(
-    #                 ['partner_id', '=', self.task_id.partner_id], limit=1
-    #         )
-
-    timepack_id = fields.Many2one('tsm.time.pack', 'Time Packs',
-                                  # default=_default_timepack,
-                                  index=True,)
+    timepack_id = fields.Many2one('tsm.time.pack', 'Time Packs', index=True)
     discount_time = fields.Boolean(
         default="True",
         string="Discount Time",
         help="Indicate if discount the time from the time pack")
 
-    # @api.onchange('task_id')
-    # def _onchange_task_id(self):
-    #     # force domain on task when project is set
-    #     return {'domain': {
-    #         'timepack_id': [('partner_id', '=', self.task_partner_id)]
-    #     }}
+    @api.model
+    def create(self, values):
+        # We search Time Pack available for the partner
+        task = self.env['tsm.task'].browse(values['task_id'])
+        time_pack_id = self.env['tsm.time.pack'].search([
+            ('partner_id', '=', task.partner_id.id)], limit=1)
+
+        if time_pack_id and not values['timepack_id']:
+            values['timepack_id'] = time_pack_id.id
+
+        return super(TsmTaskTimesheet, self).create(values)
 
     @api.onchange('timepack_id', 'discount_time')
     def _onchange_timepack(self):
