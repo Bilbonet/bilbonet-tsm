@@ -12,9 +12,10 @@ class TsmTechAsset(models.Model):
 
     def _compute_task_count(self):
         for asset in self:
-            asset.task_count = self.env['tsm.task'].search(
-                [('asset_ids', 'in', asset.id)], count=True
-            )
+            asset.task_count = self.env['tsm.task'].search([
+                ('asset_ids', 'in', asset.id),
+                '|', ('active', '=', True), ('active', '=', False)
+            ], count=True)
 
     company_id = fields.Many2one(
         'res.company',
@@ -24,7 +25,7 @@ class TsmTechAsset(models.Model):
         help="If the active field is set to False, it will allow you to hide"
         " the asset without removing it.")
     code = fields.Char(string='Tech Asset Code',
-                       default="/", required=True)
+                       default="/", required=True, copy=False)
     sequence = fields.Integer(string='Sequence', index=True, default=10,
         help="Gives the sequence order when displaying a list of assets.")
     priority = fields.Selection([
@@ -58,6 +59,8 @@ class TsmTechAsset(models.Model):
                                  index=True,
                                  track_visibility='onchange',
                                  change_default=True)
+    task_ids = fields.One2many('tsm.task', 'asset_ids', string='Tasks',
+                               context={'active_test': False})
     task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
 
     _sql_constraints = [

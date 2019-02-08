@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'views/tsm_tech_asset_views.xml',
         'views/tsm_task_view.xml',
+        'report/tsm_tech_asset_report.xml',
     ],
     'installable': True,
 }
