@@ -15,6 +15,7 @@
         'views/tsm_task_view.xml',
         'views/tsm_task_timesheet_view.xml',
         'views/tsm_task_timesheet_report_view.xml',
+        'views/tsm_project_view.xml',
     ],
     'license': 'AGPL-3',
     'installable': True,
