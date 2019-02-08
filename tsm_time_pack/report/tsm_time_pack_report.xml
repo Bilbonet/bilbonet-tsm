@@ -232,15 +232,43 @@
                             </div>
                         </div>
                         <p style="page-break-after:always;"></p>
-                        <!-- Tareas -->
+                        <!-- Taks in Time Pack-->
                         <t t-set="timesheet_tasks" t-value="[]"/>
-                        <t t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="tt">
+                        <t t-foreach="o.timesheet_ids.sorted(key=lambda b: b.task_id.code)" t-as="tt">
                             <t t-set="timesheet_tasks" t-value="timesheet_tasks+[tt.task_id]"/>
                         </t>
+                        <!--<t t-esc="timesheet_tasks"/><br/>-->
+
+                        <!--<t t-set="tasks_sorted" t-value="[]"/>-->
+                        <!--<t t-foreach="set(timesheet_tasks)" t-as="xx">-->
+                            <!--&lt;!&ndash;<t t-set="tasks_sorted" t-value="tasks_sorted+[xx.sorted(key=lambda w: w.date_start)]"/>&ndash;&gt;-->
+                            <!--<t t-set="tasks_sorted" t-value="tasks_sorted+[xx]"/>-->
+                        <!--</t>-->
+                        <!--<t t-esc="tasks_sorted"/><br/>-->
+
+                        <!--<t t-set="newList" t-value="sorted(timesheet_tasks, key=lambda k: k['code'])"/>-->
+                        <!--<t t-esc="timesheet_tasks.sort()"/><br/>-->
+                        <!--<t t-set="tasks_sorted" t-value="timesheet_tasks.sort()"/>-->
+                        <!--<t t-esc="timesheet_sorted"/><br/>-->
+
+
+                        <!--Task Sorted:-->
+                        <!--<t t-set="tasks_sorted" t-value="timesheet_tasks.sort()"/>-->
+                        <!--<t t-esc="tasks_sorted"/><br/>-->
+                        <!--Task Sorted2:-->
+                        <!--<t t-esc="timesheet_tasks.sort()"/><br/>-->
+                        <!--Task Sorted3:-->
+                        <!--<t t-foreach="set(timesheet_tasks)" t-as="xx">-->
+                            <!--<t t-set="tasks_sorted" t-value="xx.sorted(key=lambda b: b.code)"/>-->
+                        <!--</t><br/>-->
+                        <!--Sorted:-->
+                        <!--<t t-esc="tasks_sorted"/>-->
+
+
 
                         <div class="row" t-if="len(timesheet_tasks) > 0">
                             <t t-foreach="set(timesheet_tasks)" t-as="task">
-                                <!-- Tarea -->
+                                <!-- Print Task -->
                                 <table class="table table-condensed">
                                     <tr class="success">
                                         <td>
@@ -256,12 +284,12 @@
                                     </tr>
                                 </table>
                                 <span t-field="task.description"/>
-                                <!-- /Task -->
-                                <!-- Timesheets -->
+                                <!-- /Print Task -->
+                                <!-- Timesheets of the task -->
                                 <t t-set="total" t-value="0" />
                                 <table class="table table-condensed table-striped">
                                     <thead style="background-color: #3498DB;font-size:0.8em;" >
-                                        <tr class="text-center">
+                                        <tr>
                                             <th colspan="5" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
                                         </tr>
                                      </thead>
@@ -298,7 +326,7 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                <!-- /Timesheet -->
+                                <!-- /Timesheet of the task -->
                             <p style="page-break-after:always;"></p>
                             </t>
                         </div>
