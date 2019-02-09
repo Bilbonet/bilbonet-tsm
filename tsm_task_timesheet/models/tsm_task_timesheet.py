@@ -3,6 +3,7 @@
 
 from odoo import api, exceptions, fields, models, _
 from datetime import datetime, timedelta
+from odoo.exceptions import ValidationError
 
 
 class TsmTaskTimesheet(models.Model):
@@ -85,6 +86,12 @@ class TsmTaskTimesheet(models.Model):
                     _("There isn't any stage with closed check. Please "
                       "mark any.")
                 )
+            for t in line.task_id.timesheet_ids:
+                if t.amount == 0:
+                    raise ValidationError(_(
+                    "There are any timesheet with 00:00 hours in this task.\n"
+                    "That is not allowed in stages marked as closed."))
+
             line.task_id.write({'stage_id': stage.id})
 
     @api.multi

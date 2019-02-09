@@ -202,15 +202,15 @@ class TsmTimePack(models.Model):
     @api.constrains('quantity')
     def _check_quantity(self):
         if not self.quantity > 0.0:
-            raise ValidationError(
-                'Quantity of hours contrated must be greater than 0.')
+            raise ValidationError(_(
+                'Quantity of hours contrated must be greater than 0.'))
         else:
             self.contrated_hours = self.quantity
 
     @api.constrains('discount')
     def _check_discount(self):
         if self.discount > 100:
-            raise ValidationError("Discount should be less or equal to 100")
+            raise ValidationError(_("Discount should be less or equal to 100"))
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
@@ -261,7 +261,7 @@ class TsmTimePack(models.Model):
         self.ensure_one()
         if not self.partner_id or not self.product_id:
             raise ValidationError(_("You must first select a Customer "
-                                    "and product for Time Pack: %s") % self.code)
+                                "and product for Time Pack: %s") % self.code)
 
         currency = (
                 self.partner_id.property_product_pricelist.currency_id or

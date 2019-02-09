@@ -3,6 +3,7 @@
 
 
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class TsmTask(models.Model):
@@ -25,3 +26,12 @@ class TsmTask(models.Model):
     def _onchange_project_timesheet(self):
         for t in self.timesheet_ids:
             t.project_id = self.project_id.id
+
+    @api.onchange('stage_id')
+    def _onchange_task_stage(self):
+        if self.stage_id.closed:
+            for t in self.timesheet_ids:
+                if t.amount == 0:
+                    raise ValidationError(_(
+                    "There are any timesheet with 00:00 hours in this task.\n"
+                    "That is not allowed in stages marked as closed."))
