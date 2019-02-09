@@ -75,6 +75,14 @@ class TsmTechAsset(models.Model):
                 self.env['ir.sequence'].next_by_code('tsm.tech.asset')
         return super(TsmTechAsset, self).create(vals)
 
+    # For the Report Detailed
+    def _compute_task_ids(self):
+        for asset in self:
+            task_ids = self.env['tsm.task'].search([
+                ('asset_ids', 'in', asset.id),
+                '|', ('active', '=', True), ('active', '=', False)
+            ], order='date_start')
+        return task_ids
 
 class TsmTechAssetType(models.Model):
     _name = "tsm.tech.asset.type"
