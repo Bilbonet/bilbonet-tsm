@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <odoo>
+    <!--
+       Tech Asset Report
+   -->
     <report
         id="tsm_tech_asset_report_action"
         name="tsm_tech_assets.tsm_tech_asset_report_document"
@@ -9,6 +12,75 @@
         paperformat="tsm_base.tsm_paper_format_report"/>
 
     <template id="tsm_tech_asset_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="tsm_base.tsm_report_layout">
+                    <div class="page">
+                        <div class="row" name="head_report">
+                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                                <tr>
+                                    <td>Cliente:</td>
+                                    <td><span t-field="o.partner_id"/></td>
+                                    <td>Telefono:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.phone"/> /
+                                        <span t-field="o.partner_id.mobile"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.street"/>
+                                        <span t-field="o.partner_id.street2"/>
+                                        <p>
+                                        <span t-field="o.partner_id.zip"/> -
+                                        <span t-field="o.partner_id.city"/> -
+                                        <span t-field="o.partner_id.state_id"/>
+                                        </p>
+                                    </td>
+                                    <td>@mail:</td>
+                                    <td><span t-field="o.partner_id.email"/></td>
+                                </tr>
+                            </table>
+                            <div class="well well-sm text-center">
+                                <h4><span t-field="o.code"/> -
+                                <span t-field="o.name"/></h4>
+                            </div>
+                        </div>
+                        <div class="row" name="notes">
+                            <table class="table table-bordered table-condensed mt0">
+                                <thead style="font-size:1.1em;">
+                                    <tr>
+                                        <th class="text-center">Notas Técnicas:</th>
+                                        <th class="text-center">Notas Configuración:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background:white;">
+                                        <td><span t-field="o.tech_notes"/></td>
+                                        <td><span t-field="o.config_notes"/></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <!--
+       Tech Asset Report Detailed
+   -->
+    <report
+        id="tsm_tech_asset_report_detailed_action"
+        name="tsm_tech_assets.tsm_tech_asset_report_detailed_document"
+        model="tsm.tech.asset"
+        string="Print Asset Report Detailed"
+        report_type="qweb-pdf"
+        paperformat="tsm_base.tsm_paper_format_report"/>
+
+    <template id="tsm_tech_asset_report_detailed_document">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="tsm_base.tsm_report_layout">
@@ -89,5 +161,6 @@
             </t>
         </t>
     </template>
+
 
 </odoo>
