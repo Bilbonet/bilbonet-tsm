@@ -202,35 +202,30 @@
               </p>
             </field>
         </record>
-
         <record id="tsm_task_timesheet_line_view_tree_act" model="ir.actions.act_window.view">
             <field name="view_mode">tree</field>
             <field name="sequence" eval="4"/>
             <field name="view_id" ref="tsm_task_timesheet_line_tree"/>
             <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
         </record>
-
         <record id="tsm_task_timesheet_line_view_form_act" model="ir.actions.act_window.view">
             <field name="view_mode">form</field>
             <field name="sequence" eval="5"/>
             <field name="view_id" ref="tsm_task_timesheet_line_form"/>
             <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
         </record>
-
         <record id="tsm_task_timesheet_line_view_kanban_act" model="ir.actions.act_window.view">
             <field name="view_mode">kanban</field>
             <field name="sequence">3</field>
             <field name="view_id" ref="tsm_task_timesheet_line_kanban"/>
             <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
         </record>
-
         <record id="tsm_task_timesheet_line_view_calendar_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="8"/>
             <field name="view_mode">calendar</field>
             <field name="view_id" ref="tsm_task_timesheet_line_calendar"/>
             <field name="act_window_id" ref="tsm_task_timesheet_line_act"/>
         </record>
-
         <menuitem id="tsm_task_timesheet_menu_activity_mine"
             name="My Timesheets"
             parent="menu_tsm_time_tracking"
