@@ -136,8 +136,8 @@
                         </div>
                         <!-- /Notes -->
                         <!-- Tareas -->
-                        <div t-if="len(o.task_ids) > 0">
-                            <div class="row" t-foreach="o.task_ids.sorted(key=lambda b: b.code)" t-as="t" >
+                        <div t-if="o.task_count > 0">
+                            <div class="row" t-foreach="o._compute_task_ids()" t-as="t" >
                                 <table class="table table-condensed">
                                     <tr class="success">
                                         <td>
