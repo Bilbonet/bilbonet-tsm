@@ -6,9 +6,9 @@
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
         <field name="arch" type="xml">
-            <field name="name" position="before">
+            <field name="priority" position="after">
                 <field name="code" class="oe_inline"/>
-                <label string=" - " class="oe_inline"/>
+
             </field>
         </field>
     </record>

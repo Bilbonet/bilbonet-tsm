@@ -24,7 +24,8 @@ class TsmTask(models.Model):
                               copy=False,
                               string='Sale Order',
                               )
-    create_sale_order = fields.Boolean(related='stage_id.create_sale_order')
+    create_sale_order = fields.Boolean(related='stage_id.create_sale_order',
+                                       readonly="true",)
     sale_autoconfirm = fields.Boolean(
                     string='Sale autoconfirm',
                     default=True,

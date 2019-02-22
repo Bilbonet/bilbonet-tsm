@@ -44,6 +44,8 @@
                             <field name="priority" widget="priority"/>
                             <field name="code"/>
                         </h1>
+                    </div>
+                    <div class="oe_title col-xs-10">
                         <h1>
                             <field name="name" placeholder="Asset Title..."/>
                         </h1>
@@ -56,6 +58,7 @@
                         <group>
                             <field name="type_id" options="{'no_open': True}"/>
                             <field name="date"/>
+                            <field name="privacy_visibility" widget="radio"/>
                         </group>
                     </group>
                     <notebook>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <!-- ================ -->
+        <!-- Tech Asset Rules -->
+        <!-- ================ -->
+        <!-- Group Managers: can do all -->
+        <record id="tsm_tech_asset_manager_rule" model="ir.rule">
+            <field name="name">TSM Tech Asset: manager can do all</field>
+            <field name="model_id" ref="model_tsm_tech_asset"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_manager'))]"/>
+        </record>
+        <!-- Group Users: Can view, create, write (Public Asset or Asset Followers) -->
+        <record id="tsm_tech_asset_public_followers_rule" model="ir.rule">
+            <field name="name">TSM Tech Asset: Public Project or Followers</field>
+            <field name="model_id" ref="model_tsm_tech_asset"/>
+            <field name="domain_force">['|',
+                ('privacy_visibility', '!=', 'followers'),
+                ('message_partner_ids', 'in', [user.partner_id.id])]</field>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+
+</odoo>
