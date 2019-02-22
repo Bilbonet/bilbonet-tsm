@@ -62,6 +62,18 @@ class TsmTechAsset(models.Model):
     task_ids = fields.One2many('tsm.task', 'asset_ids', string='Tasks',
                                context={'active_test': False})
     task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
+    privacy_visibility = fields.Selection([
+        ('followers', 'On invitation only'),
+        ('employees', 'Visible by all employees'),
+    ],
+        string='Privacy', required=True,
+        default='followers',
+        help="Holds visibility of the tasks "
+             "that belong to the current project:\n"
+             "- On invitation only: Employees may only "
+             "see the followed project, tasks\n"
+             "- Visible by all employees: Employees "
+             "may see all project, tasks\n")
 
     _sql_constraints = [
         ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
