@@ -29,27 +29,32 @@
         <record id="base.default_user" model="res.users">
             <field name="groups_id" eval="[(4,ref('tsm_base.group_tsm_manager'))]"/>
         </record>
-        <!-- Manager see all -->
+        <!-- Group Managers: can do all -->
         <record id="tsm_project_manager_rule" model="ir.rule">
-            <field name="name">TSM Project: manager see all</field>
+            <field name="name">TSM Project: manager do all</field>
             <field name="model_id" ref="model_tsm_project"/>
             <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_manager'))]"/>
         </record>
-
-        <record id="tsm_project_public_members_rule" model="ir.rule">
-            <field name="name">TSM Project: employees: following required for follower-only projects</field>
+        <!-- Group Users: Can view (Public Project or Project Followers) -->
+        <record id="tsm_project_public_followers_rule" model="ir.rule">
+            <field name="name">TSM Project: Public Project or Followers</field>
             <field name="model_id" ref="model_tsm_project"/>
             <field name="domain_force">['|',
                 ('privacy_visibility', '!=', 'followers'),
                 ('message_partner_ids', 'in', [user.partner_id.id])]</field>
-            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
         </record>
-        <!-- Only Managers of the project can modify -->
+        <!-- Group Users: Only Managers of the project can create, modify and delete-->
         <record id="tsm_project_modify_only_managers" model="ir.rule">
             <field name="name">TSM Project: Modify only managers</field>
             <field name="model_id" ref="model_tsm_project"/>
             <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
             <field name="perm_read" eval="False"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -61,24 +66,38 @@
         <!-- =========== -->
         <!-- Tasks Rules -->
         <!-- =========== -->
-         <!-- Manager see all -->
-        <record model="ir.rule" id="tsm_project_task_manager_rule">
-            <field name="name">TSM Task: manager see all</field>
+        <!-- Group Managers: can do all -->
+        <record id="tsm_project_task_manager_rule" model="ir.rule">
+            <field name="name">TSM Task: manager can do all</field>
             <field name="model_id" ref="model_tsm_task"/>
             <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_manager'))]"/>
         </record>
-
-        <record model="ir.rule" id="tsm_project_task_public_members_rule">
-            <field name="name">TSM Task: employees: following required for follower-only tasks</field>
+        <!-- Group Users: Can view (Public Task or Task Followers) -->
+        <record id="tsm_project_task_public_followers_rule" model="ir.rule">
+            <field name="name">TSM Task: Public Task or Followers</field>
             <field name="model_id" ref="model_tsm_task"/>
             <field name="domain_force">['|',
                 ('privacy_visibility', '!=', 'followers'),
                 ('message_partner_ids', 'in', [user.partner_id.id])
                 ]</field>
-            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
         </record>
-
+        <!-- Group Users: Only Managers of the task can create, modify and delete-->
+        <record id="tsm_task_modify_only_managers" model="ir.rule">
+            <field name="name">TSM Task: Modify only managers</field>
+            <field name="model_id" ref="model_tsm_task"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
 
     </data>
 
