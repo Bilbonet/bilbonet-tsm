@@ -19,7 +19,7 @@ class TsmTaskTimesheet(models.Model):
                          "you to hide the account without removing it.",
                     default=True)
     date_time = fields.Datetime(default=fields.Datetime.now, string='Date')
-    name = fields.Char(string='Brief description', required=True)
+    name = fields.Char(string='Timesheet Title', required=True)
     amount = fields.Float('Quantity', default=0.0)
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
     project_id = fields.Many2one('tsm.project', 'Project')

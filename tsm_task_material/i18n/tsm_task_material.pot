@@ -1,0 +1,265 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tsm_task_material
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-24 19:04+0000\n"
+"PO-Revision-Date: 2019-02-24 19:04+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_sale_amount
+msgid "Amount of The Order"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
+msgid "Cantidad"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_create_sale_order
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_type_create_sale_order
+msgid "Create Sale Order"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_sale_order_view
+msgid "Create sale"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_company_currency
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_company_currency
+msgid "Currency"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
+msgid "Desc.%"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_name
+msgid "Description"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_discount
+msgid "Discount (%)"
+msgstr ""
+
+#. module: tsm_task_material
+#: code:addons/tsm_task_material/models/tsm_task_material.py:61
+#, python-format
+msgid "Discount should be less or equal to 100"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material_discount
+msgid "Discount that is applied in generated sale orders. It should be less or equal to 100"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_id
+msgid "ID"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_sale_autoconfirm
+msgid "If it is checked the sale order will be created and confirmed automatically"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_create_sale_order
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_type_create_sale_order
+msgid "If you mark this check, when a task is in this state, it will be able to create sale order"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_material_view
+msgid "Material"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_ids
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_material_view
+msgid "Material used"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
+msgid "Material y Servicios"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
+msgid "Precio"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_product_id
+msgid "Product"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: tsm_task_material
+#: code:addons/tsm_task_material/models/tsm_task_material.py:53
+#, python-format
+msgid "Quantity of material consumed must be greater than 0."
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model,name:tsm_task_material.model_sale_order
+msgid "Quotation"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_sale_id
+msgid "Sale Order"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_sale_autoconfirm
+msgid "Sale autoconfirm"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model,name:tsm_task_material.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material_sequence
+msgid "Sequence of the line in the list of materials"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_price_subtotal
+msgid "Sub Total"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
+msgid "Subtotal"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model,name:tsm_task_material.model_tsm_task_material
+msgid "TSM Task Material Used"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_sale_order_tsm_task_id
+msgid "TSM Task related"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_task_id
+msgid "Task"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_sale_order_line_tsm_task_material_id
+msgid "Task Material related that generated this order line"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model,name:tsm_task_material.model_tsm_task_type
+msgid "Task Stage"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_sale_order_tsm_task_id
+msgid "Task related that generated this order"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_sale_order_line_tsm_task_id
+msgid "Task related that generated this order line"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model,name:tsm_task_material.model_tsm_task
+msgid "Tech Support Management Task"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_material_view
+msgid "Total Amount"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_price_unit
+msgid "Unit Price"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material_product_uom_id
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_sale_amount
+msgid "Untaxed Total of The Order"
+msgstr ""
+
+#. module: tsm_task_material
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_company_currency
+#: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material_company_currency
+msgid "Utility field to express amount currency"
+msgstr ""
+
+#. module: tsm_task_material
+#: code:addons/tsm_task_material/models/tsm_task.py:102
+#, python-format
+msgid "You must first select a Customer and materials for Task: %s!"
+msgstr ""
+
