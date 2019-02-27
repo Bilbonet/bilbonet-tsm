@@ -234,40 +234,16 @@
                         <p style="page-break-after:always;"></p>
                         <!-- Taks in Time Pack-->
                         <t t-set="timesheet_tasks" t-value="[]"/>
+                        <t t-set="timesheet_sorted" t-value="[]"/>
                         <t t-foreach="o.timesheet_ids.sorted(key=lambda b: b.task_id.code)" t-as="tt">
                             <t t-set="timesheet_tasks" t-value="timesheet_tasks+[tt.task_id]"/>
                         </t>
                         <!--<t t-esc="timesheet_tasks"/><br/>-->
-
-                        <!--<t t-set="tasks_sorted" t-value="[]"/>-->
-                        <!--<t t-foreach="set(timesheet_tasks)" t-as="xx">-->
-                            <!--&lt;!&ndash;<t t-set="tasks_sorted" t-value="tasks_sorted+[xx.sorted(key=lambda w: w.date_start)]"/>&ndash;&gt;-->
-                            <!--<t t-set="tasks_sorted" t-value="tasks_sorted+[xx]"/>-->
-                        <!--</t>-->
-                        <!--<t t-esc="tasks_sorted"/><br/>-->
-
-                        <!--<t t-set="newList" t-value="sorted(timesheet_tasks, key=lambda k: k['code'])"/>-->
-                        <!--<t t-esc="timesheet_tasks.sort()"/><br/>-->
-                        <!--<t t-set="tasks_sorted" t-value="timesheet_tasks.sort()"/>-->
-                        <!--<t t-esc="timesheet_sorted"/><br/>-->
-
-
-                        <!--Task Sorted:-->
-                        <!--<t t-set="tasks_sorted" t-value="timesheet_tasks.sort()"/>-->
-                        <!--<t t-esc="tasks_sorted"/><br/>-->
-                        <!--Task Sorted2:-->
-                        <!--<t t-esc="timesheet_tasks.sort()"/><br/>-->
-                        <!--Task Sorted3:-->
-                        <!--<t t-foreach="set(timesheet_tasks)" t-as="xx">-->
-                            <!--<t t-set="tasks_sorted" t-value="xx.sorted(key=lambda b: b.code)"/>-->
-                        <!--</t><br/>-->
-                        <!--Sorted:-->
-                        <!--<t t-esc="tasks_sorted"/>-->
-
-
+                        <!-- Esta funcion ordena la lista de tareas-->
+                        <t t-set="timesheet_tasks" t-value="list(dict.fromkeys(timesheet_tasks))"/>
 
                         <div class="row" t-if="len(timesheet_tasks) > 0">
-                            <t t-foreach="set(timesheet_tasks)" t-as="task">
+                            <t t-foreach="timesheet_tasks" t-as="task">
                                 <!-- Print Task -->
                                 <table class="table table-condensed">
                                     <tr class="success">
