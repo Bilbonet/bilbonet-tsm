@@ -1,8 +1,8 @@
 # Copyright 2018 - Bilbonet <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
 
 
 class TsmTaskType(models.Model):
@@ -145,3 +145,13 @@ class TsmTask(models.Model):
             sale.action_confirm()
 
         return sale
+
+    @api.multi
+    def unlink(self):
+        for task in self:
+            if task.sale_id:
+                raise UserError(_("You cannot delete a task with sale order. "
+                "You can either delete the task's sale order and then delete "
+                "the task or simply deactivate the task."))
+        res = super(TsmTask, self).unlink()
+        return res
