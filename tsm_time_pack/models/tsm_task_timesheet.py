@@ -26,7 +26,7 @@ class TsmTaskTimesheet(models.Model):
 
         return super(TsmTaskTimesheet, self).create(values)
 
-    @api.onchange('timepack_id', 'discount_time')
+    @api.onchange('amount', 'timepack_id', 'discount_time')
     def _onchange_timepack(self):
         self.timepack_id._hours_get()
         if self.timepack_id.progress > 90:
@@ -48,3 +48,4 @@ class TsmTaskTimesheet(models.Model):
             }
             return {'warning': warning_mess}
         return {}
+
