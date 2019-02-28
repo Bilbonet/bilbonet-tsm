@@ -68,7 +68,7 @@
                                     </tr>
 
                                     <tr class="danger">
-                                        <td>Consumidas:</td>
+                                        <td>Consumidas&#160;<span class="fa fa-arrow-circle-down text-danger"/>&#160;:</td>
                                         <td class="text-right">
                                             <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> horas
                                         </td>
@@ -84,9 +84,15 @@
                             <div class="col-xs-5">
                                 <table t-if="o.complimentary_hours" class="table table-condensed">
                                     <tr>
-                                        <td>Cortesia:</td>
+                                        <td>Cortesia&#160;<span class="fa fa-arrow-circle-right"/>&#160;:</td>
                                         <td class="text-right">
                                             <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="font-size:0.6em;">
+                                            <b>Tiempo Cortesía</b> es tiempo empleado por el técnico pero que no
+                                            descuenta tiempo de las horas contratadas por el cliente.
                                         </td>
                                     </tr>
                                 </table>
@@ -117,14 +123,23 @@
                                                   t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
                                         </td>
                                         <td style="font-size:0.7em;" class="text-right">
-                                            <span t-if="t.discount_time == True">Descuenta</span>
-                                            <span t-if="t.discount_time == False">NO Descuenta</span>
+                                            <span t-field="t.timepack_id.code"/>
+                                            <span t-if="t.discount_time == True">
+                                                <span class="fa fa-2x fa-arrow-circle-down text-danger"/>
+                                            </span>
+                                            <span t-if="t.discount_time == False">
+                                                <span class="fa fa-2x fa-arrow-circle-right"/>
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot style="font-size:0.8em;">
                                     <tr>
-                                        <th colspan="4" class="text-right">
+                                        <th style="font-weight: normal;font-size:0.6em;">
+                                            <span class="fa fa-arrow-circle-down text-danger"/>&#160;Descuenta Tiempo &#160;&#160;&#160;
+                                            <span class="fa fa-arrow-circle-right"/>&#160;Tiempo Cortesia
+                                        </th>
+                                        <th colspan="3" class="text-right">
                                             <span t-field="o.total_hours_spent"
                                                   t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
                                         </th>
@@ -207,7 +222,7 @@
                                     </tr>
 
                                     <tr class="danger">
-                                        <td>Consumidas:</td>
+                                        <td>Consumidas&#160;<span class="fa fa-arrow-circle-down text-danger"/>&#160;:</td>
                                         <td class="text-right">
                                             <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> horas
                                         </td>
@@ -223,14 +238,70 @@
                             <div class="col-xs-5">
                                 <table t-if="o.complimentary_hours" class="table table-condensed">
                                     <tr>
-                                        <td>Cortesia:</td>
+                                        <td>Cortesía&#160;<span class="fa fa-arrow-circle-right"/>&#160;:</td>
                                         <td class="text-right">
                                             <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="font-size:0.6em;">
+                                            <b>Tiempo Cortesía</b> es tiempo empleado por el técnico pero que no
+                                            descuenta tiempo de las horas contratadas por el cliente.
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
+                        <!--Timesheets list in time pack-->
+                        <div class="row" t-if="len(o.timesheet_ids) > 0">
+                            <table class="table table-condensed table-striped">
+                                <thead style="background-color: #3498DB;font-size:0.8em;" >
+                                    <tr class="text-center">
+                                        <th colspan="5" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
+                                    </tr>
+                                 </thead>
+                                <tbody>
+                                    <tr t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="t" >
+                                        <td style="font-size:0.7em;">
+                                            <span t-field="t.date_time"
+                                                  t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                                        </td>
+                                        <td style="font-size:0.7em;">
+                                            <span t-field="t.task_id"/>
+                                        </td>
+                                        <td style="font-size:0.7em;">
+                                            <span t-field="t.name"/>
+                                        </td>
+                                        <td style="font-size:0.7em;" class="text-right">
+                                            <span t-field="t.amount"
+                                                  t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                        </td>
+                                        <td style="font-size:0.7em;" class="text-right">
+                                            <span t-field="t.timepack_id.code"/>
+                                            <span t-if="t.discount_time == True">
+                                                <span class="fa fa-2x fa-arrow-circle-down text-danger"/>
+                                            </span>
+                                            <span t-if="t.discount_time == False">
+                                                <span class="fa fa-2x fa-arrow-circle-right"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot style="font-size:0.8em;">
+                                    <tr>
+                                        <th style="font-weight: normal;font-size:0.6em;">
+                                            <span class="fa fa-arrow-circle-down text-danger"/>&#160;Descuenta Tiempo &#160;&#160;&#160;
+                                            <span class="fa fa-arrow-circle-right"/>&#160;Tiempo Cortesia
+                                        </th>
+                                        <th colspan="3" class="text-right">
+                                            <span t-field="o.total_hours_spent"
+                                                  t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!--/Timesheets list-->
                         <p style="page-break-after:always;"></p>
                         <!-- Taks in Time Pack-->
                         <t t-set="timesheet_tasks" t-value="[]"/>
@@ -239,7 +310,7 @@
                             <t t-set="timesheet_tasks" t-value="timesheet_tasks+[tt.task_id]"/>
                         </t>
                         <!--<t t-esc="timesheet_tasks"/><br/>-->
-                        <!-- Esta funcion ordena la lista de tareas-->
+                        <!-- This function delete duplicates -->
                         <t t-set="timesheet_tasks" t-value="list(dict.fromkeys(timesheet_tasks))"/>
 
                         <div class="row" t-if="len(timesheet_tasks) > 0">
@@ -288,8 +359,13 @@
                                                       t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
                                             </td>
                                             <td style="font-size:0.7em;" class="text-right">
-                                                <span t-if="t.discount_time == True">Descuenta</span>
-                                                <span t-if="t.discount_time == False">NO Descuenta</span>
+                                                <span t-field="t.timepack_id.code"/>
+                                                <span t-if="t.discount_time == True">
+                                                    <span class="fa fa-2x fa-arrow-circle-down text-danger"/>
+                                                </span>
+                                                <span t-if="t.discount_time == False">
+                                                    <span class="fa fa-2x fa-arrow-circle-right"/>
+                                                </span>
                                             </td>
                                         </t>
                                         </tr>

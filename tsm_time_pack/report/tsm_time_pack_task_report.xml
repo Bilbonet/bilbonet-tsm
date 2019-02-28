@@ -26,14 +26,22 @@
                             </td>
                             <td t-if="t.timepack_id" style="font-size:0.7em;" class="text-right">
                                 <span t-field="t.timepack_id.code"/>
-                                <span t-if="t.discount_time == True">Descuenta</span>
-                                <span t-if="t.discount_time == False">NO Descuenta</span>
+                                <span t-if="t.discount_time == True">
+                                    <span class="fa fa-2x fa-arrow-circle-down text-danger"/>
+                                </span>
+                                <span t-if="t.discount_time == False">
+                                    <span class="fa fa-2x fa-arrow-circle-right"/>
+                                </span>
                             </td>
                         </tr>
                     </tbody>
                     <tfoot style="font-size:0.8em;">
                         <tr>
-                            <th colspan="3" class="text-right">
+                            <th style="font-weight: normal;font-size:0.6em;">
+                                <span class="fa fa-arrow-circle-down text-danger"/>&#160;Descuenta Tiempo &#160;&#160;&#160;
+                                <span class="fa fa-arrow-circle-right"/>&#160;Tiempo Cortesia
+                            </th>
+                            <th colspan="2" class="text-right">
                                 <span t-field="o.total_hours"
                                       t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
                             </th>
