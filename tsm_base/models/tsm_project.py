@@ -1,7 +1,8 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class TsmProject(models.Model):
@@ -74,10 +75,12 @@ class TsmProject(models.Model):
     color = fields.Integer(string='Color Index')
     name = fields.Char(string='Project Name', index=True, required=True)
     user_id = fields.Many2one('res.users', string='Project Manager',
+                              required=True,
                               default=lambda self: self.env.user,
                               track_visibility="onchange")
     # use auto_join to speed up name_search call
     partner_id = fields.Many2one('res.partner', string='Customer',
+                                 required=True,
                                  auto_join=True, track_visibility='onchange')
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
@@ -118,4 +121,14 @@ class TsmProject(models.Model):
             # archiving/unarchiving a project does it on its tasks, too
             self.with_context(active_test=False).mapped('task_ids').write(
                                                 {'active': vals['active']})
+        return res
+
+    @api.multi
+    def unlink(self):
+        for project in self:
+            if project.task_ids:
+                raise UserError(_("You cannot delete a project with tasks. "
+                "You can either delete the project's task and then delete the "
+                "project or simply deactivate the project."))
+        res = super(TsmProject, self).unlink()
         return res
