@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <!-- =============== -->
+        <!-- Time Pack Rules -->
+        <!-- =============== -->
+        <!-- Group Users: Can view (Public Time Pack or Followers) -->
+        <record id="tsm_time_pack_public_followers_rule" model="ir.rule">
+            <field name="name">TSM Time Pack: Public Time Pack or Followers</field>
+            <field name="model_id" ref="model_tsm_time_pack"/>
+            <field name="domain_force">['|',
+                ('privacy_visibility', '!=', 'followers'),
+                ('message_partner_ids', 'in', [user.partner_id.id])]</field>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+
+</odoo>

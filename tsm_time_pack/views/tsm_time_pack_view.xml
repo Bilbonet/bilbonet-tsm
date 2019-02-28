@@ -46,12 +46,15 @@
                         </div>
                         <group>
                             <group>
+                                <field name="user_id"
+                                    class="o_task_user_field"
+                                    options='{"no_open": True}'/>
                                 <field name="partner_id" options='{"no_create": True}'/>
-                                <field name="date_start"/>
-                                <field name="date_end"/>
                             </group>
                             <group>
                                 <field name="privacy_visibility" widget="radio"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
                             </group>
                         </group>
                         <notebook>
