@@ -3,7 +3,7 @@
 
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class TsmTask(models.Model):
@@ -21,6 +21,16 @@ class TsmTask(models.Model):
                             help="Computed as: Sum Time Spent in tasks.")
     timesheet_ids = fields.One2many('tsm.task.timesheet',
                                     'task_id', 'Timesheets')
+
+    @api.multi
+    def unlink(self):
+        for task in self:
+            if task.timesheet_ids:
+                raise UserError(_("You cannot delete a task containing "
+                "timesheets. You can either delete all the task's timesheet "
+                "and then delete the task or simply deactivate the task."))
+        res = super(TsmTask, self).unlink()
+        return res
 
     @api.onchange('project_id')
     def _onchange_project_timesheet(self):
