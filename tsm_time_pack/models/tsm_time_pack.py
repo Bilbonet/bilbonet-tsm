@@ -16,16 +16,16 @@ class TsmTimePack(models.Model):
         'res.company',
         string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
-    active = fields.Boolean(default=True,
+    active = fields.Boolean(default=True, copy=False,
         help="If the active field is set to False, it will allow you to hide"
         " the time pack without removing it.")
     code = fields.Char(string='Time Pack Number',
                        required=True, default="/", readonly=True)
     name = fields.Char(string='Time Pack Title', track_visibility='always',
-                       index=True)
+                       index=True, copy=False)
     description = fields.Html(
         string='Time Pack Description', sanitize=True,
-        strip_style=False, translate=False,
+        strip_style=False, translate=False, copy=False,
         help="Details, notes and aclarations about the time pack.")
     timesheet_ids = fields.One2many('tsm.task.timesheet',
                                     'timepack_id', 'Timesheets')
@@ -37,7 +37,7 @@ class TsmTimePack(models.Model):
     partner_id = fields.Many2one('res.partner',
                                  string='Customer',
                                  required=True)
-    date_start = fields.Date('Start Date', required=True,
+    date_start = fields.Date('Start Date', required=True, copy=False,
                              default=fields.Date.today,
                              help="Start date of the time pack.")
     date_end = fields.Date(string='Ending Date', index=True, copy=False)
