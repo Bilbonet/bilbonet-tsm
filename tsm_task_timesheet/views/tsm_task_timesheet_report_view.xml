@@ -29,7 +29,7 @@
             <field name="name">By User</field>
             <field name="res_model">tsm.task.timesheet</field>
             <field name="domain"></field>
-            <field name="context">{'search_default_groupby_user':1,}</field>
+            <field name="context">{'search_default_groupby_user':1, 'search_default_month':1}</field>
             <field name="search_view_id" ref="tsm_task_timesheet_line_search"/>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -75,7 +75,7 @@
             <field name="name">By Task</field>
             <field name="res_model">tsm.task.timesheet</field>
             <field name="domain"></field>
-            <field name="context">{'search_default_groupby_task':1,}</field>
+            <field name="context">{'search_default_groupby_task':1, 'search_default_month':1}</field>
             <field name="search_view_id" ref="tsm_task_timesheet_line_search"/>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
