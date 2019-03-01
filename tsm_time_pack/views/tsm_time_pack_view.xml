@@ -148,6 +148,10 @@
                     <field name="partner_id"/>
                     <filter name="mine" string="My Time Packs" domain="[('user_id', '=', uid)]"/>
                     <separator/>
+                    <filter name="sale_order" string="No Sale Order" domain="[('sale_id', '=', False)]"/>
+                    <separator/>
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+                    <separator/>
                     <group expand="0" string="Group By">
                         <filter string="User" name="groupby_user" domain="[]" context="{'group_by':'user_id'}"/>
                     </group>
