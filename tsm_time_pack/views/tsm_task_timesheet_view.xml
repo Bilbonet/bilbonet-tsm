@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-        <!-- Timesheet Lines -->
+        <!-- Timesheet Lines Tree -->
         <record id="tsm_task_timesheet_line_tree_time_pack_view" model="ir.ui.view">
             <field name="name">TSM Task Tmesheet Line Tree Time Pack</field>
             <field name="model">tsm.task.timesheet</field>
@@ -14,5 +14,19 @@
                 </xpath>
             </field>
         </record>
+
+        <!-- Timesheet Lines Form -->
+        <record id="tsm_task_timesheet_line_form_time_pack_view" model="ir.ui.view">
+            <field name="name">TSM Task Tmesheet Line Form Time Pack</field>
+            <field name="model">tsm.task.timesheet</field>
+            <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_timesheet_line_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='duration']" position="after">
+                    <field name="timepack_id" domain="[('partner_id', '=', task_partner_id)]" options="{'no_create': True}"/>
+                    <field name="discount_time" attrs="{'invisible':[('timepack_id','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>
