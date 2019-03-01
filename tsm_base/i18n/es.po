@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:40+0000\n"
-"PO-Revision-Date: 2019-02-24 18:40+0000\n"
+"POT-Creation-Date: 2019-03-01 19:43+0000\n"
+"PO-Revision-Date: 2019-03-01 19:43+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:tsm_base.field_res_partner_tsm_task_count
 #: model:ir.model.fields,field_description:tsm_base.field_res_users_tsm_task_count
 msgid "# Tasks"
-msgstr "Nº Tareas"
+msgstr "Nº tareas"
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
@@ -397,7 +397,7 @@ msgstr "Última actualización el"
 #. module: tsm_base
 #: selection:tsm.task,priority:0
 msgid "Low"
-msgstr "Baja"
+msgstr "Low"
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
@@ -439,7 +439,7 @@ msgstr "Normal"
 #: selection:tsm.project,privacy_visibility:0
 #: selection:tsm.task,privacy_visibility:0
 msgid "On invitation only"
-msgstr "Solo con invitación"
+msgstr "On invitation only"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_legend_blocked
@@ -472,7 +472,7 @@ msgstr "Teléfono:"
 #. module: tsm_base
 #: model:ir.actions.report,name:tsm_base.tsm_task_report_action
 msgid "Print Task"
-msgstr "Imprimir tarea"
+msgstr "Print Task"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_priority
@@ -525,7 +525,7 @@ msgstr "Proyectos"
 #: code:addons/tsm_base/models/tsm_task.py:26
 #, python-format
 msgid "Ready for Next Stage"
-msgstr "Listo para la siguiente etapa"
+msgstr "Ready for Next Stage"
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
@@ -535,7 +535,7 @@ msgstr "Color del registro"
 #. module: tsm_base
 #: selection:tsm.task,kanban_state:0
 msgid "Red"
-msgstr "Roja"
+msgstr "Red"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type_legend_blocked
@@ -577,7 +577,7 @@ msgstr "Etapa"
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
 msgid "Stage Description and Tooltips"
-msgstr "Descripción de la tarea e información sobre herramientas"
+msgstr "Descripción de la tarea y información sobre herramientas"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type_name
@@ -624,12 +624,12 @@ msgstr "TSM Task Stages"
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_tags_action
 msgid "TSM Task Tags"
-msgstr "TSM Tareas Etiquetas"
+msgstr "TSM Task Tags"
 
 #. module: tsm_base
 #: sql_constraint:tsm.task.tags:0
 msgid "Tag name already exists !"
-msgstr "El nombre de etiqueta ya existe !"
+msgstr "Tag name already exists !"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tag_ids
@@ -642,7 +642,7 @@ msgstr "Etiquetas"
 #. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_task_tags
 msgid "Tags in tasks"
-msgstr "Etiquetas en tareas"
+msgstr "Tags in tasks"
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
@@ -657,7 +657,7 @@ msgstr "Tarea"
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_description
 msgid "Task Description"
-msgstr "Tarea Descrición"
+msgstr "Task Description"
 
 #. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_task_type
@@ -701,29 +701,29 @@ msgstr "Tareas en esta etapa se considerarán cerradas."
 #. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_project
 msgid "Tech Support Management Project"
-msgstr "Tech Support Management Project"
+msgstr "Gestión Soporte Técnico Proyecto"
 
 #. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_task
 msgid "Tech Support Management Task"
-msgstr "Tech Support Management Task"
+msgstr "Gestión Soporte Técnico Tarea"
 
 #. module: tsm_base
 #: model:ir.actions.act_window,help:tsm_base.tsm_task_action_from_menu
 msgid "Technical Support Management allows you to manage the pipeline of your tasks efficiently.\n"
 "                You can track progress, discuss on tasks, attach documents, etc."
-msgstr "Technical Support Management allows you to manage the pipeline of your tasks efficiently.\n"
-"                You can track progress, discuss on tasks, attach documents, etc."
+msgstr "Gestión Soporte Técnico te permite maneger el flujo de tus tareas eficientemente.\n"
+"                Tu puedes seguir el progreso, debatir en tareas, adjuntar documentos, etc."
 
 #. module: tsm_base
 #: model:ir.module.category,description:tsm_base.module_tsm
 msgid "Technical Support Management helps you manage your technical support"
-msgstr "Technical Support Management helps you manage your technical support"
+msgstr "Gestión Soporte Técnico te ayuda a mejorar tu servicio de soporte técnico"
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
 msgid "Telefono:"
-msgstr "Telefono:"
+msgstr "Teléfono:"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type_fold
@@ -781,6 +781,12 @@ msgstr "Puede incluso dar una ayuda sobre el uso de las estrellas utilizadas al 
 #: model:ir.actions.act_window,help:tsm_base.tsm_tasks_from_project_action
 msgid "You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc."
 msgstr "Puede gestionar sus tareas para realizar las cosas de forma eficiente. Seguir el progreso, discusiones, adjuntar documentos, etc."
+
+#. module: tsm_base
+#: code:addons/tsm_base/models/tsm_project.py:130
+#, python-format
+msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
+msgstr "No puedes eliminar un proyecto con tareas. Puedes eliminar las tareas del proyecto y depues eliminarlo o simplemente archivar el proyecto."
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view

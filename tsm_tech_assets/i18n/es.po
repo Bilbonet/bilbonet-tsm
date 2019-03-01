@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 19:08+0000\n"
-"PO-Revision-Date: 2019-02-24 19:08+0000\n"
+"POT-Creation-Date: 2019-03-01 19:54+0000\n"
+"PO-Revision-Date: 2019-03-01 19:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,12 +66,12 @@ msgstr "Tipo Elemento"
 #. module: tsm_tech_assets
 #: model:ir.actions.act_window,help:tsm_tech_assets.tsm_tech_asset_type_action
 msgid "Click to add a new type of tech asset."
-msgstr "Click para ñadir un nuevo tipo de elemento"
+msgstr "Click para ñadir un nuevo tipo de elemento técnico"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.act_window,help:tsm_tech_assets.tsm_tech_assets_open_all_action
 msgid "Click to create a new tech asset."
-msgstr "Click para crear un nuevo elemento"
+msgstr "Click para crear un nuevo elemento técnico"
 
 #. module: tsm_tech_assets
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_tree_view
@@ -81,7 +81,7 @@ msgstr "Cliente"
 #. module: tsm_tech_assets
 #: model:ir.model,name:tsm_tech_assets.model_tsm_tech_asset
 msgid "Cliente Technical Assets Management"
-msgstr "Cliente Technical Assets Management"
+msgstr "Gestión de elementos técnicos de clientes"
 
 #. module: tsm_tech_assets
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
@@ -136,7 +136,7 @@ msgstr "Fecha"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset_tech_notes
 msgid "Details, notes and aclarations about the asset."
-msgstr "Detalles y notas sobre el elemento."
+msgstr "Detalles y notas sobre el elemento técnico."
 
 #. module: tsm_tech_assets
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
@@ -190,7 +190,7 @@ msgstr "ID"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset_active
 msgid "If the active field is set to False, it will allow you to hide the asset without removing it."
-msgstr "If the active field is set to False, it will allow you to hide the asset without removing it."
+msgstr "Si el campo activo se desactiva, te permitirá ocultar el elemento técnico sin eliminarlo."
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset___last_update
@@ -250,7 +250,7 @@ msgstr "Notas"
 #. module: tsm_tech_assets
 #: selection:tsm.tech.asset,privacy_visibility:0
 msgid "On invitation only"
-msgstr "On invitation only"
+msgstr "Solo con invitación"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.report,name:tsm_tech_assets.tsm_tech_asset_report_action
@@ -292,12 +292,12 @@ msgstr "Destacado"
 #. module: tsm_tech_assets
 #: model:ir.actions.act_window,name:tsm_tech_assets.tsm_tech_assets_open_all_action
 msgid "T.S.M: Tech Assets"
-msgstr "T.S.M: Elementos"
+msgstr "T.S.M: Elementos Técnicos"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.act_window,name:tsm_tech_assets.tsm_tech_asset_type_action
 msgid "TSM Tech Asset Types"
-msgstr "TSM Tipos de elementos"
+msgstr "TSM Tipos de elementos técnicos"
 
 #. module: tsm_tech_assets
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
@@ -316,17 +316,17 @@ msgstr "Tareas"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_task_asset_ids
 msgid "Tech Asset"
-msgstr "Tech Asset"
+msgstr "Elemento Técnico"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_code
 msgid "Tech Asset Code"
-msgstr "Tech Asset Code"
+msgstr "Código Elemento Técnico"
 
 #. module: tsm_tech_assets
 #: model:ir.ui.menu,name:tsm_tech_assets.tsm_config_tech_asset_type_menu
 msgid "Tech Asset Types"
-msgstr "Tipos de elementos"
+msgstr "Tipos de elementos técnicos"
 
 #. module: tsm_tech_assets
 #: model:ir.ui.menu,name:tsm_tech_assets.tsm_tech_assets_menu
@@ -334,12 +334,12 @@ msgstr "Tipos de elementos"
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_tree_view
 msgid "Tech Assets"
-msgstr "Tech Assets"
+msgstr "Elemento Técnico"
 
 #. module: tsm_tech_assets
 #: model:ir.model,name:tsm_tech_assets.model_tsm_task
 msgid "Tech Support Management Task"
-msgstr "Tech Support Management Task"
+msgstr "Gestión Soporte Técnico Tarea"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_tech_notes
@@ -355,7 +355,7 @@ msgstr "Notas técnicas:"
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Telefono:"
-msgstr "Telefono:"
+msgstr "Teléfono:"
 
 #. module: tsm_tech_assets
 #: code:addons/tsm_tech_assets/models/tsm_tech_asset.py:80
@@ -383,7 +383,7 @@ msgstr "Tipos"
 #. module: tsm_tech_assets
 #: model:ir.model,name:tsm_tech_assets.model_tsm_tech_asset_type
 msgid "Types of assets"
-msgstr "Types of assets"
+msgstr "Tipos de "
 
 #. module: tsm_tech_assets
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document

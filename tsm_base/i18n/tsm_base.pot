@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:45+0000\n"
-"PO-Revision-Date: 2019-02-24 18:45+0000\n"
+"POT-Creation-Date: 2019-03-01 19:42+0000\n"
+"PO-Revision-Date: 2019-03-01 19:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -770,6 +770,12 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.actions.act_window,help:tsm_base.tsm_tasks_from_project_action
 msgid "You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc."
+msgstr ""
+
+#. module: tsm_base
+#: code:addons/tsm_base/models/tsm_project.py:130
+#, python-format
+msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
 msgstr ""
 
 #. module: tsm_base
