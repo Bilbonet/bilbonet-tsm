@@ -7,7 +7,8 @@
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
             <search string="Tasks">
-                <field name="name" string="Tasks"/>
+                <field name="name" string="Tasks Title"/>
+                <field name="description" string="Tasks Description"/>
                 <field name="partner_id"/>
                 <field name="project_id"/>
                 <field name="user_id"/>
