@@ -6,6 +6,7 @@
         name="tsm_time_pack.tsm_time_pack_report_summary_document"
         model="tsm.time.pack"
         string="Print Time Pack Summary"
+        print_report_name="object.name and '%s-%s' % (object.code, object.name) or object.code"
         report_type="qweb-pdf"
         paperformat="tsm_base.tsm_paper_format_report"/>
 
@@ -160,6 +161,7 @@
         name="tsm_time_pack.tsm_time_pack_report_detailed_document"
         model="tsm.time.pack"
         string="Print Time Pack Detailed"
+        print_report_name="object.name and '%s-%s' % (object.code, object.name) or object.code"
         report_type="qweb-pdf"
         paperformat="tsm_base.tsm_paper_format_report"/>
 

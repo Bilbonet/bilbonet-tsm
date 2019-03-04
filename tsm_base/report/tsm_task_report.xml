@@ -6,6 +6,7 @@
         name="tsm_base.tsm_task_report_document"
         model="tsm.task"
         string="Print Task"
+        print_report_name="object.name.replace(' ', '_')"
         report_type="qweb-pdf"
         paperformat="tsm_base.tsm_paper_format_report"/>
 
