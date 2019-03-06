@@ -18,6 +18,7 @@
         'security/tsm_security.xml',
         'security/ir.model.access.csv',
         'data/tsm_paper_format_report.xml',
+        'data/tsm_task_email_template.xml',
         'report/tsm_layout_template.xml',
         'report/tsm_task_report.xml',
         'views/tsm_project_views.xml',
