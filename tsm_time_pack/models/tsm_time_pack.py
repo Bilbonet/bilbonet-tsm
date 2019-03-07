@@ -164,7 +164,6 @@ class TsmTimePack(models.Model):
             "context": {"create": False, "show_sale": True},
         }
 
-    #@api.onchange('timesheet_ids.amount', 'timesheet_ids.discount_time')
     @api.depends('timesheet_ids.amount', 'timesheet_ids.discount_time',
                  'contrated_hours')
     def _hours_get(self):
@@ -188,6 +187,34 @@ class TsmTimePack(models.Model):
                 )
             else:
                 time.progress = 0.0
+
+    @api.multi
+    def action_time_pack_send(self):
+        self.ensure_one()
+        template = self.env.ref(
+            'tsm_time_pack.tsm_time_pack_email_template',
+            False,
+        )
+        compose_form = self.env.ref('mail.email_compose_message_wizard_form',
+                                    False)
+        ctx = dict(
+            default_model='tsm.time.pack',
+            default_res_id=self.id,
+            default_use_template=bool(template),
+            default_template_id=template and template.id or False,
+            default_composition_mode='comment',
+        )
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form.id, 'form')],
+            'view_id': compose_form.id,
+            'target': 'new',
+            'context': ctx,
+        }
 
     #==========================
     #== Product & Sale Order ==
