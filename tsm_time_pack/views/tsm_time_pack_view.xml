@@ -15,6 +15,7 @@
                 <form string="Time Packs">
                     <header>
                         <field name="sale_id" invisible="1"/>
+                        <button name="action_time_pack_send" type="object" string="Send by Email" groups="tsm_base.group_tsm_user"/>
                         <button name="create_sale"
                             type="object"
                             string="Create sale"
