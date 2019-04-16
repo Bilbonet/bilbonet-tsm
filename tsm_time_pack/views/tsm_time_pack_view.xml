@@ -13,8 +13,9 @@
             <field name="model">tsm.time.pack</field>
             <field name="arch" type="xml">
                 <form string="Time Packs">
+                    <field name="can_edit" invisible="1"/>
+                    <field name="sale_id" invisible="1"/>
                     <header>
-                        <field name="sale_id" invisible="1"/>
                         <button name="action_time_pack_send" type="object" string="Send by Email" groups="tsm_base.group_tsm_user"/>
                         <button name="create_sale"
                             type="object"
@@ -48,20 +49,20 @@
                         </div>
                         <group>
                             <group>
-                                <field name="partner_id" options='{"no_create": True}'/>
+                                <field name="partner_id" options='{"no_create": True}' attrs="{'readonly':[('can_edit','=',False)]}"/>
                             </group>
                             <group>
-                                <field name="privacy_visibility" widget="radio"/>
-                                <field name="date_start"/>
-                                <field name="date_end"/>
+                                <field name="privacy_visibility" widget="radio" attrs="{'readonly':[('can_edit','=',False)]}"/>
+                                <field name="date_start" attrs="{'readonly':[('can_edit','=',False)]}"/>
+                                <field name="date_end" attrs="{'readonly':[('can_edit','=',False)]}"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Timesheets">
                                 <group>
                                     <group>
-                                        <field name="contrated_hours" widget="float_time"/>
-                                        <field name="remaining_hours" widget="float_time" readonly="1"/>
+                                        <field name="contrated_hours" widget="float_time" attrs="{'readonly':[('can_edit','=',False)]}"/>
+                                        <field name="remaining_hours" widget="float_time"/>
                                     </group>
                                     <group>
                                         <!--<field name="progress" widget="progressbar"/>-->
