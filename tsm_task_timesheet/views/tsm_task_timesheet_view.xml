@@ -17,9 +17,9 @@
             <field name="arch" type="xml">
                 <tree editable="top" string="Timesheet Activities" import="false">
                     <field name="date_time" string="Date Time"/>
-                    <field name="name"/>
                     <field name="project_id"/>
                     <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
+                    <field name="name"/>
                     <field name="amount" string="Time (Hours)" sum="Total time" widget="float_time"/>
                     <button name="button_end_work"
                         string="Stop"
