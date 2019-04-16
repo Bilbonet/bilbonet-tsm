@@ -12,6 +12,20 @@ class TsmTimePack(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'date_start, id desc'
 
+    @api.depends('sale_id')
+    def _compute_sale_amount(self):
+        # sudo() avoid model security restriction
+        sale = self.sudo().sale_id
+        currency = (
+                self.partner_id.property_product_pricelist.currency_id or
+                self.company_currency or
+                self.env.user.company_id.currency_id)
+        self.sale_amount = sale.currency_id.compute(
+                                sale.amount_untaxed, currency)
+
+    def _compuete_can_edit(self):
+        self.can_edit = self.env.user.has_group('tsm_base.group_tsm_manager')
+
     company_id = fields.Many2one(
         'res.company',
         string='Company',
@@ -63,7 +77,8 @@ class TsmTimePack(models.Model):
         help="Computed as: The sum of the timesheet checked "
              "to discount time.")
     remaining_hours = fields.Float(compute='_hours_get',
-        store=True, string='Remaining Hours',
+        readonly=True, store=True,
+        string='Remaining Hours',
         help="Computed as: Contrated hours - Consumed hours")
     total_hours_spent = fields.Float(compute='_hours_get',
         store=True, string='Total Hours Spent',
@@ -102,10 +117,14 @@ class TsmTimePack(models.Model):
                               string='Sale Order',
                               )
     sale_amount = fields.Monetary(compute='_compute_sale_amount',
-                                  string="Amount of The Order",
-                                  help="Untaxed Total of The Order",
+                                  string='Amount of The Order',
+                                  help='Untaxed Total of The Order',
                                   currency_field='company_currency',
                                   )
+    can_edit = fields.Boolean(compute='_compuete_can_edit',
+                    string='Security: only managers can edit',
+                    help='This field is for security purpose. '
+                    'Only members of managers group can modify some fields.')
 
     _sql_constraints = [
         ('tsm_time_pack_unique_code', 'UNIQUE (code)',
@@ -139,17 +158,6 @@ class TsmTimePack(models.Model):
                 name = '[%s]' % (rec.code)
             new_result.append((rec.id, name))
         return new_result
-
-    @api.depends('sale_id')
-    def _compute_sale_amount(self):
-        # sudo() avoid model security restriction
-        sale = self.sudo().sale_id
-        currency = (
-                self.partner_id.property_product_pricelist.currency_id or
-                self.company_currency or
-                self.env.user.company_id.currency_id)
-        self.sale_amount = sale.currency_id.compute(
-                                sale.amount_untaxed, currency)
 
     def action_view_order(self):
         '''
