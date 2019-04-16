@@ -7,7 +7,7 @@
             <field name="model">tsm.task.timesheet</field>
             <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_timesheet_line_tree" />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='task_id']" position="after">
+                <xpath expr="//field[@name='amount']" position="before">
                     <field name="task_partner_id" invisible="1"/>
                     <field name="timepack_id" domain="[('partner_id', '=', task_partner_id)]" options="{'no_create': True}"/>
                     <field name="discount_time" attrs="{'invisible':[('timepack_id','=',False)]}"/>

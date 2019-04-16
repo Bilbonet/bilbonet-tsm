@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-07 20:57+0000\n"
-"PO-Revision-Date: 2019-03-07 20:57+0000\n"
+"POT-Creation-Date: 2019-04-16 20:01+0000\n"
+"PO-Revision-Date: 2019-04-16 20:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -65,15 +65,19 @@ msgid "${object.name and '%s-%s' % (object.code, object.name) or object.code}"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "<b>Complimentary time</b> is time used by the technician but\n"
+"                                            doesn't discount time of the hours contracted by the client.."
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 msgid "<b>Tiempo Cortesía</b> es tiempo empleado por el técnico pero que no\n"
 "                                            descuenta tiempo de las horas contratadas por el cliente."
 msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "<span class=\"fa fa-arrow-circle-down text-danger\"/> Descuenta Tiempo    \n"
 "                                            <span class=\"fa fa-arrow-circle-right\"/> Tiempo Cortesia"
 msgstr ""
@@ -82,6 +86,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_document
 msgid "<span class=\"fa fa-arrow-circle-down text-danger\"/> Descuenta Tiempo    \n"
 "                                <span class=\"fa fa-arrow-circle-right\"/> Tiempo Cortesia"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "<span class=\"fa fa-arrow-circle-down text-danger\"/> Discounts Time    \n"
+"                                            <span class=\"fa fa-arrow-circle-right\"/> Complimentary time"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -142,8 +152,12 @@ msgid "Click to add a time pack."
 msgstr ""
 
 #. module: tsm_time_pack
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Client:"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 msgid "Cliente:"
 msgstr ""
 
@@ -168,7 +182,7 @@ msgid "Complimentary Hours."
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:208
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:217
 #, python-format
 msgid "Compose Email"
 msgstr ""
@@ -199,14 +213,17 @@ msgid "Consumed Time"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Consumed <span class=\"fa fa-arrow-circle-down text-danger\"/> :"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 msgid "Consumidas <span class=\"fa fa-arrow-circle-down text-danger\"/> :"
 msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Contratadas:"
 msgstr ""
 
@@ -218,6 +235,11 @@ msgstr ""
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack_contrated_hours
 msgid "Contrated Hours"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Contrated:"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -256,6 +278,11 @@ msgid "Customer"
 msgstr ""
 
 #. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Date Start:"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
 msgid "Description"
 msgstr ""
@@ -266,6 +293,11 @@ msgid "Description Sale"
 msgstr ""
 
 #. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Detail Time spent"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack_description
 msgid "Details, notes and aclarations about the time pack."
 msgstr ""
@@ -273,14 +305,17 @@ msgstr ""
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Detalle Tiempo empleado"
 msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Dirección:"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Direction:"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -294,7 +329,7 @@ msgid "Discount Time"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:240
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:249
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr ""
@@ -321,7 +356,6 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Fecha Inicio:"
 msgstr ""
 
@@ -429,6 +463,11 @@ msgid "Packs of time to spent in tasks timesheet"
 msgstr ""
 
 #. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Phone:"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model:ir.actions.report,name:tsm_time_pack.tsm_time_pack_report_detailed_action
 msgid "Print Time Pack Detailed"
 msgstr ""
@@ -464,7 +503,7 @@ msgid "Quantity"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:232
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:241
 #, python-format
 msgid "Quantity of hours contrated must be greater than 0."
 msgstr ""
@@ -475,19 +514,27 @@ msgid "Quotation"
 msgstr ""
 
 #. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Remainig:"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack_remaining_hours
 msgid "Remaining Hours"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Responsible:"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 msgid "Resumen Bolsa Horas:"
 msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Saldo:"
 msgstr ""
 
@@ -509,6 +556,11 @@ msgstr ""
 #. module: tsm_time_pack
 #: model:ir.model,name:tsm_time_pack.model_sale_order_line
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack_can_edit
+msgid "Security: only managers can edit"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -537,6 +589,11 @@ msgid "Sub Total"
 msgstr ""
 
 #. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Sumary Time Pack:"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_sale_order_tsm_time_pack_id
 msgid "TSM Time Pack related"
 msgstr ""
@@ -558,14 +615,18 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Telefono:"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:112
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:131
 #, python-format
 msgid "The code must be unique!"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack_can_edit
+msgid "This field is for security purpose. Only members of managers group can modify some fields."
 msgstr ""
 
 #. module: tsm_time_pack
@@ -630,7 +691,6 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Técnico Asignado:"
 msgstr ""
 
@@ -676,15 +736,19 @@ msgid "Visible by all employees"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:290
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:299
 #, python-format
 msgid "You must first select a Customer and product for Time Pack: %s"
 msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "horas"
+msgstr ""
+
+#. module: tsm_time_pack
+#: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "hours"
 msgstr ""
 
 #. module: tsm_time_pack

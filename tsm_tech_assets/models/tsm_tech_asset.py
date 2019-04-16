@@ -17,6 +17,20 @@ class TsmTechAsset(models.Model):
                 '|', ('active', '=', True), ('active', '=', False)
             ], count=True)
 
+    def _compuete_can_edit(self):
+        if self.env.user.has_group('tsm_base.group_tsm_manager')\
+                or self.env.user.id == self.user_id.id:
+            self.can_edit = True
+
+    # For the Report Detailed
+    def _compute_task_ids(self):
+        for asset in self:
+            task_ids = self.env['tsm.task'].search([
+                ('asset_ids', 'in', asset.id),
+                '|', ('active', '=', True), ('active', '=', False)
+            ], order='date_start')
+        return task_ids
+
     company_id = fields.Many2one(
         'res.company',
         string='Company',
@@ -74,6 +88,10 @@ class TsmTechAsset(models.Model):
              "see the followed project, tasks\n"
              "- Visible by all employees: Employees "
              "may see all project, tasks\n")
+    can_edit = fields.Boolean(compute='_compuete_can_edit',
+                    string='Security: only managers can edit',
+                    help='This field is for security purpose. '
+                    'Only members of managers group can modify some fields.')
 
     _sql_constraints = [
         ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
@@ -87,14 +105,6 @@ class TsmTechAsset(models.Model):
                 self.env['ir.sequence'].next_by_code('tsm.tech.asset')
         return super(TsmTechAsset, self).create(vals)
 
-    # For the Report Detailed
-    def _compute_task_ids(self):
-        for asset in self:
-            task_ids = self.env['tsm.task'].search([
-                ('asset_ids', 'in', asset.id),
-                '|', ('active', '=', True), ('active', '=', False)
-            ], order='date_start')
-        return task_ids
 
 class TsmTechAssetType(models.Model):
     _name = "tsm.tech.asset.type"
