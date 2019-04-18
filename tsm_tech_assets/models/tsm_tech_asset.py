@@ -90,6 +90,7 @@ class TsmTechAsset(models.Model):
              "may see all project, tasks\n")
     can_edit = fields.Boolean(compute='_compuete_can_edit',
                     string='Security: only managers can edit',
+                    default=True,
                     help='This field is for security purpose. '
                     'Only members of managers group can modify some fields.')
 
