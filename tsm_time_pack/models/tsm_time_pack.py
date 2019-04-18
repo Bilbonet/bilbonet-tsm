@@ -118,11 +118,13 @@ class TsmTimePack(models.Model):
                               )
     sale_amount = fields.Monetary(compute='_compute_sale_amount',
                                   string='Amount of The Order',
+                                  copy=False,
                                   help='Untaxed Total of The Order',
                                   currency_field='company_currency',
                                   )
     can_edit = fields.Boolean(compute='_compuete_can_edit',
                     string='Security: only managers can edit',
+                    default=True,
                     help='This field is for security purpose. '
                     'Only members of managers group can modify some fields.')
 
