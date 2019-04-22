@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class TsmProject(models.Model):
     _name = "tsm.project"
     _description = "Tech Support Management Project"
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "sequence, name, id"
 
     def _compute_task_count(self):
