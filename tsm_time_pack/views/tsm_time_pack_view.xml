@@ -143,9 +143,9 @@
             <field name="model">tsm.time.pack</field>
             <field name="arch" type="xml">
                 <search string="Time Packs">
-                    <field name="user_id"/>
-                    <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
                     <field name="partner_id"/>
+                    <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                    <field name="user_id"/>
                     <filter name="mine" string="My Time Packs" domain="[('user_id', '=', uid)]"/>
                     <separator/>
                     <filter name="sale_order" string="No Sale Order" domain="[('sale_id', '=', False)]"/>
