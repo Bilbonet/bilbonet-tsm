@@ -7,4 +7,6 @@ from odoo import fields, models
 class TsmTask(models.Model):
     _inherit = "tsm.task"
 
-    asset_ids = fields.Many2many('tsm.tech.asset', string='Tech Asset',)
+    asset_ids = fields.Many2many('tsm.tech.asset', string='Tech Asset',
+                                 domain=['|', ('active', '=', False),
+                                         ('active', '=', True)])
