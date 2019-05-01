@@ -5,7 +5,7 @@
             <field name="name">TSM Task code</field>
             <field name="code">tsm.task</field>
             <field eval="4" name="padding" />
-            <field name="prefix">T</field>
+            <field name="prefix">%(y)sT</field>
         </record>
 
 </odoo>

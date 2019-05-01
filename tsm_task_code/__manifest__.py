@@ -20,7 +20,6 @@
         "tsm_base",
     ],
     "data": [
-        "data/tsm_task_sequence.xml",
         "views/tsm_view.xml",
     ],
     'installable': True,
