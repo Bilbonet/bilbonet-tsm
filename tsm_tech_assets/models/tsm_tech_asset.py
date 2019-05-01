@@ -17,7 +17,7 @@ class TsmTechAsset(models.Model):
                 '|', ('active', '=', True), ('active', '=', False)
             ], count=True)
 
-    def _compuete_can_edit(self):
+    def _compute_can_edit(self):
         if self.env.user.has_group('tsm_base.group_tsm_manager')\
                 or self.env.user.id == self.user_id.id:
             self.can_edit = True
@@ -88,7 +88,7 @@ class TsmTechAsset(models.Model):
              "see the followed project, tasks\n"
              "- Visible by all employees: Employees "
              "may see all project, tasks\n")
-    can_edit = fields.Boolean(compute='_compuete_can_edit',
+    can_edit = fields.Boolean(compute='_compute_can_edit',
                     string='Security: only managers can edit',
                     default=True,
                     help='This field is for security purpose. '

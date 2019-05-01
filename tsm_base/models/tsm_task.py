@@ -62,6 +62,8 @@ class TsmTask(models.Model):
                                    access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
 
+    code = fields.Char(
+        string='Task Number', required=True, default="/", readonly=True)
     active = fields.Boolean(default=True,
         help="If the active field is set to False, it will allow you to hide"
         " the task without removing it.")
@@ -157,6 +159,22 @@ class TsmTask(models.Model):
         string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
 
+    _sql_constraints = [
+        ('tsm_task_unique_code', 'UNIQUE (code)',
+         _('The code must be unique!')),
+    ]
+
+    @api.multi
+    def name_get(self):
+        result = super(TsmTask, self).name_get()
+        new_result = []
+
+        for task in result:
+            rec = self.browse(task[0])
+            name = '[%s] %s' % (rec.code, task[1])
+            new_result.append((rec.id, name))
+        return new_result
+
     @api.depends('stage_id', 'kanban_state')
     def _compute_kanban_state_label(self):
         for task in self:
@@ -206,6 +224,9 @@ class TsmTask(models.Model):
             'context': ctx,
         }
 
+    def action_assign_to_me(self):
+        self.write({'user_id': self.env.user.id})
+
     # ------------------------------------------------
     # CRUD overrides
     # ------------------------------------------------
@@ -213,6 +234,10 @@ class TsmTask(models.Model):
     def create(self, vals):
         # context: no_log, because subtype already handle this
         context = dict(self.env.context, mail_create_nolog=True)
+
+        # Asign new code
+        if vals.get('code', '/') == '/':
+            vals['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
 
         # for default stage
         if vals.get('project_id') and not context.get('default_project_id'):
@@ -236,8 +261,12 @@ class TsmTask(models.Model):
         result = super(TsmTask, self).write(vals)
         return result
 
-    def action_assign_to_me(self):
-        self.write({'user_id': self.env.user.id})
+    @api.multi
+    def copy(self, default=None):
+        if default is None:
+            default = {}
+        default['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
+        return super(TsmTask, self).copy(default)
 
 
 class TsmTaskTags(models.Model):
