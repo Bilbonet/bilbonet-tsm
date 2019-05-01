@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <search string="Tasks">
                 <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
-                <field name="name" string="Tasks Title"/>
+                <field name="name" string="Tasks Title" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
                 <field name="description" string="Tasks Description"/>
                 <field name="project_id"/>
                 <field name="user_id"/>
@@ -52,6 +52,7 @@
                     <div class="oe_title">
                         <h1 class="o_row">
                             <field name="priority" widget="priority"/>
+                            <field name="code" class="oe_inline"/>
                         </h1>
                     </div>
                     <div class="oe_title col-xs-10">
@@ -130,7 +131,10 @@
                                     <div class="o_kanban_record_headings">
                                         <small class="text-primary"><field name="partner_id"/></small>
                                         <hr class="mt0 mb4"/>
-                                        <strong class="o_kanban_record_title"><field name="name"/></strong><br/>
+                                        <strong class="o_kanban_record_title">
+                                            [<field name="code"/>]
+                                            <field name="name"/>
+                                        </strong><br/>
                                         <small class="o_kanban_record_subtitle text-muted">
                                             <field name="project_id" invisible="context.get('default_project_id', False)"/>
                                             <t t-if="record.date_deadline.raw_value and record.date_deadline.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
@@ -184,6 +188,7 @@
                 <field name="active" invisible="1"/>
                 <field name="sequence" invisible="not context.get('seq_visible', False)"/>
                 <field name="date_start" widget="date"/>
+                <field name="code"/>
                 <field name="name"/>
                 <field name="project_id" invisible="context.get('user_invisible', False)"/>
                 <field name="user_id" invisible="context.get('user_invisible', False)"/>
