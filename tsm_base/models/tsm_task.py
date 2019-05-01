@@ -140,8 +140,7 @@ class TsmTask(models.Model):
                               required=True,
                               index=True, track_visibility='always')
     partner_id = fields.Many2one('res.partner',
-                                 string='Customer',
-                                 required=True)
+                                 string='Customer')
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),

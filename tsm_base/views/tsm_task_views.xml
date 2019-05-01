@@ -66,7 +66,7 @@
                             <field name="user_id"
                                 class="o_task_user_field"
                                 options='{"no_open": True}'/>
-                            <field name="partner_id"/>
+                            <field name="partner_id" required="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                         </group>
                         <group>
@@ -107,6 +107,7 @@
         <field name="name">tsm.task.kanban</field>
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
+            <!--<kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">-->
             <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
                 <field name="color"/>
                 <field name="priority"/>
