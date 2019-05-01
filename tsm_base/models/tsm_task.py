@@ -63,7 +63,7 @@ class TsmTask(models.Model):
         return stages.browse(stage_ids)
 
     code = fields.Char(
-        string='Task Number', required=True, default="/", readonly=True)
+        string='Task Code', required=True, default="/", readonly=True)
     active = fields.Boolean(default=True,
         help="If the active field is set to False, it will allow you to hide"
         " the task without removing it.")
