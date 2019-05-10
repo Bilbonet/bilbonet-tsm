@@ -27,7 +27,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Direction:</td>
+                                    <td>Address:</td>
                                     <td>
                                         <span t-field="o.partner_id.street"/>
                                         <span t-field="o.partner_id.street2"/>
@@ -85,7 +85,7 @@
                             <div class="col-xs-5">
                                 <table t-if="o.complimentary_hours" class="table table-condensed">
                                     <tr>
-                                        <td>Cortesia&#160;<span class="fa fa-arrow-circle-right"/>&#160;:</td>
+                                        <td>Complimentary&#160;<span class="fa fa-arrow-circle-right"/>&#160;:</td>
                                         <td class="text-right">
                                             <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
                                         </td>
@@ -173,16 +173,16 @@
                         <div class="row" name="head_report">
                             <table class="table table-bordered table-condensed" style="margin-top:0px;">
                                 <tr>
-                                    <td>Cliente:</td>
+                                    <td>Client:</td>
                                     <td><span t-field="o.partner_id"/></td>
-                                    <td>Telefono:</td>
+                                    <td>Phone:</td>
                                     <td>
                                         <span t-field="o.partner_id.phone"/> /
                                         <span t-field="o.partner_id.mobile"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Dirección:</td>
+                                    <td>Address:</td>
                                     <td>
                                         <span t-field="o.partner_id.street"/>
                                         <span t-field="o.partner_id.street2"/>
@@ -199,15 +199,15 @@
                             <table class="table table-condensed" style="margin-top:30px;margin-bottom:-5px;">
                                 <tr>
                                     <td>
-                                        Fecha Inicio: <span t-field="o.date_start"/>
+                                        Date Start: <span t-field="o.date_start"/>
                                     </td>
                                     <td class="text-right">
-                                        Técnico Asignado: <span t-field="o.user_id.name"/>
+                                        Responsible: <span t-field="o.user_id.name"/>
                                     </td>
                                 </tr>
                             </table>
                             <div class="well well-sm text-center">
-                                <h1>Resumen Bolsa Horas: <span t-field="o.code"/></h1>
+                                <h1>Sumary Time Pack: <span t-field="o.code"/></h1>
                                 <span t-field="o.name"/>
                             </div>
                         </div>
@@ -216,23 +216,23 @@
                             <div class="col-xs-5">
                                 <table class="table table-condensed">
                                     <tr>
-                                        <td>Contratadas:</td>
+                                        <td>Contrated:</td>
                                         <td class="text-right">
                                             <!--<span t-esc="'{0:,.0f}'.format(o.contrated_hours)"/> horas-->
-                                            <span t-field="o.contrated_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                            <span t-field="o.contrated_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
                                     </tr>
 
                                     <tr class="danger">
-                                        <td>Consumidas&#160;<span class="fa fa-arrow-circle-down text-danger"/>&#160;:</td>
+                                        <td>Consumed&#160;<span class="fa fa-arrow-circle-down text-danger"/>&#160;:</td>
                                         <td class="text-right">
-                                            <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                            <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
                                     </tr>
                                     <tr class="border-black">
-                                        <td>Saldo:</td>
+                                        <td>Remaining:</td>
                                         <td class="text-right">
-                                            <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> horas
+                                            <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
                                     </tr>
                                 </table>
@@ -240,15 +240,15 @@
                             <div class="col-xs-5">
                                 <table t-if="o.complimentary_hours" class="table table-condensed">
                                     <tr>
-                                        <td>Cortesía&#160;<span class="fa fa-arrow-circle-right"/>&#160;:</td>
+                                        <td>Complimentary&#160;<span class="fa fa-arrow-circle-right"/>&#160;:</td>
                                         <td class="text-right">
                                             <span t-field="o.complimentary_hours" t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" style="font-size:0.6em;">
-                                            <b>Tiempo Cortesía</b> es tiempo empleado por el técnico pero que no
-                                            descuenta tiempo de las horas contratadas por el cliente.
+                                            <b>Complimentary time</b> is time used by the technician but
+                                            doesn't discount time of the hours contracted by the client..
                                         </td>
                                     </tr>
                                 </table>
@@ -259,7 +259,7 @@
                             <table class="table table-condensed table-striped">
                                 <thead style="background-color: #3498DB;font-size:0.8em;" >
                                     <tr class="text-center">
-                                        <th colspan="5" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
+                                        <th colspan="5" class="text-center" style="color:#fff;">Detail Time spent</th>
                                     </tr>
                                  </thead>
                                 <tbody>
@@ -292,8 +292,8 @@
                                 <tfoot style="font-size:0.8em;">
                                     <tr>
                                         <th style="font-weight: normal;font-size:0.6em;">
-                                            <span class="fa fa-arrow-circle-down text-danger"/>&#160;Descuenta Tiempo &#160;&#160;&#160;
-                                            <span class="fa fa-arrow-circle-right"/>&#160;Tiempo Cortesia
+                                            <span class="fa fa-arrow-circle-down text-danger"/>&#160;Discounts Time &#160;&#160;&#160;
+                                            <span class="fa fa-arrow-circle-right"/>&#160;Complimentary time
                                         </th>
                                         <th colspan="3" class="text-right">
                                             <span t-field="o.total_hours_spent"
@@ -321,14 +321,14 @@
                                 <table class="table table-condensed">
                                     <tr class="success">
                                         <td>
-                                            Tarea: <span t-field="task.code"/> -
+                                            Task: <span t-field="task.code"/> -
                                             <span t-field="task.name"/>
                                         </td>
                                         <td>
-                                            Fecha: <span t-field="task.date_start"/>
+                                            Date: <span t-field="task.date_start"/>
                                         </td>
                                         <td>
-                                            Técnico: <span t-field="task.user_id.name"/>
+                                            Responsible: <span t-field="task.user_id.name"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -339,7 +339,7 @@
                                 <table class="table table-condensed table-striped">
                                     <thead style="background-color: #3498DB;font-size:0.8em;" >
                                         <tr>
-                                            <th colspan="5" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
+                                            <th colspan="5" class="text-center" style="color:#fff;">Detail spent time</th>
                                         </tr>
                                      </thead>
                                     <tbody>
