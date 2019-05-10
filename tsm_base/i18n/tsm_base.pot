@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 16:28+0000\n"
-"PO-Revision-Date: 2019-03-06 16:28+0000\n"
+"POT-Creation-Date: 2019-05-09 19:10+0000\n"
+"PO-Revision-Date: 2019-05-09 19:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid "\n"
 "       &nbsp;&nbsp;Task Start: <strong>${object.date_start or ''}</strong><br />\n"
 "\n"
 "       % if object.user_id:\n"
-"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\">${object.user_id.name}</a>\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
 "       % endif\n"
 "    </p>\n"
 "\n"
@@ -184,7 +184,7 @@ msgid "Company"
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:198
+#: code:addons/tsm_base/models/tsm_task.py:218
 #, python-format
 msgid "Compose Email"
 msgstr ""
@@ -706,6 +706,11 @@ msgid "Task"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task_code
+msgid "Task Code"
+msgstr ""
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_description
 msgid "Task Description"
 msgstr ""
@@ -783,6 +788,13 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
 msgid "Telefono:"
+msgstr ""
+
+#. module: tsm_base
+#: code:addons/tsm_base/models/tsm_task.py:166
+#: sql_constraint:tsm.task:0
+#, python-format
+msgid "The code must be unique!"
 msgstr ""
 
 #. module: tsm_base
