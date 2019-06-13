@@ -74,8 +74,14 @@
                                             <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
                                     </tr>
-                                    <tr class="border-black">
+                                    <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
                                         <td>Remainig:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> hours
+                                        </td>
+                                    </tr>
+                                    <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
+                                        <td>Exceded:</td>
                                         <td class="text-right">
                                             <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
@@ -229,8 +235,14 @@
                                             <span t-field="o.consumed_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
                                     </tr>
-                                    <tr class="border-black">
-                                        <td>Remaining:</td>
+                                    <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
+                                        <td>Remainig:</td>
+                                        <td class="text-right">
+                                            <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> hours
+                                        </td>
+                                    </tr>
+                                    <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
+                                        <td>Exceded:</td>
                                         <td class="text-right">
                                             <span t-field="o.remaining_hours" t-field-options='{"widget": "float_time"}'/> hours
                                         </td>
