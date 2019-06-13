@@ -7,7 +7,6 @@ from odoo import api, fields, models, SUPERUSER_ID, _
 class TsmTaskType(models.Model):
     _name = 'tsm.task.type'
     _description = 'Task Stage'
-    _mail_post_access = 'read'
     _order = 'sequence, id'
 
     name = fields.Char(string='Stage Name', required=True, translate=True)

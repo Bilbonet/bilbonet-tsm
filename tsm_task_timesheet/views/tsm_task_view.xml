@@ -38,7 +38,7 @@
             <field name="inherit_id" ref="tsm_base.tsm_task_tree_view" />
             <field eval="2" name="priority"/>
             <field name="arch" type="xml">
-                <field name="user_id" position="after">
+                <field name="name" position="after">
                     <field name="total_hours" widget="float_time" sum="Total Hours" readonly="1"/>
                     <field name="stage_id"/>
                 </field>
