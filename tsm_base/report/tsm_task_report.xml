@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <odoo>
-    <data>
+
     <report
         id="tsm_task_report_action"
         name="tsm_base.tsm_task_report_document"
         model="tsm.task"
         string="Print Task"
-        print_report_name="object.name.replace(' ', '_')"
+        print_report_name="'('+object.code+')_'+object.name.replace(' ', '-')"
         report_type="qweb-pdf"
         paperformat="tsm_base.tsm_paper_format_report"/>
 
@@ -48,7 +48,7 @@
                                     <span t-field="o.name"/>
                                 </td>
                                 <td>
-                                    Fecha: <span t-field="o.date_start"/>
+                                    Fecha: <span t-field="o.date_start" t-field-options='{"widget": "date"}'/>
                                 </td>
                                 <td>
                                     Técnico: <span t-field="o.user_id.name"/>
@@ -62,5 +62,5 @@
             </t>
         </t>
     </template>
-    </data>
+
 </odoo>

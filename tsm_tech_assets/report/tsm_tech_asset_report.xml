@@ -8,6 +8,7 @@
         name="tsm_tech_assets.tsm_tech_asset_report_document"
         model="tsm.tech.asset"
         string="Print Asset Report"
+        print_report_name="'('+object.code+')_'+object.name.replace(' ', '-')"
         report_type="qweb-pdf"
         paperformat="tsm_base.tsm_paper_format_report"/>
 
@@ -77,6 +78,7 @@
         name="tsm_tech_assets.tsm_tech_asset_report_detailed_document"
         model="tsm.tech.asset"
         string="Print Asset Report Detailed"
+        print_report_name="'('+object.code+')_'+object.name.replace(' ', '-')+'_detailed'"
         report_type="qweb-pdf"
         paperformat="tsm_base.tsm_paper_format_report"/>
 

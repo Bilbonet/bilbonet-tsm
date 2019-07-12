@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, SUPERUSER_ID, _
+from datetime import datetime
 
 
 class TsmTaskType(models.Model):
@@ -149,12 +150,11 @@ class TsmTask(models.Model):
     ],
         string='Privacy', required=True,
         default='followers',
-        help="Holds visibility of the tasks "
-             "that belong to the current project:\n"
+        help="Holds visibility of the task:\n "
              "- On invitation only: Employees may only "
-             "see the followed project, tasks\n"
+             "see the followed tasks\n"
              "- Visible by all employees: Employees "
-             "may see all project, tasks\n")
+             "may see all tasks\n")
     company_id = fields.Many2one(
         'res.company',
         string='Company',
@@ -224,6 +224,14 @@ class TsmTask(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    def format_date(self, date):
+        # format date following user language
+        lang_model = self.env['res.lang']
+        lang = lang_model._lang_get(self.env.user.lang)
+        date_format = lang.date_format
+        return datetime.strftime(
+            fields.Date.from_string(date), date_format)
 
     def action_assign_to_me(self):
         self.write({'user_id': self.env.user.id})
