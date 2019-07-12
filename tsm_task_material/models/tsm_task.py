@@ -44,13 +44,14 @@ class TsmTask(models.Model):
 
     @api.depends('sale_id')
     def _compute_sale_amount(self):
-        sale = self.sale_id
-        currency = (
-                self.partner_id.property_product_pricelist.currency_id or
-                self.company_currency or
-                self.env.user.company_id.currency_id)
-        self.sale_amount = sale.currency_id.compute(
-                                sale.amount_untaxed, currency)
+        if self.sale_id:
+            sale = self.sale_id
+            currency = (
+                    self.partner_id.property_product_pricelist.currency_id or
+                    self.company_currency or
+                    self.env.user.company_id.currency_id)
+            self.sale_amount = sale.currency_id.compute(
+                                    sale.amount_untaxed, currency)
 
     @api.multi
     def action_view_order(self):
@@ -145,6 +146,12 @@ class TsmTask(models.Model):
             sale.action_confirm()
 
         return sale
+
+    # @api.onchange('active')
+    # def _onchange_active(self):
+    #     if self.material_ids.ids and self.active:
+    #         raise ValidationError(_("You can't archive a task "
+    #                                 "with materials: %s!") % self.name)
 
     @api.multi
     def unlink(self):
