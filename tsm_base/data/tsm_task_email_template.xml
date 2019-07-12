@@ -9,7 +9,7 @@
         <field name="model_id" ref="tsm_base.model_tsm_task"/>
         <field name="auto_delete" eval="True"/>
         <field name="report_template" ref="tsm_base.tsm_task_report_action"/>
-        <field name="report_name">${object.name.replace(' ', '_')}</field>
+        <field name="report_name">${'('+object.code+')_'+object.name.replace(' ', '-')}</field>
         <field name="lang">${object.partner_id.lang}</field>
         <field name="body_html"><![CDATA[
 <div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
