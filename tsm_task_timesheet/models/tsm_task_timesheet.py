@@ -20,7 +20,7 @@ class TsmTaskTimesheet(models.Model):
                     default=True)
     date_time = fields.Datetime(default=fields.Datetime.now, string='Date')
     name = fields.Char(string='Timesheet Title', required=True)
-    amount = fields.Float('Quantity', default=0.0)
+    amount = fields.Float(string='Quantity', default=0.0)
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
     project_id = fields.Many2one('tsm.project', 'Project')
     user_id = fields.Many2one('res.users',
@@ -36,14 +36,23 @@ class TsmTaskTimesheet(models.Model):
     task_partner_id = fields.Many2one(related='task_id.partner_id',
                                        store=True, string='Customer')
 
+    @api.model
+    def create(self, values):
+        # Assign project_id
+        project_id = self.env['tsm.task'].browse(
+                                            values['task_id']).project_id.id
+        if project_id:
+            values['project_id'] = project_id
+
+        return super(TsmTaskTimesheet, self).create(values)
+
     @api.one
-    @api.depends('date_time')
+    @api.depends('date_time', 'amount')
     def _get_stop_date_time(self):
         for line in self:
-            line.date_time_stop = \
-                datetime.strptime(line.date_time,
-                                  "%Y-%m-%d %H:%M:%S") + timedelta(
-                    seconds=line.amount*3600)
+            line.date_time_stop = datetime.strptime(
+                line.date_time, "%Y-%m-%d %H:%M:%S"
+                ) + timedelta(seconds=line.amount*3600)
 
     @api.onchange('project_id')
     def onchange_project_id(self):
