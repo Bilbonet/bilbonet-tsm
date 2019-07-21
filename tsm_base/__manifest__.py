@@ -24,6 +24,7 @@
         'report/tsm_task_report.xml',
         'views/tsm_project_views.xml',
         'views/tsm_task_views.xml',
+        'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',
     ],
     'installable': True,

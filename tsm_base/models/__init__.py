@@ -4,3 +4,4 @@
 from . import tsm_project
 from . import tsm_task
 from . import res_partner
+from . import res_config_settings
