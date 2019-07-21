@@ -65,6 +65,12 @@ class TsmTask(models.Model):
                                    access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
 
+    @api.one
+    def _get_tags_in_task(self):
+        if self.env['ir.config_parameter'].sudo().get_param(
+                'tsm_base.tsm_tags_in_task'):
+            self.tags_in_task = True
+
     code = fields.Char(
         string='Task Code', required=True, default="/", readonly=True)
     active = fields.Boolean(default=True,
@@ -82,6 +88,8 @@ class TsmTask(models.Model):
         group_expand='_read_group_stage_ids',
         copy=False,
         default=_get_default_stage_id)
+    tags_in_task = fields.Boolean(compute='_get_tags_in_task',
+                                  string="Use Tags in Tasks")
     tag_ids = fields.Many2many('tsm.task.tags', string='Tags',)
     kanban_state = fields.Selection([
         ('normal', 'Grey'),
