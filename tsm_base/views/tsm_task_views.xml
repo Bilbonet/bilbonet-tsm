@@ -34,7 +34,7 @@
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
             <form string="Task" class="o_form_project_tasks">
-                <field name="tags_in_task" invisible="1"/>
+
                 <header>
                     <button name="action_assign_to_me" string="Assign to Me" type="object" class="oe_highlight"
                             attrs="{'invisible' : [('user_id', '!=', False)]}"/>
@@ -68,6 +68,7 @@
                                 class="o_task_user_field"
                                 options='{"no_open": True}'/>
                             <field name="partner_id" required="1"/>
+                            <field name="tags_in_task" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags"
                                    options="{'color_field': 'color', 'no_create_edit': True}"
                                    attrs="{'invisible': [('tags_in_task', '=', False)]}"/>
