@@ -12,10 +12,10 @@
                     <div class="row mt16 o_settings_container">
                         <div class="col-xs-12 col-md-6 o_setting_box" title="Use tags in tasks">
                             <div class="o_setting_left_pane">
-                                <field name="tsm_tags_in_task"/>
+                                <field name="default_tags_in_task"/>
                             </div>
                             <div class="o_setting_right_pane">
-                                <label for="tsm_tags_in_task"/>
+                                <label for="default_tags_in_task"/>
                                 <div class="text-muted">
                                     Use tags to classify tasks.
                                 </div>
