@@ -4,6 +4,7 @@
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
+from datetime import datetime
 
 
 class TsmTimePack(models.Model):
@@ -203,7 +204,7 @@ class TsmTimePack(models.Model):
     def action_time_pack_send(self):
         self.ensure_one()
         template = self.env.ref(
-            'tsm_time_pack.tsm_time_pack_email_template',
+            'tsm_time_pack.tsm_time_pack_email_template2',
             False,
         )
         compose_form = self.env.ref('mail.email_compose_message_wizard_form',
@@ -226,6 +227,14 @@ class TsmTimePack(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    def format_date(self, date):
+        # format date following user language
+        lang_model = self.env['res.lang']
+        lang = lang_model._lang_get(self.env.user.lang)
+        date_format = lang.date_format
+        return datetime.strftime(
+            fields.Date.from_string(date), date_format)
 
     #==========================
     #== Product & Sale Order ==
