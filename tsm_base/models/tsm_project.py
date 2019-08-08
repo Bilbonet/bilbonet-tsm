@@ -9,7 +9,7 @@ class TsmProject(models.Model):
     _name = "tsm.project"
     _description = "Tech Support Management Project"
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = "sequence, name, id"
+    _order = "sequence, date_start desc"
 
     def _compute_task_count(self):
         task_data = self.env['tsm.task'].read_group(
