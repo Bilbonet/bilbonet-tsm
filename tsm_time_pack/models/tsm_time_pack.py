@@ -204,7 +204,7 @@ class TsmTimePack(models.Model):
     def action_time_pack_send(self):
         self.ensure_one()
         template = self.env.ref(
-            'tsm_time_pack.tsm_time_pack_email_template2',
+            'tsm_time_pack.tsm_time_pack_email_template',
             False,
         )
         compose_form = self.env.ref('mail.email_compose_message_wizard_form',
