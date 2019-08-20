@@ -48,4 +48,3 @@ class TsmTaskTimesheet(models.Model):
             }
             return {'warning': warning_mess}
         return {}
-
