@@ -348,14 +348,15 @@
               groups="base.group_no_one"/>
 
 
-    <!-- Task From Project views -->
+    <!--=======================
+        Tasks From Project views
+    ========================-->
     <record id="tsm_tasks_from_project_action" model="ir.actions.act_window">
         <field name="name">Tasks</field>
         <field name="res_model">tsm.task</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="domain">['|',('active', '=', True), ('active', '=', False)]</field>
         <field name="context">{
-            'default_group_by': 'stage_id',
             'search_default_project_id': [active_id],
             'default_project_id': active_id,
             }</field>
@@ -369,6 +370,7 @@
             </p>
         </field>
     </record>
+
     <record id="tsm_tasks_from_project_kanban_view"  model="ir.ui.view">
         <field name="name">tsm.tasks.from.project.kanban.view</field>
         <field name="model">tsm.project</field>
@@ -380,7 +382,8 @@
                         <div>
                             <span class="o_value"><t t-esc="record.task_count.value"/></span>
                             <span class="o_label">Tasks</span>
-                            <button t-if="record.task_needaction_count.raw_value" class="btn-link o_needaction" name="%(tsm_tasks_from_project_action)d" type="action" context="{'search_default_message_needaction': 1}">
+                            <button t-if="record.task_needaction_count.raw_value" class="btn-link o_needaction"
+                                    name="%(tsm_tasks_from_project_action)d" type="action" context="{'search_default_message_needaction': 1}">
                                 <t t-esc="record.task_needaction_count.raw_value"/>
                             </button>
                         </div>
@@ -389,6 +392,7 @@
             </xpath>
         </field>
     </record>
+
     <record id="tsm_tasks_from_project_form_view"  model="ir.ui.view">
         <field name="name">tsm.tasks.from.project.form.view</field>
         <field name="model">tsm.project</field>

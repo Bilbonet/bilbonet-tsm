@@ -104,8 +104,9 @@ class TsmTask(models.Model):
     date_start = fields.Datetime(string='Starting Date',
                                  default=fields.Datetime.now,
                                  index=True, copy=False)
-    date_assign = fields.Datetime(string='Assigning Date', index=True,
-                                  copy=False, readonly=True)
+    date_assign = fields.Datetime(string='Assigning Date',
+                                  default=fields.Datetime.now,
+                                  index=True, copy=False, readonly=True)
     date_deadline = fields.Date(string='Deadline', index=True, copy=False)
     date_last_stage_update = fields.Datetime(
         string='Last Stage Update',
@@ -196,7 +197,7 @@ class TsmTask(models.Model):
     @api.onchange('user_id')
     def _onchange_user(self):
         if self.user_id:
-            self.date_start = fields.Datetime.now()
+            self.date_assign = fields.Datetime.now()
 
     @api.multi
     def action_task_send(self):
@@ -245,17 +246,19 @@ class TsmTask(models.Model):
         # context: no_log, because subtype already handle this
         context = dict(self.env.context, mail_create_nolog=True)
 
-        # Asign new code
+        # Assign new code
         if vals.get('code', '/') == '/':
             vals['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
 
-        # for default stage
+        # Assign project_id if exists in vals
         if vals.get('project_id') and not context.get('default_project_id'):
             context['default_project_id'] = vals.get('project_id')
 
-        # user_id change: update date_assign
-        if vals.get('user_id'):
-            vals['date_assign'] = fields.Datetime.now()
+        # Assign partner of the project
+        # Create task from kanban view don't pass partner_id value
+        if context.get('default_project_id') and not vals.get('partner_id'):
+            vals['partner_id'] = self.env['tsm.project'].browse(
+                context.get('default_project_id')).partner_id.id
 
         task = super(TsmTask, self.with_context(context)).create(vals)
         return task
