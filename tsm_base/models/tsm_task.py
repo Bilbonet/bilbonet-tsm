@@ -108,12 +108,6 @@ class TsmTask(models.Model):
                                   default=fields.Datetime.now,
                                   index=True, copy=False, readonly=True)
     date_deadline = fields.Date(string='Deadline', index=True, copy=False)
-    date_last_stage_update = fields.Datetime(
-        string='Last Stage Update',
-        default=fields.Datetime.now,
-        index=True,
-        copy=False,
-        readonly=True)
     date_end = fields.Datetime(string='Ending Date', index=True, copy=False)
     legend_blocked = fields.Char(related='stage_id.legend_blocked',
                                  string='Kanban Blocked Explanation',
@@ -234,9 +228,6 @@ class TsmTask(models.Model):
         date_format = lang.date_format
         return datetime.strftime(
             fields.Date.from_string(date), date_format)
-
-    def action_assign_to_me(self):
-        self.write({'user_id': self.env.user.id})
 
     # ------------------------------------------------
     # CRUD overrides

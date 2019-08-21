@@ -34,10 +34,7 @@
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
             <form string="Task" class="o_form_project_tasks">
-
                 <header>
-                    <button name="action_assign_to_me" string="Assign to Me" type="object" class="oe_highlight"
-                            attrs="{'invisible' : [('user_id', '!=', False)]}"/>
                     <button name="action_task_send" type="object" string="Send by Email" groups="tsm_base.group_tsm_user"/>
                     <field name="stage_id" widget="statusbar" clickable="True"
                            options="{'fold_field': 'fold'}"/>
@@ -92,7 +89,6 @@
                                 </group>
                                 <group>
                                     <field name="date_assign" groups="base.group_no_one"/>
-                                    <field name="date_last_stage_update" groups="base.group_no_one"/>
                                     <field name="date_end" groups="base.group_no_one"/>
                                 </group>
                             </group>
