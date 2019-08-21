@@ -24,6 +24,12 @@
             <form string="Project">
                 <sheet string="Project">
                     <div class="oe_button_box" name="button_box" groups="base.group_user">
+                        <button class="oe_stat_button" icon="fa-tasks"
+                                type="action"
+                                name="%(tsm_tasks_from_project_action)d"
+                                context="{'active_test': False, 'partner_id': partner_id}">
+                            <field string="Tasks" name="task_count" widget="statinfo"/>
+                        </button>
                         <button name="toggle_active" type="object"
                                 confirm="(Un)archiving a project automatically (un)archives its tasks. Do you want to proceed?"
                                 class="oe_stat_button" icon="fa-archive">
@@ -110,6 +116,7 @@
         <field name="arch" type="xml">
             <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors">
                 <field name="name"/>
+                <field name="user_id"/>
                 <field name="partner_id"/>
                 <field name="task_count"/>
                 <field name="task_needaction_count"/>
@@ -118,16 +125,10 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
                             <div class="o_project_kanban_main">
-                                <div class="o_kanban_card_content">
-                                    <div class="o_kanban_primary_left">
-                                        <div class="o_primary">
-                                            <span><t t-esc="record.name.value"/></span>
-                                            <span t-if="record.partner_id.value">
-                                                <strong><t t-esc="record.partner_id.value"/></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <span class="o_right">
+                                    <field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" />
+                                </span>
+
                                 <div class="o_kanban_card_manage_pane" groups="tsm_base.group_tsm_manager">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">
                                         <div>
@@ -141,9 +142,46 @@
                                 <a class="o_kanban_manage_toggle_button o_left" href="#" groups="tsm_base.group_tsm_manager">
                                     <i class="fa fa-ellipsis-v" />
                                 </a>
-                                <span class="o_right">
-                                    <field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" />
-                                </span>
+
+                                <div class="o_kanban_card_content">
+                                    <div class="o_kanban_primary_left">
+                                        <div class="o_primary">
+                                            <span><t t-esc="record.name.value"/></span>
+                                            <span t-if="record.partner_id.value">
+                                                <strong><t t-esc="record.partner_id.value"/></strong>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="o_project_kanban_boxes oe_kanban_text_red text-right">
+                                    <span><field name="date_start" widget="date"/></span>
+                                </div>
+
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!--[Error] Context doesn't pass partner_id value. -->
+                                        <button class="btn-link"
+                                                type="action"
+                                                name="%(tsm_tasks_from_project_action)d"
+                                                title="Tasks of the project"
+                                                context="{'partner_id': 'partner_id'}">
+                                            <t t-esc="record.task_count.value"/> Tasks
+                                        </button>
+                                        <button t-if="record.task_needaction_count.raw_value" class="btn-link o_needaction"
+                                                type="action"
+                                                name="%(tsm_tasks_from_project_action)d"
+                                                title="Unread Messages"
+                                                context="{'search_default_message_needaction': 1, 'partner_id': 'partner_id'}">
+                                            <i class='fa fa-comments'/>
+                                            <t t-esc="record.task_needaction_count.raw_value"/>
+                                        </button>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </t>
@@ -174,5 +212,28 @@
 
     <menuitem id="tsm_project_menu" name="Projects" parent="tsm_main_menu"
               action="tsm_project_open_all_action" sequence="3"/>
+
+    <!--=======================
+        Tasks From Project views
+    ========================-->
+    <record id="tsm_tasks_from_project_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">['|',('active', '=', True), ('active', '=', False)]</field>
+        <field name="context">{
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
+            }</field>
+        <field name="search_view_id" ref="tsm_task_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Here, you can create new task
+            </p>
+            <p>
+                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+            </p>
+        </field>
+    </record>
 
 </odoo>
