@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_tsm_task_timesheet_user,tsm.task.timesheet.user,model_tsm_task_timesheet,tsm_base.group_tsm_user,1,1,1,1
+access_tsm_task_timesheet_tags_user,tsm.task.timesheet.tags.user,model_tsm_task_timesheet_tags,tsm_base.group_tsm_user,1,0,0,0
+access_tsm_task_timesheet_tags_manager,tsm.task.timesheet.tags.manager,model_tsm_task_timesheet_tags,tsm_base.group_tsm_manager,1,1,1,1
