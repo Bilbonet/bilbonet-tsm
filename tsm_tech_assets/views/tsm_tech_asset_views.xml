@@ -190,7 +190,7 @@
     <menuitem id="tsm_config_tech_asset_type_menu" action="tsm_tech_asset_type_action"
               name="Tech Asset Types"
               parent="tsm_base.tsm_config_menu"
-              sequence="4"
+              sequence="10"
               groups="base.group_no_one"/>
 
 </odoo>

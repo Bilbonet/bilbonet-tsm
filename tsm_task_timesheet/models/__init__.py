@@ -3,4 +3,4 @@
 
 from . import tsm_task_timesheet
 from . import tsm_task
-
+from . import res_config_settings

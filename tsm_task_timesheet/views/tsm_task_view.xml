@@ -11,8 +11,11 @@
                         <field name="timesheet_ids">
                             <tree editable="bottom" string="Timesheet Activities" default_order="date_time">
                                 <field name="date_time"/>
-                                <field name="user_id" required="1" options="{'no_create': True}"/>
-                                <field name="name"/>
+                                <field name="user_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="name" groups="tsm_task_timesheet.group_tsm_timesheet_title"/>
+                                <field name="tag_ids" options="{'no_create': True, 'no_open': True}"
+                                       groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                       required="1"/>
                                 <field name="amount" string="Duration" widget="float_time"/>
                                 <button name="button_end_work"
                                         string="Stop"

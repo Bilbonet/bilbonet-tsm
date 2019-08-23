@@ -39,27 +39,23 @@
               </p>
             </field>
         </record>
-
         <record id="tsm_task_timesheet_report_view_pivot_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="5"/>
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="tsm_task_timesheet_line_pivot"/>
             <field name="act_window_id" ref="tsm_task_timesheet_report_by_user_act"/>
         </record>
-
         <record id="tsm_task_timesheet_report_view_tree_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="10"/>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="tsm_task_timesheet.tsm_task_timesheet_line_tree"/>
             <field name="act_window_id" ref="tsm_task_timesheet_report_by_user_act"/>
         </record>
-
         <menuitem id="menu_tsm_task_timesheet_reports_timesheet"
             name="Timesheet"
             parent="menu_tsm_task_timesheet_reports"
             groups="tsm_base.group_tsm_manager"
             sequence="10"/>
-
         <menuitem id="menu_tsm_task_timesheet_reports_user"
             name="By User"
             parent="menu_tsm_task_timesheet_reports_timesheet"
@@ -85,14 +81,12 @@
               </p>
             </field>
         </record>
-
         <record id="tsm_timesheet_action_view_report_by_task_pivot" model="ir.actions.act_window.view">
             <field name="sequence" eval="5"/>
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="tsm_task_timesheet_line_pivot"/>
             <field name="act_window_id" ref="tsm_task_timesheet_report_by_task_act"/>
         </record>
-
         <menuitem id="menu_tsm_task_timesheet_reports_task"
             name="By Task"
             parent="menu_tsm_task_timesheet_reports_timesheet"

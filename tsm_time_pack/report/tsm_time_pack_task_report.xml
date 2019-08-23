@@ -18,7 +18,8 @@
                                       t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
                             </td>
                             <td style="font-size:0.7em;">
-                                <span t-field="t.name"/>
+                                <span t-if="t.name != '/'" t-field="t.name"/><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                <span t-if="t.name == '/'" t-field="t.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
                             </td>
                             <td style="font-size:0.7em;" class="text-right">
                                 <span t-field="t.amount"

@@ -11,6 +11,14 @@ class TsmTaskTimesheet(models.Model):
     _description = 'Spent time in tasks'
     _order = 'date_time desc, id desc'
 
+    def _get_default_tag_id(self):
+        """ Assign Default Tag if exists """
+        tag_id = self.env['tsm.task.timesheet.tags'].search([
+            ('default', '=', True)], limit=1)
+        if not tag_id:
+            return False
+        return tag_id.id
+
     company_id = fields.Many2one('res.company', string='Company',
                                  required=True,
                                  default=lambda self: self.env.user.company_id)
@@ -19,7 +27,7 @@ class TsmTaskTimesheet(models.Model):
                          "you to hide the account without removing it.",
                     default=True)
     date_time = fields.Datetime(default=fields.Datetime.now, string='Date')
-    name = fields.Char(string='Timesheet Title', required=True)
+    name = fields.Char(string='Timesheet Title', default="/", required=True)
     amount = fields.Float(string='Quantity', default=0.0)
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
     project_id = fields.Many2one('tsm.project', 'Project')
@@ -35,6 +43,9 @@ class TsmTaskTimesheet(models.Model):
                                      readonly=True)
     task_partner_id = fields.Many2one(related='task_id.partner_id',
                                        store=True, string='Customer')
+    tag_ids = fields.Many2one('tsm.task.timesheet.tags',
+                              string='Timesheet Tags',
+                              default=_get_default_tag_id)
 
     @api.model
     def create(self, values):
@@ -110,3 +121,33 @@ class TsmTaskTimesheet(models.Model):
             self.button_open_task()
         else:
             self.button_close_task()
+
+
+class TsmTaskTimesheeetTags(models.Model):
+    """ Tags of timesheets """
+    _name = "tsm.task.timesheet.tags"
+    _description = "Tags in timesheet"
+    _order = "sequence, id"
+
+    name = fields.Char(required=True)
+    active = fields.Boolean(default=True,
+        help="If the active field is set to False, it will allow you to hide"
+        " the tag without removing it.")
+    default = fields.Boolean('Default', default=False,
+                             help="Selected by default when create timesheet.")
+    sequence = fields.Integer(string='Sequence', index=True, default=10,
+        help="Gives the sequence order when displaying a list of tags.")
+
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', "Tag name already exists!"),
+    ]
+
+    @api.constrains('default')
+    def _check_default(self):
+        if self.default:
+            checked_bool = self.search([
+                                ('id', '!=', self.id),('default', '=', True)])
+            if checked_bool:
+                raise ValidationError(
+                    _("There's already one Tag checked as defautl.\n "
+                      "Tag Checked : %s") % checked_bool[0].name)

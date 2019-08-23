@@ -320,7 +320,7 @@
         <field name="name">TSM Task Tags Form</field>
         <field name="model">tsm.task.tags</field>
         <field name="arch" type="xml">
-            <form string="Tags">
+            <form string="Task Tags">
                 <group>
                     <field name="name"/>
                 </group>
@@ -333,12 +333,12 @@
         <field name="view_type">form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Click to add a new tag.
+                Click to add a new task tag.
             </p>
         </field>
     </record>
     <menuitem id="tsm_config_task_tags_menu" action="tsm_task_tags_action"
-              name="Tags"
+              name="Task Tags"
               parent="tsm_config_menu"
               sequence="3"
               groups="base.group_no_one"/>

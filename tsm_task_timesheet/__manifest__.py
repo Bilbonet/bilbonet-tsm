@@ -11,7 +11,9 @@
         'tsm_base',
     ],
     'data': [
+        'security/tsm_timesheet_security.xml',
         'security/ir.model.access.csv',
+        'views/res_config_settings_views.xml',
         'views/tsm_task_view.xml',
         'views/tsm_task_timesheet_view.xml',
         'views/tsm_task_timesheet_report_view.xml',

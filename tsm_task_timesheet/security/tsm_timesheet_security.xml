@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="group_tsm_timesheet_title" model="res.groups">
+        <field name="name">Title in Timesheet</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_tsm_timesheet_tag" model="res.groups">
+        <field name="name">Tag in Timesheet</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>
