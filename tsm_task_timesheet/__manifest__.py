@@ -13,6 +13,7 @@
     'data': [
         'security/tsm_timesheet_security.xml',
         'security/ir.model.access.csv',
+        'data/tsm_task_timesheet_tag_data.xml',
         'views/res_config_settings_views.xml',
         'views/tsm_task_view.xml',
         'views/tsm_task_timesheet_view.xml',
