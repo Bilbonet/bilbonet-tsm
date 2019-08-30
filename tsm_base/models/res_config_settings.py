@@ -9,6 +9,8 @@ class ResConfigSettings(models.TransientModel):
 
     default_tags_in_task = fields.Boolean(string="Use Tags in Tasks",
                                           default_model='tsm.task')
+    group_tsm_task_contact = fields.Boolean("Task Contact",
+                implied_group='tsm_base.group_tsm_task_contact')
 
     # Update field in active tasks
     @api.onchange('default_tags_in_task')

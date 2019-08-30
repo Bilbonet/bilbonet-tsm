@@ -21,6 +21,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" title="Use contact in tasks">
+                            <div class="o_setting_left_pane">
+                                <field name="group_tsm_task_contact"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="group_tsm_task_contact"/>
+                                <div class="text-muted">
+                                    Use contact in task to assign partners responsible.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </xpath>
