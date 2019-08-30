@@ -65,6 +65,7 @@
                                 class="o_task_user_field"
                                 options='{"no_open": True}'/>
                             <field name="partner_id" required="1"/>
+                            <field name="contact_id" groups="tsm_base.group_tsm_task_contact"/>
                             <field name="tags_in_task" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags"
                                    options="{'color_field': 'color', 'no_create_edit': True}"

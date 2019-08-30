@@ -21,8 +21,6 @@
     </record>
 
     <data noupdate="1">
-
-
         <!-- ============= -->
         <!-- Project Rules -->
         <!-- ============= -->
@@ -61,8 +59,6 @@
             <field name="perm_unlink" eval="True"/>
         </record>
 
-
-
         <!-- =========== -->
         <!-- Tasks Rules -->
         <!-- =========== -->
@@ -98,7 +94,14 @@
             <field name="perm_write" eval="True"/>
             <field name="perm_unlink" eval="True"/>
         </record>
-
     </data>
+
+    <!-- =========== -->
+    <!-- Settings    -->
+    <!-- =========== -->
+    <record id="group_tsm_task_contact" model="res.groups">
+        <field name="name">Contac in Task</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
 
 </odoo>
