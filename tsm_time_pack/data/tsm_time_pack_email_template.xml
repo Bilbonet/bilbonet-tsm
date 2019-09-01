@@ -59,14 +59,15 @@
                         <tr style="color:#dc3545;">
                             <td style="width:100px;padding:5px">Exceded:</td>
                             <td class="text-right">
-                                <strong>${('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))}</strong> hours
+                                <strong>${('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))}</strong> hours
                             </td>
                         </tr>
                         % endif
                     </tbody>
                 </table>
-             </td>
-             <td>
+            </td>
+            <td>
+                % if object.complimentary_hours > 0:
                 <table style="margin-left:30px;">
                     <tbody>
                         <tr style="color:#875A7B;">
@@ -79,6 +80,7 @@
                         <tr><td style="width:100px;padding:5px">&nbsp;</td></tr>
                     </tbody>
                 </table>
+                % endif
             </td>
         </tr>
     </table>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-09 07:11+0000\n"
-"PO-Revision-Date: 2019-08-09 07:11+0000\n"
+"POT-Creation-Date: 2019-08-31 18:39+0000\n"
+"PO-Revision-Date: 2019-08-31 18:39+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgid "\n"
 "\n"
 "    <table style=\"padding:0px;width:800px;background-color:#f9f9f9;border:solid 1px #f0f0f0;\">\n"
 "        <tr>\n"
-"            <td colspan=\"2\" style=\"text-align:center;\"><h2>RESUMEN DE HORAS</h2></td>\n"
+"            <td colspan=\"2\" style=\"text-align:center;\"><h2>HOURS SUMMARY</h2></td>\n"
 "        </tr>\n"
 "        <tr>\n"
 "            <td style=\"width:50%\">\n"
@@ -65,14 +65,15 @@ msgid "\n"
 "                        <tr style=\"color:#dc3545;\">\n"
 "                            <td style=\"width:100px;padding:5px\">Exceded:</td>\n"
 "                            <td class=\"text-right\">\n"
-"                                <strong>${('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))}</strong> hours\n"
+"                                <strong>${('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))}</strong> hours\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        % endif\n"
 "                    </tbody>\n"
 "                </table>\n"
-"             </td>\n"
-"             <td>\n"
+"            </td>\n"
+"            <td>\n"
+"                % if object.complimentary_hours > 0:\n"
 "                <table style=\"margin-left:30px;\">\n"
 "                    <tbody>\n"
 "                        <tr style=\"color:#875A7B;\">\n"
@@ -85,6 +86,7 @@ msgid "\n"
 "                        <tr><td style=\"width:100px;padding:5px\">&nbsp;</td></tr>\n"
 "                    </tbody>\n"
 "                </table>\n"
+"                % endif\n"
 "            </td>\n"
 "        </tr>\n"
 "    </table>\n"
@@ -113,11 +115,11 @@ msgid "\n"
 msgstr "\n"
 "<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hola ${object.partner_id.name or ''},</p>\n"
-"    <p>Le informamos sobre la siguiente bolsa de horas:</p>\n"
+"    <p>Le informamos sobre la siguiente bolsa de horas: </p>\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Nombre: <strong>[${object.code}] ${object.name or ''}</strong><br />\n"
-"       &nbsp;&nbsp;Fecha Contratada: <strong>${object.format_date(object.date_start)}</strong><br />\n"
+"       &nbsp;&nbsp;Fecha contratada: <strong>${object.format_date(object.date_start)}</strong><br />\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -138,53 +140,55 @@ msgstr "\n"
 "                        <tr style=\"color:#875A7B;\">\n"
 "                            <td style=\"width:100px;padding:5px\">Contratadas:</td>\n"
 "                            <td>\n"
-"                                <strong>${('%d:%02d' % (object.contrated_hours,(object.contrated_hours*60)%60))}</strong> hours\n"
+"                                <strong>${('%d:%02d' % (object.contrated_hours,(object.contrated_hours*60)%60))}</strong> horas\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        <tr style=\"background-color:#dc3545;color:#FFFFFF;\">\n"
 "                            <td style=\"width:100px;padding:5px\">Consumidas<span class=\"fa fa-arrow-circle-down text-danger\"/>:</td>\n"
 "                            <td class=\"text-right\">\n"
-"                                <strong>${('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))}</strong> hours\n"
+"                                <strong>${('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))}</strong> horas\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        % if object.remaining_hours > 0:\n"
 "                        <tr>\n"
 "                            <td style=\"width:100px;padding:5px\">Restantes:</td>\n"
 "                            <td class=\"text-right\">\n"
-"                                <strong>${('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))}</strong> hours\n"
+"                                <strong>${('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))}</strong> horas\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        % else\n"
 "                        <tr style=\"color:#dc3545;\">\n"
 "                            <td style=\"width:100px;padding:5px\">Excedidas:</td>\n"
 "                            <td class=\"text-right\">\n"
-"                                <strong>${('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))}</strong> hours\n"
+"                                <strong>${('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))}</strong> horas\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        % endif\n"
 "                    </tbody>\n"
 "                </table>\n"
-"             </td>\n"
-"             <td>\n"
+"            </td>\n"
+"            <td>\n"
+"                % if object.complimentary_hours > 0:\n"
 "                <table style=\"margin-left:30px;\">\n"
 "                    <tbody>\n"
 "                        <tr style=\"color:#875A7B;\">\n"
 "                            <td style=\"width:100px;padding:5px\">Cortesía:</td>\n"
 "                            <td>\n"
-"                                <strong>${('%d:%02d' % (object.complimentary_hours,(object.complimentary_hours*60)%60))}</strong> hours\n"
+"                                <strong>${('%d:%02d' % (object.complimentary_hours,(object.complimentary_hours*60)%60))}</strong> horas\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        <tr><td style=\"width:100px;padding:5px\">&nbsp;</td></tr>\n"
 "                        <tr><td style=\"width:100px;padding:5px\">&nbsp;</td></tr>\n"
 "                    </tbody>\n"
 "                </table>\n"
+"                % endif\n"
 "            </td>\n"
 "        </tr>\n"
 "    </table>\n"
 "\n"
 "    <br/>\n"
-"    <p>Si tiene alguna pregunta no dude en contactarnos.</p>\n"
-"    <p>Gracias por confiar en ${object.company_id.name or 'us'}!</p>\n"
+"    <p>Si tiene alguna pregunta no dude en contactarnos..</p>\n"
+"    <p>Gracias por confiar en  ${object.company_id.name or 'us'}!</p>\n"
 "    % if object.user_id.signature:\n"
 "       ${object.user_id.signature | safe}\n"
 "    % else\n"
@@ -492,7 +496,7 @@ msgstr "Fecha de fin"
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
 msgid "Exceded:"
-msgstr "Exceded:"
+msgstr "Excedido:"
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_search_view
@@ -505,9 +509,9 @@ msgid "Holds visibility of the time packs that belong to the current time pack:\
 "- On invitation only: Employees may only see the followed time packs\n"
 "- Visible by all employees: Employees may see all time packs\n"
 ""
-msgstr "Holds visibility of the time packs that belong to the current time pack:\n"
-"- On invitation only: Employees may only see the followed time packs\n"
-"- Visible by all employees: Employees may see all time packs\n"
+msgstr "Visibilidad de la bolsa de horas:\n"
+"- Solo con invitación: Solo los empleados seguidores pueden ver la bolsa de horas\n"
+"- Visible para todos los empleados: Todos los empleados pueden ver la bolsa de horas\n"
 ""
 
 #. module: tsm_time_pack
@@ -522,7 +526,7 @@ msgid "Hours Contrated: %s\n"
 "Hours Consumed:  %s\n"
 "Progress: %s %%"
 msgstr "Horas Contratadas: %s\n"
-"Horas COnsumidas:  %s\n"
+"Horas Consumidas:  %s\n"
 "Progreso: %s %%"
 
 #. module: tsm_time_pack
@@ -538,7 +542,7 @@ msgstr "ID (identificación)"
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack_sale_autoconfirm
 msgid "If it is checked the sale order will be created and confirmed automatically"
-msgstr "If it is checked the sale order will be created and confirmed automatically"
+msgstr "Si está marcado la orden de venta será creada y confirmada automaticamente"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_product_product_service_time_pack
@@ -549,7 +553,7 @@ msgstr "Si esta marcado, se permitira el uso en las bolsas de horas"
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack_active
 msgid "If the active field is set to False, it will allow you to hide the time pack without removing it."
-msgstr "If the active field is set to False, it will allow you to hide the time pack without removing it."
+msgstr "Si el campo activo en fijado a falso, le permitirá oculatar la bolsa de horas sin eliminarla."
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_task_timesheet_discount_time
@@ -730,7 +734,7 @@ msgstr "TSM Bolsa de Horas relacionada"
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_sale_order_line_tsm_time_pack_id
 msgid "TSM Time Pack related that generated this order line"
-msgstr "TSM Time Pack related that generated this order line"
+msgstr "TSM Bolsa de horas relacionada que generó esta linea de venta"
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
@@ -776,7 +780,7 @@ msgstr "Bolsa Horas Titulo..."
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_sale_order_tsm_time_pack_id
 msgid "Time Pack related that generated this order"
-msgstr "Time Pack related that generated this order"
+msgstr "Bolsa de horas relacionada que generó esta orden de venta"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_task_timesheet_timepack_id
@@ -790,7 +794,7 @@ msgstr "Bolsa de horas"
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack_contrated_hours
 msgid "Time contracted by the client for support and it can be consumed in tasks and timesheet."
-msgstr "Time contracted by the client for support and it can be consumed in tasks and timesheet."
+msgstr "Tiempo contratado por el cliente para soporte y puede ser consumido en los partes de horas de las tareas."
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
@@ -806,7 +810,7 @@ msgstr "Partes de horas"
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack_total_hours_spent
 msgid "Total Hours Spent"
-msgstr "Total Hours Spent"
+msgstr "Total Horas Empleadas"
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_tree_view
@@ -832,7 +836,7 @@ msgstr "Total sin impuestos"
 #: model:ir.model.fields,field_description:tsm_time_pack.field_product_product_service_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_product_template_service_time_pack
 msgid "Use in Time Packs"
-msgstr "Use in Time Packs"
+msgstr "Utilizado en bolsas de horas"
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_search_view
@@ -842,18 +846,18 @@ msgstr "Usuario"
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack_company_currency
 msgid "Utility field to express amount currency"
-msgstr "Campo útil para expresar importe en moneda."
+msgstr "Campo útil para expresar importe en divisa."
 
 #. module: tsm_time_pack
 #: selection:tsm.time.pack,privacy_visibility:0
 msgid "Visible by all employees"
-msgstr "Visible by all employees"
+msgstr "Visible para todos los empleados"
 
 #. module: tsm_time_pack
 #: code:addons/tsm_time_pack/models/tsm_time_pack.py:310
 #, python-format
 msgid "You must first select a Customer and product for Time Pack: %s"
-msgstr "You must first select a Customer and product for Time Pack: %s"
+msgstr "Debe seleccionar primero un Contacto y producto par la bolsa de horas: %s"
 
 #. module: tsm_time_pack
 #: model:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
