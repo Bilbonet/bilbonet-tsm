@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 19:04+0000\n"
-"PO-Revision-Date: 2019-02-24 19:04+0000\n"
+"POT-Creation-Date: 2019-08-31 18:34+0000\n"
+"PO-Revision-Date: 2019-08-31 18:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -258,7 +258,13 @@ msgid "Utility field to express amount currency"
 msgstr ""
 
 #. module: tsm_task_material
-#: code:addons/tsm_task_material/models/tsm_task.py:102
+#: code:addons/tsm_task_material/models/tsm_task.py:160
+#, python-format
+msgid "You cannot delete a task with sale order. You can either delete the task's sale order and then delete the task or simply deactivate the task."
+msgstr ""
+
+#. module: tsm_task_material
+#: code:addons/tsm_task_material/models/tsm_task.py:103
 #, python-format
 msgid "You must first select a Customer and materials for Task: %s!"
 msgstr ""

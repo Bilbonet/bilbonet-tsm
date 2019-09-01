@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 19:54+0000\n"
-"PO-Revision-Date: 2019-03-01 19:54+0000\n"
+"POT-Creation-Date: 2019-09-01 09:54+0000\n"
+"PO-Revision-Date: 2019-09-01 09:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_create_date
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Creado en"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_partner_id
@@ -172,20 +172,20 @@ msgstr "Aqui tu puedes crear una nueva tarea"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset_privacy_visibility
-msgid "Holds visibility of the tasks that belong to the current project:\n"
-"- On invitation only: Employees may only see the followed project, tasks\n"
-"- Visible by all employees: Employees may see all project, tasks\n"
+msgid "Holds visibility of the tech asset:\n"
+"- On invitation only: Employees may only see the followed tech asset\n"
+"- Visible by all employees: All employees may see tech asset\n"
 ""
-msgstr "Holds visibility of the tasks that belong to the current project:\n"
-"- On invitation only: Employees may only see the followed project, tasks\n"
-"- Visible by all employees: Employees may see all project, tasks\n"
+msgstr "Visibilidad del elemento técnico:\n"
+"- Solo con invitación: Solo los empleados seguidores pueden ver el elemento técnico\n"
+"- Visible para todos los empleados: Todos los empleados pueden ver el elemento técnico\n"
 ""
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_id
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type_id_10524
 msgid "ID"
-msgstr "ID"
+msgstr "ID (identificación)"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset_active
@@ -208,7 +208,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type_write_date
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Última actualización en"
 
 #. module: tsm_tech_assets
 #: selection:tsm.tech.asset,priority:0
@@ -278,6 +278,11 @@ msgstr "Privacidad"
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_tree_view
 msgid "Responsible"
 msgstr "Responsable"
+
+#. module: tsm_tech_assets
+#: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_can_edit
+msgid "Security: only managers can edit"
+msgstr "Seguridad: Solo responsables pueden editar"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_sequence
@@ -358,10 +363,15 @@ msgid "Telefono:"
 msgstr "Teléfono:"
 
 #. module: tsm_tech_assets
-#: code:addons/tsm_tech_assets/models/tsm_tech_asset.py:80
+#: code:addons/tsm_tech_assets/models/tsm_tech_asset.py:98
 #, python-format
 msgid "The code must be unique!"
-msgstr "El codigo debe ser único!"
+msgstr "El código debe ser único!"
+
+#. module: tsm_tech_assets
+#: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset_can_edit
+msgid "This field is for security purpose. Only members of managers group can modify some fields."
+msgstr "Este campo es para propositos de seguridad. Solo miembros del grupo de gerentes pueden modificar campos."
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type_id
@@ -383,7 +393,7 @@ msgstr "Tipos"
 #. module: tsm_tech_assets
 #: model:ir.model,name:tsm_tech_assets.model_tsm_tech_asset_type
 msgid "Types of assets"
-msgstr "Tipos de "
+msgstr "Tipos de elementos"
 
 #. module: tsm_tech_assets
 #: model:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document

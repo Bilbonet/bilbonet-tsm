@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-12 19:28+0000\n"
-"PO-Revision-Date: 2019-07-12 19:28+0000\n"
+"POT-Creation-Date: 2019-08-31 18:14+0000\n"
+"PO-Revision-Date: 2019-08-31 18:14+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,73 +18,73 @@ msgstr ""
 #. module: tsm_base
 #: model:mail.template,body_html:tsm_base.tsm_task_email_template
 msgid "\n"
-"<div style=\"font-size:13px;font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Hola ${object.partner_id.name or ''},</p>\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Le informamos de la siguiente tarea: </p>\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hello ${object.partner_id.name or ''},</p>\n"
+"    <p>We inform you about the following task: </p>\n"
 "\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;Titulo de la Tarea: <strong style=\"font-weight:bold;\">${object.name}</strong><br>\n"
-"       &nbsp;&nbsp;Comienzo de Tarea: <strong style=\"font-weight:bold;\">${object.format_date(object.date_start) or ''}</strong><br>\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Task Title: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Task Start: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
-"       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\" style=\"text-decoration:none;color:rgb(124, 123, 173);background-color:transparent;\"><strong style=\"font-weight:bold;\">${object.user_id.name}</strong></a>\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
 "       % endif\n"
 "    </p>\n"
 "\n"
-"    <br>\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Gracias por su confianza en  ${object.company_id.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for trusting in  ${object.company_id.name or 'us'}!</p>\n"
 "    % if object.user_id.signature:\n"
 "       ${object.user_id.signature | safe}\n"
 "    % else\n"
-"        <div style=\"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;padding:0px;margin:auto;\">\n"
-"            <table style=\"background-color:transparent;border-spacing:0px;border-collapse:collapse;\" cellspacing=\"0\" cellpadding=\"0\">\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
 "                <tbody>\n"
 "                    <tr>\n"
 "                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
-"                            <img src=\"/logo.png\" style=\"border-style:none;vertical-align:middle;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-width:0px;border-left-color:currentcolor;border-bottom-width:0px;border-bottom-color:currentcolor;border-right-width:0px;border-right-color:currentcolor;border-top-width:0px;border-top-color:currentcolor;padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
 "                        </td>\n"
 "                    </tr>\n"
 "                </tbody>\n"
 "            </table>\n"
 "        </div>\n"
 "    % endif\n"
-"    <br>\n"
+"    <br/>\n"
 "</div>\n"
 "        "
 msgstr "\n"
-"<div style=\"font-size:13px;font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Hola ${object.partner_id.name or ''},</p>\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Le informamos de la siguiente tarea: </p>\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hola ${object.partner_id.name or ''},</p>\n"
+"    <p>Le informamos hacerca de la siguiente tarea: </p>\n"
 "\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;Titulo de la Tarea: <strong style=\"font-weight:bold;\">${object.name}</strong><br>\n"
-"       &nbsp;&nbsp;Comienzo de Tarea: <strong style=\"font-weight:bold;\">${object.format_date(object.date_start) or ''}</strong><br>\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Titulo de la Tarea: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Fecha Inicio: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
-"       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\" style=\"text-decoration:none;color:rgb(124, 123, 173);background-color:transparent;\"><strong style=\"font-weight:bold;\">${object.user_id.name}</strong></a>\n"
+"       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
 "       % endif\n"
 "    </p>\n"
 "\n"
-"    <br>\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
-"    <p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Gracias por su confianza en  ${object.company_id.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <p>Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
+"    <p>Gracias por confiar en  ${object.company_id.name or 'us'}!</p>\n"
 "    % if object.user_id.signature:\n"
 "       ${object.user_id.signature | safe}\n"
 "    % else\n"
-"        <div style=\"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;padding:0px;margin:auto;\">\n"
-"            <table style=\"background-color:transparent;border-spacing:0px;border-collapse:collapse;\" cellspacing=\"0\" cellpadding=\"0\">\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
 "                <tbody>\n"
 "                    <tr>\n"
 "                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
-"                            <img src=\"/logo.png\" style=\"border-style:none;vertical-align:middle;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-width:0px;border-left-color:currentcolor;border-bottom-width:0px;border-bottom-color:currentcolor;border-right-width:0px;border-right-color:currentcolor;border-top-width:0px;border-top-color:currentcolor;padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
 "                        </td>\n"
 "                    </tr>\n"
 "                </tbody>\n"
 "            </table>\n"
 "        </div>\n"
 "    % endif\n"
-"    <br>\n"
+"    <br/>\n"
 "</div>\n"
 "        "
 
@@ -108,11 +108,6 @@ msgstr "${object.company_id.name} Tarea (${object.name or 'n/a'})"
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 msgid "(Un)archiving a project automatically (un)archives its tasks. Do you want to proceed?"
 msgstr "(Des)archivar un proyecto automaticamente (des)archiva sus tareas. Quieres proceder?"
-
-#. module: tsm_base
-#: model:ir.ui.view,arch_db:tsm_base.tsm_tasks_from_project_kanban_view
-msgid "<span class=\"o_label\">Tasks</span>"
-msgstr "<span class=\"o_label\">Tareas</span>"
 
 #. module: tsm_base
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
@@ -153,11 +148,6 @@ msgid "Archived"
 msgstr "Archivado"
 
 #. module: tsm_base
-#: model:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
-msgid "Assign to Me"
-msgstr "Asignármelo a mí"
-
-#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_user_id
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Assigned to"
@@ -185,7 +175,7 @@ msgstr "Bloqueada"
 
 #. module: tsm_base
 #: model:ir.actions.act_window,help:tsm_base.tsm_task_tags_action
-msgid "Click to add a new tag."
+msgid "Click to add a new task tag."
 msgstr "Clic para añadir una nueva etiqueta."
 
 #. module: tsm_base
@@ -234,7 +224,13 @@ msgid "Configuration"
 msgstr "Configuración"
 
 #. module: tsm_base
+#: model:res.groups,name:tsm_base.group_tsm_task_contact
+msgid "Contac in Task"
+msgstr "Contacto en la Tarea"
+
+#. module: tsm_base
 #: model:ir.model,name:tsm_base.model_res_partner
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task_contact_id
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
 msgid "Contact"
@@ -403,9 +399,9 @@ msgid "Holds visibility of the task:\n"
 " - On invitation only: Employees may only see the followed tasks\n"
 "- Visible by all employees: Employees may see all tasks\n"
 ""
-msgstr "Holds visibility of the task:\n"
-" - On invitation only: Employees may only see the followed tasks\n"
-"- Visible by all employees: Employees may see all tasks\n"
+msgstr "Visibilidad de la Tarea:\n"
+" - Solo con invitación: Solo los empleados seguidores pueden ver las tareas\n"
+"- Visible para todos los empleados: Los empleados pueden ver todas las tareas\n"
 ""
 
 #. module: tsm_base
@@ -414,9 +410,9 @@ msgid "Holds visibility of the tasks that belong to the current project:\n"
 "- On invitation only: Employees may only see the followed project, tasks\n"
 "- Visible by all employees: Employees may see all project, tasks\n"
 ""
-msgstr "Holds visibility of the tasks that belong to the current project:\n"
-"- On invitation only: Employees may only see the followed project, tasks\n"
-"- Visible by all employees: Employees may see all project, tasks\n"
+msgstr "Visibilidad de las tareas que pertenecen al proyecto actual:\n"
+"- Solo con invitación: Solo los empleados seguidores pueden ver las tareas\n"
+"- Visible para todos los empleados: Todos los empleados pueden ver las tareas del proyecto\n"
 ""
 
 #. module: tsm_base
@@ -471,11 +467,6 @@ msgstr "Explicación del kanban válido"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type___last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
-
-#. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_task_date_last_stage_update
-msgid "Last Stage Update"
-msgstr "última actualización de la etapa"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project_write_uid
@@ -664,6 +655,8 @@ msgid "Sequence"
 msgstr "Secuencia"
 
 #. module: tsm_base
+#: model:ir.actions.act_window,name:tsm_base.tsm_config_settings_action
+#: model:ir.ui.menu,name:tsm_base.tsm_menu_configuration
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 msgid "Settings"
 msgstr "Ajustes"
@@ -712,6 +705,7 @@ msgstr "Fecha de inicio"
 #. module: tsm_base
 #: model:ir.module.category,name:tsm_base.module_tsm
 #: model:ir.ui.menu,name:tsm_base.tsm_main_menu
+#: model:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "T.S.M"
 msgstr "T.S.M"
 
@@ -719,6 +713,11 @@ msgstr "T.S.M"
 #: model:ir.actions.act_window,name:tsm_base.tsm_project_open_all_action
 msgid "T.S.M: Projects"
 msgstr "T.S.M: Proyectos"
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
+msgid "TSM Task Settings"
+msgstr "TSM Task Settings"
 
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_type_open_action
@@ -737,8 +736,6 @@ msgstr "El nombre de etiqueta ya existe !"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tag_ids
-#: model:ir.ui.menu,name:tsm_base.tsm_config_task_tags_menu
-#: model:ir.ui.view,arch_db:tsm_base.tsm_task_tags_form_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_tags_search_view
 msgid "Tags"
 msgstr "Etiquetas"
@@ -764,6 +761,11 @@ msgid "Task Code"
 msgstr "Código Tarea"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_res_config_settings_group_tsm_task_contact
+msgid "Task Contact"
+msgstr "Task Contact"
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_description
 msgid "Task Description"
 msgstr "Tarea Descrición"
@@ -774,6 +776,12 @@ msgstr "Tarea Descrición"
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_type_tree
 msgid "Task Stage"
 msgstr "Etapa de la tarea"
+
+#. module: tsm_base
+#: model:ir.ui.menu,name:tsm_base.tsm_config_task_tags_menu
+#: model:ir.ui.view,arch_db:tsm_base.tsm_task_tags_form_view
+msgid "Task Tags"
+msgstr "Task Tags"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_name
@@ -795,10 +803,11 @@ msgstr "Título de tarea..."
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project_task_ids
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project_task_needaction_count
 #: model:ir.ui.menu,name:tsm_base.tsm_task_menu
+#: model:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
+#: model:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_tree_view
-#: model:ir.ui.view,arch_db:tsm_base.tsm_tasks_from_project_form_view
 msgid "Tasks"
 msgstr "Tareas"
 
@@ -816,6 +825,11 @@ msgstr "Titulo Tarea"
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type_closed
 msgid "Tasks in this stage are considered closed."
 msgstr "Tareas en esta etapa se considerarán cerradas."
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
+msgid "Tasks of the project"
+msgstr "Tasks of the project"
 
 #. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_project
@@ -867,10 +881,37 @@ msgid "Unassigned"
 msgstr "No asignado"
 
 #. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Unread Messages"
 msgstr "Mensajes por leer"
+
+#. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_res_config_settings_default_tags_in_task
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags_in_task
+msgid "Use Tags in Tasks"
+msgstr "Use Tags en Tareas"
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
+msgid "Use contact in task to assign partners responsible."
+msgstr "Use contacto en tareas para asignar responsable del cliente."
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
+msgid "Use contact in tasks"
+msgstr "Use contacto en tareas"
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
+msgid "Use tags in tasks"
+msgstr "Use tags en tareras"
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
+msgid "Use tags to classify tasks."
+msgstr "Use tags para calsificar tareas."
 
 #. module: tsm_base
 #: model:res.groups,name:tsm_base.group_tsm_user
@@ -918,4 +959,19 @@ msgstr "No puedes eliminar un proyecto con tareas. Puedes eliminar las tareas de
 #: model:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "oe_kanban_text_red"
 msgstr "oe_kanban_text_red"
+
+#. module: tsm_base
+#: model:ir.model,name:tsm_base.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
+
+#. module: tsm_base
+#: model:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
+msgid "text-muted"
+msgstr "text-muted"
+
+#. module: tsm_base
+#: model:ir.model,name:tsm_base.model_tsm_config_settings
+msgid "tsm.config.settings"
+msgstr "tsm.config.settings"
 

@@ -82,12 +82,11 @@ class TsmTechAsset(models.Model):
     ],
         string='Privacy', required=True,
         default='followers',
-        help="Holds visibility of the tasks "
-             "that belong to the current project:\n"
+        help="Holds visibility of the tech asset:\n"
              "- On invitation only: Employees may only "
-             "see the followed project, tasks\n"
-             "- Visible by all employees: Employees "
-             "may see all project, tasks\n")
+             "see the followed tech asset\n"
+             "- Visible by all employees: All employees "
+             "may see tech asset\n")
     can_edit = fields.Boolean(compute='_compute_can_edit',
                     string='Security: only managers can edit',
                     default=True,
