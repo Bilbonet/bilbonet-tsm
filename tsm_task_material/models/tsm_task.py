@@ -45,7 +45,7 @@ class TsmTask(models.Model):
     @api.depends('sale_id')
     def _compute_sale_amount(self):
         if self.sale_id:
-            sale = self.sale_id
+            sale = self.sudo().sale_id
             currency = (
                     self.partner_id.property_product_pricelist.currency_id or
                     self.company_currency or
