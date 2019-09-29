@@ -25,6 +25,8 @@ class TsmProject(models.Model):
         for project in self:
             project.task_count = result.get(project.id, 0)
 
+    # Desde proyect tareas que necesitan algun accion.
+    # Los mostrabamos en la vista kanba! Ahora de momento no lo utilizamos
     def _compute_task_needaction_count(self):
         projects_data = self.env['tsm.task'].read_group([
             ('project_id', 'in', self.ids),
@@ -105,10 +107,12 @@ class TsmProject(models.Model):
         string='Company',
         default=lambda self: self.env['res.company']._company_default_get()
     )
-    task_ids = fields.One2many('tsm.task', 'project_id', string='Tasks')
-    task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
+    task_ids = fields.One2many('tsm.task', 'project_id',
+                               string='Tasks Related')
+    task_count = fields.Integer(compute='_compute_task_count',
+                                string="Amount Tasks")
     task_needaction_count = fields.Integer(
-        compute='_compute_task_needaction_count', string="Tasks")
+        compute='_compute_task_needaction_count', string="Tasks need action")
 
     @api.multi
     def write(self, vals):

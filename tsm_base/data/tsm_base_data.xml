@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <odoo>
     <data noupdate="1">
+
+        <!-- Users -->
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_tsm_manager'))]"/>
+        </record>
+
+        <!-- Paper Format -->
         <record id="tsm_paper_format_report" model="report.paperformat">
             <field name="name">T.S.M A4 Reports</field>
             <field name="default" eval="True" />

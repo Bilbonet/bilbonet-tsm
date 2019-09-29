@@ -98,7 +98,7 @@ class TsmTask(models.Model):
              " * Green indicates the task is ready to be "
              "pulled to the next stage")
     kanban_state_label = fields.Char(compute='_compute_kanban_state_label',
-                                     string='Kanban State',
+                                     string='Kanban State Label',
                                      track_visibility='onchange')
     color = fields.Integer(string='Color Index')
     date_start = fields.Datetime(string='Starting Date',
