@@ -8,9 +8,10 @@ class ResPartner(models.Model):
     """ Inherits partner and adds Tasks information in the partner form """
     _inherit = 'res.partner'
 
-    tsm_task_ids = fields.One2many('tsm.task', 'partner_id', string='Tasks')
+    tsm_task_ids = fields.One2many('tsm.task', 'partner_id',
+                                   string='Partner related tasks')
     tsm_task_count = fields.Integer(
-        compute='_compute_task_count', string='# Tasks')
+        compute='_compute_task_count', string='Amount Partner Tasks')
 
     def _compute_task_count(self):
         fetch_data = self.env['tsm.task'].read_group(

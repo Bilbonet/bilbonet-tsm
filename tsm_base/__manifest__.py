@@ -3,7 +3,7 @@
 
 {
     'name': 'Technical Support Management',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Management',
     'license': 'AGPL-3',
     'author': 'Jesus Ramiro (Bilbonet.NET)',
@@ -17,15 +17,17 @@
     'data': [
         'security/tsm_security.xml',
         'security/ir.model.access.csv',
-        "data/tsm_task_sequence.xml",
-        'data/tsm_paper_format_report.xml',
-        'data/tsm_task_email_template.xml',
+        'data/tsm_task_sequence.xml',
+        'data/tsm_base_data.xml',
         'report/tsm_layout_template.xml',
         'report/tsm_task_report.xml',
+        'data/tsm_task_email_template.xml',
         'views/tsm_project_views.xml',
         'views/tsm_task_views.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',
     ],
     'installable': True,
+    'auto_install': False,
+    'application': True,
 }
