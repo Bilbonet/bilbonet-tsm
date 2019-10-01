@@ -18,7 +18,7 @@ class TsmTaskMaterial(models.Model):
                                  string='Product', required=True)
     name = fields.Text(string='Description')
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
-    product_uom_id = fields.Many2one(comodel_name='product.uom',
+    product_uom_id = fields.Many2one(comodel_name='uom.uom',
                                      string='Unit of Measure')
     price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
     price_subtotal = fields.Float(compute='_compute_price_subtotal',
