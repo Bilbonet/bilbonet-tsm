@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <odoo>
     <template id="tsm_task_material_report_document" inherit_id="tsm_base.tsm_task_report_document">
-        <xpath expr="//div[@name='head_report']" position="after">
+        <xpath expr="//div[@name='task_body_report']" position="after">
             <t t-set="importe" t-value="0"/>
             <div class="row" t-if="len(o.material_ids) > 0" name="task_material">
-                <table class="table table-condensed table-striped">
-                    <thead style="background-color: #000;font-size:0.8em;" >
+                <table class="table table-sm table-striped mt16">
+                    <thead style="background-color: #000;font-size:0.8em;">
                         <tr class="text-center">
                             <th class="text-center" style="color:#FFF;">Material y Servicios</th>
                             <th class="text-right" style="color:#FFF;font-size:0.6em;">Cantidad</th>

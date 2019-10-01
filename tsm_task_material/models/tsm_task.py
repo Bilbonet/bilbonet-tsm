@@ -110,7 +110,7 @@ class TsmTask(models.Model):
         sale = self.env['sale.order'].new({
             'partner_id': self.partner_id,
             'currency_id': currency.id,
-            'date_order': fields.Date.today(),
+            'date_order': fields.Datetime.today(),
             'company_id': self.company_id.id,
             'user_id': self.user_id.id,
             'origin': self.code + ' - ' + self.name,

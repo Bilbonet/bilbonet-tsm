@@ -11,6 +11,7 @@
     "installable": True,
     "depends": [
         "tsm_base",
+        "sale",
         "product",
     ],
     "data": [
