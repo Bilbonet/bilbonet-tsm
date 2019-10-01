@@ -16,7 +16,7 @@
                 <t t-call="tsm_base.tsm_report_layout">
                     <div class="page">
                         <div class="row" name="head_report">
-                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                            <table class="table table-bordered table-sm" style="margin-top:0px;">
                                 <tr>
                                     <td>Cliente:</td>
                                     <td><span t-field="o.partner_id"/></td>
@@ -30,12 +30,10 @@
                                     <td>Dirección:</td>
                                     <td>
                                         <span t-field="o.partner_id.street"/>
-                                        <span t-field="o.partner_id.street2"/>
-                                        <p>
+                                        <span t-field="o.partner_id.street2"/><br/>
                                         <span t-field="o.partner_id.zip"/> -
                                         <span t-field="o.partner_id.city"/> -
                                         <span t-field="o.partner_id.state_id"/>
-                                        </p>
                                     </td>
                                     <td>@mail:</td>
                                     <td><span t-field="o.partner_id.email"/></td>
@@ -43,8 +41,8 @@
                             </table>
                         </div>
                         <div class="row" name="info_report">
-                            <table class="table table-condensed" style="margin-top:-10px;">
-                                <tr class="success">
+                            <table class="table table-sm">
+                                <tr class="bg-success">
                                     <td>
                                         Tarea: <span t-field="o.code"/> -
                                         <span t-field="o.name"/>
