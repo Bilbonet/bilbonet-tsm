@@ -62,8 +62,9 @@ class TsmTaskTimesheet(models.Model):
     def _get_stop_date_time(self):
         for line in self:
             line.date_time_stop = datetime.strptime(
-                line.date_time, "%Y-%m-%d %H:%M:%S"
+                str(line.date_time), "%Y-%m-%d %H:%M:%S"
                 ) + timedelta(seconds=line.amount*3600)
+
 
     @api.onchange('project_id')
     def onchange_project_id(self):
