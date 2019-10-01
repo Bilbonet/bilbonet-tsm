@@ -156,7 +156,8 @@
                             <div class="row">
                                 <div class="col-xs-2">
                                     <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
-                                         t-att-title="record.user_id.value" width="40" height="40" class="oe_kanban_avatar pull-left"/>
+                                         t-att-title="record.user_id.value"  t-att-alt="record.user_id.value"
+                                         width="40" height="40" class="oe_kanban_avatar pull-left"/>
                                 </div>
                                 <div class="col-xs-10">
                                     <div>

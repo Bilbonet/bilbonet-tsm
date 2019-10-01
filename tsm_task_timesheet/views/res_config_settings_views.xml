@@ -5,7 +5,7 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="tsm_base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <div data-key="tsm" position="inside">
+            <div data-key="tsm_base" position="inside">
                 <h2>TSM Timesheet Settings</h2>
                 <div class="row mt16 o_settings_container">
                     <div class="col-xs-12 col-md-6 o_setting_box" title="Use tags in timesheet">
