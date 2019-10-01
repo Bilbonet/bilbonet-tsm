@@ -3,7 +3,7 @@
 {
     "name": "TSM Task Material",
     "summary": "Record products spent in a Task and create Sale Orders",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "Management",
     "author": "Jesus Ramiro,",
     "license": "AGPL-3",

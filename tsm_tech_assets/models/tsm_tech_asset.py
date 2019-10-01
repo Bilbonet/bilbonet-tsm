@@ -75,7 +75,8 @@ class TsmTechAsset(models.Model):
                                  change_default=True)
     task_ids = fields.One2many('tsm.task', 'asset_ids', string='Tasks',
                                context={'active_test': False})
-    task_count = fields.Integer(compute='_compute_task_count', string="Tasks")
+    task_count = fields.Integer(compute='_compute_task_count',
+                                string="Amount Tasks")
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
