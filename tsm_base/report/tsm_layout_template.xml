@@ -27,7 +27,7 @@
                 <div class="col-8">
                     <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
                 </div>
-                <div class="col-4">
+                <div class="col-4" style="font-size:0.8em;">
                     <ul class="list-unstyled">
                         <li t-if="company.phone"><small>Phone: <span t-field="company.phone"/></small></li>
                         <li t-if="company.email"><small>Email: <span t-field="company.email"/></small></li>
@@ -45,7 +45,7 @@
 
     <template id="tsm_report_layout_footer">
         <div t-if="report_type == 'pdf'" class="footer">
-            <div class="text-center" style="border-top: 1px solid black;">
+            <div class="text-center" style="border-top: 1px solid black;font-size:0.8em;">
                 Page: <span class="page"/> / <span class="topage"/>
             </div>
         </div>
