@@ -3,7 +3,7 @@
 
 {
     'name': 'Client Technical Assets Management',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Management',
     'license': 'AGPL-3',
     'author': 'Jesus Ramiro (Bilbonet.NET)',

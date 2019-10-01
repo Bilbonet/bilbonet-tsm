@@ -18,7 +18,7 @@
                 <t t-call="tsm_base.tsm_report_layout">
                     <div class="page">
                         <div class="row" name="head_report">
-                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                            <table class="table table-bordered table-sm" style="margin-top:0px;">
                                 <tr>
                                     <td>Cliente:</td>
                                     <td><span t-field="o.partner_id"/></td>
@@ -32,12 +32,10 @@
                                     <td>Dirección:</td>
                                     <td>
                                         <span t-field="o.partner_id.street"/>
-                                        <span t-field="o.partner_id.street2"/>
-                                        <p>
+                                        <span t-field="o.partner_id.street2"/><br/>
                                         <span t-field="o.partner_id.zip"/> -
                                         <span t-field="o.partner_id.city"/> -
                                         <span t-field="o.partner_id.state_id"/>
-                                        </p>
                                     </td>
                                     <td>@mail:</td>
                                     <td><span t-field="o.partner_id.email"/></td>
@@ -49,7 +47,7 @@
                             </div>
                         </div>
                         <div class="row" name="notes">
-                            <table class="table table-bordered table-condensed mt0">
+                            <table class="table table-bordered table-sm mt0">
                                 <thead style="font-size:1.1em;">
                                     <tr>
                                         <th class="text-center">Notas Técnicas:</th>
@@ -88,7 +86,7 @@
                 <t t-call="tsm_base.tsm_report_layout">
                     <div class="page">
                         <div class="row" name="head_report">
-                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                            <table class="table table-bordered table-sm" style="margin-top:0px;">
                                 <tr>
                                     <td>Cliente:</td>
                                     <td><span t-field="o.partner_id"/></td>
@@ -102,12 +100,10 @@
                                     <td>Dirección:</td>
                                     <td>
                                         <span t-field="o.partner_id.street"/>
-                                        <span t-field="o.partner_id.street2"/>
-                                        <p>
+                                        <span t-field="o.partner_id.street2"/><br/>
                                         <span t-field="o.partner_id.zip"/> -
                                         <span t-field="o.partner_id.city"/> -
                                         <span t-field="o.partner_id.state_id"/>
-                                        </p>
                                     </td>
                                     <td>@mail:</td>
                                     <td><span t-field="o.partner_id.email"/></td>
@@ -120,7 +116,7 @@
                         </div>
                         <!-- Notes -->
                         <div class="row" name="notes">
-                            <table class="table table-bordered table-condensed mt0">
+                            <table class="table table-bordered table-sm mt0">
                                 <thead style="font-size:1.1em;">
                                     <tr>
                                         <th class="text-center">Notas Técnicas:</th>
@@ -138,10 +134,10 @@
                         </div>
                         <!-- /Notes -->
                         <!-- Tareas -->
-                        <div t-if="o.task_count > 0">
-                            <div class="row" t-foreach="o._compute_task_ids()" t-as="t" >
-                                <table class="table table-condensed">
-                                    <tr class="success">
+                        <div t-if="o.task_count > 0" t-foreach="o._compute_task_ids()" t-as="t">
+                            <div class="row mt16">
+                                <table class="table table-sm">
+                                    <tr class="bg-success">
                                         <td>
                                             Tarea: <span t-field="t.code"/> -
                                             <span t-field="t.name"/>
@@ -154,6 +150,8 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </div>
+                            <div class="row">
                                 <span t-field="t.description"/>
                             </div>
                         </div>
