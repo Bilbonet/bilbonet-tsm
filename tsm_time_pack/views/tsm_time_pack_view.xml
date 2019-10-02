@@ -43,7 +43,7 @@
                         <div class="oe_title">
                             <h1 class="o_row">
                                 <field name="code" class="oe_inline"/>
-                                <label string=" - " class="oe_inline"/>
+                                <span class="oe_inline"> - </span>
                                 <field name="name" placeholder="Time Pack Title..."/>
                             </h1>
                         </div>
@@ -174,7 +174,9 @@
                             <div t-attf-class="oe_kanban_global_click">
                                 <div class="row">
                                     <div class="col-xs-2">
-                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="40" height="40" class="oe_kanban_avatar pull-left"/>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
+                                             t-att-title="record.user_id.value" t-att-alt="record.user_id.value"
+                                             width="40" height="40" class="oe_kanban_avatar pull-left"/>
                                     </div>
                                     <div class="col-xs-10">
                                         <div>
