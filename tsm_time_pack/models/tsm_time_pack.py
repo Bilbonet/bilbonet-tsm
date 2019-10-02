@@ -21,8 +21,11 @@ class TsmTimePack(models.Model):
                 self.partner_id.property_product_pricelist.currency_id or
                 self.company_currency or
                 self.env.user.company_id.currency_id)
-        self.sale_amount = sale.currency_id.compute(
-                                sale.amount_untaxed, currency)
+        # self.sale_amount = sale.currency_id.compute(
+        #                         sale.amount_untaxed, currency)
+        self.sale_amount = sale.currency_id._convert(
+            sale.amount_untaxed, currency,
+            self.company_id, self.date_start or fields.Date.today())
 
     def _compuete_can_edit(self):
         self.can_edit = self.env.user.has_group('tsm_base.group_tsm_manager')
@@ -93,7 +96,7 @@ class TsmTimePack(models.Model):
                                  string='Product')
     description_sale = fields.Text(string='Description Sale')
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
-    product_uom_id = fields.Many2one(comodel_name='product.uom',
+    product_uom_id = fields.Many2one(comodel_name='uom.uom',
                                      string='Unit of Measure')
     price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
     discount = fields.Float(string='Discount (%)',
@@ -317,7 +320,7 @@ class TsmTimePack(models.Model):
         sale = self.env['sale.order'].new({
             'partner_id': self.partner_id,
             'currency_id': currency.id,
-            'date_order': fields.Date.today(),
+            'date_order': fields.Datetime.today(),
             'company_id': self.company_id.id,
             'user_id': self.user_id.id,
             'origin': self.name_get()[0][1],
