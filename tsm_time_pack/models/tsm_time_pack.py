@@ -21,8 +21,6 @@ class TsmTimePack(models.Model):
                 self.partner_id.property_product_pricelist.currency_id or
                 self.company_currency or
                 self.env.user.company_id.currency_id)
-        # self.sale_amount = sale.currency_id.compute(
-        #                         sale.amount_untaxed, currency)
         self.sale_amount = sale.currency_id._convert(
             sale.amount_untaxed, currency,
             self.company_id, self.date_start or fields.Date.today())
