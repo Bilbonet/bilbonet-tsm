@@ -2,9 +2,9 @@
 <odoo>
     <!-- Task Report Modification -->
     <template id="tsm_time_pack_report_document" inherit_id="tsm_base.tsm_task_report_document">
-        <xpath expr="//div[@name='head_report']" position="after">
+        <xpath expr="//div[@name='task_body_report']" position="after">
             <div class="row" t-if="len(o.timesheet_ids) > 0">
-                <table class="table table-condensed table-striped">
+                <table class="table table-sm table-striped">
                     <thead style="background-color: #3498DB;font-size:0.8em;" >
                         <tr class="text-center">
                             <th colspan="3" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
@@ -22,16 +22,15 @@
                                 <span t-if="t.name == '/'" t-field="t.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
                             </td>
                             <td style="font-size:0.7em;" class="text-right">
-                                <span t-field="t.amount"
-                                      t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                <span t-field="t.amount" t-options="{'widget': 'float_time'}"/>
                             </td>
                             <td t-if="t.timepack_id" style="font-size:0.7em;" class="text-right">
                                 <span t-field="t.timepack_id.code"/>
                                 <span t-if="t.discount_time == True">
-                                    <span class="fa fa-2x fa-arrow-circle-down text-danger"/>
+                                    <span class="fa fa-arrow-circle-down text-danger"/>
                                 </span>
                                 <span t-if="t.discount_time == False">
-                                    <span class="fa fa-2x fa-arrow-circle-right"/>
+                                    <span class="fa fa-arrow-circle-right"/>
                                 </span>
                             </td>
                         </tr>
@@ -43,8 +42,7 @@
                                 <span class="fa fa-arrow-circle-right"/>&#160;Tiempo Cortesia
                             </th>
                             <th colspan="2" class="text-right">
-                                <span t-field="o.total_hours"
-                                      t-field-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                <span t-field="o.total_hours" t-options="{'widget': 'float_time'}"/>
                             </th>
                         </tr>
                     </tfoot>
