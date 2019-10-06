@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-31 18:35+0000\n"
-"PO-Revision-Date: 2019-08-31 18:35+0000\n"
+"POT-Creation-Date: 2019-10-06 10:13+0000\n"
+"PO-Revision-Date: 2019-10-06 10:13+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_kanban
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_kanban
 msgid "<strong>Duration: </strong>"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_active
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_active
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__active
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__active
 msgid "Active"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
 msgid "Actived"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgid "All Timesheets"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_user_id
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__user_id
 msgid "Assigned to"
 msgstr ""
 
@@ -55,166 +55,171 @@ msgid "By User"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_tags_action
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_tags_action
 msgid "Click to add a new timesheet tag."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_line_act
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_task_act
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_user_act
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_timesheet_lines_by_project
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_line_act
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_task_act
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_user_act
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_timesheet_lines_by_project
 msgid "Click to record activities."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Close task"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_closed
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__closed
 msgid "Closed"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_company_id
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__company_id
 msgid "Company"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_total_hours
+#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task__total_hours
 msgid "Computed as: Sum Time Spent in tasks."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_create_uid
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_create_uid
+#: model:ir.model,name:tsm_task_timesheet.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: tsm_task_timesheet
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__create_uid
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_create_date
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_create_date
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__create_date
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_task_partner_id
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__task_partner_id
 msgid "Customer"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_date_time
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__date_time
 msgid "Date"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Date Time"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_default
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__default
 msgid "Default"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_display_name
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_display_name
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__display_name
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
 msgid "Duration"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_date_time_stop
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__date_time_stop
 msgid "End date time for calendar view"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags_sequence
+#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags__sequence
 msgid "Gives the sequence order when displaying a list of tags."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Group By"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_id
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_id
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__id
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__id
 msgid "ID"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_active
+#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet__active
 msgid "If the active field is set to False, it will allow you to hide the account without removing it."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags_active
+#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags__active
 msgid "If the active field is set to False, it will allow you to hide the tag without removing it."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet___last_update
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags___last_update
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet____last_update
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_write_uid
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_write_uid
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__write_uid
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_write_date
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_write_date
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__write_date
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: tsm_task_timesheet
 #: model:ir.actions.act_window,name:tsm_task_timesheet.tsm_task_timesheet_line_act
 #: model:ir.ui.menu,name:tsm_task_timesheet.tsm_task_timesheet_menu_activity_mine
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "My Timesheets"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_name
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__name
 msgid "Name"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Open Tasks"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Open task"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
 msgid "Open/Close timesheet line automatically open/close its tasks. Do you want to proceed?"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_project_id
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__project_id
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Project"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_amount
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__amount
 msgid "Quantity"
 msgstr ""
 
@@ -224,12 +229,12 @@ msgid "Reporting"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags_default
+#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags__default
 msgid "Selected by default when create timesheet."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags_sequence
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__sequence
 msgid "Sequence"
 msgstr ""
 
@@ -239,14 +244,14 @@ msgid "Spent time in tasks"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Stop"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
 msgid "TSM Timesheet Settings"
 msgstr ""
 
@@ -266,7 +271,7 @@ msgid "Tag name already exists!"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
 msgid "Tags"
 msgstr ""
 
@@ -276,13 +281,13 @@ msgid "Tags in timesheet"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_task_id
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__task_id
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Task"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_closed
+#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet__closed
 msgid "Tasks in this stage are considered closed."
 msgstr ""
 
@@ -293,61 +298,61 @@ msgstr ""
 
 #. module: tsm_task_timesheet
 #: code:addons/tsm_task_timesheet/models/tsm_task.py:45
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:111
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:112
 #, python-format
 msgid "There are any timesheet with 00:00 hours in this task.\n"
 "That is not allowed in stages marked as closed."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:106
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:107
 #, python-format
 msgid "There isn't any stage with closed check. Please mark any."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:152
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:153
 #, python-format
 msgid "There's already one Tag checked as defautl.\n"
 " Tag Checked : %s"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "This Month"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "This Week"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Time (Hours)"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
 msgid "Time Entry"
 msgstr ""
 
 #. module: tsm_task_timesheet
 #: model:ir.ui.menu,name:tsm_task_timesheet.menu_tsm_task_timesheet_reports_timesheet
 #: model:ir.ui.menu,name:tsm_task_timesheet.menu_tsm_time_tracking
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_pivot
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_pivot
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Timesheet"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Timesheet Activities"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Timesheet Month"
 msgstr ""
 
@@ -357,34 +362,34 @@ msgid "Timesheet Project"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_res_config_settings_group_tsm_timesheet_tag
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_res_config_settings__group_tsm_timesheet_tag
 msgid "Timesheet Tag"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tag_ids
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__tag_ids
 #: model:ir.ui.menu,name:tsm_task_timesheet.tsm_config_timesheet_tags_menu
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_form_view
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_form_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_tree
 msgid "Timesheet Tags"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_res_config_settings_group_tsm_timesheet_title
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_name
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_res_config_settings__group_tsm_timesheet_title
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__name
 msgid "Timesheet Title"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Timesheet by Month"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_ids
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_project_timesheet_lines_form
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_calendar
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task__timesheet_ids
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_project_timesheet_lines_form
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_calendar
 msgid "Timesheets"
 msgstr ""
 
@@ -394,54 +399,54 @@ msgid "Title in Timesheet"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Today"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.view_task_tree2_inherited
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.view_task_tree2_inherited
 msgid "Total Hours"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_total_hours
+#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task__total_hours
 msgid "Total Spent Hours"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Total time"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
 msgid "Use tags in timesheet"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
 msgid "Use tags to classify timesheet."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
 msgid "Use title to describe timesheet."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "User"
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_line_act
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_timesheet_lines_by_project
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_line_act
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_timesheet_lines_by_project
 msgid "You can register and track your workings hours by task every day."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_task_act
-#: model:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_user_act
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_task_act
+#: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_user_act
 msgid "You can register and track your workings hours by tasks every day."
 msgstr ""
 
@@ -449,10 +454,5 @@ msgstr ""
 #: code:addons/tsm_task_timesheet/models/tsm_task.py:29
 #, python-format
 msgid "You cannot delete a task containing timesheets. You can either delete all the task's timesheet and then delete the task or simply deactivate the task."
-msgstr ""
-
-#. module: tsm_task_timesheet
-#: model:ir.model,name:tsm_task_timesheet.model_res_config_settings
-msgid "res.config.settings"
 msgstr ""
 
