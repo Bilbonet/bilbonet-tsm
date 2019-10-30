@@ -46,7 +46,7 @@ class TsmTask(models.Model):
     _name = "tsm.task"
     _description = "Tech Support Management Task"
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = "priority desc, sequence, id desc"
+    _order = "priority desc, sequence, date_start"
 
     def _get_default_stage_id(self):
         """ Gives default stage_id """
