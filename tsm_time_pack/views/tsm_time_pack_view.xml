@@ -13,6 +13,7 @@
             <field name="model">tsm.time.pack</field>
             <field name="arch" type="xml">
                 <form string="Time Packs">
+                    <field name="company_id" invisible="1"/>
                     <field name="can_edit" invisible="1"/>
                     <field name="sale_id" invisible="1"/>
                     <header>
