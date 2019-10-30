@@ -112,6 +112,7 @@ class TsmTimePack(models.Model):
                     )
     company_currency = fields.Many2one('res.currency',
                             related='company_id.currency_id',
+                            string="Company Currency",
                             readonly=True,
                             help='Utility field to express amount currency')
     sale_id = fields.Many2one(comodel_name='sale.order',
