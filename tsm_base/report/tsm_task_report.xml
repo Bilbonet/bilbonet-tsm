@@ -18,16 +18,16 @@
                         <div class="row" name="head_report">
                             <table class="table table-bordered table-sm" style="margin-top:0px;">
                                 <tr>
-                                    <td>Cliente:</td>
+                                    <td>Client:</td>
                                     <td><span t-field="o.partner_id"/></td>
-                                    <td>Telefono:</td>
+                                    <td>Phone:</td>
                                     <td>
                                         <span t-field="o.partner_id.phone"/> /
                                         <span t-field="o.partner_id.mobile"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Dirección:</td>
+                                    <td>Address:</td>
                                     <td>
                                         <span t-field="o.partner_id.street"/>
                                         <span t-field="o.partner_id.street2"/><br/>
@@ -44,14 +44,14 @@
                             <table class="table table-sm">
                                 <tr class="bg-success">
                                     <td>
-                                        Tarea: <span t-field="o.code"/> -
+                                        Task: <span t-field="o.code"/> -
                                         <span t-field="o.name"/>
                                     </td>
                                     <td>
-                                        Fecha: <span t-field="o.date_start" t-field-options='{"widget": "date"}'/>
+                                        Date: <span t-field="o.date_start" t-options="{'widget': 'date'}"/>
                                     </td>
                                     <td>
-                                        Técnico: <span t-field="o.user_id.name"/>
+                                        Technician: <span t-field="o.user_id.name"/>
                                     </td>
                                 </tr>
                             </table>

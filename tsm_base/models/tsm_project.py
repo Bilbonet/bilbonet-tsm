@@ -25,8 +25,8 @@ class TsmProject(models.Model):
         for project in self:
             project.task_count = result.get(project.id, 0)
 
-    # Desde proyect tareas que necesitan algun accion.
-    # Los mostrabamos en la vista kanba! Ahora de momento no lo utilizamos
+    # Desde proyecto: tareas que necesitan algun accion.
+    # Los mostrabamos en la vista kanban! Ahora de momento no lo utilizamos
     def _compute_task_needaction_count(self):
         projects_data = self.env['tsm.task'].read_group([
             ('project_id', 'in', self.ids),
@@ -136,3 +136,43 @@ class TsmProject(models.Model):
                 "project or simply deactivate the project."))
         res = super(TsmProject, self).unlink()
         return res
+
+    @api.multi
+    def action_project_send(self):
+        '''
+        This function opens a window to compose an email,
+        with the project template message loaded by default
+        '''
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('tsm_base', 'tsm_project_email_template')[1]
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        lang = self.env.context.get('lang')
+        template = template_id and self.env['mail.template'].browse(template_id)
+        if template and template.lang:
+            lang = template._render_template(template.lang, 'tsm.project', self.ids[0])
+        ctx = {
+            'default_model': 'tsm.project',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'model_description': self.with_context(lang=lang).name,
+            'force_email': True
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
