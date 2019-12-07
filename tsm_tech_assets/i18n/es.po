@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-06 10:16+0000\n"
-"PO-Revision-Date: 2019-10-06 10:16+0000\n"
+"POT-Creation-Date: 2019-12-07 21:51+0000\n"
+"PO-Revision-Date: 2019-12-07 21:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_needaction
 msgid "Action Needed"
-msgstr "Acción requerida"
+msgstr "Acción Necesaria"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__active
@@ -44,12 +44,12 @@ msgstr "Estado de la actividad"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__task_count
 msgid "Amount Tasks"
-msgstr ""
+msgstr "Cantidad Tareas"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 msgid "Archived"
-msgstr "Archivada"
+msgstr "Archivado"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
@@ -59,12 +59,12 @@ msgstr "Activo"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 msgid "Asset Code"
-msgstr ""
+msgstr "Código Elemento"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 msgid "Asset Name"
-msgstr ""
+msgstr "Nombre Elemento"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__name
@@ -75,13 +75,13 @@ msgstr "Titulo Elemento"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Asset Title..."
-msgstr ""
+msgstr "Titulo Elemento..."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_tree_view
 msgid "Asset Type"
-msgstr ""
+msgstr "Tipo Elemento"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_attachment_count
@@ -91,12 +91,12 @@ msgstr "Conteo de archivos adjuntos"
 #. module: tsm_tech_assets
 #: model_terms:ir.actions.act_window,help:tsm_tech_assets.tsm_tech_asset_type_action
 msgid "Click to add a new type of tech asset."
-msgstr ""
+msgstr "Click para añadir un nuevo tipo de elemento técnico."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.actions.act_window,help:tsm_tech_assets.tsm_tech_assets_open_all_action
 msgid "Click to create a new tech asset."
-msgstr ""
+msgstr "Click para crear un nuevo elemnento técnico."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_tree_view
@@ -112,7 +112,7 @@ msgstr "Gestión de elementos técnicos de clientes"
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Cliente:"
-msgstr ""
+msgstr "Cliente:"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__company_id
@@ -127,7 +127,7 @@ msgstr "Notas Configuración"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Configuration Notes:"
-msgstr ""
+msgstr "Notas Configuración"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__config_notes
@@ -144,7 +144,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__create_date
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado el"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__partner_id
@@ -167,18 +167,18 @@ msgstr "Detalles y notas sobre el elemento técnico."
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Dirección:"
-msgstr ""
+msgstr "Dirección:"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__display_name
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre a mostrar"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 msgid "Fecha:"
-msgstr ""
+msgstr "Fecha"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_follower_ids
@@ -208,7 +208,7 @@ msgstr "Agrupar por"
 #. module: tsm_tech_assets
 #: model_terms:ir.actions.act_window,help:tsm_tech_assets.tsm_tasks_from_tech_asset_action
 msgid "Here, you can create new task"
-msgstr ""
+msgstr "Aquí, usted puede crear una nueva tarea"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__privacy_visibility
@@ -225,7 +225,7 @@ msgstr "Visibilidad del elemento técnico:\n"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__id
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type__id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr ""
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__message_unread
@@ -235,7 +235,7 @@ msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__message_has_error
@@ -262,13 +262,13 @@ msgstr "Última modificación en"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__write_uid
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Última actualización por"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__write_date
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset_type__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Última actualización el"
 
 #. module: tsm_tech_assets
 #: selection:tsm.tech.asset,priority:0
@@ -298,7 +298,7 @@ msgstr "Mis actividades"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 msgid "My Assets"
-msgstr ""
+msgstr "Mis Elementos"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_date_deadline
@@ -318,19 +318,19 @@ msgstr "Siguiente tipo de actividad"
 #. module: tsm_tech_assets
 #: selection:tsm.tech.asset,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Notas Configuración:"
-msgstr ""
+msgstr "Notas Configuración:"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Notas Técnicas:"
-msgstr ""
+msgstr "Notas Técnicas:"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
@@ -448,7 +448,7 @@ msgstr "TSM Tipos de elementos técnicos"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 msgid "Tarea:"
-msgstr ""
+msgstr "Tarea:"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.act_window,name:tsm_tech_assets.tsm_tasks_from_tech_asset_action
@@ -494,19 +494,19 @@ msgstr "Notas Técnicas"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Technical Notes:"
-msgstr ""
+msgstr "Notas Técnicas:"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Telefono:"
-msgstr ""
+msgstr "Teléfono:"
 
 #. module: tsm_tech_assets
 #: code:addons/tsm_tech_assets/models/tsm_tech_asset.py:99
 #, python-format
 msgid "The code must be unique!"
-msgstr ""
+msgstr "El código debe ser único!"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__can_edit
@@ -533,7 +533,7 @@ msgstr "Type de elemento"
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_type_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_type_search_view
 msgid "Types"
-msgstr ""
+msgstr "Tipos"
 
 #. module: tsm_tech_assets
 #: model:ir.model,name:tsm_tech_assets.model_tsm_tech_asset_type
@@ -543,7 +543,7 @@ msgstr "Tipos de elementos"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 msgid "Técnico:"
-msgstr ""
+msgstr "Técnico"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
@@ -554,7 +554,7 @@ msgstr "No asignado"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_unread
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
 msgid "Unread Messages"
-msgstr "Mensajes sin leer"
+msgstr "Mensajes por leer"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_unread_counter
@@ -579,10 +579,10 @@ msgstr "Historial de comunicaciones del sitio web"
 #. module: tsm_tech_assets
 #: model_terms:ir.actions.act_window,help:tsm_tech_assets.tsm_tasks_from_tech_asset_action
 msgid "You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc."
-msgstr ""
+msgstr "Ahora usted puede gestionar sus tareas para tenerlas hechas eficientemente. Siga el progreso, comente, adjunte documentos, etc."
 
 #. module: tsm_tech_assets
 #: sql_constraint:tsm.tech.asset:0
 msgid "¡El número debe de ser único!"
-msgstr ""
+msgstr "¡El número debe ser único!"
 
