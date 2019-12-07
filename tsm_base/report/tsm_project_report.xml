@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<odoo>
+    <report
+        id="tsm_project_report_action"
+        name="tsm_base.tsm_project_report_document"
+        model="tsm.project"
+        string="Print Project Report"
+        print_report_name="object.name.replace(' ', '-')"
+        report_type="qweb-pdf"
+        paperformat="tsm_base.tsm_paper_format_report"/>
+
+    <template id="tsm_project_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs.with_context(active_test=False)" t-as="o">
+                <t t-call="tsm_base.tsm_report_layout">
+                    <div class="page">
+                        <div class="row" name="head_report">
+                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                                <tr>
+                                    <td>Client:</td>
+                                    <td><span t-field="o.partner_id"/></td>
+                                    <td>Phone:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.phone"/> /
+                                        <span t-field="o.partner_id.mobile"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Address:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.street"/>
+                                        <span t-field="o.partner_id.street2"/><br/>
+                                        <span t-field="o.partner_id.zip"/> -
+                                        <span t-field="o.partner_id.city"/> -
+                                        <span t-field="o.partner_id.state_id"/>
+                                    </td>
+                                    <td>@mail:</td>
+                                    <td><span t-field="o.partner_id.email"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="jumbotron">
+                            <h1><span t-field="o.name"/></h1>
+                            <span t-field="o.description" name="projec_description"/>
+                        </div>
+                        <!-- Tasks -->
+                        <div t-if="len(o.task_ids) > 0" t-foreach="o.task_ids.sorted(key=lambda t: t.id)" t-as="t" name="tasks">
+                            <div class="row">
+                                <table class="table table-sm">
+                                    <tr class="bg-success">
+                                        <td>
+                                            Task: <span t-field="t.code"/> -
+                                            <span t-field="t.name"/>
+                                        </td>
+                                        <td>
+                                            Date: <span t-field="t.date_start" t-options="{'widget': 'date'}"/>
+                                        </td>
+                                        <td>
+                                            Technician: <span t-field="t.user_id.name"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" name="task_description">
+                                <span t-field="t.description"/>
+                            </div>
+                            <p style="page-break-after:always;" name="page-break"></p>
+                        </div>
+                        <!-- /Taska -->
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

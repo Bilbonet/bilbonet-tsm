@@ -7,8 +7,8 @@
                 <table class="table table-sm table-striped">
                     <thead style="background-color: #3498DB;font-size:0.8em;" >
                         <tr class="text-center">
-                            <th colspan="3" class="text-center" style="color:#fff;">Detalle Tiempo empleado</th>
-                            <th t-foreach="o.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id" class="text-right" style="color:#fff;">Bolsa Horas</th>
+                            <th colspan="3" class="text-center" style="color:#fff;">Spent Time Detail</th>
+                            <th t-foreach="o.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id" class="text-right" style="color:#fff;">Time Pack</th>
                         </tr>
                      </thead>
                     <tbody>
@@ -38,8 +38,10 @@
                     <tfoot style="font-size:0.8em;">
                         <tr>
                             <th style="font-weight: normal;font-size:0.6em;">
-                                <span class="fa fa-arrow-circle-down text-danger"/>&#160;Descuenta Tiempo &#160;&#160;&#160;
-                                <span class="fa fa-arrow-circle-right"/>&#160;Tiempo Cortesia
+                                <div t-if="any(o.timesheet_ids.filtered(lambda l: l.timepack_id))">
+                                    <span class="fa fa-arrow-circle-down text-danger"/>&#160;Discount Time &#160;&#160;&#160;
+                                    <span class="fa fa-arrow-circle-right"/>&#160;Complimentary Time
+                                </div>
                             </th>
                             <th colspan="2" class="text-right">
                                 <span t-field="o.total_hours" t-options="{'widget': 'float_time'}"/>

@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-06 10:12+0000\n"
-"PO-Revision-Date: 2019-10-06 10:12+0000\n"
+"POT-Creation-Date: 2019-12-07 21:35+0000\n"
+"PO-Revision-Date: 2019-12-07 21:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+msgid "Amount"
+msgstr ""
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__sale_amount
@@ -53,6 +58,7 @@ msgid "Currency"
 msgstr ""
 
 #. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Desc.%"
 msgstr ""
@@ -120,6 +126,11 @@ msgid "Material"
 msgstr ""
 
 #. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+msgid "Material and Services"
+msgstr ""
+
+#. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__material_ids
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_material_view
 msgid "Material used"
@@ -133,6 +144,11 @@ msgstr ""
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Precio"
+msgstr ""
+
+#. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+msgid "Price"
 msgstr ""
 
 #. module: tsm_task_material
@@ -183,6 +199,7 @@ msgid "Sub Total"
 msgstr ""
 
 #. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Subtotal"
 msgstr ""

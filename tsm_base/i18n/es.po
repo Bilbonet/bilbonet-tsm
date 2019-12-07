@@ -6,14 +6,87 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-06 10:08+0000\n"
-"PO-Revision-Date: 2019-10-06 10:08+0000\n"
+"POT-Creation-Date: 2019-12-07 21:01+0000\n"
+"PO-Revision-Date: 2019-12-07 21:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: tsm_base
+#: model:mail.template,body_html:tsm_base.tsm_project_email_template
+msgid "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hello ${object.partner_id.name or ''},</p>\n"
+"    <p>We inform you about the following project: </p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Project Title: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Project Start: <strong>${object.date_start or ''}</strong><br>\n"
+"\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       % endif\n"
+"    </p>\n"
+"\n"
+"    <br/>\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for trusting in  ${object.company_id.name or 'us'}!</p>\n"
+"    % if object.user_id.signature:\n"
+"       ${object.user_id.signature | safe}\n"
+"    % else\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
+"                <tbody>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"        </div>\n"
+"    % endif\n"
+"    <br/>\n"
+"</div>\n"
+"        "
+msgstr "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hola ${object.partner_id.name or ''},</p>\n"
+"    <p>Le informamos sobre el siguiente Projecto: </p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Projecto Titulo: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Project Comienzo: <strong>${object.date_start or ''}</strong><br>\n"
+"\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Su Contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       % endif\n"
+"    </p>\n"
+"\n"
+"    <br/>\n"
+"    <p>Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
+"    <p>Gracias por confiar en  ${object.company_id.name or 'us'}!</p>\n"
+"    % if object.user_id.signature:\n"
+"       ${object.user_id.signature | safe}\n"
+"    % else\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
+"                <tbody>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"        </div>\n"
+"    % endif\n"
+"    <br/>\n"
+"</div>\n"
+"        "
 
 #. module: tsm_base
 #: model:mail.template,body_html:tsm_base.tsm_task_email_template
@@ -59,7 +132,7 @@ msgstr "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Titulo de la Tarea: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Fecha Inicio: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Tarea Fecha Inicio: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -90,8 +163,18 @@ msgstr "\n"
 
 #. module: tsm_base
 #: model:mail.template,report_name:tsm_base.tsm_task_email_template
-msgid "${'('+object.code+')_'+object.name.replace(' ', '-')}"
+msgid "${'('+object.code+')_'+(object.name or '').replace(' ', '-')}"
+msgstr "${'('+object.code+')_'+(object.name or 'Bolsa_Horas').replace(' ', '-')}"
+
+#. module: tsm_base
+#: model:mail.template,report_name:tsm_base.tsm_project_email_template
+msgid "${(object.name or '').replace(' ', '-')}"
 msgstr ""
+
+#. module: tsm_base
+#: model:mail.template,subject:tsm_base.tsm_project_email_template
+msgid "${object.company_id.name} Project (${object.name or 'n/a'})"
+msgstr "${object.company_id.name} Proyecto (${object.name or 'n/a'})"
 
 #. module: tsm_base
 #: model:mail.template,subject:tsm_base.tsm_task_email_template
@@ -101,7 +184,7 @@ msgstr "${object.company_id.name} Tarea (${object.name or 'n/a'})"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 msgid "(Un)archiving a project automatically (un)archives its tasks. Do you want to proceed?"
-msgstr ""
+msgstr "(Des)archivar un proyecto automaticamente (des)archiva sus tareas. Desea proceder?"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
@@ -115,6 +198,7 @@ msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"
 msgstr ""
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
 msgid "@mail:"
 msgstr ""
@@ -134,7 +218,7 @@ msgstr "El estado Kanban en una tarea indica que existen situaciones especiales:
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_needaction
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_needaction
 msgid "Action Needed"
-msgstr "Acción requerida"
+msgstr "Acción Necesaria"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__active
@@ -145,7 +229,7 @@ msgstr "Activo"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_partner_info_form_view
 msgid "Active Tasks"
-msgstr ""
+msgstr "Tareas Activas"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_ids
@@ -165,21 +249,27 @@ msgid "Add a description..."
 msgstr "Añadir una descripción.."
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
+msgid "Address:"
+msgstr "Dirección:"
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_res_partner__tsm_task_count
 #: model:ir.model.fields,field_description:tsm_base.field_res_users__tsm_task_count
 msgid "Amount Partner Tasks"
-msgstr ""
+msgstr "Cantidad Tareas Cliente"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__task_count
 msgid "Amount Tasks"
-msgstr ""
+msgstr "Cantidad Tareas"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Archived"
-msgstr "Archivada"
+msgstr "Archivado"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__user_id
@@ -197,7 +287,9 @@ msgstr "Fecha de asignación"
 msgid "At each stage employees can block or make task ready for next stage.\n"
 "                            You can define here labels that will be displayed for the state instead\n"
 "                            of the default labels."
-msgstr ""
+msgstr "En cada estado el usuario puede bloquear o dejar la tarea lista para el siguiente estado.\n"
+"                            Usted puede definir aqui que será mostrado en el estado en vaez de\n"
+"                            el texto por defecto."
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_attachment_count
@@ -214,22 +306,23 @@ msgstr "Bloqueada"
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_tags_action
 msgid "Click to add a new task tag."
-msgstr ""
+msgstr "Click para añadir una nueva etiqueta de tarea"
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_type_open_action
 msgid "Click to add a stage in the task pipeline."
-msgstr ""
+msgstr "Click para añadir un estado en las tareas."
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_project_open_all_action
 msgid "Click to create a new project."
-msgstr ""
+msgstr "Click para añadir un nuevo proyecto"
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
-msgid "Cliente:"
-msgstr ""
+msgid "Client:"
+msgstr "Cliente:"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__closed
@@ -241,7 +334,7 @@ msgstr "Cerrado"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__color
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__color
 msgid "Color Index"
-msgstr "Índice de color"
+msgstr "Índice de Colores"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__company_id
@@ -251,15 +344,9 @@ msgid "Company"
 msgstr "Compañía"
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:217
-#, python-format
-msgid "Compose Email"
-msgstr ""
-
-#. module: tsm_base
 #: model:ir.model,name:tsm_base.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Opciones de Configuración"
 
 #. module: tsm_base
 #: model:ir.ui.menu,name:tsm_base.tsm_config_menu
@@ -293,7 +380,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__create_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado el"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__partner_id
@@ -304,6 +391,17 @@ msgid "Customer"
 msgstr "Cliente"
 
 #. module: tsm_base
+#: model:ir.ui.menu,name:tsm_base.tsm_res_partner_menu
+msgid "Customers"
+msgstr "Clientes"
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
+msgid "Date:"
+msgstr "Fecha:"
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__date_deadline
 msgid "Deadline"
 msgstr "Fecha límite"
@@ -312,7 +410,8 @@ msgstr "Fecha límite"
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_type_open_action
 msgid "Define the steps that will be used in the task, up to the closing of the task.\n"
 "            You will use these stages in order to track the progress in solving a task."
-msgstr ""
+msgstr "Define los estados que seran usados en la tarea, arriba del cierre de la tarea.\n"
+"            Usted utilizara estos estados para seguir el progreso en la realización de la tarea."
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
@@ -337,17 +436,12 @@ msgid "Details, notes and aclarations about the task."
 msgstr "Detalles, notas y aclaraciones sobre la tarea."
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
-msgid "Dirección:"
-msgstr ""
-
-#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__display_name
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__display_name
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__display_name
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre a mostrar"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
@@ -362,7 +456,7 @@ msgstr "Editar"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "Edit Task"
-msgstr ""
+msgstr "Editar Tarea"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
@@ -385,11 +479,6 @@ msgid "Extra Info"
 msgstr "Información extra"
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
-msgid "Fecha:"
-msgstr ""
-
-#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__fold
 msgid "Folded in Kanban"
 msgstr "Plegada en Kanban"
@@ -397,12 +486,12 @@ msgstr "Plegada en Kanban"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 msgid "Follow this project to automatically track the events associated to tasks and issues of this project."
-msgstr ""
+msgstr "Sigue este proyecto para automaticamente ser informado de eventos asociados a tareas the este proyecto"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 msgid "Followed by Me"
-msgstr ""
+msgstr "Seguido por mi"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_follower_ids
@@ -461,7 +550,7 @@ msgstr "Agrupar por"
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_tasks_from_project_action
 msgid "Here, you can create new task"
-msgstr ""
+msgstr "Aquí, usted puede crear una nueva tarea"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__privacy_visibility
@@ -491,7 +580,7 @@ msgstr "Visibilidad de las tareas que pertenecen al proyecto actual:\n"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__id
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__message_unread
@@ -503,7 +592,7 @@ msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__message_needaction
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__message_has_error
@@ -572,7 +661,7 @@ msgstr "Última modificación en"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__write_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Última actualización por"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__write_date
@@ -580,7 +669,7 @@ msgstr "Última actualización de"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__write_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Última actualización el"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
@@ -629,12 +718,12 @@ msgstr "Mis favoritos"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 msgid "My Projects"
-msgstr ""
+msgstr "Mis Proyectos"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "My Tasks"
-msgstr ""
+msgstr "Mis Tareas"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__name
@@ -662,7 +751,7 @@ msgstr "Siguiente tipo de actividad"
 #. module: tsm_base
 #: selection:tsm.task,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_needaction_counter
@@ -736,7 +825,9 @@ msgid "Partner related tasks"
 msgstr ""
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
 msgid "Phone:"
 msgstr "Teléfono:"
 
@@ -745,6 +836,11 @@ msgstr "Teléfono:"
 #: selection:tsm.task,activity_state:0
 msgid "Planned"
 msgstr "Planificado"
+
+#. module: tsm_base
+#: model:ir.actions.report,name:tsm_base.tsm_project_report_action
+msgid "Print Project Report"
+msgstr "Imprimir Informe Proyecto"
 
 #. module: tsm_base
 #: model:ir.actions.report,name:tsm_base.tsm_task_report_action
@@ -831,6 +927,7 @@ msgid "Search Project"
 msgstr ""
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 msgid "Send by Email"
 msgstr "Enviar por correo electrónico"
@@ -861,7 +958,7 @@ msgstr "Etapa"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
 msgid "Stage Description and Tooltips"
-msgstr ""
+msgstr "Descripción del estado y titulos"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__name
@@ -916,7 +1013,7 @@ msgstr "T.S.M: Proyectos"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "TSM Task Settings"
-msgstr ""
+msgstr "TSM Tareas Ajustes"
 
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_type_open_action
@@ -945,11 +1042,6 @@ msgid "Tags in tasks"
 msgstr "Etiquetas en tareas"
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
-msgid "Tarea:"
-msgstr ""
-
-#. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 msgid "Task"
 msgstr "Tarea"
@@ -962,7 +1054,7 @@ msgstr "Código Tarea"
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_res_config_settings__group_tsm_task_contact
 msgid "Task Contact"
-msgstr ""
+msgstr "Contacto Tarea"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__description
@@ -980,7 +1072,7 @@ msgstr "Etapa de la tarea"
 #: model:ir.ui.menu,name:tsm_base.tsm_config_task_tags_menu
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_tags_form_view
 msgid "Task Tags"
-msgstr ""
+msgstr "Taeas Etiquetas"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__name
@@ -990,7 +1082,13 @@ msgstr "Título de tarea"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 msgid "Task Title..."
-msgstr ""
+msgstr "Título Tarea..."
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
+msgid "Task:"
+msgstr "Tarea:"
 
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_menu
@@ -1008,17 +1106,17 @@ msgstr "Tareas"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Tasks Description"
-msgstr ""
+msgstr "Descripción Tarea"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__task_ids
 msgid "Tasks Related"
-msgstr ""
+msgstr "Tareas Relacionadas"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Tasks Title"
-msgstr ""
+msgstr "Titulo Tareas"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__closed
@@ -1028,7 +1126,7 @@ msgstr "Tareas en esta etapa se considerarán cerradas."
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__task_needaction_count
 msgid "Tasks need action"
-msgstr ""
+msgstr "Tareas necesitan accion"
 
 #. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_project
@@ -1044,7 +1142,8 @@ msgstr "Gestión Soporte Técnico Tarea"
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_action_from_menu
 msgid "Technical Support Management allows you to manage the pipeline of your tasks efficiently.\n"
 "                You can track progress, discuss on tasks, attach documents, etc."
-msgstr ""
+msgstr "Gestión Soporte Técnico le permite la gestión de sus tareas eficientemente.\n"
+"                Usted puede seguir el progreso, comentar en tareas, adjuntar documentos, etc."
 
 #. module: tsm_base
 #: model:ir.module.category,description:tsm_base.module_tsm
@@ -1052,15 +1151,16 @@ msgid "Technical Support Management helps you manage your technical support"
 msgstr "Gestión de soporte técnico le ayuda a gestionar su soporte técnico"
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
-msgid "Telefono:"
-msgstr ""
+msgid "Technician:"
+msgstr "Técnico"
 
 #. module: tsm_base
 #: code:addons/tsm_base/models/tsm_task.py:165
 #, python-format
 msgid "The code must be unique!"
-msgstr ""
+msgstr "El código debe ser único!"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__fold
@@ -1074,18 +1174,13 @@ msgid "Today"
 msgstr "Hoy"
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
-msgid "Técnico:"
-msgstr ""
-
-#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_unread
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_unread
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Unread Messages"
-msgstr "Mensajes sin leer"
+msgstr "Mensajes por leer"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_unread_counter
@@ -1102,22 +1197,22 @@ msgstr "Use Tags en Tareas"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "Use contact in task to assign partners responsible."
-msgstr ""
+msgstr "Utilice los contactos en tareas para asignar un responsable."
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "Use contact in tasks"
-msgstr ""
+msgstr "Utilice contactos en tareas"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "Use tags in tasks"
-msgstr ""
+msgstr "Utilice etiquetas en tareas"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "Use tags to classify tasks."
-msgstr ""
+msgstr "Utilice etqieutas para clasificar tareas."
 
 #. module: tsm_base
 #: model:res.groups,name:tsm_base.group_tsm_user
@@ -1145,7 +1240,7 @@ msgstr "Historial de comunicaciones del sitio web"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
 msgid "Website:"
-msgstr ""
+msgstr "Web"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__is_favorite
@@ -1155,17 +1250,17 @@ msgstr "Ya sea si este proyecto se tiene que mostrar en el tablero o no"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
 msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
-msgstr ""
+msgstr "Usted puede también añadir una descrpción para ayudar a sus compañeros a entender el significado y proposito del estado."
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
 msgid "You can also give a tooltip about the use of the stars available in the kanban and form views."
-msgstr ""
+msgstr "Usted puede tambien añadir un titulo acerca del uso de estrellas disponible en las vistas kanban y formulario."
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_tasks_from_project_action
 msgid "You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc."
-msgstr ""
+msgstr "Ahora usted puede gestionar sus tareas para tenerlas hechas eficientemente. Siga el progreso, comente, adjunte documentos, etc."
 
 #. module: tsm_base
 #: code:addons/tsm_base/models/tsm_project.py:134
@@ -1186,5 +1281,5 @@ msgstr ""
 #. module: tsm_base
 #: sql_constraint:tsm.task:0
 msgid "¡El número debe de ser único!"
-msgstr ""
+msgstr "¡El número debe de ser único!"
 

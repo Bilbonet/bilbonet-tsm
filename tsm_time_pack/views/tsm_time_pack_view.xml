@@ -17,12 +17,10 @@
                     <field name="can_edit" invisible="1"/>
                     <field name="sale_id" invisible="1"/>
                     <header>
-                        <button name="action_time_pack_send" type="object" string="Send by Email" groups="tsm_base.group_tsm_user"/>
-                        <button name="create_sale"
-                            type="object"
-                            string="Create sale"
-                            groups="sales_team.group_sale_manager"
-                            attrs="{'invisible':[('sale_id','!=',False)]}" />
+                        <button name="action_time_pack_send" type="object" groups="tsm_base.group_tsm_user"
+                                string=" Send by Email" class="oe_highlight" icon="fa-envelope"/>
+                        <button name="create_sale" type="object" groups="sales_team.group_sale_manager"
+                                string="Create sale" attrs="{'invisible':[('sale_id','!=',False)]}" />
                     </header>
                     <sheet string="Task">
                         <div class="oe_button_box" name="button_box">

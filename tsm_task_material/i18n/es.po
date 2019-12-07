@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-06 10:13+0000\n"
-"PO-Revision-Date: 2019-10-06 10:13+0000\n"
+"POT-Creation-Date: 2019-12-07 21:36+0000\n"
+"PO-Revision-Date: 2019-12-07 21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+msgid "Amount"
+msgstr "Importe"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__sale_amount
@@ -23,7 +28,7 @@ msgstr "Total del pedido"
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Cantidad"
-msgstr ""
+msgstr "Cantidad"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__create_sale_order
@@ -34,7 +39,7 @@ msgstr "Crear Orden de Venta"
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_material_view
 msgid "Create sale"
-msgstr ""
+msgstr "Crear venta"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__create_uid
@@ -44,7 +49,7 @@ msgstr "Creado por"
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado el"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__company_currency
@@ -53,9 +58,10 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Desc.%"
-msgstr ""
+msgstr "Desc.%"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__name
@@ -71,7 +77,7 @@ msgstr "Descuento (%)"
 #: code:addons/tsm_task_material/models/tsm_task_material.py:61
 #, python-format
 msgid "Discount should be less or equal to 100"
-msgstr ""
+msgstr "El descuento debe ser menos o igual a 100"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material__discount
@@ -81,12 +87,12 @@ msgstr "El descuento que se aplica a la orden de venta. Debe ser menor o igual a
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre a mostrar"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr ""
 
 #. module: tsm_task_material
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task__sale_autoconfirm
@@ -107,17 +113,22 @@ msgstr "Última modificación en"
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Última actualización por"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Última actualización el"
 
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_form_material_view
 msgid "Material"
-msgstr ""
+msgstr "Material"
+
+#. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+msgid "Material and Services"
+msgstr "Material y Servicios"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__material_ids
@@ -128,12 +139,17 @@ msgstr "Materiales usados"
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Material y Servicios"
-msgstr ""
+msgstr "Material y Servicios"
 
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Precio"
-msgstr ""
+msgstr "Precio"
+
+#. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+msgid "Price"
+msgstr "Precio"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__product_id
@@ -149,7 +165,7 @@ msgstr "Cantidad"
 #: code:addons/tsm_task_material/models/tsm_task_material.py:53
 #, python-format
 msgid "Quantity of material consumed must be greater than 0."
-msgstr ""
+msgstr "La cantidad de material consumido debe ser mayor de 0."
 
 #. module: tsm_task_material
 #: model:ir.model,name:tsm_task_material.model_sale_order
@@ -183,9 +199,10 @@ msgid "Sub Total"
 msgstr "Subtotal"
 
 #. module: tsm_task_material
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #. module: tsm_task_material
 #: model:ir.model,name:tsm_task_material.model_tsm_task_material
@@ -235,7 +252,7 @@ msgstr "Importe total"
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__price_unit
 msgid "Unit Price"
-msgstr "Precio unitario"
+msgstr "Precio unidad"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__product_uom_id
@@ -251,7 +268,7 @@ msgstr "Total sin impuestos"
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task__company_currency
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material__company_currency
 msgid "Utility field to express amount currency"
-msgstr "Campo útil para expresar importe en moneda."
+msgstr "Campo útil para expresar importe en divisa."
 
 #. module: tsm_task_material
 #: code:addons/tsm_task_material/models/tsm_task.py:161
