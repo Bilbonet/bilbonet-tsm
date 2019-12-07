@@ -326,7 +326,7 @@
                                                 <span t-field="task.name"/>
                                             </td>
                                             <td>
-                                                Date: <span t-field="task.date_start"/>
+                                                Date: <span t-field="task.date_start" t-options="{'widget': 'date'}"/>
                                             </td>
                                             <td>
                                                 Responsible: <span t-field="task.user_id.name"/>

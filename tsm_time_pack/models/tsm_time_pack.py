@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 from odoo.exceptions import ValidationError
 from datetime import datetime
 
@@ -204,28 +204,40 @@ class TsmTimePack(models.Model):
 
     @api.multi
     def action_time_pack_send(self):
+        '''
+        This function opens a window to compose an email,
+        with the time pack template message loaded by default
+        '''
         self.ensure_one()
-        template = self.env.ref(
-            'tsm_time_pack.tsm_time_pack_email_template',
-            False,
-        )
-        compose_form = self.env.ref('mail.email_compose_message_wizard_form',
-                                    False)
-        ctx = dict(
-            default_model='tsm.time.pack',
-            default_res_id=self.id,
-            default_use_template=bool(template),
-            default_template_id=template and template.id or False,
-            default_composition_mode='comment',
-        )
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('tsm_time_pack', 'tsm_time_pack_email_template')[1]
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        lang = self.env.context.get('lang')
+        template = template_id and self.env['mail.template'].browse(template_id)
+        if template and template.lang:
+            lang = template._render_template(template.lang, 'tsm.time.pack', self.ids[0])
+        ctx = {
+            'default_model': 'tsm.time.pack',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'model_description': self.with_context(lang=lang).name,
+            'force_email': True
+        }
         return {
-            'name': _('Compose Email'),
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'mail.compose.message',
-            'views': [(compose_form.id, 'form')],
-            'view_id': compose_form.id,
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
             'target': 'new',
             'context': ctx,
         }

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="tsm_time_pack_project_report" inherit_id="tsm_base.tsm_project_report_document">
+        <xpath expr="//span[@name='projec_description']" position="after">
+            <t t-set="time_total" t-value="0"/>
+            <t t-set="time_tp_discount" t-value="0"/>
+            <t t-set="time_tp_nodiscount" t-value="0"/>
+            <div class="row" t-foreach="o.task_ids" t-as="t" context="{'active_test': False}" t-if="t.timesheet_ids">
+                <t t-set="time_total" t-value="time_total+sum(ti.amount for ti in t.timesheet_ids)"/>
+                <div class="row" t-foreach="t.timesheet_ids" t-as="ts">
+                    <t t-set="time_tp_discount" t-value="time_tp_discount+ts.amount" t-if="ts.timepack_id and ts.discount_time"/>
+                    <t t-set="time_tp_nodiscount" t-value="time_tp_nodiscount+ts.amount" t-if="ts.timepack_id and ts.discount_time == False"/>
+                </div>
+            </div>
+            <div class="row">
+                <di class="col-sm-3">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td>Total Time:</td>
+                                <td class="text-right">
+                                    <strong><span t-esc="time_total" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/></strong>
+                                </td>
+                            </tr>
+                            <tr t-if="time_tp_discount > 0">
+                                <td>Discounted <span style="font-size:0.8em;" class="fa fa-2x fa-arrow-circle-down text-danger"/>:</td>
+                                <td class="text-right">
+                                    <span t-esc="time_tp_discount" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}' class="text-danger"/>
+                                </td>
+                            </tr>
+                            <tr t-if="time_tp_nodiscount > 0">
+                                <td>Complimentary <span style="font-size:0.8em;" class="fa fa-2x fa-arrow-circle-right"/>:</td>
+                                <td class="text-right">
+                                    <span t-esc="time_tp_nodiscount" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </di>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='task_description']" position="after">
+            <div class="row" t-if="len(t.timesheet_ids) > 0">
+                <table class="table table-sm table-striped">
+                    <thead style="background-color: #3498DB;font-size:0.8em;" >
+                        <tr class="text-center">
+                            <th colspan="3" class="text-center" style="color:#fff;">Spent Time Detail</th>
+                            <th t-foreach="t.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id" class="text-right" style="color:#fff;">Bolsa Horas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="t.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="ts" >
+                            <td style="font-size:0.7em;">
+                                <span t-field="ts.date_time"
+                                      t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                            </td>
+                            <td style="font-size:0.7em;">
+                                <span t-if="ts.name != '/'" t-field="ts.name"/><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                <span t-if="ts.name == '/'" t-field="ts.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
+                            </td>
+                            <td style="font-size:0.7em;" class="text-right">
+                                <t t-set="time_total" t-value="time_total+ts.amount"/><!--Contamos el tiempo empleado-->
+                                <span t-field="ts.amount"  t-options="{'widget': 'float_time'}"/>
+                            </td>
+                            <td t-if="ts.timepack_id" style="font-size:0.7em;" class="text-right">
+                                <span t-field="ts.timepack_id.code"/>
+                                <span t-if="ts.discount_time == True">
+                                    <span class="fa fa-arrow-circle-down text-danger"/>
+                                </span>
+                                <span t-if="ts.discount_time == False">
+                                    <span class="fa fa-arrow-circle-right"/>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-size:0.8em;">
+                        <tr>
+                            <th style="font-weight: normal;font-size:0.6em;">
+                                <div t-foreach="t.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id">
+                                    <span t-if="time_tp_discount > 0" class="fa fa-arrow-circle-down text-danger">&#160;Discount Time &#160;&#160;&#160;</span>
+                                    <span t-if="time_tp_nodiscount > 0" class="fa fa-arrow-circle-right">&#160;Complimentary Time</span>
+                                </div>
+                            </th>
+                            <th colspan="2" class="text-right">
+                                <span t-field="t.total_hours" t-options="{'widget': 'float_time'}"/>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
