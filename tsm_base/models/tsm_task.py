@@ -67,7 +67,7 @@ class TsmTask(models.Model):
 
     code = fields.Char(
         string='Task Code', required=True, default="/", readonly=True)
-    active = fields.Boolean(default=True,
+    active = fields.Boolean(default=True, copy=False,
         help="If the active field is set to False, it will allow you to hide"
         " the task without removing it.")
     priority = fields.Selection([
@@ -98,8 +98,7 @@ class TsmTask(models.Model):
              " * Green indicates the task is ready to be "
              "pulled to the next stage")
     kanban_state_label = fields.Char(compute='_compute_kanban_state_label',
-                                     string='Kanban State Label',
-                                     track_visibility='onchange')
+        string='Kanban State Label')
     color = fields.Integer(string='Color Index')
     date_start = fields.Datetime(string='Starting Date',
                                  default=fields.Datetime.now,
