@@ -39,7 +39,7 @@ class TsmTechAsset(models.Model):
         help="If the active field is set to False, it will allow you to hide"
         " the asset without removing it.")
     code = fields.Char(string='Tech Asset Code',
-                       default="/", required=True, copy=False)
+        default="/", required=True, copy=False)
     sequence = fields.Integer(string='Sequence', index=True, default=10,
         help="Gives the sequence order when displaying a list of assets.")
     priority = fields.Selection([
@@ -47,36 +47,26 @@ class TsmTechAsset(models.Model):
         ('1', 'Normal'),
     ], default='0', index=True, string="Priority")
     date = fields.Datetime(string='Date',
-                           default=fields.Datetime.now,
-                           index=True, copy=False)
+        default=fields.Datetime.now, index=True, copy=False)
     name = fields.Char(string='Asset Title', track_visibility='always',
-                       required=True, index=True)
-    tech_notes = fields.Html(
-        string='Technical Notes', sanitize=True,
-        strip_style=False, translate=False,
+        required=True, index=True)
+    tech_notes = fields.Html(string='Technical Notes',
+        sanitize=True, strip_style=False, translate=False,
         help="Details, notes and aclarations about the asset.")
-    config_notes = fields.Html(
-        string='Configuration Notes', sanitize=True,
-        strip_style=False, translate=False,
+    config_notes = fields.Html(string='Configuration Notes',
+        sanitize=True, strip_style=False, translate=False,
         help="Configurations, notes about the assets.")
     user_id = fields.Many2one('res.users',
-                              string='Responsible',
-                              default=lambda self: self.env.uid,
-                              required=True,
-                              index=True, track_visibility='always')
+        string='Responsible', required=True,
+        default=lambda self: self.env.uid, index=True, track_visibility='always')
     partner_id = fields.Many2one('res.partner',
-                                 string='Customer',
-                                 required=True)
+        string='Customer', required=True)
     type_id = fields.Many2one('tsm.tech.asset.type',
-                                 string='Type',
-                                 required=True,
-                                 index=True,
-                                 track_visibility='onchange',
-                                 change_default=True)
-    task_ids = fields.One2many('tsm.task', 'asset_ids', string='Tasks',
-                               context={'active_test': False})
-    task_count = fields.Integer(compute='_compute_task_count',
-                                string="Amount Tasks")
+        string='Type', required=True, index=True,
+        track_visibility='onchange', change_default=True)
+    task_ids = fields.One2many('tsm.task', 'asset_ids',
+        string='Tasks', context={'active_test': False})
+    task_count = fields.Integer(compute='_compute_task_count', string="Amount Tasks")
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
@@ -89,10 +79,9 @@ class TsmTechAsset(models.Model):
              "- Visible by all employees: All employees "
              "may see tech asset\n")
     can_edit = fields.Boolean(compute='_compute_can_edit',
-                    string='Security: only managers can edit',
-                    default=True,
-                    help='This field is for security purpose. '
-                    'Only members of managers group can modify some fields.')
+        string='Security: only managers can edit', default=True,
+        help='This field is for security purpose. '
+        'Only members of managers group can modify some fields.')
 
     _sql_constraints = [
         ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
@@ -106,6 +95,47 @@ class TsmTechAsset(models.Model):
                 self.env['ir.sequence'].next_by_code('tsm.tech.asset')
         return super(TsmTechAsset, self).create(vals)
 
+    @api.multi
+    def action_tech_asset_send(self):
+        '''
+        This function opens a window to compose an email,
+        with the tech asset template message loaded by default
+        '''
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference(
+                'tsm_tech_assets', 'tsm_tech_asset_email_template')[1]
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference(
+                'mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        lang = self.env.context.get('lang')
+        template = template_id and self.env['mail.template'].browse(template_id)
+        if template and template.lang:
+            lang = template._render_template(template.lang, 'tsm.tech.asset', self.ids[0])
+        ctx = {
+            'default_model': 'tsm.tech.asset',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'model_description': self.with_context(lang=lang).name,
+            'force_email': True
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 class TsmTechAssetType(models.Model):
     _name = "tsm.tech.asset.type"

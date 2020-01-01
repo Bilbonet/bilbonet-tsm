@@ -18,6 +18,7 @@
         'views/tsm_tech_asset_views.xml',
         'views/tsm_task_view.xml',
         'report/tsm_tech_asset_report.xml',
+        'data/tsm_tech_asset_email_template.xml',
     ],
     'installable': True,
 }
