@@ -46,12 +46,24 @@
                                 <span t-field="o.name"/></h4>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-6">
+                                Date: <span t-field="o.date" t-options="{'widget': 'date'}"/>
+                            </div>
+                            <div class="col-6 text-right">
+                                Responsible: <span t-field="o.user_id.name"/>
+                            </div>
+                        </div>
+                        <div class="jumbotron text-center">
+                            <h3><span t-field="o.code"/> - <span t-field="o.name"/></h3>
+                        </div>
+                        <!-- Notes -->
                         <div class="row" name="notes">
                             <table class="table table-bordered table-sm mt0">
                                 <thead style="font-size:1.1em;">
                                     <tr>
-                                        <th class="text-center">Notas Técnicas:</th>
-                                        <th class="text-center">Notas Configuración:</th>
+                                        <th class="text-center">Technical Notes:</th>
+                                        <th class="text-center">Configuration Notes:</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -114,13 +126,24 @@
                                 <span t-field="o.name"/></h4>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-6">
+                                Date: <span t-field="o.date" t-options="{'widget': 'date'}"/>
+                            </div>
+                            <div class="col-6 text-right">
+                                Responsible: <span t-field="o.user_id.name"/>
+                            </div>
+                        </div>
+                        <div class="jumbotron text-center">
+                            <h3><span t-field="o.code"/> - <span t-field="o.name"/></h3>
+                        </div>
                         <!-- Notes -->
                         <div class="row" name="notes">
                             <table class="table table-bordered table-sm mt0">
                                 <thead style="font-size:1.1em;">
                                     <tr>
-                                        <th class="text-center">Notas Técnicas:</th>
-                                        <th class="text-center">Notas Configuración:</th>
+                                        <th class="text-center">Technical Notes:</th>
+                                        <th class="text-center">Configuration Notes:</th>
                                     </tr>
                                 </thead>
                                 <tbody>

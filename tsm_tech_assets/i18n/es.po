@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-07 21:51+0000\n"
-"PO-Revision-Date: 2019-12-07 21:51+0000\n"
+"POT-Creation-Date: 2020-01-01 21:08+0000\n"
+"PO-Revision-Date: 2020-01-01 21:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,199 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: tsm_tech_assets
+#: model:mail.template,body_html:tsm_tech_assets.tsm_tech_asset_email_template
+msgid "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hello ${object.partner_id.name or ''},</p>\n"
+"    <p>We inform you about the following Tech Asset: </p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Type: <strong>${object.type_id.name}</strong><br />\n"
+"       &nbsp;&nbsp;Name: <strong>${object.code} - ${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Date: <strong>${format_tz(object.date, tz='UTC', format='%d/%m/%Y')}</strong><br>\n"
+"\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       % endif\n"
+"    </p>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"    <table style=\"width:100%;background-color:#f9f9f9;border:solid 1px #f0f0f0;\">\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;border-right:solid 1px #a0a0a0;\"><h4>Technical Notes:</h4></td>\n"
+"            <td style=\"padding:4px;\"><h4>Configuration Notes:</h4></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;width:50%;border-right:solid 1px #a0a0a0;\">${object.tech_notes | safe}</td>\n"
+"            <td style=\"padding:4px;width:50%\">${object.config_notes | safe}</td>\n"
+"        </tr>\n"
+"    </table>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"    <br/>\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for trusting in  ${object.company_id.name or 'us'}!</p>\n"
+"    % if object.user_id.signature:\n"
+"       ${object.user_id.signature | safe}\n"
+"    % else\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
+"                <tbody>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"        </div>\n"
+"    % endif\n"
+"    <br/>\n"
+"</div>\n"
+"        "
+msgstr "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hola ${object.partner_id.name or ''},</p>\n"
+"    <p>Le informamos sobre el siguiente elemento técnico: </p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Tipo: <strong>${object.type_id.name}</strong><br />\n"
+"       &nbsp;&nbsp;Nombre: <strong>${object.code} - ${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Fecha: <strong>${format_tz(object.date, tz='UTC', format='%d/%m/%Y')}</strong><br>\n"
+"\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Su Contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       % endif\n"
+"    </p>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"    <table style=\"width:100%;background-color:#f9f9f9;border:solid 1px #f0f0f0;\">\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;border-right:solid 1px #a0a0a0;\"><h4>Notas Técnicas:</h4></td>\n"
+"            <td style=\"padding:4px;\"><h4>Notas Configuración:</h4></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;width:50%;border-right:solid 1px #a0a0a0;\">${object.tech_notes | safe}</td>\n"
+"            <td style=\"padding:4px;width:50%\">${object.config_notes | safe}</td>\n"
+"        </tr>\n"
+"    </table>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"    <br/>\n"
+"    <p>Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
+"    <p>Gracias por confiar en  ${object.company_id.name or 'us'}!</p>\n"
+"    % if object.user_id.signature:\n"
+"       ${object.user_id.signature | safe}\n"
+"    % else\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
+"                <tbody>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"        </div>\n"
+"    % endif\n"
+"    <br/>\n"
+"</div>\n"
+"        "
+
+#. module: tsm_tech_assets
+#: model:mail.template,body_html:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hello ${object.partner_id.name or ''},</p>\n"
+"    <p>We inform you about the following Tech Asset: </p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Type: <strong>${object.type_id.name}</strong><br />\n"
+"       &nbsp;&nbsp;Name: <strong>${object.code} - ${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Date: <strong>${format_tz(object.date, tz='UTC', format='%d/%m/%Y')}</strong><br>\n"
+"\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       % endif\n"
+"    </p>\n"
+"\n"
+"    <br/>\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for trusting in  ${object.company_id.name or 'us'}!</p>\n"
+"    % if object.user_id.signature:\n"
+"       ${object.user_id.signature | safe}\n"
+"    % else\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
+"                <tbody>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"        </div>\n"
+"    % endif\n"
+"    <br/>\n"
+"</div>\n"
+"        "
+msgstr "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hola ${object.partner_id.name or ''},</p>\n"
+"    <p>Le informamos sobre el siguiente elemento técnico: </p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;Tipo: <strong>${object.type_id.name}</strong><br />\n"
+"       &nbsp;&nbsp;Nombre: <strong>${object.code} - ${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Fecha: <strong>${format_tz(object.date, tz='UTC', format='%d/%m/%Y')}</strong><br>\n"
+"\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Su Contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       % endif\n"
+"    </p>\n"
+"\n"
+"    <br/>\n"
+"    <p>Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
+"    <p>Gracias por confiar en  ${object.company_id.name or 'us'}!</p>\n"
+"    % if object.user_id.signature:\n"
+"       ${object.user_id.signature | safe}\n"
+"    % else\n"
+"        <div style=\"padding:0px;margin:auto;\">\n"
+"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
+"                <tbody>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" width=\"200\">\n"
+"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"        </div>\n"
+"    % endif\n"
+"    <br/>\n"
+"</div>\n"
+"        "
+
+#. module: tsm_tech_assets
+#: model:mail.template,report_name:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid "${'('+object.code+')_'+(object.name or '').replace(' ', '-')}"
+msgstr "${'('+object.code+')_'+(object.name or 'Time Pack').replace(' ', '-')}"
+
+#. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "@mail:"
-msgstr ""
+msgstr "@mail:"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_needaction
@@ -112,7 +301,7 @@ msgstr "Gestión de elementos técnicos de clientes"
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Cliente:"
-msgstr "Cliente:"
+msgstr ""
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__company_id
@@ -125,6 +314,8 @@ msgid "Configuration Notes"
 msgstr "Notas Configuración"
 
 #. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Configuration Notes:"
 msgstr "Notas Configuración"
@@ -159,6 +350,12 @@ msgid "Date"
 msgstr "Fecha"
 
 #. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
+msgid "Date:"
+msgstr "Fecha:"
+
+#. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__tech_notes
 msgid "Details, notes and aclarations about the asset."
 msgstr "Detalles y notas sobre el elemento técnico."
@@ -167,7 +364,7 @@ msgstr "Detalles y notas sobre el elemento técnico."
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Dirección:"
-msgstr "Dirección:"
+msgstr ""
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__display_name
@@ -321,18 +518,6 @@ msgid "Normal"
 msgstr "Normal"
 
 #. module: tsm_tech_assets
-#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
-#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
-msgid "Notas Configuración:"
-msgstr "Notas Configuración:"
-
-#. module: tsm_tech_assets
-#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
-#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
-msgid "Notas Técnicas:"
-msgstr "Notas Técnicas:"
-
-#. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Notes"
 msgstr "Notas"
@@ -410,9 +595,20 @@ msgid "Responsible User"
 msgstr "Usuario responsable"
 
 #. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
+msgid "Responsible:"
+msgstr "Responsable"
+
+#. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__can_edit
 msgid "Security: only managers can edit"
 msgstr "Seguridad: Solo responsables pueden editar"
+
+#. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
+msgid "Send by Email"
+msgstr "Enviar por correo electrónico"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__sequence
@@ -448,7 +644,7 @@ msgstr "TSM Tipos de elementos técnicos"
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 msgid "Tarea:"
-msgstr "Tarea:"
+msgstr "Tarea"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.act_window,name:tsm_tech_assets.tsm_tasks_from_tech_asset_action
@@ -462,6 +658,12 @@ msgstr "Tareas"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_task__asset_ids
 msgid "Tech Asset"
 msgstr "Elemento Técnico"
+
+#. module: tsm_tech_assets
+#: model:mail.template,subject:tsm_tech_assets.tsm_tech_asset_email_template
+#: model:mail.template,subject:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid "Tech Asset (${object.code or 'n/a'} - ${object.name or 'n/a'})"
+msgstr "Elemento Técnico (${object.code or 'n/a'} - ${object.name or 'n/a'})"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__code
@@ -492,6 +694,8 @@ msgid "Technical Notes"
 msgstr "Notas Técnicas"
 
 #. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Technical Notes:"
 msgstr "Notas Técnicas:"
@@ -503,7 +707,7 @@ msgid "Telefono:"
 msgstr "Teléfono:"
 
 #. module: tsm_tech_assets
-#: code:addons/tsm_tech_assets/models/tsm_tech_asset.py:99
+#: code:addons/tsm_tech_assets/models/tsm_tech_asset.py:88
 #, python-format
 msgid "The code must be unique!"
 msgstr "El código debe ser único!"
