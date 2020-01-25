@@ -25,21 +25,6 @@ class TsmProject(models.Model):
         for project in self:
             project.task_count = result.get(project.id, 0)
 
-    # Desde proyecto: tareas que necesitan algun accion.
-    # Los mostrabamos en la vista kanban! Ahora de momento no lo utilizamos
-    def _compute_task_needaction_count(self):
-        projects_data = self.env['tsm.task'].read_group([
-            ('project_id', 'in', self.ids),
-            ('message_needaction', '=', True)
-        ], ['project_id'], ['project_id'])
-        mapped_data = {
-            project_data['project_id'][0]:
-                int(project_data['project_id_count'])
-                for project_data in projects_data
-        }
-        for project in self:
-            project.task_needaction_count = mapped_data.get(project.id, 0)
-
     def _compute_is_favorite(self):
         for project in self:
             project.is_favorite = self.env.user in project.favorite_user_ids
@@ -68,26 +53,23 @@ class TsmProject(models.Model):
         'res.users', 'tsm_project_favorite_user_rel', 'project_id', 'user_id',
         default=_get_default_favorite_user_ids,
         string='Members')
-    is_favorite = fields.Boolean(
-        compute='_compute_is_favorite',
+    is_favorite = fields.Boolean(compute='_compute_is_favorite',
         inverse='_inverse_is_favorite',
         string='Show Project on dashboard',
         help="Whether this project should be displayed on the "
              "dashboard or not")
     color = fields.Integer(string='Color Index')
     name = fields.Char(string='Project Name', index=True, required=True)
-    user_id = fields.Many2one('res.users', string='Project Manager',
-                              required=True,
-                              default=lambda self: self.env.user,
-                              track_visibility="onchange")
+    user_id = fields.Many2one('res.users',
+        string='Project Manager', required=True,
+        default=lambda self: self.env.user, track_visibility="onchange")
     # use auto_join to speed up name_search call
-    partner_id = fields.Many2one('res.partner', string='Customer',
-                                 required=True,
-                                 auto_join=True, track_visibility='onchange')
+    partner_id = fields.Many2one('res.partner',
+        string='Customer', required=True, auto_join=True, track_visibility='onchange')
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
-    ],
+        ],
         string='Privacy', required=True,
         default='followers',
         help="Holds visibility of the tasks "
@@ -100,19 +82,11 @@ class TsmProject(models.Model):
         strip_style=False, translate=False,
         help="Details, notes and aclarations about the project.")
     date_start = fields.Datetime(string='Starting Date',
-                                 default=fields.Datetime.now,
-                                 index=True, copy=False)
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
-        default=lambda self: self.env['res.company']._company_default_get()
-    )
-    task_ids = fields.One2many('tsm.task', 'project_id',
-                               string='Tasks Related')
-    task_count = fields.Integer(compute='_compute_task_count',
-                                string="Amount Tasks")
-    task_needaction_count = fields.Integer(
-        compute='_compute_task_needaction_count', string="Tasks need action")
+        default=fields.Datetime.now, index=True, copy=False)
+    company_id = fields.Many2one('res.company', string='Company',
+        default=lambda self: self.env['res.company']._company_default_get())
+    task_ids = fields.One2many('tsm.task', 'project_id', string='Tasks Related')
+    task_count = fields.Integer(compute='_compute_task_count', string="Amount Tasks")
 
     @api.multi
     def write(self, vals):

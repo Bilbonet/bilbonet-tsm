@@ -60,9 +60,7 @@
                     <group>
                         <group>
                             <field name="project_id" domain="[('active', '=', True)]"/>
-                            <field name="user_id"
-                                class="o_task_user_field"
-                                options='{"no_open": True}'/>
+                            <field name="user_id" class="o_task_user_field" options='{"no_open": True}'/>
                             <field name="partner_id" required="1"/>
                             <field name="contact_id" groups="tsm_base.group_tsm_task_contact"/>
                             <field name="tags_in_task" invisible="1"/>
@@ -103,11 +101,27 @@
             </form>
         </field>
     </record>
+
+    <record id="tsm_quick_create_task_form" model="ir.ui.view">
+        <field name="name">project.task.form.quick_create</field>
+        <field name="model">tsm.task</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" string = "Task Title"/>
+                    <field name="partner_id" options="{'no_open': True,'no_create': True}" required="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
     <record id="tsm_task_kanban_view" model="ir.ui.view">
         <field name="name">tsm.task.kanban</field>
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks"
+                    on_create="quick_create" quick_create_view="tsm_base.tsm_quick_create_task_form">
                 <field name="tags_in_task" invisible="1"/>
                 <field name="color"/>
                 <field name="priority"/>
@@ -204,9 +218,10 @@
             </tree>
         </field>
     </record>
+
     <!-- Tasks Actions -->
     <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
-        <field name="name">Tasks</field>
+        <field name="name">TSM My Tasks from menu</field>
         <field name="res_model">tsm.task</field>
         <field name="view_type">form</field>
         <field name="view_id" ref="tsm_task_kanban_view"/>
@@ -227,6 +242,7 @@
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="tsm_task_search_view"/>
     </record>
+
     <!-- Tasks Menus -->
     <menuitem id="tsm_task_menu" action="tsm_task_action_from_menu"
               name="Tasks"
@@ -237,7 +253,9 @@
               parent="tsm_base.tsm_main_menu"
               sequence="10"/>
 
-    <!-- Task Types -->
+    <!--=================
+        Tasks Types views
+    ==================-->
     <record id="tsm_task_type_form" model="ir.ui.view">
         <field name="name">tsm.task.type.form</field>
         <field name="model">tsm.task.type</field>
@@ -314,7 +332,9 @@
               groups="base.group_no_one"/>
 
 
-    <!-- Task Tags -->
+    <!--================
+        Tasks Tags views
+    =================-->
     <record id="tsm_task_tags_search_view" model="ir.ui.view">
         <field name="name">TSM Task Tags Seacrh</field>
         <field name="model">tsm.task.tags</field>
@@ -352,17 +372,18 @@
               groups="base.group_no_one"/>
 
 
-    <!--=======================
+    <!--========================
         Tasks From Project views
-    ========================-->
+    =========================-->
     <record id="tsm_tasks_from_project_action" model="ir.actions.act_window">
-        <field name="name">Tasks</field>
+        <field name="name">TSM Project's Tasks</field>
         <field name="res_model">tsm.task</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="domain">['|',('active', '=', True), ('active', '=', False)]</field>
+        <!--<field name="domain">['|',('active', '=', True), ('active', '=', False)]</field>-->
+        <!--<field name="context">{'active_test': False}</field>-->
         <field name="context">{
+            'active_test': False,
             'search_default_project_id': [active_id],
-            'default_project_id': active_id,
             }</field>
         <field name="search_view_id" ref="tsm_task_search_view"/>
         <field name="help" type="html">
@@ -384,8 +405,7 @@
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button" icon="fa-tasks"
                         type="action"
-                        name="%(tsm_tasks_from_project_action)d"
-                        context="{'active_test': False, 'partner_id': partner_id}">
+                        name="%(tsm_tasks_from_project_action)d">
                     <field string="Tasks" name="task_count" widget="statinfo"/>
                 </button>
             </button>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-07 21:00+0000\n"
-"PO-Revision-Date: 2019-12-07 21:00+0000\n"
+"POT-Creation-Date: 2020-01-25 18:57+0000\n"
+"PO-Revision-Date: 2020-01-25 18:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgid "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Project Title: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Project Start: <strong>${object.date_start or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Project Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -63,7 +63,7 @@ msgid "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Task Title: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Task Start: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Task Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -928,6 +928,16 @@ msgid "T.S.M: Projects"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_menu
+msgid "TSM My Tasks from menu"
+msgstr ""
+
+#. module: tsm_base
+#: model:ir.actions.act_window,name:tsm_base.tsm_tasks_from_project_action
+msgid "TSM Project's Tasks"
+msgstr ""
+
+#. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "TSM Task Settings"
 msgstr ""
@@ -993,6 +1003,7 @@ msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__name
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_quick_create_task_form
 msgid "Task Title"
 msgstr ""
 
@@ -1008,9 +1019,7 @@ msgid "Task:"
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_menu
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_partner
-#: model:ir.actions.act_window,name:tsm_base.tsm_tasks_from_project_action
 #: model:ir.ui.menu,name:tsm_base.tsm_task_menu
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
@@ -1041,11 +1050,6 @@ msgid "Tasks in this stage are considered closed."
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__task_needaction_count
-msgid "Tasks need action"
-msgstr ""
-
-#. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_project
 msgid "Tech Support Management Project"
 msgstr ""
@@ -1073,7 +1077,8 @@ msgid "Technician:"
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:165
+#: code:addons/tsm_base/models/tsm_task.py:144
+#: sql_constraint:tsm.task:0
 #, python-format
 msgid "The code must be unique!"
 msgstr ""
@@ -1179,7 +1184,7 @@ msgid "You can now manage your tasks in order to get things done efficiently. Tr
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:134
+#: code:addons/tsm_base/models/tsm_project.py:108
 #, python-format
 msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
 msgstr ""
@@ -1192,10 +1197,5 @@ msgstr ""
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "text-muted"
-msgstr ""
-
-#. module: tsm_base
-#: sql_constraint:tsm.task:0
-msgid "¡El número debe de ser único!"
 msgstr ""
 
