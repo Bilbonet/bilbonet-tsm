@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-07 21:01+0000\n"
-"PO-Revision-Date: 2019-12-07 21:01+0000\n"
+"POT-Creation-Date: 2020-01-25 18:57+0000\n"
+"PO-Revision-Date: 2020-01-25 18:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgid "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Project Title: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Project Start: <strong>${object.date_start or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Project Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -55,14 +55,14 @@ msgid "\n"
 msgstr "\n"
 "<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hola ${object.partner_id.name or ''},</p>\n"
-"    <p>Le informamos sobre el siguiente Projecto: </p>\n"
+"    <p>Le informamos acerca del siguiente proyecto: </p>\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;Projecto Titulo: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Project Comienzo: <strong>${object.date_start or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Titulo Proyecto: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Comienzo Proyecto: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
-"       &nbsp;&nbsp;Su Contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
+"       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
 "       % endif\n"
 "    </p>\n"
 "\n"
@@ -97,7 +97,7 @@ msgid "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Task Title: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Task Start: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Task Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -131,8 +131,8 @@ msgstr "\n"
 "    <p>Le informamos acerca de la siguiente tarea: </p>\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;Titulo de la Tarea: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Tarea Fecha Inicio: <strong>${object.format_date(object.date_start) or ''}</strong><br>\n"
+"       &nbsp;&nbsp;Titulo Tarea: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Comienzo Tarea: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -190,7 +190,7 @@ msgstr "(Des)archivar un proyecto automaticamente (des)archiva sus tareas. Desea
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "<i class=\"fa fa-comments\" role=\"img\" aria-label=\"Unread Messages\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-comments\" role=\"img\" aria-label=\"Mensajes sin leer\"/>"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
@@ -258,7 +258,7 @@ msgstr "Dirección:"
 #: model:ir.model.fields,field_description:tsm_base.field_res_partner__tsm_task_count
 #: model:ir.model.fields,field_description:tsm_base.field_res_users__tsm_task_count
 msgid "Amount Partner Tasks"
-msgstr "Cantidad Tareas Cliente"
+msgstr "Cantidad Tareas de Cliente"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__task_count
@@ -280,7 +280,7 @@ msgstr "Asignada a"
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__date_assign
 msgid "Assigning Date"
-msgstr "Fecha de asignación"
+msgstr "Fecha Asignación"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
@@ -295,7 +295,7 @@ msgstr "En cada estado el usuario puede bloquear o dejar la tarea lista para el 
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_attachment_count
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_attachment_count
 msgid "Attachment Count"
-msgstr "Conteo de archivos adjuntos"
+msgstr "Cantidad archivos adjuntos"
 
 #. module: tsm_base
 #: code:addons/tsm_base/models/tsm_task.py:21
@@ -620,7 +620,7 @@ msgstr "En progreso"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_is_follower
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_is_follower
 msgid "Is Follower"
-msgstr "Es un seguidor"
+msgstr "Es Seguidor"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__legend_blocked
@@ -640,7 +640,7 @@ msgstr "Estado de kanban"
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__kanban_state_label
 msgid "Kanban State Label"
-msgstr ""
+msgstr "Etiqueta del Estado del Kanban"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__legend_done
@@ -674,7 +674,7 @@ msgstr "Última actualización el"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
 msgid "Logo"
-msgstr ""
+msgstr "Logotipo"
 
 #. module: tsm_base
 #: selection:tsm.task,priority:0
@@ -822,7 +822,7 @@ msgstr "Página: <span class=\"page\"/>/<span class=\"topage\"/>"
 #: model:ir.model.fields,field_description:tsm_base.field_res_partner__tsm_task_ids
 #: model:ir.model.fields,field_description:tsm_base.field_res_users__tsm_task_ids
 msgid "Partner related tasks"
-msgstr ""
+msgstr "Cliente Tareas Relacionadas"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
@@ -924,7 +924,7 @@ msgstr "Búsqueda"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 msgid "Search Project"
-msgstr ""
+msgstr "Buscar proyecto"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
@@ -978,7 +978,7 @@ msgstr "Destacado"
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__legend_priority
 msgid "Starred Explanation"
-msgstr "Explicación de la estrella"
+msgstr "Explicación de destacado"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__date_start
@@ -1009,6 +1009,16 @@ msgstr ""
 #: model:ir.actions.act_window,name:tsm_base.tsm_project_open_all_action
 msgid "T.S.M: Projects"
 msgstr "T.S.M: Proyectos"
+
+#. module: tsm_base
+#: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_menu
+msgid "TSM My Tasks from menu"
+msgstr "TSM Mis Tareas desde menú"
+
+#. module: tsm_base
+#: model:ir.actions.act_window,name:tsm_base.tsm_tasks_from_project_action
+msgid "TSM Project's Tasks"
+msgstr "TSM Tareas del Proyecto"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
@@ -1076,6 +1086,7 @@ msgstr "Taeas Etiquetas"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__name
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_quick_create_task_form
 msgid "Task Title"
 msgstr "Título de tarea"
 
@@ -1088,12 +1099,10 @@ msgstr "Título Tarea..."
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
 msgid "Task:"
-msgstr "Tarea:"
+msgstr "Tarea"
 
 #. module: tsm_base
-#: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_menu
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_partner
-#: model:ir.actions.act_window,name:tsm_base.tsm_tasks_from_project_action
 #: model:ir.ui.menu,name:tsm_base.tsm_task_menu
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
@@ -1124,11 +1133,6 @@ msgid "Tasks in this stage are considered closed."
 msgstr "Tareas en esta etapa se considerarán cerradas."
 
 #. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__task_needaction_count
-msgid "Tasks need action"
-msgstr "Tareas necesitan accion"
-
-#. module: tsm_base
 #: model:ir.model,name:tsm_base.model_tsm_project
 msgid "Tech Support Management Project"
 msgstr "Gestión de soporte técnico Proyectos"
@@ -1157,7 +1161,8 @@ msgid "Technician:"
 msgstr "Técnico"
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:165
+#: code:addons/tsm_base/models/tsm_task.py:144
+#: sql_constraint:tsm.task:0
 #, python-format
 msgid "The code must be unique!"
 msgstr "El código debe ser único!"
@@ -1180,7 +1185,7 @@ msgstr "Hoy"
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Unread Messages"
-msgstr "Mensajes por leer"
+msgstr "Mensajes sin leer"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_unread_counter
@@ -1192,7 +1197,7 @@ msgstr "Contador de mensajes sin leer"
 #: model:ir.model.fields,field_description:tsm_base.field_res_config_settings__default_tags_in_task
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__tags_in_task
 msgid "Use Tags in Tasks"
-msgstr "Use Tags en Tareas"
+msgstr "Use Etiquetas en Tareas"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
@@ -1212,7 +1217,7 @@ msgstr "Utilice etiquetas en tareas"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "Use tags to classify tasks."
-msgstr "Utilice etqieutas para clasificar tareas."
+msgstr "Utilice etiquetas para clasificar tareas."
 
 #. module: tsm_base
 #: model:res.groups,name:tsm_base.group_tsm_user
@@ -1240,12 +1245,12 @@ msgstr "Historial de comunicaciones del sitio web"
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
 msgid "Website:"
-msgstr "Web"
+msgstr "Sitio Web"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__is_favorite
 msgid "Whether this project should be displayed on the dashboard or not"
-msgstr "Ya sea si este proyecto se tiene que mostrar en el tablero o no"
+msgstr "Indica si este proyecto se tiene que mostrar en el tablero o no"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
@@ -1263,7 +1268,7 @@ msgid "You can now manage your tasks in order to get things done efficiently. Tr
 msgstr "Ahora usted puede gestionar sus tareas para tenerlas hechas eficientemente. Siga el progreso, comente, adjunte documentos, etc."
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:134
+#: code:addons/tsm_base/models/tsm_project.py:108
 #, python-format
 msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
 msgstr "No puedes eliminar un proyecto con tareas. Puedes eliminar las tareas del proyecto y depues eliminarlo o simplemente archivar el proyecto."
@@ -1277,9 +1282,4 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "text-muted"
 msgstr ""
-
-#. module: tsm_base
-#: sql_constraint:tsm.task:0
-msgid "¡El número debe de ser único!"
-msgstr "¡El número debe de ser único!"
 

@@ -17,7 +17,7 @@
 
     <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
        &nbsp;&nbsp;Project Title: <strong>${object.name}</strong><br />
-       &nbsp;&nbsp;Project Start: <strong>${object.date_start or ''}</strong><br>
+       &nbsp;&nbsp;Project Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>
 
        % if object.user_id:
        &nbsp;&nbsp;Your contact: <a href="mailto:${object.user_id.email or ''}?subject=Task%20${object.name}"><strong>${object.user_id.name}</strong></a>

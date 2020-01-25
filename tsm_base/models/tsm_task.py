@@ -65,8 +65,8 @@ class TsmTask(models.Model):
                                    access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
 
-    code = fields.Char(
-        string='Task Code', required=True, default="/", readonly=True)
+    code = fields.Char(string='Task Code',
+        required=True, default="/", readonly=True)
     active = fields.Boolean(default=True, copy=False,
         help="If the active field is set to False, it will allow you to hide"
         " the task without removing it.")
@@ -76,11 +76,9 @@ class TsmTask(models.Model):
     ], default='0', index=True, string="Priority")
     sequence = fields.Integer(string='Sequence', index=True, default=10,
         help="Gives the sequence order when displaying a list of tasks.")
-    stage_id = fields.Many2one(
-        'tsm.task.type', string='Stage',
-        track_visibility='onchange', index=True,
+    stage_id = fields.Many2one('tsm.task.type',
+        string='Stage', track_visibility='onchange', index=True, copy=False,
         group_expand='_read_group_stage_ids',
-        copy=False,
         default=_get_default_stage_id)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
     tag_ids = fields.Many2many('tsm.task.tags', string='Tags',)
@@ -88,8 +86,7 @@ class TsmTask(models.Model):
         ('normal', 'Grey'),
         ('done', 'Green'),
         ('blocked', 'Red')],
-        string='Kanban State',
-        copy=False, default='normal', required=True,
+        string='Kanban State', copy=False, default='normal', required=True,
         help="A task's kanban state indicates special situations "
              "affecting it:\n"
              " * Grey is the default situation\n"
@@ -101,62 +98,45 @@ class TsmTask(models.Model):
         string='Kanban State Label')
     color = fields.Integer(string='Color Index')
     date_start = fields.Datetime(string='Starting Date',
-                                 default=fields.Datetime.now,
-                                 index=True, copy=False)
+        default=fields.Datetime.now, index=True, copy=False)
     date_assign = fields.Datetime(string='Assigning Date',
-                                  default=fields.Datetime.now,
-                                  index=True, copy=False, readonly=True)
+        default=fields.Datetime.now, index=True, copy=False, readonly=True)
     date_deadline = fields.Date(string='Deadline', index=True, copy=False)
     date_end = fields.Datetime(string='Ending Date', index=True, copy=False)
     legend_blocked = fields.Char(related='stage_id.legend_blocked',
-                                 string='Kanban Blocked Explanation',
-                                 readonly=True, related_sudo=False)
+        string='Kanban Blocked Explanation', readonly=True, related_sudo=False)
     legend_done = fields.Char(related='stage_id.legend_done',
-                              string='Kanban Valid Explanation',
-                              readonly=True, related_sudo=False)
+        string='Kanban Valid Explanation', readonly=True, related_sudo=False)
     legend_normal = fields.Char(related='stage_id.legend_normal',
-                                string='Kanban Ongoing Explanation',
-                                readonly=True, related_sudo=False)
-    name = fields.Char(string='Task Title', track_visibility='always',
-                       required=True, index=True)
-    description = fields.Html(
-        string='Task Description', sanitize=True,
-        strip_style=False, translate=False,
+        string='Kanban Ongoing Explanation', readonly=True, related_sudo=False)
+    name = fields.Char(string='Task Title',
+        track_visibility='always', required=True, index=True)
+    description = fields.Html(string='Task Description',
+        sanitize=True, strip_style=False, translate=False,
         help="Details, notes and aclarations about the task.")
     project_id = fields.Many2one('tsm.project',
-                                 string='Project',
-                                 index=True,
-                                 track_visibility='onchange',
-                                 change_default=True)
+        string='Project', index=True, track_visibility='onchange')
     manager_id = fields.Many2one('res.users',
-                                 string='Project Manager',
-                                 related='project_id.user_id',
-                                 readonly=True, related_sudo=False)
+        string='Project Manager', related='project_id.user_id',
+        readonly=True, related_sudo=False)
     user_id = fields.Many2one('res.users',
-                              string='Assigned to',
-                              default=lambda self: self.env.uid,
-                              required=True,
-                              index=True, track_visibility='always')
-    partner_id = fields.Many2one('res.partner',
-                                 string='Customer')
-    contact_id = fields.Many2one('res.partner',
-                                 domain="[('parent_id', '=', partner_id),"
-                                        "('type', '=', 'contact')]",
-                                 string='Contact')
+        string='Assigned to', default=lambda self: self.env.uid,
+        required=True, index=True, track_visibility='always')
+    partner_id = fields.Many2one('res.partner', string='Customer')
+    contact_id = fields.Many2one('res.partner', string='Contact',
+        domain="[('parent_id', '=', partner_id),"
+                "('type', 'in', ('contact','invoice'))]",)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
-    ],
-        string='Privacy', required=True,
-        default='followers',
+        ],
+        string='Privacy', required=True, default='followers',
         help="Holds visibility of the task:\n "
              "- On invitation only: Employees may only "
              "see the followed tasks\n"
              "- Visible by all employees: Employees "
              "may see all tasks\n")
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
+    company_id = fields.Many2one('res.company', string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
 
     _sql_constraints = [
@@ -236,17 +216,32 @@ class TsmTask(models.Model):
             'context': ctx,
         }
 
-    def format_date(self, date):
-        # format date following user language
-        lang_model = self.env['res.lang']
-        lang = lang_model._lang_get(self.env.user.lang)
-        date_format = lang.date_format
-        return datetime.strftime(
-            fields.Date.from_string(date), date_format)
+    """Eliminado el 25-01-2020
+        Se utilizaba para formatear la fecha en las plantillas email.
+        Ahora hay otro metodo sin necesidad de utilizar un metodo
+    """
+    # def format_date(self, date):
+    #     # format date following user language
+    #     lang_model = self.env['res.lang']
+    #     lang = lang_model._lang_get(self.env.user.lang)
+    #     date_format = lang.date_format
+    #     return datetime.strftime(
+    #         fields.Date.from_string(date), date_format)
 
     # ------------------------------------------------
     # CRUD overrides
     # ------------------------------------------------
+    @api.model
+    def default_get(self, fields):
+        result = super(TsmTask, self).default_get(fields)
+        active_model = self._context.get('active_model')
+        if active_model == 'tsm.project':
+            active_id = self._context.get('active_id')
+            project = self.env['tsm.project'].browse(active_id)
+            result['partner_id'] = project.partner_id.id
+
+        return result
+
     @api.model
     def create(self, vals):
         # context: no_log, because subtype already handle this
@@ -255,16 +250,6 @@ class TsmTask(models.Model):
         # Assign new code
         if vals.get('code', '/') == '/':
             vals['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
-
-        # Assign project_id if exists in vals
-        if vals.get('project_id') and not context.get('default_project_id'):
-            context['default_project_id'] = vals.get('project_id')
-
-        # Assign partner of the project
-        # Create task from kanban view don't pass partner_id value
-        if context.get('default_project_id') and not vals.get('partner_id'):
-            vals['partner_id'] = self.env['tsm.project'].browse(
-                context.get('default_project_id')).partner_id.id
 
         task = super(TsmTask, self.with_context(context)).create(vals)
         return task
