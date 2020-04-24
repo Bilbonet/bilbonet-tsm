@@ -48,57 +48,58 @@
                                 Responsible: <span t-field="o.user_id.name"/>
                             </div>
                         </div>
-                        <div class="jumbotron text-center">
-                            <div class="col"><h1>Sumary Time Pack: <span t-field="o.code"/></h1></div>
+                        <div class="jumbotron">
+                            <div class="col text-center"><h1>Sumary Time Pack: <span t-field="o.code"/></h1></div>
                             <div class="col" t-if="o.name">Title: <span t-field="o.name"/></div>
-                        </div>
-                        <!-- Time Pack sumary -->
-                        <div class="row justify-content-center">
-                            <div class="col-4">
-                                <table class="table table-sm">
-                                    <tr>
-                                        <td>Contrated:</td>
-                                        <td class="text-right">
-                                            <span t-field="o.contrated_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
+                            <div class="col" t-if="o.description"><span t-field="o.description"/></div>
+                            <!-- Time Pack sumary -->
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td>Contrated:</td>
+                                            <td class="text-right text-secondary">
+                                                <span t-field="o.contrated_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
 
-                                    <tr class="bg-secondary">
-                                        <td>Consumed <span class="fa fa-arrow-circle-down text-danger"/> :</td>
-                                        <td class="text-right">
-                                            <span t-field="o.consumed_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
-                                    <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
-                                        <td>Remainig:</td>
-                                        <td class="text-right">
-                                            <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
-                                    <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
-                                        <td>Exceded:</td>
-                                        <td class="text-right">
-                                            <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col-1"></div>
-                            <div class="col-4">
-                                <table t-if="o.complimentary_hours" class="table table-sm">
-                                    <tr>
-                                        <td>Complimentary <span class="fa fa-arrow-circle-right"/> :</td>
-                                        <td class="text-right">
-                                            <span t-field="o.complimentary_hours"  t-options="{'widget': 'float_time'}"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" style="font-size:0.6em;">
-                                            <b>Complimentary time</b> is time used by the technician but
-                                            doesn't discount time of the hours contracted by the client..
-                                        </td>
-                                    </tr>
-                                </table>
+                                        <tr t-if="o.consumed_hours &gt;= 0">
+                                            <td>Consumed <span class="fa fa-arrow-circle-down text-danger"/> :</td>
+                                            <td class="text-right text-danger">
+                                                <span t-field="o.consumed_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                        <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
+                                            <td>Remainig:</td>
+                                            <td class="text-right">
+                                                <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                        <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
+                                            <td>Exceded:</td>
+                                            <td class="text-right">
+                                                <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-2"></div>
+                                <div class="col-4">
+                                    <table t-if="o.complimentary_hours" class="table table-sm">
+                                        <tr>
+                                            <td>Complimentary <span class="fa fa-arrow-circle-right"/> :</td>
+                                            <td class="text-right">
+                                                <span t-field="o.complimentary_hours"  t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="font-size:0.6em;">
+                                                <b>Complimentary time</b> is time used by the technician but
+                                                doesn't discount time of the hours contracted by the client..
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <!-- Timesheet Lines -->
@@ -203,58 +204,66 @@
                                 Responsible: <span t-field="o.user_id.name"/>
                             </div>
                         </div>
-                        <div class="jumbotron text-center">
-                            <div class="col"><h1>Sumary Time Pack: <span t-field="o.code"/></h1></div>
+                        <div class="jumbotron">
+                            <div class="col text-center"><h1>Sumary Time Pack: <span t-field="o.code"/></h1></div>
                             <div class="col" t-if="o.name">Title: <span t-field="o.name"/></div>
-                        </div>
-                        <!-- Time Pack sumary -->
-                        <div class="row justify-content-center">
-                            <div class="col-4">
-                                <table class="table table-sm">
-                                    <tr>
-                                        <td>Contrated:</td>
-                                        <td class="text-right">
-                                            <span t-field="o.contrated_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
+                            <div class="col" t-if="o.description"><span t-field="o.description"/></div>
 
-                                    <tr class="bg-secondary">
-                                        <td>Consumed <span class="fa fa-arrow-circle-down text-danger"/> :</td>
-                                        <td class="text-right">
-                                            <span t-field="o.consumed_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
-                                    <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
-                                        <td>Remainig:</td>
-                                        <td class="text-right">
-                                            <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
-                                    <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
-                                        <td>Exceded:</td>
-                                        <td class="text-right">
-                                            <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
-                                        </td>
-                                    </tr>
-                                </table>
+
+                            <!-- Time Pack sumary -->
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td>Contrated:</td>
+                                            <td class="text-right text-secondary">
+                                                <span t-field="o.contrated_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+
+                                        <tr t-if="o.consumed_hours &gt;= 0">
+                                            <td>Consumed <span class="fa fa-arrow-circle-down text-danger"/> :</td>
+                                            <td class="text-right text-danger">
+                                                <span t-field="o.consumed_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                        <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
+                                            <td>Remainig:</td>
+                                            <td class="text-right">
+                                                <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                        <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
+                                            <td>Exceded:</td>
+                                            <td class="text-right">
+                                                <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-2"></div>
+                                <div class="col-4">
+                                    <table t-if="o.complimentary_hours" class="table table-sm">
+                                        <tr>
+                                            <td>Complimentary <span class="fa fa-arrow-circle-right"/> :</td>
+                                            <td class="text-right">
+                                                <span t-field="o.complimentary_hours"  t-options="{'widget': 'float_time'}"/> hours
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="font-size:0.6em;">
+                                                <b>Complimentary time</b> is time used by the technician but
+                                                doesn't discount time of the hours contracted by the client..
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="col-1"></div>
-                            <div class="col-4">
-                                <table t-if="o.complimentary_hours" class="table table-sm">
-                                    <tr>
-                                        <td>Complimentary <span class="fa fa-arrow-circle-right"/> :</td>
-                                        <td class="text-right">
-                                            <span t-field="o.complimentary_hours"  t-options="{'widget': 'float_time'}"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" style="font-size:0.6em;">
-                                            <b>Complimentary time</b> is time used by the technician but
-                                            doesn't discount time of the hours contracted by the client..
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+
+
+
+
+
                         </div>
                         <!-- Timesheet Lines -->
                         <div class="row" t-if="len(o.timesheet_ids) &gt; 0">

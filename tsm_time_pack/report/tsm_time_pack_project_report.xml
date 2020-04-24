@@ -19,20 +19,21 @@
                         <tbody>
                             <tr>
                                 <td>Total Time:</td>
-                                <td class="text-right">
-                                    <strong><span t-esc="time_total" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/></strong>
+                                <td class="text-right text-secondary">
+                                    <!--<strong><span t-esc="time_total" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/></strong>-->
+                                    <strong><span t-esc="time_total" t-options="{'widget': 'float_time'}"/></strong> hours
                                 </td>
                             </tr>
                             <tr t-if="time_tp_discount > 0">
                                 <td>Discounted <span style="font-size:0.8em;" class="fa fa-2x fa-arrow-circle-down text-danger"/>:</td>
-                                <td class="text-right">
-                                    <span t-esc="time_tp_discount" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}' class="text-danger"/>
+                                <td class="text-right text-danger">
+                                    <span t-esc="time_tp_discount" t-options="{'widget': 'float_time'}"/> hours
                                 </td>
                             </tr>
                             <tr t-if="time_tp_nodiscount > 0">
                                 <td>Complimentary <span style="font-size:0.8em;" class="fa fa-2x fa-arrow-circle-right"/>:</td>
                                 <td class="text-right">
-                                    <span t-esc="time_tp_nodiscount" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/>
+                                    <span t-esc="time_tp_nodiscount" t-options="{'widget': 'float_time'}"/> hours
                                 </td>
                             </tr>
                         </tbody>
@@ -46,7 +47,7 @@
                     <thead style="background-color: #3498DB;font-size:0.8em;" >
                         <tr class="text-center">
                             <th colspan="3" class="text-center" style="color:#fff;">Spent Time Detail</th>
-                            <th t-foreach="t.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id" class="text-right" style="color:#fff;">Bolsa Horas</th>
+                            <th t-foreach="t.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id" class="text-right" style="color:#fff;">Time Pack</th>
                         </tr>
                     </thead>
                     <tbody>
