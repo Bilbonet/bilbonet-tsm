@@ -31,8 +31,7 @@ class TsmTechAsset(models.Model):
             ], order='date_start')
         return task_ids
 
-    company_id = fields.Many2one(
-        'res.company',
+    company_id = fields.Many2one('res.company',
         string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
     active = fields.Boolean(default=True,
