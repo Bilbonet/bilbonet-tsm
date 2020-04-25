@@ -25,37 +25,12 @@ class TsmProject(models.Model):
         for project in self:
             project.task_count = result.get(project.id, 0)
 
-    def _compute_is_favorite(self):
-        for project in self:
-            project.is_favorite = self.env.user in project.favorite_user_ids
-
-    def _inverse_is_favorite(self):
-        favorite_projects = not_fav_projects = self.env['tsm.project'].sudo()
-        for project in self:
-            if self.env.user in project.favorite_user_ids:
-                favorite_projects |= project
-            else:
-                not_fav_projects |= project
-
-        # Project User has no write access for project.
-        not_fav_projects.write({'favorite_user_ids': [(4, self.env.uid)]})
-        favorite_projects.write({'favorite_user_ids': [(3, self.env.uid)]})
-
-    def _get_default_favorite_user_ids(self):
-        return [(6, 0, [self.env.uid])]
-
     active = fields.Boolean(default=True,
         help="If the active field is set to False, it will allow you to hide"
              " the project without removing it.")
     sequence = fields.Integer(default=10,
         help="Gives the sequence order when displaying a list of Projects.")
-    favorite_user_ids = fields.Many2many(
-        'res.users', 'tsm_project_favorite_user_rel', 'project_id', 'user_id',
-        default=_get_default_favorite_user_ids,
-        string='Members')
-    is_favorite = fields.Boolean(compute='_compute_is_favorite',
-        inverse='_inverse_is_favorite',
-        string='Show Project on dashboard',
+    is_favorite = fields.Boolean(string='Show Project on dashboard',
         help="Whether this project should be displayed on the "
              "dashboard or not")
     color = fields.Integer(string='Color Index')
@@ -90,13 +65,10 @@ class TsmProject(models.Model):
 
     @api.multi
     def write(self, vals):
-        # directly compute is_favorite to dodge allow write access right
-        if 'is_favorite' in vals:
-            vals.pop('is_favorite')
-            self._fields['is_favorite'].determine_inverse(self)
         res = super(TsmProject, self).write(vals) if vals else True
+
+        # archiving/unarchiving a project does it on its tasks, too
         if 'active' in vals:
-            # archiving/unarchiving a project does it on its tasks, too
             self.with_context(active_test=False).mapped('task_ids').write(
                                                 {'active': vals['active']})
         return res
