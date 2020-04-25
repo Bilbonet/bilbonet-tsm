@@ -83,10 +83,11 @@
                 <field name="user_id" string="Project Manager"/>
                 <filter name="my_projects" string="My Projects" domain="[('user_id','=',uid)]"/>
                 <separator/>
-                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <filter name="my_favorites" string="My Favorites" domain="[('is_favorite','=',True)]"/>
                 <separator/>
-                <filter name="my_favorites" string="My Favorites" domain="[('favorite_user_ids', 'in', uid)]"/>
                 <filter name="followed_by_me" string="Followed by Me" domain="[('message_is_follower','=',True)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Manager" name="Manager" context="{'group_by':'user_id'}"/>
                     <filter string="Contact" name="Partner" context="{'group_by':'partner_id'}"/>
