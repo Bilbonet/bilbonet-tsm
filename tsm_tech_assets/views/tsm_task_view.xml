@@ -6,8 +6,9 @@
         <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
         <field name="arch" type="xml">
             <field name="date_deadline" position="after">
-                <!--<field name="asset_ids" widget="many2many_tags" domain="[('partner_id', '=', partner_id)]" options="{'no_create_edit': True}"/>-->
-                <field name="asset_ids" widget="many2many_kanban" domain="[('partner_id', 'child_of', partner_id)]" options="{'no_create_edit': True}">
+                <field name="asset_ids" widget="many2many_kanban"  options="{'no_create_edit': True}"
+                       domain="[('partner_id', 'child_of', partner_id)]"
+                       context="{'default_partner_id':partner_id}">
                     <kanban quick_create="false" edit="true">
                         <field name="name"/>
                         <templates>
