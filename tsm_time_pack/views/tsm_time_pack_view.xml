@@ -126,7 +126,11 @@
             <field name="name">TSM Time Pack tsm.time.pack.tree</field>
             <field name="model">tsm.time.pack</field>
             <field name="arch" type="xml">
-                <tree string="Time Packs" import="false">
+                <tree string="Time Packs"
+                      decoration-muted="active == False"
+                      decoration-success="progress &lt; 50 and active == True"
+                      decoration-danger="progress &gt; 90 and active == True">
+                    <field name="active" invisible="1"/>
                     <field name="date_start"/>
                     <field name="partner_id"/>
                     <field name="code"/>
