@@ -45,7 +45,7 @@
         <field name="res_model">res.config.settings</field>
         <field name="view_mode">form</field>
         <field name="target">inline</field>
-        <field name="context">{'module' : 'tsm'}</field>
+        <field name="context">{'module' : 'tsm_base'}</field>
     </record>
 
     <menuitem id="tsm_menu_configuration"
