@@ -40,7 +40,7 @@
                 </header>
                 <sheet string="Task">
                     <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object" groups="tsm_base.group_tsm_user"
+                        <button name="toggle_active" type="object"
                                 class="oe_stat_button" icon="fa-archive">
                             <field name="active" widget="boolean_button"
                                 options='{"terminology": "archive"}'/>
@@ -160,8 +160,9 @@
                                             <span class="fa fa-ellipsis-v"/>
                                         </a>
                                         <div class="dropdown-menu" role="menu">
-                                            <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">Edit Task</a>
-                                            <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                            <a role="menuitem" name="toggle_active" type="object" class="dropdown-item">(Un)Archive</a>
+                                            <a role="menuitem" type="edit" class="dropdown-item">Edit Task</a>
+                                            <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
                                             <div role="separator" class="dropdown-divider"></div>
                                             <ul class="oe_kanban_colorpicker" data-field="color"/>
                                         </div>
