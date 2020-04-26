@@ -1,7 +1,7 @@
 # Copyright 2018 - Bilbonet <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 import odoo.addons.decimal_precision as dp
 
