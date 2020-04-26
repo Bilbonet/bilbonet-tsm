@@ -60,10 +60,6 @@ class TsmTask(models.Model):
         This function returns an action that display the order
         given sale order id.
         '''
-        # action = self.env.ref('sale.action_orders').read()[0]
-        # action['views'] = [(self.env.ref('sale.view_order_form').id, 'form')]
-        # action['res_id'] = self.sale_id.id
-        # return action
 
         self.ensure_one()
         return {
@@ -82,7 +78,7 @@ class TsmTask(models.Model):
             'product_uom': line.product_uom_id.id,
         })
 
-        '''Get other sale line values from product onchange'''
+        # Get other sale line values from product onchange
         sale_line.product_id_change()
         sale_line_vals = sale_line._convert_to_write(sale_line._cache)
 
@@ -108,25 +104,31 @@ class TsmTask(models.Model):
                 self.partner_id.property_product_pricelist.currency_id or
                 self.company_currency)
 
-        sale = self.env['sale.order'].new({
-            'partner_id': self.partner_id,
+        sale = self.env['sale.order'].new({'partner_id': self.partner_id})
+        # Get partner extra fields
+        sale.onchange_partner_id()
+        # Write the resulting virtual record modifications made by the onchange call
+        sale_vals = sale._convert_to_write(sale._cache)
+
+        sale_vals.update({
+            'origin': self.code + ' - ' + self.name,
             'currency_id': currency.id,
-            'date_order': fields.Datetime.today(),
+            'payment_term_id': self.partner_id.property_payment_term_id.id,
+            'payment_mode_id': self.partner_id.customer_payment_mode_id.id,
+            'fiscal_position_id': self.partner_id.property_account_position_id.id,
             'company_id': self.company_id.id,
             'user_id': self.user_id.id,
-            'origin': self.code + ' - ' + self.name,
+            'pricelist_id': self.partner_id.property_product_pricelist.id,
             'tsm_task_id': self.id,
         })
 
-        '''Get other sale values from partner onchange'''
-        sale.onchange_partner_id()
-        return sale._convert_to_write(sale._cache)
+        return sale_vals
 
     @api.multi
     def create_sale(self):
         """
         Create Sale order from task
-        :return: Sele Order created
+        :return: Sale Order created
         """
         self.ensure_one()
         sale_vals = self._prepare_sale()
@@ -138,21 +140,15 @@ class TsmTask(models.Model):
                 sale_line_id = \
                     self.env['sale.order.line'].create(sale_line_vals)
 
-        '''Update Task with the values from the sale order'''
+        # Update Task with the values from the sale order
         vals = {'sale_id': sale.id}
         self.update(vals)
 
-        ''' Autoconfirm sale order if it's checked'''
+        # Autoconfirm sale order if it's checked
         if self.sale_autoconfirm:
             sale.action_confirm()
 
         return sale
-
-    # @api.onchange('active')
-    # def _onchange_active(self):
-    #     if self.material_ids.ids and self.active:
-    #         raise ValidationError(_("You can't archive a task "
-    #                                 "with materials: %s!") % self.name)
 
     @api.multi
     def unlink(self):
