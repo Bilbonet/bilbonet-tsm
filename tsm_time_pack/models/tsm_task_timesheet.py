@@ -47,3 +47,13 @@ class TsmTaskTimesheet(models.Model):
             }
             return {'warning': warning_mess}
         return {}
+
+    def view_time_pack(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'tsm.time.pack',
+            'res_id': self.timepack_id.id,
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+        }

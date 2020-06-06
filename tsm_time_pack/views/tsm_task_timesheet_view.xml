@@ -11,6 +11,9 @@
                 <xpath expr="//field[@name='amount']" position="before">
                     <field name="task_partner_id" invisible="1"/>
                     <field name="timepack_id" domain="[('partner_id', '=', task_partner_id)]" options='{"no_open": True, "no_create": True}'/>
+                    <button type="object" name="view_time_pack"
+                            string="View Time Pack Details" icon="fa-search-plus"
+                            attrs="{'invisible':[('timepack_id','=',False)]}"/>
                     <field name="discount_time" attrs="{'invisible':[('timepack_id','=',False)]}"/>
                 </xpath>
             </field>
@@ -23,7 +26,13 @@
             <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_timesheet_line_form" />
             <field name="arch" type="xml">
                 <xpath expr="//div[@name='duration']" position="after">
-                    <field name="timepack_id" domain="[('partner_id', '=', task_partner_id)]" options='{"no_open": True, "no_create": True}'/>
+                    <label for="timepack_id" string="Time Pack"/>
+                    <div name="time_pack">
+                        <field name="timepack_id" domain="[('partner_id', '=', task_partner_id)]" options='{"no_open": True, "no_create": True}'/>
+                        <button type="object" name="view_time_pack"
+                                icon="fa-search-plus"
+                                attrs="{'invisible':[('timepack_id','=',False)]}"/>
+                    </div>
                     <field name="discount_time" attrs="{'invisible':[('timepack_id','=',False)]}"/>
                 </xpath>
             </field>
