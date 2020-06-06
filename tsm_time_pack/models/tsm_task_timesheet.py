@@ -2,7 +2,6 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, models, fields, _
-from datetime import datetime, timedelta
 
 
 class TsmTaskTimesheet(models.Model):
@@ -30,12 +29,12 @@ class TsmTaskTimesheet(models.Model):
     def _onchange_timepack(self):
         self.timepack_id._hours_get()
         if self.timepack_id.progress > 90:
-            contrated_hours = (datetime(2000,1,1)+timedelta(
-                seconds=self.timepack_id.contrated_hours*3600)
-                ).strftime('%H:%M')
-            consumed_hours = (datetime(2000,1,1)+timedelta(
-                seconds=self.timepack_id.consumed_hours*3600)
-                ).strftime('%H:%M')
+            contrated_hours = '{0:02.0f}:{1:02.0f}'.format(
+                *divmod(float(self.timepack_id.contrated_hours) * 60, 60)
+            )
+            consumed_hours = '{0:02.0f}:{1:02.0f}'.format(
+                *divmod(float(self.timepack_id.consumed_hours) * 60, 60)
+            )
 
             message = _(
                 'Hours Contrated: %s'
@@ -43,7 +42,7 @@ class TsmTaskTimesheet(models.Model):
                 '\nProgress: %s %%') \
                 % (contrated_hours, consumed_hours, self.timepack_id.progress)
             warning_mess = {
-                'title': _("Alert Time Pack %s") % self.timepack_id.code,
+                'title': _("Alert Time Pack: %s") % self.timepack_id.code,
                 'message': message
             }
             return {'warning': warning_mess}

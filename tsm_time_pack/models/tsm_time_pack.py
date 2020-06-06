@@ -182,25 +182,34 @@ class TsmTimePack(models.Model):
                  'contrated_hours')
     def _hours_get(self):
         for time in self.sorted(key='id', reverse=True):
-            '''use "sudo" here to allow task user (without timesheet 
-            user right) to create task'''
-            time.total_hours_spent = sum(
-                                    time.sudo().timesheet_ids.mapped('amount')
-            )
-            '''Filter time line checked to discount time'''
-            timesheet_consu = time.sudo().mapped('timesheet_ids').filtered(
-                     lambda x: x.discount_time)
-            time.consumed_hours = sum(timesheet_consu.mapped('amount'))
-            time.complimentary_hours = \
-                time.total_hours_spent - time.consumed_hours
-            time.remaining_hours = time.contrated_hours - time.consumed_hours
+            '''
+            use "sudo" here to allow user (without timesheet user right) 
+            to access timesheets
+            '''
 
+            '''Filter timesheet ids checked to discount time'''
+            timesheet_consu_ids = time.sudo().mapped('timesheet_ids').filtered(
+                lambda x: x.discount_time
+            )
+
+            total_hours_spent = sum(time.sudo().timesheet_ids.mapped('amount'))
+            consumed_hours = sum(timesheet_consu_ids.mapped('amount'))
+            complimentary_hours = total_hours_spent - consumed_hours
+            remaining_hours = time.contrated_hours - consumed_hours
             if time.contrated_hours > 0.0:
-                time.progress = round(
-                    (100.0 * time.consumed_hours) / time.contrated_hours, 2
+                progress = round(
+                    (100.0 * consumed_hours) / time.contrated_hours, 2
                 )
             else:
-                time.progress = 0.0
+                progress = 0.0
+
+            time.update({
+                'total_hours_spent': total_hours_spent,
+                'consumed_hours':  consumed_hours,
+                'complimentary_hours': complimentary_hours,
+                'remaining_hours': remaining_hours,
+                'progress': progress,
+            })
 
     @api.multi
     def action_time_pack_send(self):
