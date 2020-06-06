@@ -216,18 +216,6 @@ class TsmTask(models.Model):
             'context': ctx,
         }
 
-    """Eliminado el 25-01-2020
-        Se utilizaba para formatear la fecha en las plantillas email.
-        Ahora hay otro metodo sin necesidad de utilizar un metodo
-    """
-    # def format_date(self, date):
-    #     # format date following user language
-    #     lang_model = self.env['res.lang']
-    #     lang = lang_model._lang_get(self.env.user.lang)
-    #     date_format = lang.date_format
-    #     return datetime.strftime(
-    #         fields.Date.from_string(date), date_format)
-
     # ------------------------------------------------
     # CRUD overrides
     # ------------------------------------------------

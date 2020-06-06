@@ -87,10 +87,6 @@ class TsmTechAsset(models.Model):
          _('The code must be unique!')),
     ]
 
-    # @api.model
-    # def default_get(self, vals):
-    #     pass
-
     @api.model
     def create(self, vals):
         if vals.get('code', '/') == '/':
