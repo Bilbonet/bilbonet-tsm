@@ -28,11 +28,11 @@
                     </div>
 
                     <field name="write_date" invisible="1"/><!-- To make invisible on create -->
-                    <div class="row" attrs="{'invisible':[('write_date','=',False)]}">
-                        <div class="col-md-1">
+                    <div class="row oe_title" attrs="{'invisible':[('write_date','=',False)]}">
+                        <div class="mr-3">
                             <h1><field name="priority" widget="priority"/></h1>
                         </div>
-                        <div class="col-md-3">
+                        <div>
                             <h1><field name="code" attrs="{'readonly':[('can_edit','=',False)]}"/></h1>
                         </div>
                     </div>
