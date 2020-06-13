@@ -77,7 +77,7 @@ class TsmTask(models.Model):
     sequence = fields.Integer(string='Sequence', index=True, default=10,
         help="Gives the sequence order when displaying a list of tasks.")
     stage_id = fields.Many2one('tsm.task.type',
-        string='Stage', track_visibility='onchange', index=True, copy=False,
+        string='Stage', index=True, copy=False,
         group_expand='_read_group_stage_ids',
         default=_get_default_stage_id)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
@@ -109,8 +109,7 @@ class TsmTask(models.Model):
         string='Kanban Valid Explanation', readonly=True, related_sudo=False)
     legend_normal = fields.Char(related='stage_id.legend_normal',
         string='Kanban Ongoing Explanation', readonly=True, related_sudo=False)
-    name = fields.Char(string='Task Title',
-        track_visibility='always', required=True, index=True)
+    name = fields.Char(string='Task Title', required=True, index=True)
     description = fields.Html(string='Task Description',
         sanitize=True, strip_style=False, translate=False,
         help="Details, notes and aclarations about the task.")
@@ -249,6 +248,11 @@ class TsmTask(models.Model):
         # user_id change: update date_assign
         if vals.get('user_id') and 'date_assign' not in vals:
             vals['date_assign'] = now
+
+        # if task is archived reset some values
+        if 'active' in vals and False == vals['active']:
+            vals['priority'] = 0
+            vals['kanban_state'] = 'normal'
 
         result = super(TsmTask, self).write(vals)
         return result
