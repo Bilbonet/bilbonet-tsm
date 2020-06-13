@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 19:01+0000\n"
-"PO-Revision-Date: 2020-04-24 19:01+0000\n"
+"POT-Creation-Date: 2020-06-12 19:32+0000\n"
+"PO-Revision-Date: 2020-06-12 19:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -211,7 +211,7 @@ msgstr "\n"
 #. module: tsm_time_pack
 #: model:mail.template,report_name:tsm_time_pack.tsm_time_pack_email_template
 msgid "${'('+object.code+')_'+(object.name or 'Time Pack').replace(' ', '-')}"
-msgstr ""
+msgstr "${'('+object.code+')_'+(object.name or 'Bolsa Horas').replace(' ', '-')}"
 
 #. module: tsm_time_pack
 #: model:mail.template,subject:tsm_time_pack.tsm_time_pack_email_template
@@ -279,10 +279,10 @@ msgid "Address:"
 msgstr "Dirección:"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:46
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:45
 #, python-format
-msgid "Alert Time Pack %s"
-msgstr "Aviso Bolsa Horas %s"
+msgid "Alert Time Pack: %s"
+msgstr "Aviso Bolsa Horas: %s"
 
 #. module: tsm_time_pack
 #: model:ir.actions.act_window,name:tsm_time_pack.tsm_time_pack_all_act
@@ -482,7 +482,7 @@ msgid "Discount Time"
 msgstr "Descuenta tiempo"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:274
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:283
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr "El descuento debe ser menor o igual a 100"
@@ -555,7 +555,7 @@ msgid "Hours Consumed"
 msgstr "Horas Consumidas"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:40
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:39
 #, python-format
 msgid "Hours Contrated: %s\n"
 "Hours Consumed:  %s\n"
@@ -763,7 +763,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:266
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:275
 #, python-format
 msgid "Quantity of hours contrated must be greater than 0."
 msgstr "La cantidad de horas contratadas debe ser mayor que 0."
@@ -897,6 +897,7 @@ msgid "This field is for security purpose. Only members of managers group can mo
 msgstr "Este campo es para propositos de seguridad. Solo miembros del grupo de gerentes pueden modificar campos."
 
 #. module: tsm_time_pack
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_task_timesheet_line_form_time_pack_view
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_project_report
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_document
 msgid "Time Pack"
@@ -1020,6 +1021,12 @@ msgid "Utility field to express amount currency"
 msgstr "Campo útil para expresar importe en divisa."
 
 #. module: tsm_time_pack
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_task_form_time_pack_view
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_task_timesheet_line_tree_time_pack_view
+msgid "View Time Pack Details"
+msgstr "Ver Detalles Bolsa Horas"
+
+#. module: tsm_time_pack
 #: selection:tsm.time.pack,privacy_visibility:0
 msgid "Visible by all employees"
 msgstr "Visible para todos los empleados"
@@ -1035,7 +1042,7 @@ msgid "Website communication history"
 msgstr "Historial de comunicaciones del sitio web"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:324
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:333
 #, python-format
 msgid "You must first select a Customer and product for Time Pack: %s"
 msgstr "Debe seleccionar primero un Contacto y producto par la bolsa de horas: %s"
