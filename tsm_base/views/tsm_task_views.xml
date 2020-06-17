@@ -40,7 +40,10 @@
                 </header>
                 <sheet string="Task">
                     <div class="oe_button_box" name="button_box">
+                        <field name="closed" invisible="1"/>
                         <button name="toggle_active" type="object"
+                                attrs="{'invisible': [('closed', '=', False)]}"
+                                groups="tsm_base.group_tsm_user"
                                 class="oe_stat_button" icon="fa-archive">
                             <field name="active" widget="boolean_button"
                                 options='{"terminology": "archive"}'/>
@@ -162,7 +165,10 @@
                                             <span class="fa fa-ellipsis-v"/>
                                         </a>
                                         <div class="dropdown-menu" role="menu">
-                                            <a role="menuitem" name="toggle_active" type="object" class="dropdown-item">(Un)Archive</a>
+                                            <field name="closed" invisible="1"/>
+                                            <a role="menuitem" name="toggle_active" type="object"
+                                               attrs="{'invisible':[('closed', '=', False)]}"
+                                               class="dropdown-item">(Un)Archive</a>
                                             <a role="menuitem" type="edit" class="dropdown-item">Edit Task</a>
                                             <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
                                             <div role="separator" class="dropdown-divider"></div>
@@ -257,7 +263,7 @@
               sequence="10"/>
 
     <!--=================
-        Tasks Types views
+        Tasks Stage views
     ==================-->
     <record id="tsm_task_type_form" model="ir.ui.view">
         <field name="name">tsm.task.type.form</field>
@@ -310,8 +316,9 @@
             <tree string="Task Stage">
                 <field name="sequence" widget="handle" groups="base.group_no_one"/>
                 <field name="name"/>
-                <field name="fold"/>
                 <field name="description"/>
+                <field name="fold"/>
+                <field name="closed"/>
             </tree>
         </field>
     </record>

@@ -64,26 +64,6 @@ class TsmProject(models.Model):
     task_count = fields.Integer(compute='_compute_task_count', string="Amount Tasks")
 
     @api.multi
-    def write(self, vals):
-        res = super(TsmProject, self).write(vals) if vals else True
-
-        # archiving/unarchiving a project does it on its tasks, too
-        if 'active' in vals:
-            self.with_context(active_test=False).mapped('task_ids').write(
-                                                {'active': vals['active']})
-        return res
-
-    @api.multi
-    def unlink(self):
-        for project in self:
-            if project.task_ids:
-                raise UserError(_("You cannot delete a project with tasks. "
-                "You can either delete the project's task and then delete the "
-                "project or simply deactivate the project."))
-        res = super(TsmProject, self).unlink()
-        return res
-
-    @api.multi
     def action_project_send(self):
         '''
         This function opens a window to compose an email,
@@ -122,3 +102,36 @@ class TsmProject(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    # ------------------
+    # CRUD overrides
+    # ------------------
+    @api.multi
+    def write(self, vals):
+        res = super(TsmProject, self).write(vals) if vals else True
+
+        # archiving/unarchiving a project does it on its tasks, too
+        # if 'active' in vals:
+        #     self.with_context(active_test=False).mapped('task_ids').write(
+        #                                         {'active': vals['active']})
+
+        # First all tasks of the project must be archived
+        if 'active' in vals and False == vals['active']:
+            actives = self.browse(self.task_ids)
+            if actives:
+                raise UserError(
+                    _("You cannot archive a project with active tasks. "
+                      "You need to archive all tasks of the project first.")
+                )
+
+        return res
+
+    @api.multi
+    def unlink(self):
+        for project in self:
+            if project.task_ids:
+                raise UserError(_("You cannot delete a project with tasks. "
+                "You can either delete the project's task and then delete the "
+                "project or simply deactivate the project."))
+        res = super(TsmProject, self).unlink()
+        return res
