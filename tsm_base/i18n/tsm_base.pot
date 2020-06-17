@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-25 18:57+0000\n"
-"PO-Revision-Date: 2020-01-25 18:57+0000\n"
+"POT-Creation-Date: 2020-06-17 16:01+0000\n"
+"PO-Revision-Date: 2020-06-17 16:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -114,8 +114,8 @@ msgid "${object.company_id.name} Task (${object.name or 'n/a'})"
 msgstr ""
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
-msgid "(Un)archiving a project automatically (un)archives its tasks. Do you want to proceed?"
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
+msgid "(Un)Archive"
 msgstr ""
 
 #. module: tsm_base
@@ -252,6 +252,7 @@ msgid "Client:"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__closed
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__closed
 msgid "Closed"
 msgstr ""
@@ -611,11 +612,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 #: model:res.groups,name:tsm_base.group_tsm_manager
 msgid "Manager"
-msgstr ""
-
-#. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__favorite_user_ids
-msgid "Members"
 msgstr ""
 
 #. module: tsm_base
@@ -1045,8 +1041,9 @@ msgid "Tasks Title"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.model.fields,help:tsm_base.field_tsm_task__closed
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__closed
-msgid "Tasks in this stage are considered closed."
+msgid "Tasks in this stage are considered closed. You can only archive a task in a stage with state closed."
 msgstr ""
 
 #. module: tsm_base
@@ -1184,7 +1181,13 @@ msgid "You can now manage your tasks in order to get things done efficiently. Tr
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:108
+#: code:addons/tsm_base/models/tsm_project.py:123
+#, python-format
+msgid "You cannot archive a project with active tasks. You need to archive all tasks of the project first."
+msgstr ""
+
+#. module: tsm_base
+#: code:addons/tsm_base/models/tsm_project.py:133
 #, python-format
 msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
 msgstr ""

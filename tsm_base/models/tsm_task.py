@@ -37,7 +37,8 @@ class TsmTaskType(models.Model):
         help='This stage is folded in the kanban view when there are no '
              'records in that stage to display.')
     closed = fields.Boolean(
-        help="Tasks in this stage are considered closed.",
+        help="Tasks in this stage are considered closed. "
+             "You can only archive a task in a stage with state closed.",
         default=False,
     )
 
@@ -61,12 +62,12 @@ class TsmTask(models.Model):
         """ Read group customization in order to display all the stages in the
             kanban view, even if they are empty
         """
-        stage_ids = stages._search([], order=order,
-                                   access_rights_uid=SUPERUSER_ID)
+        stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
 
     code = fields.Char(string='Task Code',
         required=True, default="/", readonly=True)
+    name = fields.Char(string='Task Title', required=True, index=True)
     active = fields.Boolean(default=True, copy=False,
         help="If the active field is set to False, it will allow you to hide"
         " the task without removing it.")
@@ -80,6 +81,7 @@ class TsmTask(models.Model):
         string='Stage', index=True, copy=False,
         group_expand='_read_group_stage_ids',
         default=_get_default_stage_id)
+    closed = fields.Boolean(related='stage_id.closed', readonly=True)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
     tag_ids = fields.Many2many('tsm.task.tags', string='Tags',)
     kanban_state = fields.Selection([
@@ -109,7 +111,6 @@ class TsmTask(models.Model):
         string='Kanban Valid Explanation', readonly=True, related_sudo=False)
     legend_normal = fields.Char(related='stage_id.legend_normal',
         string='Kanban Ongoing Explanation', readonly=True, related_sudo=False)
-    name = fields.Char(string='Task Title', required=True, index=True)
     description = fields.Html(string='Task Description',
         sanitize=True, strip_style=False, translate=False,
         help="Details, notes and aclarations about the task.")
@@ -215,9 +216,9 @@ class TsmTask(models.Model):
             'context': ctx,
         }
 
-    # ------------------------------------------------
+    # ------------------
     # CRUD overrides
-    # ------------------------------------------------
+    # ------------------
     @api.model
     def default_get(self, fields):
         result = super(TsmTask, self).default_get(fields)
