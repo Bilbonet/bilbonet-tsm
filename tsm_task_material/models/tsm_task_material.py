@@ -12,28 +12,24 @@ class TsmTaskMaterial(models.Model):
     _order = "sequence,id"
 
     task_id = fields.Many2one(comodel_name='tsm.task',
-                              string='Task', ondelete='cascade',
-                              required=True)
+        string='Task', ondelete='cascade', required=True)
     product_id = fields.Many2one(comodel_name='product.product',
-                                 string='Product', required=True)
+        string='Product', required=True)
     name = fields.Text(string='Description')
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
-    product_uom_id = fields.Many2one(comodel_name='uom.uom',
-                                     string='Unit of Measure')
+    product_uom_id = fields.Many2one(comodel_name='uom.uom', string='Unit of Measure')
     price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
     price_subtotal = fields.Float(compute='_compute_price_subtotal',
-                                  digits=dp.get_precision('Account'),
-                                  string='Sub Total')
+        string='Sub Total', digits=dp.get_precision('Account'))
     discount = fields.Float(string='Discount (%)',
-                    digits=dp.get_precision('Discount'),
-                    help='Discount that is applied in generated sale orders.'
-                        ' It should be less or equal to 100')
+        digits=dp.get_precision('Discount'),
+        help='Discount that is applied in generated sale orders.'
+             ' It should be less or equal to 100')
     sequence = fields.Integer(string="Sequence", default=10,
-                    help="Sequence of the line in the list of materials")
+        help="Sequence of the line in the list of materials")
     company_currency = fields.Many2one('res.currency',
-                            related='task_id.company_id.currency_id',
-                            readonly=True,
-                            help='Utility field to express amount currency')
+        related='task_id.company_id.currency_id', readonly=True,
+        help='Utility field to express amount currency')
 
     @api.multi
     @api.depends('quantity', 'price_unit', 'discount')
@@ -89,3 +85,28 @@ class TsmTaskMaterial(models.Model):
         vals['price_unit'] = product.list_price
         self.update(vals)
         return {'domain': domain}
+
+    def _prepare_sale_line(self):
+        self.ensure_one()
+        sale_line_vals = {
+            'product_id': self.product_id.id,
+            'product_uom': self.product_uom_id.id,
+            'product_uom_qty': self.quantity,
+            'discount': self.discount,
+            'tsm_task_id': self.task_id.id,
+            'tsm_task_material_id': self.id,
+        }
+        sale_line = self.env['sale.order.line'].with_context(
+            force_company=self.task_id.company_id.id,
+        ).new(sale_line_vals)
+        # Get other sale line values from product onchange
+        sale_line.product_id_change()
+        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
+        sale_line_vals.update(
+            {
+                'name': self.name,
+                'sequence': self.sequence,
+                'price_unit': self.price_unit,
+            }
+        )
+        return sale_line_vals
