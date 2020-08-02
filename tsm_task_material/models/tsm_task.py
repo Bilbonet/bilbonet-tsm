@@ -17,30 +17,20 @@ class TsmTask(models.Model):
     _inherit = "tsm.task"
 
     material_ids = fields.One2many(comodel_name='tsm.task.material',
-                                   inverse_name='task_id',
-                                   string='Material used',
-                                   )
+        inverse_name='task_id', string='Material used')
     sale_id = fields.Many2one(comodel_name='sale.order',
-                              copy=False,
-                              string='Sale Order',
-                              )
+        string='Sale Order', copy=False)
     create_sale_order = fields.Boolean(related='stage_id.create_sale_order',
-                                       readonly="true",)
-    sale_autoconfirm = fields.Boolean(
-                    string='Sale autoconfirm',
-                    default=True,
-                    help='If it is checked the sale order will be created '
-                         'and confirmed automatically',
-                    )
+        readonly="true",)
+    sale_autoconfirm = fields.Boolean(string='Sale autoconfirm', default=True,
+        help='If it is checked the sale order will be created '
+             'and confirmed automatically')
     company_currency = fields.Many2one('res.currency',
-                            related='company_id.currency_id',
-                            readonly=True,
-                            help='Utility field to express amount currency')
+        related='company_id.currency_id', readonly=True,
+        help='Utility field to express amount currency')
     sale_amount = fields.Monetary(compute='_compute_sale_amount',
-                                  string="Amount of The Order",
-                                  help="Untaxed Total of The Order",
-                                  currency_field='company_currency',
-                                  )
+        string="Amount of The Order", currency_field='company_currency',
+        help="Untaxed Total of The Order")
 
     @api.depends('sale_id')
     def _compute_sale_amount(self):
@@ -70,29 +60,6 @@ class TsmTask(models.Model):
             "context": {"create": False, "show_sale": True},
         }
 
-    @api.model
-    def _prepare_sale_line(self, line, sale_id):
-        sale_line = self.env['sale.order.line'].new({
-            'order_id': sale_id,
-            'product_id': line.product_id.id,
-            'product_uom': line.product_uom_id.id,
-        })
-
-        # Get other sale line values from product onchange
-        sale_line.product_id_change()
-        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
-
-        sale_line_vals.update({
-            'name': line.name,
-            'price_unit': line.price_unit,
-            'product_uom_qty': line.quantity,
-            'discount': line.discount,
-            'tsm_task_id': line.task_id.id,
-            'tsm_task_material_id': line.id,
-        })
-
-        return sale_line_vals
-
     @api.multi
     def _prepare_sale(self):
         self.ensure_one()
@@ -104,7 +71,13 @@ class TsmTask(models.Model):
                 self.partner_id.property_product_pricelist.currency_id or
                 self.company_currency)
 
-        sale = self.env['sale.order'].new({'partner_id': self.partner_id})
+        sale = self.env['sale.order'].with_context(
+            force_company=self.company_id.id,
+        ).new({
+            'company_id': self.company_id.id,
+            'partner_id': self.partner_id,
+        })
+
         # Get partner extra fields
         sale.onchange_partner_id()
         # Write the resulting virtual record modifications made by the onchange call
@@ -113,15 +86,11 @@ class TsmTask(models.Model):
         sale_vals.update({
             'origin': self.code + ' - ' + self.name,
             'currency_id': currency.id,
-            'payment_term_id': self.partner_id.property_payment_term_id.id,
-            'payment_mode_id': self.partner_id.customer_payment_mode_id.id,
             'fiscal_position_id': self.partner_id.property_account_position_id.id,
-            'company_id': self.company_id.id,
             'user_id': self.user_id.id,
             'pricelist_id': self.partner_id.property_product_pricelist.id,
             'tsm_task_id': self.id,
         })
-
         return sale_vals
 
     @api.multi
@@ -132,18 +101,18 @@ class TsmTask(models.Model):
         """
         self.ensure_one()
         sale_vals = self._prepare_sale()
-        sale = self.env['sale.order'].create(sale_vals)
 
         for line in self.material_ids:
-            sale_line_vals = self._prepare_sale_line(line, sale.id)
+            sale_vals.setdefault('order_line', [])
+            sale_line_vals = line._prepare_sale_line()
             if sale_line_vals:
-                sale_line_id = \
-                    self.env['sale.order.line'].create(sale_line_vals)
-
+                sale_vals['order_line'].append(
+                    (0, 0, sale_line_vals)
+                )
+        sale = self.env['sale.order'].create(sale_vals)
         # Update Task with the values from the sale order
         vals = {'sale_id': sale.id}
         self.update(vals)
-
         # Autoconfirm sale order if it's checked
         if self.sale_autoconfirm:
             sale.action_confirm()
