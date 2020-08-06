@@ -37,14 +37,13 @@ class TsmTask(models.Model):
         if self.sale_id:
             sale = self.sudo().sale_id
             currency = (
-                    self.partner_id.property_product_pricelist.currency_id or
-                    self.company_currency or
-                    self.env.user.company_id.currency_id)
+                self.company_currency or
+                self.partner_id.property_product_pricelist.currency_id or
+                self.env.user.company_id.currency_id)
             self.sale_amount = sale.currency_id._convert(
                 sale.amount_untaxed, currency,
                 self.company_id, self.date_start or fields.Date.today())
 
-    @api.multi
     def action_view_order(self):
         '''
         This function returns an action that display the order
@@ -60,7 +59,6 @@ class TsmTask(models.Model):
             "context": {"create": False, "show_sale": True},
         }
 
-    @api.multi
     def _prepare_sale(self):
         self.ensure_one()
         if not self.partner_id or not self.material_ids:
@@ -68,8 +66,9 @@ class TsmTask(models.Model):
                                     "and materials for Task: %s!") % self.name)
 
         currency = (
-                self.partner_id.property_product_pricelist.currency_id or
-                self.company_currency)
+            self.company_currency or
+            self.partner_id.property_product_pricelist.currency_id or
+            self.env.user.company_id.currency_id)
 
         sale = self.env['sale.order'].with_context(
             force_company=self.company_id.id,
@@ -84,16 +83,14 @@ class TsmTask(models.Model):
         sale_vals = sale._convert_to_write(sale._cache)
 
         sale_vals.update({
-            'origin': self.code + ' - ' + self.name,
+            'client_order_ref': '[' + self.code + '] ' + self.name,
             'currency_id': currency.id,
             'fiscal_position_id': self.partner_id.property_account_position_id.id,
             'user_id': self.user_id.id,
             'pricelist_id': self.partner_id.property_product_pricelist.id,
-            'tsm_task_id': self.id,
         })
         return sale_vals
 
-    @api.multi
     def create_sale(self):
         """
         Create Sale order from task
@@ -110,6 +107,10 @@ class TsmTask(models.Model):
                     (0, 0, sale_line_vals)
                 )
         sale = self.env['sale.order'].create(sale_vals)
+        sale.message_post_with_view('mail.message_origin_link',
+            values={'self': sale, 'origin': self},
+            subtype_id=self.env.ref('mail.mt_note').id)
+
         # Update Task with the values from the sale order
         vals = {'sale_id': sale.id}
         self.update(vals)
@@ -119,7 +120,6 @@ class TsmTask(models.Model):
 
         return sale
 
-    @api.multi
     def unlink(self):
         for task in self:
             if task.sale_id:
