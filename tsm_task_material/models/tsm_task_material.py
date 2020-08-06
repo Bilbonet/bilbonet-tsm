@@ -31,7 +31,6 @@ class TsmTaskMaterial(models.Model):
         related='task_id.company_id.currency_id', readonly=True,
         help='Utility field to express amount currency')
 
-    @api.multi
     @api.depends('quantity', 'price_unit', 'discount')
     def _compute_price_subtotal(self):
         for line in self:
@@ -40,7 +39,6 @@ class TsmTaskMaterial(models.Model):
             subtotal *= 1 - discount
             line.price_subtotal = subtotal
 
-    @api.multi
     @api.constrains('quantity')
     def _check_quantity(self):
         for material in self:
@@ -48,7 +46,6 @@ class TsmTaskMaterial(models.Model):
                 raise ValidationError(
                     _('Quantity of material consumed must be greater than 0.'))
 
-    @api.multi
     @api.constrains('discount')
     def _check_discount(self):
         for line in self:
@@ -77,12 +74,14 @@ class TsmTaskMaterial(models.Model):
             uom=self.product_uom_id.id
         )
 
-        name = product.name_get()[0][1]
+        name = product.name
         if product.description_sale:
             name += '\n' + product.description_sale
-        vals['name'] = name
+        vals.update ({
+            'name': name,
+            'price_unit': product.list_price,
+        })
 
-        vals['price_unit'] = product.list_price
         self.update(vals)
         return {'domain': domain}
 
@@ -93,8 +92,6 @@ class TsmTaskMaterial(models.Model):
             'product_uom': self.product_uom_id.id,
             'product_uom_qty': self.quantity,
             'discount': self.discount,
-            'tsm_task_id': self.task_id.id,
-            'tsm_task_material_id': self.id,
         }
         sale_line = self.env['sale.order.line'].with_context(
             force_company=self.task_id.company_id.id,
