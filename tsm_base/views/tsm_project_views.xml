@@ -36,10 +36,13 @@
                                    options='{"terminology": "archive"}'/>
                         </button>
                     </div>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name" placeholder="Project Name"/>
-                        </h1>
+                    <div class="row oe_title">
+                        <div class="mr-3">
+                            <h1><field name="priority" widget="priority"/></h1>
+                        </div>
+                        <div>
+                            <h1><field name="name" placeholder="Project Name"/></h1>
+                        </div>
                     </div>
                     <group>
                         <group>
