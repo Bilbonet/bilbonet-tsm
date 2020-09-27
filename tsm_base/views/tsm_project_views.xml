@@ -98,9 +98,13 @@
         <field name="name">tsm.project.tree</field>
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
-            <tree decoration-bf="active == True" decoration-muted="active == False" string="Projects">
-                <field name="sequence" widget="handle"/>
+            <tree string="Projects"  decoration-muted="active == False"
+                  decoration-bf="priority == '1'"
+                  decoration-danger="activity_state != False">
                 <field name="active" invisible="1"/>
+                <field name="priority" invisible="1"/>
+                <field name="activity_state" invisible="1"/>
+                <field name="sequence" widget="handle"/>
                 <field name="name" string="Project Name"/>
                 <field name="user_id" string="Project Manager"/>
                 <field name="partner_id" string="Contact"/>
@@ -114,12 +118,15 @@
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
             <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors">
+                <field name="color"/>
+                <field name="priority"/>
                 <field name="name"/>
                 <field name="user_id"/>
                 <field name="partner_id"/>
                 <field name="task_count"/>
                 <field name="message_needaction_counter"/>
-                <field name="color"/>
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
@@ -146,11 +153,11 @@
                                     </div>
                                 </div>
                                 <a class="o_kanban_manage_toggle_button o_left" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
-                                <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
                             </div>
 
                             <div class="o_kanban_record_bottom">
                                 <div class="oe_kanban_bottom_left">
+                                    <field name="priority" widget="priority"/>
                                     <field name="activity_ids" widget="kanban_activity"/>
                                     <t t-if="record.message_needaction_counter.raw_value">
                                         <span role="alert" class='oe_kanban_mail_new' title='Unread Messages'>
@@ -158,6 +165,11 @@
                                             <t t-raw="record.message_needaction_counter.raw_value"/>
                                         </span>
                                     </t>
+                                    <a name="%(tsm_tasks_from_project_action)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.task_count.value"/> Tasks</span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
                                     <span class="oe_kanban_text_red"><field name="date_start" widget="date"/></span>
