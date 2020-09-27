@@ -9,7 +9,7 @@ class TsmProject(models.Model):
     _name = "tsm.project"
     _description = "Tech Support Management Project"
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = "sequence, date_start desc"
+    _order = "priority desc, sequence, date_start"
 
     def _compute_task_count(self):
         task_data = self.env['tsm.task'].read_group(
@@ -25,16 +25,17 @@ class TsmProject(models.Model):
         for project in self:
             project.task_count = result.get(project.id, 0)
 
+    name = fields.Char(string='Project Name', index=True, required=True)
     active = fields.Boolean(default=True,
         help="If the active field is set to False, it will allow you to hide"
              " the project without removing it.")
+    priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'Normal'),
+    ], default='0', index=True, string="Priority")
     sequence = fields.Integer(default=10,
         help="Gives the sequence order when displaying a list of Projects.")
-    is_favorite = fields.Boolean(string='Show Project on dashboard',
-        help="Whether this project should be displayed on the "
-             "dashboard or not")
     color = fields.Integer(string='Color Index')
-    name = fields.Char(string='Project Name', index=True, required=True)
     user_id = fields.Many2one('res.users',
         string='Project Manager', required=True,
         default=lambda self: self.env.user, track_visibility="onchange")
