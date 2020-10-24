@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-12 19:32+0000\n"
-"PO-Revision-Date: 2020-06-12 19:32+0000\n"
+"POT-Creation-Date: 2020-10-24 11:28+0000\n"
+"PO-Revision-Date: 2020-10-24 11:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgid "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Name: <strong>[${object.code}] ${object.name or ''}</strong><br />\n"
-"       &nbsp;&nbsp;Date: <strong>${object.format_date(object.date_start)}</strong><br />\n"
+"       &nbsp;&nbsp;Date: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br />\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -119,7 +119,7 @@ msgstr "\n"
 "\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;Nombre: <strong>[${object.code}] ${object.name or ''}</strong><br />\n"
-"       &nbsp;&nbsp;Fecha: <strong>${object.format_date(object.date_start)}</strong><br />\n"
+"       &nbsp;&nbsp;Fecha: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br />\n"
 "\n"
 "       % if object.user_id:\n"
 "       &nbsp;&nbsp;Su contacto: <a href=\"mailto:${object.user_id.email or ''}?subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
@@ -158,7 +158,7 @@ msgstr "\n"
 "                        </tr>\n"
 "                        % else\n"
 "                        <tr style=\"color:#dc3545;\">\n"
-"                            <td style=\"width:100px;padding:5px\">Excedidas:</td>\n"
+"                            <td style=\"width:100px;padding:5px\">Exceso:</td>\n"
 "                            <td class=\"text-right\">\n"
 "                                <strong>${('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))}</strong> horas\n"
 "                            </td>\n"
@@ -188,7 +188,7 @@ msgstr "\n"
 "\n"
 "    <br/>\n"
 "    <p>Si usted tiene alguna pregunta, no dude en contactarnos.</p>\n"
-"    <p>Gracias por su confianza en  ${object.company_id.name or 'us'}!</p>\n"
+"    <p>Gracias por su confianza en ${object.company_id.name or 'us'}!</p>\n"
 "    % if object.user_id.signature:\n"
 "       ${object.user_id.signature | safe}\n"
 "    % else\n"
@@ -312,7 +312,7 @@ msgstr "Asignada a"
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__message_attachment_count
 msgid "Attachment Count"
-msgstr "Número de adjuntos"
+msgstr "Conteo de archivos adjuntos"
 
 #. module: tsm_time_pack
 #: model_terms:ir.actions.act_window,help:tsm_time_pack.tsm_time_pack_mine_act
@@ -500,7 +500,7 @@ msgstr "Descontado <span style=\"font-size:0.8em;\" class=\"fa fa-2x fa-arrow-ci
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre mostrado"
 
 #. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
@@ -582,7 +582,7 @@ msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__message_has_error
@@ -618,7 +618,7 @@ msgstr "Es un seguidor"
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack____last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última modificación el"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__write_uid
@@ -992,7 +992,7 @@ msgstr "Unidad de medida"
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__message_unread
 msgid "Unread Messages"
-msgstr "Mensajes sin leer"
+msgstr "Mensajes por leer"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__message_unread_counter

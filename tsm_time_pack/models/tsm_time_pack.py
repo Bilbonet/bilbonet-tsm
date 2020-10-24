@@ -251,14 +251,6 @@ class TsmTimePack(models.Model):
             'context': ctx,
         }
 
-    def format_date(self, date):
-        # format date following user language
-        lang_model = self.env['res.lang']
-        lang = lang_model._lang_get(self.env.user.lang)
-        date_format = lang.date_format
-        return datetime.strftime(
-            fields.Date.from_string(date), date_format)
-
     #==========================
     #== Product & Sale Order ==
     #==========================
