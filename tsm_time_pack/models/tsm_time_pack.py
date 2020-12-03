@@ -4,7 +4,6 @@
 from odoo import api, fields, models, _
 import odoo.addons.decimal_precision as dp
 from odoo.exceptions import ValidationError
-from datetime import datetime
 
 
 class TsmTimePack(models.Model):
