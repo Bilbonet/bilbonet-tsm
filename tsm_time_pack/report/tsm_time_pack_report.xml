@@ -259,11 +259,6 @@
                                     </table>
                                 </div>
                             </div>
-
-
-
-
-
                         </div>
                         <!-- Timesheet Lines -->
                         <div class="row" t-if="len(o.timesheet_ids) &gt; 0">
@@ -317,10 +312,9 @@
                         <!-- Taks in Time Pack-->
                         <t t-set="timesheet_tasks" t-value="[]"/>
                         <t t-set="timesheet_sorted" t-value="[]"/>
-                        <t t-foreach="o.timesheet_ids.sorted(key=lambda b: b.task_id.code)" t-as="tt">
+                        <t t-foreach="o.timesheet_ids.sudo().sorted(key=lambda b: b.task_id.code)" t-as="tt">
                             <t t-set="timesheet_tasks" t-value="timesheet_tasks+[tt.task_id]"/>
                         </t>
-                        <!--<t t-esc="timesheet_tasks"/><br/>-->
                         <!-- This function delete duplicates -->
                         <t t-set="timesheet_tasks" t-value="list(dict.fromkeys(timesheet_tasks))"/>
 
