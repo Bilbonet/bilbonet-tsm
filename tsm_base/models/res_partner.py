@@ -14,8 +14,13 @@ class ResPartner(models.Model):
         compute='_compute_task_count', string='Amount Partner Tasks')
 
     def _compute_task_count(self):
-        fetch_data = self.env['tsm.task'].read_group(
-            [('partner_id', 'in', self.ids)], ['partner_id'], ['partner_id']
+        # fetch_data = self.env['tsm.task'].read_group(
+        #     domain=[('partner_id', 'in', self.ids)],
+        #     fields=['partner_id'], groupby=['partner_id']
+        # )
+        fetch_data = self.env['tsm.task'].with_context(active_test=False).read_group(
+            domain=[('partner_id', 'in', self.ids)],
+            fields=['partner_id'], groupby=['partner_id']
         )
         result = dict(
                     (data['partner_id'][0], data['partner_id_count'])
