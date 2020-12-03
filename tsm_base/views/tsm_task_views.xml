@@ -245,12 +245,7 @@
             </p>
         </field>
     </record>
-    <record id="tsm_task_action_from_partner" model="ir.actions.act_window">
-        <field name="name">Tasks</field>
-        <field name="res_model">tsm.task</field>
-        <field name="view_mode">kanban,tree,form</field>
-        <field name="search_view_id" ref="tsm_task_search_view"/>
-    </record>
+
 
     <!-- Tasks Menus -->
     <menuitem id="tsm_task_menu" action="tsm_task_action_from_menu"

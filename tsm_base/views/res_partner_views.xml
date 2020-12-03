@@ -11,12 +11,19 @@
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button" type="action" name="%(tsm_task_action_from_partner)d"
-                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id}"
+                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'active_test': False}"
                         icon="fa-tasks">
-                    <field  string="Active Tasks" name="tsm_task_count" widget="statinfo"/>
+                    <field  string="Tasks" name="tsm_task_count" widget="statinfo"/>
                 </button>
             </button>
         </field>
+    </record>
+
+    <record id="tsm_task_action_from_partner" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="search_view_id" ref="tsm_task_search_view"/>
     </record>
 
 </odoo>
