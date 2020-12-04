@@ -4,37 +4,40 @@
         <xpath expr="//p[@name='page-break']" position="before">
             <div class="row" t-if="len(t.material_ids) > 0" name="task_material">
                 <t t-set="importe" t-value="0"/>
+                <!-- Is there a discount on at least one line? -->
+                <t t-set="display_discount" t-value="any([l.discount for l in t.material_ids])"/>
                 <table class="table table-sm table-striped">
-                    <thead style="background-color: #000;font-size:0.8em;" >
+                    <thead style="background-color: #000;">
                         <tr class="text-center">
                             <th class="text-center" style="color:#FFF;">Material and Services</th>
-                            <th class="text-right" style="color:#FFF;font-size:0.6em;">Amount</th>
-                            <th class="text-right" style="color:#FFF;font-size:0.6em;">Price</th>
-                            <th class="text-right" style="color:#FFF;font-size:0.6em;">Desc.%</th>
-                            <th class="text-right" style="color:#FFF;font-size:0.6em;">Subtotal</th>
+                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Amount</th>
+                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Price</th>
+                            <th t-if="display_discount" class="text-right" style="color:#FFF;font-size:0.8em;">Desc.%</th>
+                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr t-foreach="t.material_ids.sorted(key=lambda b: b.sequence)" t-as="m" >
                             <t t-set="importe" t-value="importe+m.price_subtotal" />
-                            <td style="font-size:0.7em;">
-                                <span t-field="m.product_id"/>
+                            <td style="font-size:0.8em;">
+                                <span t-field="m.name"/>
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.8em;" class="text-right">
                                 <span t-field="m.quantity"/>
+                                <span t-field="m.product_uom_id" groups="uom.group_uom"/>
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.8em;" class="text-right">
                                 <span t-field="m.price_unit" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td t-if="display_discount" style="font-size:0.8em;" class="text-right">
                                 <span t-field="m.discount" />
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.8em;" class="text-right">
                                 <span t-field="m.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot style="font-size:0.8em;">
+                    <tfoot>
                         <tr>
                             <th colspan="5" class="text-right">
                                 <span t-esc="importe" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
