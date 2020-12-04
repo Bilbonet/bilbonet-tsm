@@ -109,8 +109,6 @@ class TsmProject(models.Model):
     # ------------------
     @api.multi
     def write(self, vals):
-        res = super(TsmProject, self).write(vals) if vals else True
-
         # archiving/unarchiving a project does it on its tasks, too
         # if 'active' in vals:
         #     self.with_context(active_test=False).mapped('task_ids').write(
@@ -124,7 +122,11 @@ class TsmProject(models.Model):
                     _("You cannot archive a project with active tasks. "
                       "You need to archive all tasks of the project first.")
                 )
+            else:
+                # if project is archived reset some values
+                vals['priority'] = 0
 
+        res = super(TsmProject, self).write(vals) if vals else True
         return res
 
     @api.multi
