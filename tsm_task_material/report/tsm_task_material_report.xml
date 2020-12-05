@@ -9,9 +9,9 @@
                 <table class="table table-sm table-striped mt16">
                     <thead style="background-color: #000;">
                         <tr class="text-center">
-                            <th class="text-center" style="color:#FFF;">Material y Servicios</th>
-                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Cantidad</th>
-                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Precio</th>
+                            <th class="text-center" style="color:#FFF;">Material and Services</th>
+                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Amount</th>
+                            <th class="text-right" style="color:#FFF;font-size:0.8em;">Price</th>
                             <th t-if="display_discount" class="text-right" style="color:#FFF;font-size:0.8em;">Desc.%</th>
                             <th class="text-right" style="color:#FFF;font-size:0.8em;">Subtotal</th>
                         </tr>

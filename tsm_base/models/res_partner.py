@@ -9,15 +9,11 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     tsm_task_ids = fields.One2many('tsm.task', 'partner_id',
-                                   string='Partner related tasks')
-    tsm_task_count = fields.Integer(
-        compute='_compute_task_count', string='Amount Partner Tasks')
+        string='Partner related tasks')
+    tsm_task_count = fields.Integer(string='Amount Partner Tasks',
+        compute='_compute_task_count')
 
     def _compute_task_count(self):
-        # fetch_data = self.env['tsm.task'].read_group(
-        #     domain=[('partner_id', 'in', self.ids)],
-        #     fields=['partner_id'], groupby=['partner_id']
-        # )
         fetch_data = self.env['tsm.task'].with_context(active_test=False).read_group(
             domain=[('partner_id', 'in', self.ids)],
             fields=['partner_id'], groupby=['partner_id']
