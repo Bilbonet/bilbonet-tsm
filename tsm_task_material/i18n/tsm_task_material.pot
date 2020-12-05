@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-07 21:35+0000\n"
-"PO-Revision-Date: 2019-12-07 21:35+0000\n"
+"POT-Creation-Date: 2020-12-05 17:20+0000\n"
+"PO-Revision-Date: 2020-12-05 17:20+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgid "Discount (%)"
 msgstr ""
 
 #. module: tsm_task_material
-#: code:addons/tsm_task_material/models/tsm_task_material.py:61
+#: code:addons/tsm_task_material/models/tsm_task_material.py:54
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr ""
@@ -162,13 +162,12 @@ msgid "Quantity"
 msgstr ""
 
 #. module: tsm_task_material
-#: code:addons/tsm_task_material/models/tsm_task_material.py:53
+#: code:addons/tsm_task_material/models/tsm_task_material.py:47
 #, python-format
 msgid "Quantity of material consumed must be greater than 0."
 msgstr ""
 
 #. module: tsm_task_material
-#: model:ir.model,name:tsm_task_material.model_sale_order
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__sale_id
 msgid "Sale Order"
 msgstr ""
@@ -176,11 +175,6 @@ msgstr ""
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__sale_autoconfirm
 msgid "Sale autoconfirm"
-msgstr ""
-
-#. module: tsm_task_material
-#: model:ir.model,name:tsm_task_material.model_sale_order_line
-msgid "Sales Order Line"
 msgstr ""
 
 #. module: tsm_task_material
@@ -210,33 +204,13 @@ msgid "TSM Task Material Used"
 msgstr ""
 
 #. module: tsm_task_material
-#: model:ir.model.fields,field_description:tsm_task_material.field_sale_order__tsm_task_id
-msgid "TSM Task related"
-msgstr ""
-
-#. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__task_id
 msgid "Task"
 msgstr ""
 
 #. module: tsm_task_material
-#: model:ir.model.fields,field_description:tsm_task_material.field_sale_order_line__tsm_task_material_id
-msgid "Task Material related that generated this order line"
-msgstr ""
-
-#. module: tsm_task_material
 #: model:ir.model,name:tsm_task_material.model_tsm_task_type
 msgid "Task Stage"
-msgstr ""
-
-#. module: tsm_task_material
-#: model:ir.model.fields,help:tsm_task_material.field_sale_order__tsm_task_id
-msgid "Task related that generated this order"
-msgstr ""
-
-#. module: tsm_task_material
-#: model:ir.model.fields,field_description:tsm_task_material.field_sale_order_line__tsm_task_id
-msgid "Task related that generated this order line"
 msgstr ""
 
 #. module: tsm_task_material
@@ -271,13 +245,13 @@ msgid "Utility field to express amount currency"
 msgstr ""
 
 #. module: tsm_task_material
-#: code:addons/tsm_task_material/models/tsm_task.py:161
+#: code:addons/tsm_task_material/models/tsm_task.py:126
 #, python-format
 msgid "You cannot delete a task with sale order. You can either delete the task's sale order and then delete the task or simply deactivate the task."
 msgstr ""
 
 #. module: tsm_task_material
-#: code:addons/tsm_task_material/models/tsm_task.py:104
+#: code:addons/tsm_task_material/models/tsm_task.py:65
 #, python-format
 msgid "You must first select a Customer and materials for Task: %s!"
 msgstr ""
