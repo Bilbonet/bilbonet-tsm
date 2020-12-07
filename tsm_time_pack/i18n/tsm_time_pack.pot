@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-24 11:27+0000\n"
-"PO-Revision-Date: 2020-10-24 11:27+0000\n"
+"POT-Creation-Date: 2020-12-07 17:42+0000\n"
+"PO-Revision-Date: 2020-12-07 17:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -132,6 +132,18 @@ msgid "<b>Complimentary time</b> is time used by the technician but\n"
 msgstr ""
 
 #. module: tsm_time_pack
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:41
+#, python-format
+msgid "<h5>Time Pack Almost Finished<br/>Time Pack: %s </h5><h2>Progress: %s %%</h2>"
+msgstr ""
+
+#. module: tsm_time_pack
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:34
+#, python-format
+msgid "<h5>Time Pack Finished<br/>Time Pack: %s </h5><h2>Progress: %s %%</h2>"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_document
 msgid "<span class=\"fa fa-arrow-circle-down text-danger\"/> Discount Time    \n"
 "                                    <span class=\"fa fa-arrow-circle-right\"/> Complimentary Time"
@@ -182,7 +194,7 @@ msgid "Address:"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:45
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:67
 #, python-format
 msgid "Alert Time Pack: %s"
 msgstr ""
@@ -385,7 +397,7 @@ msgid "Discount Time"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:283
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:274
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr ""
@@ -455,7 +467,7 @@ msgid "Hours Consumed"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:39
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:61
 #, python-format
 msgid "Hours Contrated: %s\n"
 "Hours Consumed:  %s\n"
@@ -661,7 +673,7 @@ msgid "Quantity"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:275
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:266
 #, python-format
 msgid "Quantity of hours contrated must be greater than 0."
 msgstr ""
@@ -780,7 +792,7 @@ msgid "Task:"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:136
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:135
 #: sql_constraint:tsm.time.pack:0
 #, python-format
 msgid "The code must be unique!"
@@ -937,7 +949,7 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:333
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:324
 #, python-format
 msgid "You must first select a Customer and product for Time Pack: %s"
 msgstr ""
