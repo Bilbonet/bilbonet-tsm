@@ -15,15 +15,37 @@ class TsmTaskTimesheet(models.Model):
 
     @api.model
     def create(self, values):
-        # We search Time Pack available for the partner
-        task = self.env['tsm.task'].browse(values['task_id'])
-        time_pack_id = self.env['tsm.time.pack'].search([
-            ('partner_id', '=', task.partner_id.id)], limit=1)
+        res = super(TsmTaskTimesheet, self).create(values)
 
-        if time_pack_id and not values['timepack_id']:
-            values['timepack_id'] = time_pack_id.id
+        '''If we don't indicate Time Pack in the new Timesheet. 
+           We search a Time Pack available for the partner'''
+        if not values['timepack_id']:
+            task = self.env['tsm.task'].browse(values['task_id'])
+            time_pack_id = self.env['tsm.time.pack'].search([
+                ('partner_id', '=', task.partner_id.id)], limit=1)
 
-        return super(TsmTaskTimesheet, self).create(values)
+            if time_pack_id:
+                res.update({
+                    'timepack_id': time_pack_id.id
+                })
+
+        if res['timepack_id']:
+            if res.timepack_id.progress >= 100:
+                message = _(
+                    '<h5>Time Pack Finished<br/>'
+                    'Time Pack: %s </h5>'
+                    '<h2>Progress: %s %%</h2>'
+                ) % (res.timepack_id.code, res.timepack_id.progress)
+                self.env.user.notify_danger(message=message)
+            elif res.timepack_id.progress >= 90:
+                message = _(
+                    '<h5>Time Pack Finished<br/>'
+                    'Time Pack: %s </h5>'
+                    '<h2>Progress: %s %%</h2>'
+                ) % (res.timepack_id.code, res.timepack_id.progress)
+                self.env.user.notify_warning(message=message)
+
+        return res
 
     @api.onchange('amount', 'timepack_id', 'discount_time')
     def _onchange_timepack(self):

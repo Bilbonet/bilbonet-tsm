@@ -20,32 +20,26 @@ class TsmTaskTimesheet(models.Model):
         return tag_id.id
 
     company_id = fields.Many2one('res.company', string='Company',
-                                 required=True,
-                                 default=lambda self: self.env.user.company_id)
+        required=True, default=lambda self: self.env.user.company_id)
     active = fields.Boolean('Active',
-                    help="If the active field is set to False, it will allow "
-                         "you to hide the account without removing it.",
-                    default=True)
+        help="If the active field is set to False, it will allow "
+             "you to hide the account without removing it.",
+        default=True)
     date_time = fields.Datetime(default=fields.Datetime.now, string='Date')
     name = fields.Char(string='Timesheet Title', default="/", required=True)
     amount = fields.Float(string='Quantity', default=0.0)
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
     project_id = fields.Many2one('tsm.project', 'Project')
-    user_id = fields.Many2one('res.users',
-                              string='Assigned to',
-                              default=lambda self: self.env.uid,
-                              required=True,
-                              index=True, track_visibility='always')
+    user_id = fields.Many2one('res.users', string='Assigned to',
+        default=lambda self: self.env.uid, required=True, index=True,
+        track_visibility='always')
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
     date_time_stop = fields.Datetime(compute='_get_stop_date_time',
-                                     string='End date time for calendar view',
-                                     store=True,
-                                     readonly=True)
+        string='End date time for calendar view', store=True, readonly=True)
     task_partner_id = fields.Many2one(related='task_id.partner_id',
-                                       store=True, string='Customer')
-    tag_ids = fields.Many2one('tsm.task.timesheet.tags',
-                              string='Timesheet Tags',
-                              default=_get_default_tag_id)
+        store=True, string='Customer')
+    tag_ids = fields.Many2one('tsm.task.timesheet.tags', string='Timesheet Tags',
+        default=_get_default_tag_id)
 
     @api.model
     def create(self, values):
@@ -135,7 +129,7 @@ class TsmTaskTimesheeetTags(models.Model):
         help="If the active field is set to False, it will allow you to hide"
         " the tag without removing it.")
     default = fields.Boolean('Default', default=False,
-                             help="Selected by default when create timesheet.")
+        help="Selected by default when create timesheet.")
     sequence = fields.Integer(string='Sequence', index=True, default=10,
         help="Gives the sequence order when displaying a list of tags.")
 
