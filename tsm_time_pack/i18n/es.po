@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-24 11:28+0000\n"
-"PO-Revision-Date: 2020-10-24 11:28+0000\n"
+"POT-Creation-Date: 2020-12-07 17:41+0000\n"
+"PO-Revision-Date: 2020-12-07 17:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -227,6 +227,18 @@ msgstr "<b>Tiempo de cortesia</b>, es tiempo empleado por el técnico pero\n"
 "                                            que no descuenta tiempo de las horas contratadas por el cliente."
 
 #. module: tsm_time_pack
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:41
+#, python-format
+msgid "<h5>Time Pack Almost Finished<br/>Time Pack: %s </h5><h2>Progress: %s %%</h2>"
+msgstr "<h5>Bolsa Horas Casi Finalizada<br/>Bolsa Horas: %s </h5><h2>Progreso: %s %%</h2>"
+
+#. module: tsm_time_pack
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:34
+#, python-format
+msgid "<h5>Time Pack Finished<br/>Time Pack: %s </h5><h2>Progress: %s %%</h2>"
+msgstr "<h5>Bolsa Horas Finalizada<br/>Bolsa Horas: %s </h5><h2>Progreso: %s %%</h2>"
+
+#. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_document
 msgid "<span class=\"fa fa-arrow-circle-down text-danger\"/> Discount Time    \n"
 "                                    <span class=\"fa fa-arrow-circle-right\"/> Complimentary Time"
@@ -255,7 +267,7 @@ msgstr ""
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__message_needaction
 msgid "Action Needed"
-msgstr "Acción Necesaria"
+msgstr "Acción requerida"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__active
@@ -279,7 +291,7 @@ msgid "Address:"
 msgstr "Dirección:"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:45
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:67
 #, python-format
 msgid "Alert Time Pack: %s"
 msgstr "Aviso Bolsa Horas: %s"
@@ -482,7 +494,7 @@ msgid "Discount Time"
 msgstr "Descuenta tiempo"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:283
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:274
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr "El descuento debe ser menor o igual a 100"
@@ -500,7 +512,7 @@ msgstr "Descontado <span style=\"font-size:0.8em;\" class=\"fa fa-2x fa-arrow-ci
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre a mostrar"
 
 #. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
@@ -555,7 +567,7 @@ msgid "Hours Consumed"
 msgstr "Horas Consumidas"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:39
+#: code:addons/tsm_time_pack/models/tsm_task_timesheet.py:61
 #, python-format
 msgid "Hours Contrated: %s\n"
 "Hours Consumed:  %s\n"
@@ -582,7 +594,7 @@ msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
+msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__message_has_error
@@ -618,7 +630,7 @@ msgstr "Es un seguidor"
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack____last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Última modificación en"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__write_uid
@@ -763,7 +775,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:275
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:266
 #, python-format
 msgid "Quantity of hours contrated must be greater than 0."
 msgstr "La cantidad de horas contratadas debe ser mayor que 0."
@@ -885,7 +897,7 @@ msgid "Task:"
 msgstr "Tarea"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:136
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:135
 #: sql_constraint:tsm.time.pack:0
 #, python-format
 msgid "The code must be unique!"
@@ -1042,7 +1054,7 @@ msgid "Website communication history"
 msgstr "Historial de comunicaciones del sitio web"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:333
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:324
 #, python-format
 msgid "You must first select a Customer and product for Time Pack: %s"
 msgstr "Debe seleccionar primero un Contacto y producto par la bolsa de horas: %s"

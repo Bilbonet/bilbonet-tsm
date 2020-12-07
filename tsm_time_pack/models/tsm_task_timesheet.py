@@ -39,7 +39,7 @@ class TsmTaskTimesheet(models.Model):
                 self.env.user.notify_danger(message=message)
             elif res.timepack_id.progress >= 90:
                 message = _(
-                    '<h5>Time Pack Finished<br/>'
+                    '<h5>Time Pack Almost Finished<br/>'
                     'Time Pack: %s </h5>'
                     '<h2>Progress: %s %%</h2>'
                 ) % (res.timepack_id.code, res.timepack_id.progress)
