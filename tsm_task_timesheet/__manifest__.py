@@ -9,6 +9,7 @@
     'website': 'https://github.com/Bilbonet/bilbonet-tsm/',
     'depends': [
         'tsm_base',
+        'web_notify',
     ],
     'data': [
         'security/tsm_timesheet_security.xml',
