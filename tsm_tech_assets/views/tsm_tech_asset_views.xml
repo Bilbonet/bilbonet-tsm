@@ -97,32 +97,6 @@
             </tree>
         </field>
     </record>
-    <record id="tsm_tech_assets_search_view" model="ir.ui.view">
-        <field name="name">Tsm Tech Assets Search</field>
-        <field name="model">tsm.tech.asset</field>
-        <field name="arch" type="xml">
-            <search string="Tech Assets">
-                <field name="partner_id"/>
-                <field name="name" string="Asset Name"/>
-                <field name="type_id" string="Asset Type"/>
-                <field name="user_id"/>
-                <field name="code" string="Asset Code"/>
-                <filter string="My Assets" name="my_assets" domain="[('user_id','=',uid)]"/>
-                <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
-                <separator/>
-                <filter string="My Activities" name="activities_my" domain="[('activity_ids.user_id', '=', uid)]"/>
-                <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
-                <separator/>
-                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Responsible" name="User" context="{'group_by':'user_id'}"/>
-                    <filter string="Customer" name="customer" context="{'group_by':'partner_id'}"/>
-                    <filter string="Type" name="Type" context="{'group_by':'type_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-
     <record id="tsm_tech_assets_kanban_view" model="ir.ui.view">
         <field name="name">tsm.tech.assets.kanban</field>
         <field name="model">tsm.tech.asset</field>
@@ -184,7 +158,44 @@
             </kanban>
         </field>
     </record>
+    <record id="tsm_tech_assets_search_view" model="ir.ui.view">
+        <field name="name">Tsm Tech Assets Search</field>
+        <field name="model">tsm.tech.asset</field>
+        <field name="arch" type="xml">
+            <search string="Tech Assets">
+                <field name="partner_id"/>
+                <field name="name" string="Asset Name"/>
+                <field name="type_id" string="Asset Type"/>
+                <field name="user_id"/>
+                <field name="code" string="Asset Code"/>
+                <filter string="My Assets" name="my_assets" domain="[('user_id','=',uid)]"/>
+                <filter string="Starred" name="starred" domain="[('priority','in',[1, 2])]"/>
+                <separator/>
+                <filter string="My Activities" name="activities_my" domain="[('activity_ids.user_id', '=', uid)]"/>
+                <filter string="Late Activities" name="activities_overdue"
+                        domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Today Activities" name="activities_today"
+                        domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
 
+                <filter name="week" string="For This Week"
+                        domain="[
+                                '&amp;',
+                                ('activity_ids.date_deadline', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                ('activity_ids.date_deadline', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),]"/>
+                <filter string="For This Month" name="this_month" domain="[('activity_ids.date_deadline','&gt;=', time.strftime('%Y-%m-01'))]"/>
+                <filter string="Future Activities" name="activities_upcoming_all"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Responsible" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="Customer" name="customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="Type" name="Type" context="{'group_by':'type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
 
     <!--
         Asset: Menus and Actions
@@ -194,7 +205,7 @@
         <field name="res_model">tsm.tech.asset</field>
         <field name="view_type">form</field>
         <field name="domain">[]</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form,kanban,activity</field>
         <field name="view_id" ref="tsm_tech_assets_tree_view"/>
         <field name="target">main</field>
         <field name="help" type="html">

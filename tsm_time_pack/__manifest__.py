@@ -10,10 +10,11 @@
     "application": False,
     "installable": True,
     "depends": [
+        "product",
         "tsm_base",
         "tsm_task_timesheet",
         "sale",
-        "product",
+        'web_notify',
     ],
     "data": [
         "security/ir.model.access.csv",
