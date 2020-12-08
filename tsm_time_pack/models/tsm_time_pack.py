@@ -27,49 +27,38 @@ class TsmTimePack(models.Model):
     def _compuete_can_edit(self):
         self.can_edit = self.env.user.has_group('tsm_base.group_tsm_manager')
 
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
+    company_id = fields.Many2one('res.company', string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
     active = fields.Boolean(default=True, copy=False,
         help="If the active field is set to False, it will allow you to hide"
         " the time pack without removing it.")
     code = fields.Char(string='Time Pack Number',
-                       required=True, default="/", readonly=True)
-    name = fields.Char(string='Time Pack Title', track_visibility='always',
-                       index=True, copy=False)
-    description = fields.Html(
-        string='Time Pack Description', sanitize=True,
+        required=True, default="/", readonly=True)
+    name = fields.Char(string='Time Pack Title',
+        track_visibility='always', index=True, copy=False)
+    description = fields.Html(string='Time Pack Description', sanitize=True,
         strip_style=False, translate=False, copy=False,
         help="Details, notes and aclarations about the time pack.")
-    timesheet_ids = fields.One2many('tsm.task.timesheet',
-                                    'timepack_id', 'Timesheets')
-    user_id = fields.Many2one('res.users',
-                              string='Assigned to',
-                              default=lambda self: self.env.uid,
-                              required=True,
-                              index=True, track_visibility='always')
-    partner_id = fields.Many2one('res.partner',
-                                 string='Customer',
-                                 required=True)
+    timesheet_ids = fields.One2many('tsm.task.timesheet', 'timepack_id', 'Timesheets')
+    user_id = fields.Many2one('res.users', string='Assigned to',
+        default=lambda self: self.env.uid, required=True,
+        index=True, track_visibility='always')
+    partner_id = fields.Many2one('res.partner', string='Customer', required=True)
     date_start = fields.Date('Start Date', required=True, copy=False,
-                             default=fields.Date.today,
-                             help="Start date of the time pack.")
+        default=fields.Date.today, help="Start date of the time pack.")
     date_end = fields.Date(string='Ending Date', index=True, copy=False)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
-    ],
-        string='Privacy', required=True,
-        default='followers',
+        ],
+        string='Privacy', required=True, default='followers',
         help="Holds visibility of the time packs "
              "that belong to the current time pack:\n"
              "- On invitation only: Employees may only "
              "see the followed time packs\n"
              "- Visible by all employees: Employees "
              "may see all time packs\n")
-    contrated_hours = fields.Float(
-        string='Contrated Hours',
+    contrated_hours = fields.Float(string='Contrated Hours',
         default=0.0, required=True,
         help='Time contracted by the client for support and it can be '
              'consumed in tasks and timesheet.')
@@ -77,9 +66,8 @@ class TsmTimePack(models.Model):
         store=True, string='Hours Consumed',
         help="Computed as: The sum of the timesheet checked "
              "to discount time.")
-    remaining_hours = fields.Float(compute='_hours_get',
+    remaining_hours = fields.Float(string='Remaining Hours', compute='_hours_get',
         readonly=True, store=True,
-        string='Remaining Hours',
         help="Computed as: Contrated hours - Consumed hours")
     total_hours_spent = fields.Float(compute='_hours_get',
         store=True, string='Total Hours Spent',
@@ -90,45 +78,33 @@ class TsmTimePack(models.Model):
     progress = fields.Float(compute='_hours_get',
         store=True, string='Progress', group_operator="avg")
     product_id = fields.Many2one(comodel_name='product.product',
-                                 string='Product')
+        string='Product')
     description_sale = fields.Text(string='Description Sale')
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
     product_uom_id = fields.Many2one(comodel_name='uom.uom',
-                                     string='Unit of Measure')
+        string='Unit of Measure')
     price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
     discount = fields.Float(string='Discount (%)',
-                    digits=dp.get_precision('Discount'),
-                    help='Discount that is applied in generated sale orders.'
-                        ' It should be less or equal to 100')
-    price_subtotal = fields.Float(compute='_compute_price_subtotal',
-                                  digits=dp.get_precision('Account'),
-                                  string='Sub Total')
-    sale_autoconfirm = fields.Boolean(
-                    string='Sale autoconfirm',
-                    default=True,
-                    help='If it is checked the sale order will be created '
-                         'and confirmed automatically',
-                    )
+        digits=dp.get_precision('Discount'),
+        help='Discount that is applied in generated sale orders.'
+             ' It should be less or equal to 100')
+    price_subtotal = fields.Float(string='Sub Total',
+        compute='_compute_price_subtotal', digits=dp.get_precision('Account'),)
+    sale_autoconfirm = fields.Boolean(string='Sale autoconfirm', default=True,
+        elp='If it is checked the sale order will be created '
+            'and confirmed automatically',)
     company_currency = fields.Many2one('res.currency',
-                            related='company_id.currency_id',
-                            string="Company Currency",
-                            readonly=True,
-                            help='Utility field to express amount currency')
-    sale_id = fields.Many2one(comodel_name='sale.order',
-                              copy=False,
-                              string='Sale Order',
-                              )
+        related='company_id.currency_id', string="Company Currency", readonly=True,
+        help='Utility field to express amount currency')
+    sale_id = fields.Many2one(comodel_name='sale.order', string='Sale Order',
+        copy=False,)
     sale_amount = fields.Monetary(compute='_compute_sale_amount',
-                                  string='Amount of The Order',
-                                  copy=False,
-                                  help='Untaxed Total of The Order',
-                                  currency_field='company_currency',
-                                  )
+        string='Amount of The Order', copy=False, currency_field='company_currency',
+        help='Untaxed Total of The Order',)
     can_edit = fields.Boolean(compute='_compuete_can_edit',
-                    string='Security: only managers can edit',
-                    default=True,
-                    help='This field is for security purpose. '
-                    'Only members of managers group can modify some fields.')
+        string='Security: only managers can edit', default=True,
+        help='This field is for security purpose. '
+             'Only members of managers group can modify some fields.')
 
     _sql_constraints = [
         ('tsm_time_pack_unique_code', 'UNIQUE (code)',
