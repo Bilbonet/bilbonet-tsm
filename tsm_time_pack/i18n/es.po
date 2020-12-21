@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-07 17:41+0000\n"
-"PO-Revision-Date: 2020-12-07 17:41+0000\n"
+"POT-Creation-Date: 2020-12-21 18:14+0000\n"
+"PO-Revision-Date: 2020-12-21 18:14+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -494,7 +494,7 @@ msgid "Discount Time"
 msgstr "Descuenta tiempo"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:274
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:250
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr "El descuento debe ser menor o igual a 100"
@@ -600,11 +600,6 @@ msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
-
-#. module: tsm_time_pack
-#: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__sale_autoconfirm
-msgid "If it is checked the sale order will be created and confirmed automatically"
-msgstr "Si está marcado el pedido de venta será creado y confirmado automaticamante"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_product_product__service_time_pack
@@ -775,7 +770,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:266
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:242
 #, python-format
 msgid "Quantity of hours contrated must be greater than 0."
 msgstr "La cantidad de horas contratadas debe ser mayor que 0."
@@ -877,16 +872,6 @@ msgid "Sumary Time Pack:"
 msgstr "Resumen Bolsa Horas"
 
 #. module: tsm_time_pack
-#: model:ir.model.fields,field_description:tsm_time_pack.field_sale_order__tsm_time_pack_id
-msgid "TSM Time Pack related"
-msgstr "TSM Bolsa de Horas relacionada"
-
-#. module: tsm_time_pack
-#: model:ir.model.fields,field_description:tsm_time_pack.field_sale_order_line__tsm_time_pack_id
-msgid "TSM Time Pack related that generated this order line"
-msgstr "TSM Bolsa de horas relacionada que generó esta linea de venta"
-
-#. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
 msgid "Task"
 msgstr "Tarea"
@@ -897,7 +882,7 @@ msgid "Task:"
 msgstr "Tarea"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:135
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:111
 #: sql_constraint:tsm.time.pack:0
 #, python-format
 msgid "The code must be unique!"
@@ -936,9 +921,10 @@ msgid "Time Pack Title..."
 msgstr "Titulo Bolsa Horas"
 
 #. module: tsm_time_pack
-#: model:ir.model.fields,help:tsm_time_pack.field_sale_order__tsm_time_pack_id
-msgid "Time Pack related that generated this order"
-msgstr "Bolsa de horas relacionada que generó esta orden de venta"
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:325
+#, python-format
+msgid "Time Pack ["
+msgstr "Bolsa Horas ["
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_task_timesheet__timepack_id
@@ -1054,7 +1040,7 @@ msgid "Website communication history"
 msgstr "Historial de comunicaciones del sitio web"
 
 #. module: tsm_time_pack
-#: code:addons/tsm_time_pack/models/tsm_time_pack.py:324
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:304
 #, python-format
 msgid "You must first select a Customer and product for Time Pack: %s"
 msgstr "Debe seleccionar primero un Contacto y producto par la bolsa de horas: %s"
