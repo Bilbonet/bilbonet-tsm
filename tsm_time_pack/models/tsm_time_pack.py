@@ -274,24 +274,28 @@ class TsmTimePack(models.Model):
             self.update(vals)
 
     def _prepare_sale_line(self, sale_id):
-        sale_line = self.env['sale.order.line'].new({
+        self.ensure_one()
+        sale_line_vals = {
             'order_id': sale_id,
             'product_id': self.product_id.id,
             'product_uom': self.product_uom_id.id,
-        })
-
-        '''Get other sale line values from product onchange'''
-        sale_line.product_id_change()
-        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
-
-        sale_line_vals.update({
-            'name': self.description_sale,
-            'price_unit': self.price_unit,
             'product_uom_qty': self.quantity,
             'discount': self.discount,
-            'tsm_time_pack_id': self.id,
-        })
+        }
+        sale_line = self.env['sale.order.line'].with_context(
+            force_company=self.company_id.id,
+        ).new(sale_line_vals)
+        # Get other sale line values from product onchange
+        sale_line.product_id_change()
+        # Write the resulting virtual record modifications made by the onchange call
+        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
 
+        sale_line_vals.update(
+            {
+                'name': self.description_sale,
+                'price_unit': self.price_unit,
+            }
+        )
         return sale_line_vals
 
     def _prepare_sale(self):
@@ -301,23 +305,31 @@ class TsmTimePack(models.Model):
                                 "and product for Time Pack: %s") % self.code)
 
         currency = (
+                self.company_currency or
                 self.partner_id.property_product_pricelist.currency_id or
-                self.company_currency)
+                self.env.user.company_id.currency_id)
 
-        sale = self.env['sale.order'].new({
-            'partner_id': self.partner_id,
-            'currency_id': currency.id,
-            'date_order': fields.Datetime.today(),
+        sale = self.env['sale.order'].with_context(
+            force_company=self.company_id.id,
+        ).new({
             'company_id': self.company_id.id,
-            'user_id': self.user_id.id,
-            'origin': self.name_get()[0][1],
-            'tsm_time_pack_id': self.id,
+            'partner_id': self.partner_id,
         })
 
-        '''Get other sale values from partner onchange'''
+        # Get partner extra fields
         sale.onchange_partner_id()
+        # Write the resulting virtual record modifications made by the onchange call
+        sale_vals = sale._convert_to_write(sale._cache)
 
-        return sale._convert_to_write(sale._cache)
+        sale_vals.update({
+            'client_order_ref': _('Time Pack [') + self.code + '] ' + self.name,
+            'currency_id': currency.id,
+            'fiscal_position_id': self.partner_id.property_account_position_id.id,
+            'user_id': self.user_id.id,
+            'pricelist_id': self.partner_id.property_product_pricelist.id,
+            'origin': self.name_get()[0][1],
+        })
+        return sale_vals
 
     def create_sale(self):
         """
@@ -331,6 +343,11 @@ class TsmTimePack(models.Model):
         sale_line_vals = self._prepare_sale_line(sale.id)
         if sale_line_vals:
             self.env['sale.order.line'].create(sale_line_vals)
+
+        '''Write mesage in the chater of the SO'''
+        sale.message_post_with_view('mail.message_origin_link',
+            values={'self': sale, 'origin': self},
+            subtype_id=self.env.ref('mail.mt_note').id)
 
         '''Update Time Pack with the values from the sale order'''
         vals = {'sale_id': sale.id}
