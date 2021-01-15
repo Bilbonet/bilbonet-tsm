@@ -322,13 +322,18 @@ class TsmTimePack(models.Model):
         sale_vals = sale._convert_to_write(sale._cache)
 
         sale_vals.update({
-            'client_order_ref': _('Time Pack [') + self.code + '] ' + self.name,
+            'client_order_ref': (_(
+                'Time Pack [%s] %s' % (self.code, self.name)
+                if self.name else
+                'Time Pack [%s]' % self.code
+            )),
             'currency_id': currency.id,
             'fiscal_position_id': self.partner_id.property_account_position_id.id,
             'user_id': self.user_id.id,
             'pricelist_id': self.partner_id.property_product_pricelist.id,
             'origin': self.name_get()[0][1],
         })
+
         return sale_vals
 
     def create_sale(self):
