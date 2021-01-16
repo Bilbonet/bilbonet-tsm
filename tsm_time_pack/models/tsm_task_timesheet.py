@@ -7,10 +7,9 @@ from odoo import api, models, fields, _
 class TsmTaskTimesheet(models.Model):
     _inherit = "tsm.task.timesheet"
 
-    timepack_id = fields.Many2one('tsm.time.pack', 'Time Packs', index=True)
-    discount_time = fields.Boolean(
-        default="True",
-        string="Discount Time",
+    timepack_id = fields.Many2one(comodel_name='tsm.time.pack',
+        string='Time Packs', index=True)
+    discount_time = fields.Boolean(default="True", string="Discount Time",
         help="Indicate if discount the time from the time pack")
 
     @api.model
@@ -22,7 +21,9 @@ class TsmTaskTimesheet(models.Model):
         if not values['timepack_id']:
             task = self.env['tsm.task'].browse(values['task_id'])
             time_pack_id = self.env['tsm.time.pack'].search([
-                ('partner_id', '=', task.partner_id.id)], limit=1)
+                ('partner_id', '=', task.partner_id.id),
+                ('active', '=', True),
+            ], limit=1)
 
             if time_pack_id:
                 res.update({

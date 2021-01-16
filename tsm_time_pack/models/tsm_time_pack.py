@@ -27,7 +27,7 @@ class TsmTimePack(models.Model):
     def _compuete_can_edit(self):
         self.can_edit = self.env.user.has_group('tsm_base.group_tsm_manager')
 
-    company_id = fields.Many2one('res.company', string='Company',
+    company_id = fields.Many2one(comodel_name='res.company', string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
     active = fields.Boolean(default=True, copy=False,
         help="If the active field is set to False, it will allow you to hide"
@@ -39,13 +39,16 @@ class TsmTimePack(models.Model):
     description = fields.Html(string='Time Pack Description', sanitize=True,
         strip_style=False, translate=False, copy=False,
         help="Details, notes and aclarations about the time pack.")
-    timesheet_ids = fields.One2many('tsm.task.timesheet', 'timepack_id', 'Timesheets')
-    user_id = fields.Many2one('res.users', string='Assigned to',
+    timesheet_ids = fields.One2many(comodel_name='tsm.task.timesheet',
+        inverse_name='timepack_id', string='Timesheets', copy=False)
+    user_id = fields.Many2one(comodel_name='res.users', string='Assigned to',
         default=lambda self: self.env.uid, required=True,
         index=True, track_visibility='always')
-    partner_id = fields.Many2one('res.partner', string='Customer', required=True)
-    date_start = fields.Date('Start Date', required=True, copy=False,
-        default=fields.Date.today, help="Start date of the time pack.")
+    partner_id = fields.Many2one(comodel_name='res.partner', string='Customer',
+        required=True)
+    date_start = fields.Date(string='Start Date', required=True, copy=False,
+        default=fields.Date.today,
+        help="Start date of the time pack.")
     date_end = fields.Date(string='Ending Date', index=True, copy=False)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
@@ -62,23 +65,27 @@ class TsmTimePack(models.Model):
         default=0.0, required=True,
         help='Time contracted by the client for support and it can be '
              'consumed in tasks and timesheet.')
-    consumed_hours = fields.Float(compute='_hours_get',
-        store=True, string='Hours Consumed',
+    consumed_hours = fields.Float(string='Hours Consumed',
+        compute='_hours_get',
+        store=True,
         help="Computed as: The sum of the timesheet checked "
              "to discount time.")
-    remaining_hours = fields.Float(string='Remaining Hours', compute='_hours_get',
+    remaining_hours = fields.Float(string='Remaining Hours',
+        compute='_hours_get',
         readonly=True, store=True,
         help="Computed as: Contrated hours - Consumed hours")
-    total_hours_spent = fields.Float(compute='_hours_get',
-        store=True, string='Total Hours Spent',
+    total_hours_spent = fields.Float(string='Total Hours Spent',
+        compute='_hours_get',
+        store=True,
         help="Computed as: Time Spent in tasks.")
-    complimentary_hours = fields.Float(compute='_hours_get',
-        store=True, string='Complimentary Hours.',
+    complimentary_hours = fields.Float(string='Complimentary Hours.',
+        compute='_hours_get',
+        store=True,
         help="Hours spent but not discounted in time pack.")
-    progress = fields.Float(compute='_hours_get',
-        store=True, string='Progress', group_operator="avg")
-    product_id = fields.Many2one(comodel_name='product.product',
-        string='Product')
+    progress = fields.Float(string='Progress',
+        compute='_hours_get',
+        store=True, group_operator="avg")
+    product_id = fields.Many2one(comodel_name='product.product', string='Product')
     description_sale = fields.Text(string='Description Sale')
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
     product_uom_id = fields.Many2one(comodel_name='uom.uom',
@@ -88,12 +95,12 @@ class TsmTimePack(models.Model):
         digits=dp.get_precision('Discount'),
         help='Discount that is applied in generated sale orders.'
              ' It should be less or equal to 100')
-    price_subtotal = fields.Float(string='Sub Total',
-        compute='_compute_price_subtotal', digits=dp.get_precision('Account'),)
+    price_subtotal = fields.Float(compute='_compute_price_subtotal',
+        string='Sub Total', digits=dp.get_precision('Account'),)
     sale_autoconfirm = fields.Boolean(string='Sale autoconfirm', default=True,
-        elp='If it is checked the sale order will be created '
-            'and confirmed automatically',)
-    company_currency = fields.Many2one('res.currency',
+        help='If it is checked the sale order will be created '
+             'and confirmed automatically',)
+    company_currency = fields.Many2one(comodel_name='res.currency',
         related='company_id.currency_id', string="Company Currency", readonly=True,
         help='Utility field to express amount currency')
     sale_id = fields.Many2one(comodel_name='sale.order', string='Sale Order',
@@ -349,16 +356,16 @@ class TsmTimePack(models.Model):
         if sale_line_vals:
             self.env['sale.order.line'].create(sale_line_vals)
 
-        '''Write mesage in the chater of the SO'''
+        # Write mesage in the chater of the SO
         sale.message_post_with_view('mail.message_origin_link',
             values={'self': sale, 'origin': self},
             subtype_id=self.env.ref('mail.mt_note').id)
 
-        '''Update Time Pack with the values from the sale order'''
+        # Update Time Pack with the values from the sale order
         vals = {'sale_id': sale.id}
         self.update(vals)
 
-        ''' Autoconfirm sale order if it's checked'''
+        # Autoconfirm sale order if it's checked
         if self.sale_autoconfirm:
             sale.action_confirm()
 
