@@ -4,7 +4,7 @@
     <record id="tsm_task_email_template" model="mail.template">
         <field name="name">TSM Task - Send by Email</field>
         <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
-        <field name="subject">${object.company_id.name} Task (${object.name or 'n/a'})</field>
+        <field name="subject">Task (${object.name or 'n/a'})</field>
         <field name="partner_to">${object.contact_id != False and object.contact_id.id}</field>
         <field name="email_to">${(object.partner_id.email or '')|safe}</field>
         <field name="model_id" ref="tsm_base.model_tsm_task"/>
