@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-07 21:39+0000\n"
-"PO-Revision-Date: 2019-12-07 21:39+0000\n"
+"POT-Creation-Date: 2022-07-01 19:18+0000\n"
+"PO-Revision-Date: 2022-07-01 19:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -288,7 +288,7 @@ msgstr ""
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet__closed
-msgid "Tasks in this stage are considered closed."
+msgid "Tasks in this stage are considered closed. You can only archive a task in a stage with state closed."
 msgstr ""
 
 #. module: tsm_task_timesheet
@@ -298,20 +298,20 @@ msgstr ""
 
 #. module: tsm_task_timesheet
 #: code:addons/tsm_task_timesheet/models/tsm_task.py:45
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:112
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:106
 #, python-format
 msgid "There are any timesheet with 00:00 hours in this task.\n"
 "That is not allowed in stages marked as closed."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:107
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:101
 #, python-format
 msgid "There isn't any stage with closed check. Please mark any."
 msgstr ""
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:153
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:147
 #, python-format
 msgid "There's already one Tag checked as defautl.\n"
 " Tag Checked : %s"
