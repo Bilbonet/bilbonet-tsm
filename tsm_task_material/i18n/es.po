@@ -1,34 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* tsm_task_material
+# 	* tsm_task_material
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-05 17:21+0000\n"
-"PO-Revision-Date: 2020-12-05 17:21+0000\n"
+"POT-Creation-Date: 2022-07-01 19:15+0000\n"
+"PO-Revision-Date: 2022-07-01 21:18+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 3.1\n"
 
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Amount"
-msgstr "Cantidad"
+msgstr "Importe"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__sale_amount
 msgid "Amount of The Order"
 msgstr "Total del pedido"
-
-#. module: tsm_task_material
-#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
-msgid "Cantidad"
-msgstr ""
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task__create_sale_order
@@ -77,7 +75,7 @@ msgstr "Descuento (%)"
 #: code:addons/tsm_task_material/models/tsm_task_material.py:54
 #, python-format
 msgid "Discount should be less or equal to 100"
-msgstr ""
+msgstr "El descuento debe ser menor o igual a 100"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material__discount
@@ -87,7 +85,7 @@ msgstr "El descuento que se aplica a la orden de venta. Debe ser menor o igual a
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre a mostrar"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__id
@@ -108,7 +106,7 @@ msgstr "Si marcas este check, cuando la tarea está en este estado, se podrá cr
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material____last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Última modificación en"
 
 #. module: tsm_task_material
 #: model:ir.model.fields,field_description:tsm_task_material.field_tsm_task_material__write_uid
@@ -127,6 +125,7 @@ msgstr ""
 
 #. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Material and Services"
 msgstr "Material y Servicios"
 
@@ -137,17 +136,8 @@ msgid "Material used"
 msgstr "Materiales usados"
 
 #. module: tsm_task_material
-#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
-msgid "Material y Servicios"
-msgstr ""
-
-#. module: tsm_task_material
-#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
-msgid "Precio"
-msgstr ""
-
-#. module: tsm_task_material
 #: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_material_project_report
+#: model_terms:ir.ui.view,arch_db:tsm_task_material.tsm_task_material_report_document
 msgid "Price"
 msgstr "Precio"
 
@@ -242,17 +232,16 @@ msgstr "Total sin impuestos"
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task__company_currency
 #: model:ir.model.fields,help:tsm_task_material.field_tsm_task_material__company_currency
 msgid "Utility field to express amount currency"
-msgstr "Campo útil para expresar importe en divisa."
+msgstr "Campo útil para expresar importe en divisa"
 
 #. module: tsm_task_material
 #: code:addons/tsm_task_material/models/tsm_task.py:126
 #, python-format
 msgid "You cannot delete a task with sale order. You can either delete the task's sale order and then delete the task or simply deactivate the task."
-msgstr "No se puede eliminar una tarea con orden de venta. Puede eliminar la orden de venta asociada y despues la tarea. O simplemente desactivar la tarea."
+msgstr "No se puede eliminar una tarea con orden de venta. Puede eliminar la orden de venta asociada y después la tarea. O simplemente desactivar la tarea."
 
 #. module: tsm_task_material
 #: code:addons/tsm_task_material/models/tsm_task.py:65
 #, python-format
 msgid "You must first select a Customer and materials for Task: %s!"
 msgstr "Primero debes seleccionar un cliente y materiales para la tarea: %s!"
-

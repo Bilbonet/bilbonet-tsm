@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-17 16:01+0000\n"
-"PO-Revision-Date: 2020-06-17 16:01+0000\n"
+"POT-Creation-Date: 2022-07-01 18:45+0000\n"
+"PO-Revision-Date: 2022-07-01 18:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -109,11 +109,6 @@ msgid "${object.company_id.name} Project (${object.name or 'n/a'})"
 msgstr ""
 
 #. module: tsm_base
-#: model:mail.template,subject:tsm_base.tsm_task_email_template
-msgid "${object.company_id.name} Task (${object.name or 'n/a'})"
-msgstr ""
-
-#. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "(Un)Archive"
 msgstr ""
@@ -153,11 +148,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__active
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__active
 msgid "Active"
-msgstr ""
-
-#. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_partner_info_form_view
-msgid "Active Tasks"
 msgstr ""
 
 #. module: tsm_base
@@ -598,6 +588,7 @@ msgid "Logo"
 msgstr ""
 
 #. module: tsm_base
+#: selection:tsm.project,priority:0
 #: selection:tsm.task,priority:0
 msgid "Low"
 msgstr ""
@@ -665,6 +656,7 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: tsm_base
+#: selection:tsm.project,priority:0
 #: selection:tsm.task,priority:0
 msgid "Normal"
 msgstr ""
@@ -764,6 +756,7 @@ msgid "Print Task"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__priority
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__priority
 msgid "Priority"
 msgstr ""
@@ -859,11 +852,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:tsm_base.tsm_config_settings_action
 #: model:ir.ui.menu,name:tsm_base.tsm_menu_configuration
 msgid "Settings"
-msgstr ""
-
-#. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__is_favorite
-msgid "Show Project on dashboard"
 msgstr ""
 
 #. module: tsm_base
@@ -970,6 +958,11 @@ msgid "Task"
 msgstr ""
 
 #. module: tsm_base
+#: model:mail.template,subject:tsm_base.tsm_task_email_template
+msgid "Task (${object.name or 'n/a'})"
+msgstr ""
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__code
 msgid "Task Code"
 msgstr ""
@@ -1017,11 +1010,12 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_partner
 #: model:ir.ui.menu,name:tsm_base.tsm_task_menu
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_partner_info_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_tree_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_tasks_from_project_form
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_tasks_from_project_kanban
 msgid "Tasks"
 msgstr ""
 
@@ -1161,11 +1155,6 @@ msgid "Website:"
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,help:tsm_base.field_tsm_project__is_favorite
-msgid "Whether this project should be displayed on the dashboard or not"
-msgstr ""
-
-#. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
 msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
 msgstr ""
@@ -1181,13 +1170,13 @@ msgid "You can now manage your tasks in order to get things done efficiently. Tr
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:123
+#: code:addons/tsm_base/models/tsm_project.py:122
 #, python-format
 msgid "You cannot archive a project with active tasks. You need to archive all tasks of the project first."
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:133
+#: code:addons/tsm_base/models/tsm_project.py:136
 #, python-format
 msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
 msgstr ""
