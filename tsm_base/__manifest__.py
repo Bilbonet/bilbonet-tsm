@@ -3,7 +3,7 @@
 
 {
     'name': 'Technical Support Management',
-    'version': '12.0.2.0.0',
+    'version': '16.0.1.0.0',
     'category': 'Management',
     'license': 'AGPL-3',
     'author': 'Jesus Ramiro (Bilbonet.NET)',
@@ -24,8 +24,8 @@
         'report/tsm_project_report.xml',
         'data/tsm_task_email_template.xml',
         'data/tsm_project_email_template.xml',
-        'views/tsm_project_views.xml',
         'views/tsm_task_views.xml',
+        'views/tsm_project_views.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',
     ],

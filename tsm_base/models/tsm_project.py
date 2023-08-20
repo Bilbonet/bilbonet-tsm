@@ -1,7 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
-from odoo import api, fields, models, _
+from odoo import fields, models, _
 from odoo.exceptions import UserError
 
 
@@ -64,7 +63,6 @@ class TsmProject(models.Model):
     task_ids = fields.One2many('tsm.task', 'project_id', string='Tasks Related')
     task_count = fields.Integer(compute='_compute_task_count', string="Amount Tasks")
 
-    @api.multi
     def action_project_send(self):
         '''
         This function opens a window to compose an email,
@@ -107,7 +105,6 @@ class TsmProject(models.Model):
     # ------------------
     # CRUD overrides
     # ------------------
-    @api.multi
     def write(self, vals):
         # archiving/unarchiving a project does it on its tasks, too
         # if 'active' in vals:
@@ -115,7 +112,7 @@ class TsmProject(models.Model):
         #                                         {'active': vals['active']})
 
         # First all tasks of the project must be archived
-        if 'active' in vals and False == vals['active']:
+        if 'active' in vals and vals['active'] == False:
             actives = self.browse(self.task_ids)
             if actives:
                 raise UserError(
@@ -126,15 +123,13 @@ class TsmProject(models.Model):
                 # if project is archived reset some values
                 vals['priority'] = 0
 
-        res = super(TsmProject, self).write(vals) if vals else True
+        res = super().write(vals) if vals else True
         return res
 
-    @api.multi
     def unlink(self):
         for project in self:
             if project.task_ids:
                 raise UserError(_("You cannot delete a project with tasks. "
                 "You can either delete the project's task and then delete the "
                 "project or simply deactivate the project."))
-        res = super(TsmProject, self).unlink()
-        return res
+        return super().unlink()

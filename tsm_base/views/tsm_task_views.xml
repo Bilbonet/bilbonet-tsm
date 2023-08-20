@@ -1,5 +1,20 @@
 <?xml version="1.0"?>
 <odoo>
+    <!-- Main Menus -->
+    <menuitem id="tsm_main_menu" name="T.S.M"
+              web_icon="tsm_base,static/description/icon.png"
+              groups="group_tsm_manager,group_tsm_user"
+              sequence="50" />
+
+    <menuitem id="menu_tsm_search" name="Search"
+              parent="tsm_main_menu"
+              groups="base.group_no_one,tsm_base.group_tsm_user"
+              sequence="4"/>
+
+    <menuitem id="tsm_config_menu" name="Configuration"
+              parent="tsm_main_menu"
+              groups="tsm_base.group_tsm_manager"
+              sequence="100"/>
 
     <!-- Tasks views -->
     <record id="tsm_task_search_view" model="ir.ui.view">
@@ -27,6 +42,7 @@
             </search>
         </field>
     </record>
+
     <record id="tsm_task_form_view" model="ir.ui.view">
         <field name="name">tsm.task.form</field>
         <field name="model">tsm.task</field>
@@ -210,6 +226,7 @@
             </kanban>
         </field>
     </record>
+
     <record id="tsm_task_tree_view" model="ir.ui.view">
         <field name="name">tsm.task.tree</field>
         <field name="model">tsm.task</field>
@@ -228,11 +245,10 @@
         </field>
     </record>
 
-    <!-- Tasks Actions -->
+    <!-- Tasks Antions $ Menus -->
     <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
         <field name="name">TSM My Tasks from menu</field>
         <field name="res_model">tsm.task</field>
-        <field name="view_type">form</field>
         <field name="view_id" ref="tsm_task_kanban_view"/>
         <field name="view_mode">kanban,tree,form</field>
         <field name="context">{'search_default_my_tasks': 1}</field>
@@ -246,16 +262,16 @@
         </field>
     </record>
 
-
-    <!-- Tasks Menus -->
-    <menuitem id="tsm_task_menu" action="tsm_task_action_from_menu"
-              name="Tasks"
+    <menuitem id="tsm_task_menu" name="Tasks" 
               parent="tsm_base.tsm_main_menu"
+              action="tsm_task_action_from_menu"
               sequence="1"/>
-    <menuitem id="tsm_res_partner_menu" action="base.action_partner_form"
-              name="Customers"
+
+    <menuitem id="tsm_res_partner_menu" name="Customers"
               parent="tsm_base.tsm_main_menu"
+              action="base.action_partner_form"
               sequence="10"/>
+
 
     <!--=================
         Tasks Stage views
@@ -304,6 +320,7 @@
             </form>
         </field>
     </record>
+
     <record id="tsm_task_type_tree" model="ir.ui.view">
         <field name="name">tsm.task.type.tree</field>
         <field name="model">tsm.task.type</field>
@@ -317,10 +334,10 @@
             </tree>
         </field>
     </record>
+
     <record id="tsm_task_type_open_action" model="ir.actions.act_window">
         <field name="name">TSM Task Stages</field>
         <field name="res_model">tsm.task.type</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="tsm_task_type_tree"/>
         <field name="help" type="html">
@@ -330,12 +347,12 @@
             You will use these stages in order to track the progress in solving a task.</p>
         </field>
     </record>
-    <menuitem id="tsm_config_type_menu" action="tsm_task_type_open_action"
-              name="Stages"
+
+    <menuitem id="tsm_config_type_menu" name="Stages"
+              action="tsm_task_type_open_action"
               parent="tsm_config_menu"
               sequence="2"
               groups="base.group_no_one"/>
-
 
     <!--================
         Tasks Tags views
@@ -360,61 +377,21 @@
             </form>
         </field>
     </record>
+
     <record id="tsm_task_tags_action" model="ir.actions.act_window">
         <field name="name">TSM Task Tags</field>
         <field name="res_model">tsm.task.tags</field>
-        <field name="view_type">form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to add a new task tag.
             </p>
         </field>
     </record>
-    <menuitem id="tsm_config_task_tags_menu" action="tsm_task_tags_action"
-              name="Task Tags"
+
+    <menuitem id="tsm_config_task_tags_menu" name="Task Tags"
+              action="tsm_task_tags_action"
               parent="tsm_config_menu"
               sequence="3"
               groups="base.group_no_one"/>
-
-
-    <!--========================
-        Tasks From Project views
-    =========================-->
-    <record id="tsm_tasks_from_project_action" model="ir.actions.act_window">
-        <field name="name">TSM Project's Tasks</field>
-        <field name="res_model">tsm.task</field>
-        <field name="view_mode">kanban,tree,form</field>
-        <!--<field name="domain">['|',('active', '=', True), ('active', '=', False)]</field>-->
-        <!--<field name="context">{'active_test': False}</field>-->
-        <field name="context">{
-            'active_test': False,
-            'search_default_project_id': [active_id],
-            }</field>
-        <field name="search_view_id" ref="tsm_task_search_view"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Here, you can create new task
-            </p>
-            <p>
-                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
-            </p>
-        </field>
-    </record>
-
-    <!-- Tasks from project: Form button -->
-    <record id="tsm_tasks_from_project_form" model="ir.ui.view">
-        <field name="name">TSM Tasks from project form</field>
-        <field name="model">tsm.project</field>
-        <field name="inherit_id" ref="tsm_base.tsm_project_form_view"/>
-        <field name="arch" type="xml">
-            <button name="toggle_active" position="before">
-                <button class="oe_stat_button" icon="fa-tasks"
-                        type="action"
-                        name="%(tsm_tasks_from_project_action)d">
-                    <field string="Tasks" name="task_count" widget="statinfo"/>
-                </button>
-            </button>
-        </field>
-    </record>
 
 </odoo>

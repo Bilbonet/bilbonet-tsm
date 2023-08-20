@@ -1,46 +1,7 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from odoo import api, fields, models, SUPERUSER_ID, _
 from datetime import datetime
-
-
-class TsmTaskType(models.Model):
-    _name = 'tsm.task.type'
-    _description = 'Task Stage'
-    _order = 'sequence, id'
-
-    name = fields.Char(string='Stage Name', required=True, translate=True)
-    description = fields.Text(translate=True)
-    sequence = fields.Integer(default=1)
-    legend_priority = fields.Char(
-        string='Starred Explanation', translate=True,
-        help='Explanation text to help users using the '
-             'star on tasks in this stage.')
-    legend_blocked = fields.Char(
-        'Red Kanban Label', default=lambda s: _('Blocked'),
-        translate=True, required=True,
-        help='Override the default value displayed for the blocked state for '
-             'kanban selection, when the task is in that stage.')
-    legend_done = fields.Char(
-        'Green Kanban Label', default=lambda s: _('Ready for Next Stage'),
-        translate=True, required=True,
-        help='Override the default value displayed for the done state for '
-             'kanban selection, when the task is in that stage.')
-    legend_normal = fields.Char(
-        'Grey Kanban Label', default=lambda s: _('In Progress'),
-        translate=True, required=True,
-        help='Override the default value displayed for the normal state for '
-             'kanban selection, when the task is in that stage.')
-    fold = fields.Boolean(
-        string='Folded in Kanban',
-        help='This stage is folded in the kanban view when there are no '
-             'records in that stage to display.')
-    closed = fields.Boolean(
-        help="Tasks in this stage are considered closed. "
-             "You can only archive a task in a stage with state closed.",
-        default=False,
-    )
 
 
 class TsmTask(models.Model):
@@ -144,7 +105,6 @@ class TsmTask(models.Model):
          _('The code must be unique!')),
     ]
 
-    @api.multi
     def name_get(self):
         result = super(TsmTask, self).name_get()
         new_result = []
@@ -176,7 +136,6 @@ class TsmTask(models.Model):
         if self.user_id:
             self.date_assign = fields.Datetime.now()
 
-    @api.multi
     def action_task_send(self):
         '''
         This function opens a window to compose an email,
@@ -230,50 +189,33 @@ class TsmTask(models.Model):
 
         return result
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         # context: no_log, because subtype already handle this
         context = dict(self.env.context, mail_create_nolog=True)
 
         # Assign new code
-        if vals.get('code', '/') == '/':
-            vals['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
+        for vals in vals_list:
+            if vals.get('code', '/') == '/':
+                vals['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
 
-        task = super(TsmTask, self.with_context(context)).create(vals)
-        return task
+        return super(TsmTask, self.with_context(context)).create(vals_list)
 
-    @api.multi
     def write(self, vals):
         now = fields.Datetime.now()
-
         # user_id change: update date_assign
         if vals.get('user_id') and 'date_assign' not in vals:
             vals['date_assign'] = now
 
         # if task is archived reset some values
-        if 'active' in vals and False == vals['active']:
+        if 'active' in vals and vals['active'] == False:
             vals['priority'] = 0
             vals['kanban_state'] = 'normal'
 
-        result = super(TsmTask, self).write(vals)
-        return result
-
-    @api.multi
+        return super().write(vals)
+    
     def copy(self, default=None):
-        if default is None:
-            default = {}
+        self.ensure_one()
+        default = dict(default or {})
         default['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
-        return super(TsmTask, self).copy(default)
-
-
-class TsmTaskTags(models.Model):
-    """ Tags of tasks """
-    _name = "tsm.task.tags"
-    _description = "Tags in tasks"
-
-    name = fields.Char(required=True)
-    color = fields.Integer(string='Color Index', default=10)
-
-    _sql_constraints = [
-        ('name_uniq', 'unique (name)', "Tag name already exists !"),
-    ]
+        return super().copy(default)
