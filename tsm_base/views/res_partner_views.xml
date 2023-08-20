@@ -1,29 +1,30 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <!--  Partners inherited form -->
-    <record id="tsm_task_partner_info_form_view" model="ir.ui.view">
-        <field name="name">tsm.task.res.partner.buttons</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="priority" eval="60"/>
-        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
-        <field name="arch" type="xml">
-            <button name="toggle_active" position="before">
-                <button class="oe_stat_button" type="action" name="%(tsm_task_action_from_partner)d"
-                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'active_test': False}"
-                        icon="fa-tasks">
-                    <field  string="Tasks" name="tsm_task_count" widget="statinfo"/>
-                </button>
-            </button>
-        </field>
-    </record>
-
+    <!--  Partner Task Button -->
     <record id="tsm_task_action_from_partner" model="ir.actions.act_window">
         <field name="name">Tasks</field>
         <field name="res_model">tsm.task</field>
         <field name="view_mode">tree,form,kanban</field>
         <field name="search_view_id" ref="tsm_task_search_view"/>
+    </record>
+
+    <record id="tsm_task_partner_info_form_view" model="ir.ui.view">
+        <field name="name">tsm.task.res.partner.buttons</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority" eval="60"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="action" name="%(tsm_task_action_from_partner)d"
+                        context="{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'active_test': False}"
+                        attrs="{'invisible': [('tsm_task_count', '=', 0)]}"
+                        groups="tsm_base.group_tsm_user"
+                        icon="fa-tasks">
+                    <field  string="Tasks" name="tsm_task_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
     </record>
 
 </odoo>
