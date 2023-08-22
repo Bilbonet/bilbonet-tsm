@@ -76,13 +76,13 @@ class TsmTask(models.Model):
         sanitize=True, strip_style=False, translate=False,
         help="Details, notes and aclarations about the task.")
     project_id = fields.Many2one('tsm.project',
-        string='Project', index=True, track_visibility='onchange')
+        string='Project', index=True, tracking=True)
     manager_id = fields.Many2one('res.users',
         string='Project Manager', related='project_id.user_id',
         readonly=True, related_sudo=False)
     user_id = fields.Many2one('res.users',
         string='Assigned to', default=lambda self: self.env.uid,
-        required=True, index=True, track_visibility='always')
+        required=True, index=True, tracking=True)
     partner_id = fields.Many2one('res.partner', string='Customer')
     contact_id = fields.Many2one('res.partner', string='Contact',
         domain="[('parent_id', '=', partner_id),"

@@ -15,7 +15,7 @@
         </t>
 
         <t t-call="tsm_base.tsm_report_layout_header" />
-        <div class="article">
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
             <t t-raw="0"/>
         </div>
         <t t-call="tsm_base.tsm_report_layout_footer" />

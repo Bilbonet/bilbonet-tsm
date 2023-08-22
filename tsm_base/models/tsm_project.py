@@ -36,11 +36,12 @@ class TsmProject(models.Model):
         help="Gives the sequence order when displaying a list of Projects.")
     color = fields.Integer(string='Color Index')
     user_id = fields.Many2one('res.users',
-        string='Project Manager', required=True,
-        default=lambda self: self.env.user, track_visibility="onchange")
+        string='Project Manager',
+        default=lambda self: self.env.user, 
+        required=True, tracking=True)
     # use auto_join to speed up name_search call
     partner_id = fields.Many2one('res.partner',
-        string='Customer', required=True, auto_join=True, track_visibility='onchange')
+        string='Customer', required=True, auto_join=True, tracking=True)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
