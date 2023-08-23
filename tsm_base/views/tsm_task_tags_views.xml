@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+
+    <record id="tsm_task_tags_search_view" model="ir.ui.view">
+        <field name="name">TSM Task Tags Seacrh</field>
+        <field name="model">tsm.task.tags</field>
+        <field name="arch" type="xml">
+            <search string="Tags">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    
+    <record id="tsm_task_tags_form_view" model="ir.ui.view">
+        <field name="name">TSM Task Tags Form</field>
+        <field name="model">tsm.task.tags</field>
+        <field name="arch" type="xml">
+            <form string="Task Tags">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="tsm_task_tags_action" model="ir.actions.act_window">
+        <field name="name">TSM Task Tags</field>
+        <field name="res_model">tsm.task.tags</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new task tag.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="tsm_config_task_tags_menu" name="Task Tags"
+              action="tsm_task_tags_action"
+              parent="tsm_config_menu"
+              sequence="3"
+              groups="base.group_no_one"/>
+
+</odoo>

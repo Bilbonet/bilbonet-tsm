@@ -26,6 +26,8 @@
         'data/tsm_project_email_template.xml',
         'views/tsm_task_views.xml',
         'views/tsm_project_views.xml',
+        'views/tsm_task_type_views.xml',
+        'views/tsm_task_tags_views.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',
     ],

@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <!-- Main Menus -->
     <menuitem id="tsm_main_menu" name="T.S.M"
@@ -51,31 +53,23 @@
                 <header>
                     <button name="action_task_send" type="object" groups="tsm_base.group_tsm_user"
                             string=" Send by Email" class="oe_highlight" icon="fa-envelope"/>
-                    <field name="stage_id" widget="statusbar" clickable="True"
-                           options="{'fold_field': 'fold'}"/>
+                    <field name="stage_id" 
+                        widget="statusbar"
+                        options="{'clickable': '1', 'fold_field': 'fold'}"/>
                 </header>
                 <sheet string="Task">
-                    <div class="oe_button_box" name="button_box">
-                        <field name="closed" invisible="1"/>
-                        <button name="toggle_active" type="object"
-                                attrs="{'invisible': [('closed', '=', False)]}"
-                                groups="tsm_base.group_tsm_user"
-                                class="oe_stat_button" icon="fa-archive">
-                            <field name="active" widget="boolean_button"
-                                options='{"terminology": "archive"}'/>
-                        </button>
-                    </div>
-                    <div class="row oe_title">
-                        <div class="mr-3">
-                            <h1><field name="priority" widget="priority"/></h1>
-                        </div>
-                        <div>
-                            <h1><field name="code"/></h1>
-                        </div>
-                    </div>
-                    <div class="oe_title col-xs-10">
-                        <h1>
-                            <field name="name" placeholder="Task Title..."/>
+                    <field name="active" invisible="1"/>
+                    <field name="closed" invisible="1"/>
+                    <div class="oe_button_box" name="button_box" groups="base.group_user"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title pe-0">
+                        <h1 class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex w-100">
+                                <field name="priority" widget="priority" class="me-3"/>
+                                <field name="code" class="me-3" style="flex-basis: 10%"/>
+                                <field name="name" class="o_task_name me-3 pe-2" placeholder="Task Title..."/>
+                            </div>
+                            <field name="kanban_state" widget="state_selection" class=""/>
                         </h1>
                     </div>
                     <group>
@@ -182,9 +176,6 @@
                                         </a>
                                         <div class="dropdown-menu" role="menu">
                                             <field name="closed" invisible="1"/>
-                                            <a role="menuitem" name="toggle_active" type="object"
-                                               attrs="{'invisible':[('closed', '=', False)]}"
-                                               class="dropdown-item">(Un)Archive</a>
                                             <a role="menuitem" type="edit" class="dropdown-item">Edit Task</a>
                                             <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
                                             <div role="separator" class="dropdown-divider"></div>
@@ -271,127 +262,5 @@
               parent="tsm_base.tsm_main_menu"
               action="base.action_partner_form"
               sequence="10"/>
-
-
-    <!--=================
-        Tasks Stage views
-    ==================-->
-    <record id="tsm_task_type_form" model="ir.ui.view">
-        <field name="name">tsm.task.type.form</field>
-        <field name="model">tsm.task.type</field>
-        <field name="arch" type="xml">
-            <form string="Task Stage">
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="sequence" groups="base.group_no_one"/>
-                        </group>
-                        <group>
-                            <field name="fold"/>
-                            <field name="closed"/>
-                        </group>
-                    </group>
-                    <group string="Stage Description and Tooltips">
-                        <p class="text-muted" colspan="2">
-                            At each stage employees can block or make task ready for next stage.
-                            You can define here labels that will be displayed for the state instead
-                            of the default labels.
-                        </p>
-                        <label for="legend_normal" string=" " class="o_status oe_project_kanban_legend"/>
-                        <field name="legend_normal" nolabel="1"/>
-                        <label for="legend_blocked" string=" " class="o_status o_status_red oe_project_kanban_legend"/>
-                        <field name="legend_blocked" nolabel="1"/>
-                        <label for="legend_done" string=" " class="o_status o_status_green oe_project_kanban_legend"/>
-                        <field name="legend_done" nolabel="1"/>
-
-                        <p class="text-muted" colspan="2">
-                            You can also give a tooltip about the use of the stars available in the kanban and form views.
-                        </p>
-                        <label for="legend_priority" string=" " class="fa fa-star fa-lg o_star_on oe_project_kanban_legend"/>
-                        <field name="legend_priority" nolabel="1"/>
-
-                        <p class="text-muted" colspan="2">
-                            You can also add a description to help your coworkers understand the meaning and purpose of the stage.
-                        </p>
-                        <field name="description" placeholder="Add a description..." nolabel="1" colspan="2"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <record id="tsm_task_type_tree" model="ir.ui.view">
-        <field name="name">tsm.task.type.tree</field>
-        <field name="model">tsm.task.type</field>
-        <field name="arch" type="xml">
-            <tree string="Task Stage">
-                <field name="sequence" widget="handle" groups="base.group_no_one"/>
-                <field name="name"/>
-                <field name="description"/>
-                <field name="fold"/>
-                <field name="closed"/>
-            </tree>
-        </field>
-    </record>
-
-    <record id="tsm_task_type_open_action" model="ir.actions.act_window">
-        <field name="name">TSM Task Stages</field>
-        <field name="res_model">tsm.task.type</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="tsm_task_type_tree"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Click to add a stage in the task pipeline.</p>
-            <p>Define the steps that will be used in the task, up to the closing of the task.
-            You will use these stages in order to track the progress in solving a task.</p>
-        </field>
-    </record>
-
-    <menuitem id="tsm_config_type_menu" name="Stages"
-              action="tsm_task_type_open_action"
-              parent="tsm_config_menu"
-              sequence="2"
-              groups="base.group_no_one"/>
-
-    <!--================
-        Tasks Tags views
-    =================-->
-    <record id="tsm_task_tags_search_view" model="ir.ui.view">
-        <field name="name">TSM Task Tags Seacrh</field>
-        <field name="model">tsm.task.tags</field>
-        <field name="arch" type="xml">
-            <search string="Tags">
-                <field name="name"/>
-            </search>
-        </field>
-    </record>
-    <record id="tsm_task_tags_form_view" model="ir.ui.view">
-        <field name="name">TSM Task Tags Form</field>
-        <field name="model">tsm.task.tags</field>
-        <field name="arch" type="xml">
-            <form string="Task Tags">
-                <group>
-                    <field name="name"/>
-                </group>
-            </form>
-        </field>
-    </record>
-
-    <record id="tsm_task_tags_action" model="ir.actions.act_window">
-        <field name="name">TSM Task Tags</field>
-        <field name="res_model">tsm.task.tags</field>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Click to add a new task tag.
-            </p>
-        </field>
-    </record>
-
-    <menuitem id="tsm_config_task_tags_menu" name="Task Tags"
-              action="tsm_task_tags_action"
-              parent="tsm_config_menu"
-              sequence="3"
-              groups="base.group_no_one"/>
 
 </odoo>
