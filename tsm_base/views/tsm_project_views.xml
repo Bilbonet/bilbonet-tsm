@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
 
     <!--========================
@@ -44,19 +46,15 @@
                                 name="%(tsm_tasks_from_project_action)d">
                             <field string="Tasks" name="task_count" widget="statinfo"/>
                         </button>
-                        <!-- <button name="toggle_active" type="object"
-                                class="oe_stat_button" icon="fa-archive">
-                            <field name="active" widget="boolean_button"
-                                   options='{"terminology": "archive"}'/>
-                        </button> -->
                     </div>
-                    <div class="row oe_title">
-                        <div class="mr-3">
-                            <h1><field name="priority" widget="priority"/></h1>
-                        </div>
-                        <div>
-                            <h1><field name="name" placeholder="Project Name"/></h1>
-                        </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title pe-0">
+                        <h1 class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex w-100">
+                                <field name="priority" widget="priority" class="me-3"/>
+                                <field name="name" class="me-3 pe-2" placeholder="Project Name..."/>
+                            </div>
+                        </h1>
                     </div>
                     <group>
                         <group>

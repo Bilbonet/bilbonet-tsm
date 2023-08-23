@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* tsm_base
+# 	* tsm_base
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-01 18:45+0000\n"
-"PO-Revision-Date: 2022-07-01 18:45+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-08-23 10:18+0000\n"
+"PO-Revision-Date: 2023-08-23 10:18+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +17,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model:mail.template,body_html:tsm_base.tsm_project_email_template
-msgid "\n"
+msgid ""
+"\n"
 "<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hello ${object.partner_id.name or ''},</p>\n"
 "    <p>We inform you about the following project: </p>\n"
@@ -56,7 +57,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model:mail.template,body_html:tsm_base.tsm_task_email_template
-msgid "\n"
+msgid ""
+"\n"
 "<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hello ${object.partner_id.name or ''},</p>\n"
 "    <p>We inform you about the following task: </p>\n"
@@ -109,8 +111,9 @@ msgid "${object.company_id.name} Project (${object.name or 'n/a'})"
 msgstr ""
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
-msgid "(Un)Archive"
+#: model:ir.actions.report,print_report_name:tsm_base.tsm_project_report_action
+#: model:ir.actions.report,print_report_name:tsm_base.tsm_task_report_action
+msgid "'(' + object.code + ')_' + object.name.replace(' ', '-')"
 msgstr ""
 
 #. module: tsm_base
@@ -132,7 +135,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__kanban_state
-msgid "A task's kanban state indicates special situations affecting it:\n"
+msgid ""
+"A task's kanban state indicates special situations affecting it:\n"
 " * Grey is the default situation\n"
 " * Red indicates something is preventing the progress of this task\n"
 " * Green indicates the task is ready to be pulled to the next stage"
@@ -157,9 +161,21 @@ msgid "Activities"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_exception_decoration
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_state
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_state
 msgid "Activity State"
+msgstr ""
+
+#. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_type_icon
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_type_icon
+msgid "Activity Type Icon"
 msgstr ""
 
 #. module: tsm_base
@@ -186,6 +202,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Archived"
 msgstr ""
@@ -203,7 +221,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid "At each stage employees can block or make task ready for next stage.\n"
+msgid ""
+"At each stage employees can block or make task ready for next stage.\n"
 "                            You can define here labels that will be displayed for the state instead\n"
 "                            of the default labels."
 msgstr ""
@@ -215,7 +234,8 @@ msgid "Attachment Count"
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:21
+#. odoo-python
+#: code:addons/tsm_base/models/tsm_task_type.py:0
 #, python-format
 msgid "Blocked"
 msgstr ""
@@ -326,7 +346,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_type_open_action
-msgid "Define the steps that will be used in the task, up to the closing of the task.\n"
+msgid ""
+"Define the steps that will be used in the task, up to the closing of the task.\n"
 "            You will use these stages in order to track the progress in solving a task."
 msgstr ""
 
@@ -402,7 +423,9 @@ msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
-msgid "Follow this project to automatically track the events associated to tasks and issues of this project."
+msgid ""
+"Follow this project to automatically track the events associated to tasks "
+"and issues of this project."
 msgstr ""
 
 #. module: tsm_base
@@ -417,15 +440,15 @@ msgid "Followers"
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_channel_ids
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_channel_ids
-msgid "Followers (Channels)"
-msgstr ""
-
-#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_partner_ids
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_partner_ids
 msgid "Followers (Partners)"
+msgstr ""
+
+#. module: tsm_base
+#: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_type_icon
+#: model:ir.model.fields,help:tsm_base.field_tsm_task__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: tsm_base
@@ -439,7 +462,7 @@ msgid "Gives the sequence order when displaying a list of tasks."
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.task,kanban_state:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__kanban_state__done
 msgid "Green"
 msgstr ""
 
@@ -449,7 +472,7 @@ msgid "Green Kanban Label"
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.task,kanban_state:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__kanban_state__normal
 msgid "Grey"
 msgstr ""
 
@@ -465,24 +488,30 @@ msgid "Group By"
 msgstr ""
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__has_message
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_tasks_from_project_action
 msgid "Here, you can create new task"
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__privacy_visibility
-msgid "Holds visibility of the task:\n"
+msgid ""
+"Holds visibility of the task:\n"
 " - On invitation only: Employees may only see the followed tasks\n"
 "- Visible by all employees: Employees may see all tasks\n"
-""
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__privacy_visibility
-msgid "Holds visibility of the tasks that belong to the current project:\n"
+msgid ""
+"Holds visibility of the tasks that belong to the current project:\n"
 "- On invitation only: Employees may only see the followed project, tasks\n"
 "- Visible by all employees: Employees may see all project, tasks\n"
-""
 msgstr ""
 
 #. module: tsm_base
@@ -494,9 +523,15 @@ msgid "ID"
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,help:tsm_base.field_tsm_project__message_unread
-#: model:ir.model.fields,help:tsm_base.field_tsm_task__message_unread
-msgid "If checked new messages require your attention."
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_exception_icon
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: tsm_base
+#: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_exception_icon
+#: model:ir.model.fields,help:tsm_base.field_tsm_task__activity_exception_icon
+msgid "Icon to indicate an exception activity."
 msgstr ""
 
 #. module: tsm_base
@@ -513,16 +548,21 @@ msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__active
-msgid "If the active field is set to False, it will allow you to hide the project without removing it."
+msgid ""
+"If the active field is set to False, it will allow you to hide the project "
+"without removing it."
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__active
-msgid "If the active field is set to False, it will allow you to hide the task without removing it."
+msgid ""
+"If the active field is set to False, it will allow you to hide the task "
+"without removing it."
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:31
+#. odoo-python
+#: code:addons/tsm_base/models/tsm_task_type.py:0
 #, python-format
 msgid "In Progress"
 msgstr ""
@@ -588,8 +628,8 @@ msgid "Logo"
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.project,priority:0
-#: selection:tsm.task,priority:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_project__priority__0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__priority__0
 msgid "Low"
 msgstr ""
 
@@ -600,8 +640,8 @@ msgid "Main Attachment"
 msgstr ""
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 #: model:res.groups,name:tsm_base.group_tsm_manager
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
 msgid "Manager"
 msgstr ""
 
@@ -618,8 +658,9 @@ msgid "Messages"
 msgstr ""
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
-msgid "My Favorites"
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__my_activity_date_deadline
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__my_activity_date_deadline
+msgid "My Activity Deadline"
 msgstr ""
 
 #. module: tsm_base
@@ -635,6 +676,12 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__name
 msgid "Name"
+msgstr ""
+
+#. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_calendar_event_id
+#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
 msgstr ""
 
 #. module: tsm_base
@@ -656,8 +703,8 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.project,priority:0
-#: selection:tsm.task,priority:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_project__priority__1
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__priority__1
 msgid "Normal"
 msgstr ""
 
@@ -670,13 +717,13 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_has_error_counter
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_has_error_counter
-msgid "Number of error"
+msgid "Number of errors"
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__message_needaction_counter
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: tsm_base
@@ -686,39 +733,33 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,help:tsm_base.field_tsm_project__message_unread_counter
-#: model:ir.model.fields,help:tsm_base.field_tsm_task__message_unread_counter
-msgid "Number of unread messages"
-msgstr ""
-
-#. module: tsm_base
-#: selection:tsm.project,privacy_visibility:0
-#: selection:tsm.task,privacy_visibility:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_project__privacy_visibility__followers
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__privacy_visibility__followers
 msgid "On invitation only"
-msgstr ""
-
-#. module: tsm_base
-#: selection:tsm.project,activity_state:0
-#: selection:tsm.task,activity_state:0
-msgid "Overdue"
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__legend_blocked
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__legend_blocked
-msgid "Override the default value displayed for the blocked state for kanban selection, when the task is in that stage."
+msgid ""
+"Override the default value displayed for the blocked state for kanban "
+"selection, when the task is in that stage."
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__legend_done
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__legend_done
-msgid "Override the default value displayed for the done state for kanban selection, when the task is in that stage."
+msgid ""
+"Override the default value displayed for the done state for kanban "
+"selection, when the task is in that stage."
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__legend_normal
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__legend_normal
-msgid "Override the default value displayed for the normal state for kanban selection, when the task is in that stage."
+msgid ""
+"Override the default value displayed for the normal state for kanban "
+"selection, when the task is in that stage."
 msgstr ""
 
 #. module: tsm_base
@@ -727,22 +768,10 @@ msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_res_partner__tsm_task_ids
-#: model:ir.model.fields,field_description:tsm_base.field_res_users__tsm_task_ids
-msgid "Partner related tasks"
-msgstr ""
-
-#. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_report_document
 msgid "Phone:"
-msgstr ""
-
-#. module: tsm_base
-#: selection:tsm.project,activity_state:0
-#: selection:tsm.task,activity_state:0
-msgid "Planned"
 msgstr ""
 
 #. module: tsm_base
@@ -792,9 +821,13 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__name
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_filter_view
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
 msgid "Project Name"
+msgstr ""
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
+msgid "Project Name..."
 msgstr ""
 
 #. module: tsm_base
@@ -804,13 +837,14 @@ msgid "Projects"
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:26
+#. odoo-python
+#: code:addons/tsm_base/models/tsm_task_type.py:0
 #, python-format
 msgid "Ready for Next Stage"
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.task,kanban_state:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__kanban_state__blocked
 msgid "Red"
 msgstr ""
 
@@ -893,7 +927,8 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_state
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__activity_state
-msgid "Status based on activities\n"
+msgid ""
+"Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
@@ -917,8 +952,18 @@ msgid "TSM My Tasks from menu"
 msgstr ""
 
 #. module: tsm_base
+#: model:mail.template,name:tsm_base.tsm_project_email_template
+msgid "TSM Project - Send by Email"
+msgstr ""
+
+#. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_tasks_from_project_action
 msgid "TSM Project's Tasks"
+msgstr ""
+
+#. module: tsm_base
+#: model:mail.template,name:tsm_base.tsm_task_email_template
+msgid "TSM Task - Send by Email"
 msgstr ""
 
 #. module: tsm_base
@@ -937,7 +982,13 @@ msgid "TSM Task Tags"
 msgstr ""
 
 #. module: tsm_base
-#: sql_constraint:tsm.task.tags:0
+#: model:ir.model.fields,field_description:tsm_base.field_res_partner__tsm_task_ids
+#: model:ir.model.fields,field_description:tsm_base.field_res_users__tsm_task_ids
+msgid "TSM tasks"
+msgstr ""
+
+#. module: tsm_base
+#: model:ir.model.constraint,message:tsm_base.constraint_tsm_task_tags_name_uniq
 msgid "Tag name already exists !"
 msgstr ""
 
@@ -1010,12 +1061,12 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_task_action_from_partner
 #: model:ir.ui.menu,name:tsm_base.tsm_task_menu
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_tree_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_partner_info_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_tree_view
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_tasks_from_project_form
 msgid "Tasks"
 msgstr ""
 
@@ -1037,7 +1088,9 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__closed
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__closed
-msgid "Tasks in this stage are considered closed. You can only archive a task in a stage with state closed."
+msgid ""
+"Tasks in this stage are considered closed. You can only archive a task in a "
+"stage with state closed."
 msgstr ""
 
 #. module: tsm_base
@@ -1052,7 +1105,8 @@ msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_action_from_menu
-msgid "Technical Support Management allows you to manage the pipeline of your tasks efficiently.\n"
+msgid ""
+"Technical Support Management allows you to manage the pipeline of your tasks efficiently.\n"
 "                You can track progress, discuss on tasks, attach documents, etc."
 msgstr ""
 
@@ -1068,36 +1122,31 @@ msgid "Technician:"
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_task.py:144
-#: sql_constraint:tsm.task:0
+#. odoo-python
+#: code:addons/tsm_base/models/tsm_task.py:0
+#: model:ir.model.constraint,message:tsm_base.constraint_tsm_task_tsm_task_unique_code
 #, python-format
 msgid "The code must be unique!"
 msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_task_type__fold
-msgid "This stage is folded in the kanban view when there are no records in that stage to display."
+msgid ""
+"This stage is folded in the kanban view when there are no records in that "
+"stage to display."
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.project,activity_state:0
-#: selection:tsm.task,activity_state:0
-msgid "Today"
+#: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_exception_decoration
+#: model:ir.model.fields,help:tsm_base.field_tsm_task__activity_exception_decoration
+msgid "Type of the exception activity on record."
 msgstr ""
 
 #. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_unread
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_unread
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Unread Messages"
-msgstr ""
-
-#. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_unread_counter
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_unread_counter
-msgid "Unread Messages Counter"
 msgstr ""
 
 #. module: tsm_base
@@ -1132,8 +1181,8 @@ msgid "User"
 msgstr ""
 
 #. module: tsm_base
-#: selection:tsm.project,privacy_visibility:0
-#: selection:tsm.task,privacy_visibility:0
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_project__privacy_visibility__employees
+#: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__privacy_visibility__employees
 msgid "Visible by all employees"
 msgstr ""
 
@@ -1156,29 +1205,41 @@ msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
+msgid ""
+"You can also add a description to help your coworkers understand the meaning"
+" and purpose of the stage."
 msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid "You can also give a tooltip about the use of the stars available in the kanban and form views."
+msgid ""
+"You can also give a tooltip about the use of the stars available in the "
+"kanban and form views."
 msgstr ""
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_tasks_from_project_action
-msgid "You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc."
+msgid ""
+"You can now manage your tasks in order to get things done efficiently. Track"
+" progress, discuss, attach documents, etc."
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:122
+#. odoo-python
+#: code:addons/tsm_base/models/tsm_project.py:0
 #, python-format
-msgid "You cannot archive a project with active tasks. You need to archive all tasks of the project first."
+msgid ""
+"You cannot archive a project with active tasks. You need to archive all "
+"tasks of the project first."
 msgstr ""
 
 #. module: tsm_base
-#: code:addons/tsm_base/models/tsm_project.py:136
+#. odoo-python
+#: code:addons/tsm_base/models/tsm_project.py:0
 #, python-format
-msgid "You cannot delete a project with tasks. You can either delete the project's task and then delete the project or simply deactivate the project."
+msgid ""
+"You cannot delete a project with tasks. You can either delete the project's "
+"task and then delete the project or simply deactivate the project."
 msgstr ""
 
 #. module: tsm_base
@@ -1190,4 +1251,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "text-muted"
 msgstr ""
-

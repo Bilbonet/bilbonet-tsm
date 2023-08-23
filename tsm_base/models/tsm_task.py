@@ -45,7 +45,7 @@ class TsmTask(models.Model):
     closed = fields.Boolean(related='stage_id.closed', readonly=True)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
     tag_ids = fields.Many2many('tsm.task.tags', string='Tags',)
-    kanban_state = fields.Selection([
+    kanban_state = fields.Selection(selection=[
         ('normal', 'Grey'),
         ('done', 'Green'),
         ('blocked', 'Red')],
