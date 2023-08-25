@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-23 10:18+0000\n"
-"PO-Revision-Date: 2023-08-23 12:34+0200\n"
+"POT-Creation-Date: 2023-08-24 11:43+0000\n"
+"PO-Revision-Date: 2023-08-25 11:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -61,136 +61,6 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
-"\n"
-"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; "
-"color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"    <p>Hola ${object.partner_id.name or ''},</p>\n"
-"    <p>Le informamos sobre el siguiente proyecto: </p>\n"
-"\n"
-"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;Titulo Proyecto: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Fecha Comienzo: <strong>${format_tz(object.date_start, tz='UTC', format='%d/"
-"%m/%Y') or ''}</strong><br>\n"
-"\n"
-"       % if object.user_id:\n"
-"       &nbsp;&nbsp;Su Contacto: <a href=\"mailto:${object.user_id.email or ''}?"
-"subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
-"       % endif\n"
-"    </p>\n"
-"\n"
-"    <br/>\n"
-"    <p>Si tiene alguna pregunta no dude en contactarnos.</p>\n"
-"    <p>Graqcias por confiar en Bilbonet!</p>\n"
-"    % if object.user_id.signature:\n"
-"       ${object.user_id.signature | safe}\n"
-"    % else\n"
-"        <div style=\"padding:0px;margin:auto;\">\n"
-"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
-"                <tbody>\n"
-"                    <tr>\n"
-"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" "
-"width=\"200\">\n"
-"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"            </table>\n"
-"        </div>\n"
-"    % endif\n"
-"    <br/>\n"
-"</div>\n"
-"        "
-
-#. module: tsm_base
-#: model:mail.template,body_html:tsm_base.tsm_task_email_template
-msgid ""
-"\n"
-"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; "
-"color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"    <p>Hello ${object.partner_id.name or ''},</p>\n"
-"    <p>We inform you about the following task: </p>\n"
-"\n"
-"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;Task Title: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Task Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/"
-"%Y') or ''}</strong><br>\n"
-"\n"
-"       % if object.user_id:\n"
-"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?"
-"subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
-"       % endif\n"
-"    </p>\n"
-"\n"
-"    <br/>\n"
-"    <p>If you have any question, do not hesitate to contact us.</p>\n"
-"    <p>Thank you for trusting in  ${object.company_id.name or 'us'}!</p>\n"
-"    % if object.user_id.signature:\n"
-"       ${object.user_id.signature | safe}\n"
-"    % else\n"
-"        <div style=\"padding:0px;margin:auto;\">\n"
-"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
-"                <tbody>\n"
-"                    <tr>\n"
-"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" "
-"width=\"200\">\n"
-"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"            </table>\n"
-"        </div>\n"
-"    % endif\n"
-"    <br/>\n"
-"</div>\n"
-"        "
-msgstr ""
-"\n"
-"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; "
-"color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"    <p>Hola ${object.partner_id.name or ''},</p>\n"
-"    <p>Le informamos sobre la siguiente tarea: </p>\n"
-"\n"
-"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;T´tulo Tarea: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;Fecha Comienzo: <strong>${format_tz(object.date_start, tz='UTC', format='%d/"
-"%m/%Y') or ''}</strong><br>\n"
-"\n"
-"       % if object.user_id:\n"
-"       &nbsp;&nbsp;Su Contacto: <a href=\"mailto:${object.user_id.email or ''}?"
-"subject=Task%20${object.name}\"><strong>${object.user_id.name}</strong></a>\n"
-"       % endif\n"
-"    </p>\n"
-"\n"
-"    <br/>\n"
-"    <p>Si tiene alguna pregunta no dude en contactarnos.</p>\n"
-"    <p>Gracias por confiar en Bilbonet!</p>\n"
-"    % if object.user_id.signature:\n"
-"       ${object.user_id.signature | safe}\n"
-"    % else\n"
-"        <div style=\"padding:0px;margin:auto;\">\n"
-"            <table cellspacing=\"0\" cellpadding=\"0\">\n"
-"                <tbody>\n"
-"                    <tr>\n"
-"                        <td style=\"padding:10px 10px 10px 0px;font-size: 12px\" "
-"width=\"200\">\n"
-"                            <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: "
-"auto; width: 100px;\" alt=\"${user.company_id.name}\">\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"            </table>\n"
-"        </div>\n"
-"    % endif\n"
-"    <br/>\n"
-"</div>\n"
-"        "
-
-#. module: tsm_base
-#: model:mail.template,report_name:tsm_base.tsm_task_email_template
-msgid "${'('+object.code+')_'+(object.name or '').replace(' ', '-')}"
-msgstr "${'('+object.code+')_'+(object.name or 'Bolsa_Horas').replace(' ', '-')}"
 
 #. module: tsm_base
 #: model:mail.template,report_name:tsm_base.tsm_project_email_template
@@ -200,12 +70,27 @@ msgstr ""
 #. module: tsm_base
 #: model:mail.template,subject:tsm_base.tsm_project_email_template
 msgid "${object.company_id.name} Project (${object.name or 'n/a'})"
-msgstr "${object.company_id.name} Proyecto (${object.name or 'n/a'})"
+msgstr ""
 
 #. module: tsm_base
 #: model:ir.actions.report,print_report_name:tsm_base.tsm_project_report_action
 #: model:ir.actions.report,print_report_name:tsm_base.tsm_task_report_action
 msgid "'(' + object.code + ')_' + object.name.replace(' ', '-')"
+msgstr ""
+
+#. module: tsm_base
+#: model:mail.template,body_html:tsm_base.tsm_task_email_template
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hello, <span style=\"font-weight: bold;\" t-out=\"object.partner_id.name or ''\"></"
+"span>\n"
+"        <br><br>\n"
+"        We inform you about the following task: \n"
+"        <br><br>\n"
+"    </p>\n"
+"</div>        \n"
+"        "
 msgstr ""
 
 #. module: tsm_base
@@ -1128,8 +1013,8 @@ msgstr "Tarea"
 
 #. module: tsm_base
 #: model:mail.template,subject:tsm_base.tsm_task_email_template
-msgid "Task (${object.name or 'n/a'})"
-msgstr "Tarea (${object.name or 'n/a'})"
+msgid "Task ({object.name or 'n/a'})"
+msgstr ""
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__code
@@ -1262,7 +1147,7 @@ msgstr ""
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_exception_decoration
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Tipo excepción de actividad en el regsitro"
+msgstr "Tipo excepción de actividad en el registro."
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
@@ -1296,6 +1181,11 @@ msgstr "Utilice etiquetas en tareas"
 #: model_terms:ir.ui.view,arch_db:tsm_base.res_config_settings_view_form
 msgid "Use tags to classify tasks."
 msgstr "Utilice etiquetas para clasificar tareas."
+
+#. module: tsm_base
+#: model:mail.template,description:tsm_base.tsm_task_email_template
+msgid "Used by technicians when they send task report to a customer"
+msgstr ""
 
 #. module: tsm_base
 #: model:res.groups,name:tsm_base.group_tsm_user
@@ -1381,4 +1271,9 @@ msgstr ""
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "text-muted"
+msgstr ""
+
+#. module: tsm_base
+#: model:mail.template,report_name:tsm_base.tsm_task_email_template
+msgid "{{ '(' + object.code + ')_' + (object.name or '').replace(' ', '-') }}"
 msgstr ""

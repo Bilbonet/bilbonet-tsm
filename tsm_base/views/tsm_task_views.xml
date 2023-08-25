@@ -90,7 +90,7 @@
                     </group>
                     <notebook>
                         <page name="description_page" string="Description">
-                            <field name="description" type="html"/>
+                            <field name="description" type="html" options="{'codeview': true }" placeholder="Task description..."/>
                             <div class="oe_clear"/>
                         </page>
                         <page name="extra_info" string="Extra Info">
