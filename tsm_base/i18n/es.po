@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 11:43+0000\n"
-"PO-Revision-Date: 2023-08-25 11:42+0200\n"
+"PO-Revision-Date: 2023-08-25 16:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -873,7 +873,7 @@ msgstr "Buscar proyecto"
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 msgid "Send by Email"
-msgstr "Enviar por correo electrónico"
+msgstr "Enviar por eMail"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__sequence
