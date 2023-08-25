@@ -1,52 +1,38 @@
 <?xml version="1.0"?>
 <odoo>
-
     <record id="tsm_task_email_template" model="mail.template">
         <field name="name">TSM Task - Send by Email</field>
-        <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
-        <field name="subject">Task (${object.name or 'n/a'})</field>
-        <field name="partner_to">${object.contact_id != False and object.contact_id.id}</field>
-        <field name="email_to">${(object.partner_id.email or '')|safe}</field>
         <field name="model_id" ref="tsm_base.model_tsm_task"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="subject">Task: {{object.name or 'n/a'}}</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.contact_id.id if object.contact_id.email else object.partner_id.id }}</field>
         <field name="report_template" ref="tsm_base.tsm_task_report_action"/>
-        <field name="report_name">${'('+object.code+')_'+(object.name or '').replace(' ', '-')}</field>
-        <field name="lang">${object.partner_id.lang}</field>
-        <field name="body_html"><![CDATA[
-<div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
-    <p>Hello ${object.partner_id.name or ''},</p>
-    <p>We inform you about the following task: </p>
-
-    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
-       &nbsp;&nbsp;Task Title: <strong>${object.name}</strong><br />
-       &nbsp;&nbsp;Task Start: <strong>${format_tz(object.date_start, tz='UTC', format='%d/%m/%Y') or ''}</strong><br>
-
-       % if object.user_id:
-       &nbsp;&nbsp;Your contact: <a href="mailto:${object.user_id.email or ''}?subject=Task%20${object.name}"><strong>${object.user_id.name}</strong></a>
-       % endif
+        <field name="report_name">{{ '(' + object.code + ')_' + (object.name or '').replace(' ', '-') }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="description">Used by technicians when they send task report to a customer</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;">
+        Hello, <span style="font-weight: bold;" t-out="object.partner_id.name or ''"></span>
+        <br/><br/>
+        We inform you about the following task: 
     </p>
-
-    <br/>
-    <p>If you have any question, do not hesitate to contact us.</p>
-    <p>Thank you for trusting in  ${object.company_id.name or 'us'}!</p>
-    % if object.user_id.signature:
-       ${object.user_id.signature | safe}
-    % else
-        <div style="padding:0px;margin:auto;">
-            <table cellspacing="0" cellpadding="0">
-                <tbody>
-                    <tr>
-                        <td style="padding:10px 10px 10px 0px;font-size: 12px" width="200">
-                            <img src="/logo.png" style="padding: 0px; margin: 0px; height: auto; width: 100px;" alt="${user.company_id.name}">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    % endif
-    <br/>
-</div>
-        ]]></field>
+    <p style="border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;">
+       Title: <span style="font-weight: bold;" t-out="object.name or ''"></span><br/>
+       Task Start: <span style="font-weight: bold;" t-out="object.date_start or ''" t-options="{'widget': 'date'}"></span><br/>
+       Your contact: <span style="font-weight: bold;" t-out="object.user_id.name or ''"></span>
+    </p>
+    <p>
+        If you have any question, do not hesitate to contact us.<br/>
+        Thank you for trusting in us!
+    </p>
+    <t t-if="not is_html_empty(object.user_id.signature)">
+        <br/>
+        <t t-out="object.user_id.signature or ''">--<br/>Bilbonet</t>
+    </t>
+</div>        
+        </field>
     </record>
 
 </odoo>
