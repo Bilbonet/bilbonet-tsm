@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <template id="tsm_material_project_report" inherit_id="tsm_base.tsm_project_report_document">
         <xpath expr="//p[@name='page-break']" position="before">

@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <data>
         <!-- TSM Task Type Form -->
@@ -20,8 +22,8 @@
             <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//notebook/page[@name='extra_info']" position="before">
-                    <page name="material_used" string="Material" groups="tsm_base.group_tsm_user">
-                        <field name="material_ids" groups="tsm_base.group_tsm_user" attrs="{'readonly': [('sale_id', '!=', False)]}">
+                    <page name="material_used" string="Material">
+                        <field name="material_ids" attrs="{'readonly': [('sale_id', '!=', False)]}">
                             <tree string="Material used" editable="bottom">
                                 <field name="sequence" widget="handle" />
                                 <field name="product_id"/>
@@ -36,7 +38,7 @@
                         </field>
                     </page>
                 </xpath>
-                <!-- Add Sale Order Button -->
+
                 <field name="stage_id" position="before">
                     <field name="sale_id" invisible="1"/>
                     <field name="create_sale_order" invisible="1"/>
@@ -44,10 +46,12 @@
                         type="object"
                         string="Create sale"
                         groups="sales_team.group_sale_manager"
-                        attrs="{'invisible':['|','|',('material_ids', '=', []),('sale_id','!=',False),('create_sale_order', '=', False)]}"/>
+                        attrs="{'invisible':[
+                            '|','|',('material_ids', '=', []),('sale_id','!=',False),('create_sale_order', '=', False)
+                        ]}"/>
                 </field>
-                <!-- Add button sale info -->
-                <xpath expr="//button[@name='toggle_active']" position="before">
+
+                <xpath expr="//div[@name='button_box']" position="inside">
                     <button class="oe_stat_button" type="object" attrs="{'invisible': [('sale_id', '=', False)]}"
                             name="action_view_order"
                             icon="fa-eur">
@@ -58,9 +62,9 @@
                     </button>
                 </xpath>
                 <!-- Archive button: atributes -->
-                <xpath expr="//button[@name='toggle_active']" position="attributes">
+                <!-- <xpath expr="//button[@name='toggle_active']" position="attributes">
                     <attribute name="attrs">{'invisible': ['|',('closed', '=', False),'&amp;',('material_ids', '!=', []),('sale_id', '=', False)]}</attribute>
-                </xpath>
+                </xpath> -->
                 <!-- Sale Order Autoconfirm -->
                 <field name="privacy_visibility" position="after">
                     <field name="sale_autoconfirm"
@@ -71,12 +75,11 @@
             </field>
         </record>
         <!-- TSM Task Form -->
-        <record id="tsm_task_kanban_material_view" model="ir.ui.view">
+        <!-- <record id="tsm_task_kanban_material_view" model="ir.ui.view">
             <field name="name">TSM material tsm.task.kanban.material</field>
             <field name="model">tsm.task</field>
             <field name="inherit_id" ref="tsm_base.tsm_task_kanban_view"/>
             <field name="arch" type="xml">
-                <!-- Archive menu -->
                 <field name="closed" position="after">
                     <field name="material_ids" invisible="1"/>
                     <field name="sale_id" invisible="1"/>
@@ -85,7 +88,7 @@
                     <attribute name="attrs">{'invisible': ['|',('closed', '=', False),'&amp;',('material_ids', '!=', []),('sale_id', '=', False)]}</attribute>
                 </xpath>
             </field>
-        </record>
+        </record> -->
 
     </data>
 </odoo>
