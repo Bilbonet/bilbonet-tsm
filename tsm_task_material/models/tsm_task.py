@@ -1,16 +1,8 @@
 # Copyright 2018 - Bilbonet <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+from datetime import date
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
-
-
-class TsmTaskType(models.Model):
-    _inherit = 'tsm.task.type'
-
-    create_sale_order = fields.Boolean(
-        help="If you mark this check, when a task is in this state, "
-             "it will be able to create sale order",)
 
 
 class TsmTask(models.Model):
@@ -34,15 +26,18 @@ class TsmTask(models.Model):
 
     @api.depends('sale_id')
     def _compute_sale_amount(self):
-        if self.sale_id:
-            sale = self.sudo().sale_id
-            currency = (
-                self.company_currency or
-                self.partner_id.property_product_pricelist.currency_id or
-                self.env.user.company_id.currency_id)
-            self.sale_amount = sale.currency_id._convert(
-                sale.amount_untaxed, currency,
-                self.company_id, self.date_start or fields.Date.today())
+        for task in self:
+            if task.sale_id:
+                sale = task.sudo().sale_id
+                currency = (
+                    task.company_currency or
+                    task.partner_id.property_product_pricelist.currency_id or
+                    task.env.user.company_id.currency_id)
+                task.sale_amount = sale.currency_id._convert(
+                    sale.amount_untaxed, currency,
+                    task.company_id, task.date_start or fields.Date.today())
+            else:
+                task.sale_amount = 0
 
     def action_view_order(self):
         '''
@@ -62,34 +57,28 @@ class TsmTask(models.Model):
     def _prepare_sale(self):
         self.ensure_one()
         if not self.partner_id or not self.material_ids:
-            raise ValidationError(_("You must first select a Customer "
-                                    "and materials for Task: %s!") % self.name)
+            raise ValidationError(
+                _("You must first select a Customer "
+                "and materials for Task: %s!") % self.name
+            )
 
-        currency = (
-            self.company_currency or
-            self.partner_id.property_product_pricelist.currency_id or
-            self.env.user.company_id.currency_id)
+        sale = self.env['sale.order'].new(
+            {
+                'partner_id': self.partner_id,
+                'date_order': fields.Date.to_string(date.today()),
+                'origin': self.code,
+                'client_order_ref': '[' + self.code + '] ' + self.name,
+                'company_id': self.company_id.id,
+                'user_id': self.user_id.id,
+            }
+        )
 
-        sale = self.env['sale.order'].with_context(
-            force_company=self.company_id.id,
-        ).new({
-            'company_id': self.company_id.id,
-            'partner_id': self.partner_id,
-        })
+        if self.partner_id.property_payment_term_id:
+            sale.payment_term_id = self.partner_id.property_payment_term_id
+        if self.partner_id.property_account_position_id:
+            sale.fiscal_position_id = self.partner_id.property_account_position_id
 
-        # Get partner extra fields
-        sale.onchange_partner_id()
-        # Write the resulting virtual record modifications made by the onchange call
-        sale_vals = sale._convert_to_write(sale._cache)
-
-        sale_vals.update({
-            'client_order_ref': '[' + self.code + '] ' + self.name,
-            'currency_id': currency.id,
-            'fiscal_position_id': self.partner_id.property_account_position_id.id,
-            'user_id': self.user_id.id,
-            'pricelist_id': self.partner_id.property_product_pricelist.id,
-        })
-        return sale_vals
+        return sale._convert_to_write(sale._cache)
 
     def create_sale(self):
         """

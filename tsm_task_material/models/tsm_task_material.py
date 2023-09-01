@@ -1,9 +1,7 @@
 # Copyright 2018 - Bilbonet <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-import odoo.addons.decimal_precision as dp
 
 
 class TsmTaskMaterial(models.Model):
@@ -20,9 +18,9 @@ class TsmTaskMaterial(models.Model):
     product_uom_id = fields.Many2one(comodel_name='uom.uom', string='Unit of Measure')
     price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
     price_subtotal = fields.Float(compute='_compute_price_subtotal',
-        string='Sub Total', digits=dp.get_precision('Account'))
+        string='Sub Total', digits='Account')
     discount = fields.Float(string='Discount (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
         help='Discount that is applied in generated sale orders.'
              ' It should be less or equal to 100')
     sequence = fields.Integer(string="Sequence", default=10,
@@ -53,9 +51,9 @@ class TsmTaskMaterial(models.Model):
                 raise ValidationError(
                     _("Discount should be less or equal to 100"))
 
-    @api.multi
     @api.onchange('product_id')
     def _onchange_product_id(self):
+        self.ensure_one()
         if not self.product_id:
             return {'domain': {'product_uom_id': []}}
 
@@ -88,22 +86,13 @@ class TsmTaskMaterial(models.Model):
     def _prepare_sale_line(self):
         self.ensure_one()
         sale_line_vals = {
+            'sequence': self.sequence,
             'product_id': self.product_id.id,
+            'name': self.name,
             'product_uom': self.product_uom_id.id,
+            'price_unit': self.price_unit,
             'product_uom_qty': self.quantity,
             'discount': self.discount,
         }
-        sale_line = self.env['sale.order.line'].with_context(
-            force_company=self.task_id.company_id.id,
-        ).new(sale_line_vals)
-        # Get other sale line values from product onchange
-        sale_line.product_id_change()
-        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
-        sale_line_vals.update(
-            {
-                'name': self.name,
-                'sequence': self.sequence,
-                'price_unit': self.price_unit,
-            }
-        )
-        return sale_line_vals
+        sale_line = self.env['sale.order.line'].new(sale_line_vals)
+        return sale_line._convert_to_write(sale_line._cache)
