@@ -1,7 +1,7 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models, SUPERUSER_ID, _
-from datetime import datetime
+from odoo.exceptions import ValidationError
 
 
 class TsmTask(models.Model):
@@ -135,6 +135,14 @@ class TsmTask(models.Model):
     def _onchange_user(self):
         if self.user_id:
             self.date_assign = fields.Datetime.now()
+
+    @api.constrains('active')
+    def _check_archiving_restrictions(self):
+        # constraint should be tested just after archiving a task, but shouldn't be raised when unarchiving a task
+        for task in self.filtered(lambda t: not t.active):
+            if task.closed == False:
+                raise ValidationError(_("You can not archive a task in a stage not considered closed.\n"
+                                        "You can archive tasks in closed stages."))
 
     def action_task_send(self):
         '''
