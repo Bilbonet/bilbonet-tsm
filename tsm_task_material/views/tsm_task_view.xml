@@ -29,7 +29,7 @@
                                 <field name="product_id"/>
                                 <field name="name" required="True" />
                                 <field name="quantity"/>
-                                <field name="product_uom_id" required="True" />
+                                <field name="product_uom_id" required="True" optional="show"/>
                                 <field name="price_unit" widget="monetary" options="{'currency_field': 'company_currency'}"/>
                                 <field name="discount" />
                                 <field name="price_subtotal" sum="Total Amount" widget="monetary" options="{'currency_field': 'company_currency'}"/>
