@@ -101,7 +101,7 @@
                                     <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                                 </group>
                                 <group>
-                                    <field name="date_assign" groups="base.group_no_one"/>
+                                    <field name="date_assign" readonly="1" force_save="1"/>
                                     <field name="date_end" groups="base.group_no_one"/>
                                 </group>
                             </group>
