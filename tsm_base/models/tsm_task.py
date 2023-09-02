@@ -63,7 +63,7 @@ class TsmTask(models.Model):
     date_start = fields.Datetime(string='Starting Date',
         default=fields.Datetime.now, index=True, copy=False)
     date_assign = fields.Datetime(string='Assigning Date',
-        default=fields.Datetime.now, index=True, copy=False, readonly=True)
+        default=fields.Datetime.now, copy=False, tracking=True)
     date_deadline = fields.Date(string='Deadline', index=True, copy=False)
     date_end = fields.Datetime(string='Ending Date', index=True, copy=False)
     legend_blocked = fields.Char(related='stage_id.legend_blocked',
@@ -205,14 +205,6 @@ class TsmTask(models.Model):
 
         return super(TsmTask, self.with_context(context)).create(vals_list)
 
-    def write(self, vals):
-        now = fields.Datetime.now()
-        # user_id change: update date_assign
-        if vals.get('user_id') and 'date_assign' not in vals:
-            vals['date_assign'] = now
-
-        return super().write(vals)
-    
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
