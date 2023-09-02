@@ -143,6 +143,11 @@ class TsmTask(models.Model):
             if task.closed == False:
                 raise ValidationError(_("You can not archive a task in a stage not considered closed.\n"
                                         "You can archive tasks in closed stages."))
+            # if task is archived reset some values
+            task.update({
+                'priority': 0,
+                'kanban_state': 'normal',
+            })
 
     def action_task_send(self):
         '''
@@ -205,11 +210,6 @@ class TsmTask(models.Model):
         # user_id change: update date_assign
         if vals.get('user_id') and 'date_assign' not in vals:
             vals['date_assign'] = now
-
-        # if task is archived reset some values
-        if 'active' in vals and vals['active'] == False:
-            vals['priority'] = 0
-            vals['kanban_state'] = 'normal'
 
         return super().write(vals)
     
