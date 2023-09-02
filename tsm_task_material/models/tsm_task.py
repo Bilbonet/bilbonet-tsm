@@ -117,3 +117,17 @@ class TsmTask(models.Model):
                 "the task or simply deactivate the task."))
         res = super(TsmTask, self).unlink()
         return res
+
+    @api.constrains('active')
+    def _check_archiving_restrictions(self):
+        #Only sales manager can archive a task with materials and no sale order
+        if not self.user_has_groups("sales_team.group_sale_manager"):
+            for task in self.filtered(lambda t: not t.active):
+                if task.material_ids and not task.sale_id:
+                    raise ValidationError(
+                        _("Only sales manager can archive tasks "
+                          "with materials and no sale order.\n"
+                          "Ask for manager to archive the task.\n\n"
+                          "Task:[%s] - %s") % (task.code, task.name)
+                    )
+        return super()._check_archiving_restrictions()
