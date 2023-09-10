@@ -24,24 +24,24 @@
                             <td style="font-size:0.7em;">
                                 <span t-field="m.name"/>
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.7em;text-align:right;">
                                 <span t-field="m.quantity"/>
                                 <span t-field="m.product_uom_id" groups="uom.group_uom"/>
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.7em;text-align:right;">
                                 <span t-field="m.price_unit" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                             </td>
-                            <td t-if="display_discount" style="font-size:0.7em;" class="text-right">
+                            <td t-if="display_discount" style="font-size:0.7em;text-align:right;">
                                 <span t-field="m.discount" />
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.7em;text-align:right;">
                                 <span t-field="m.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot style="font-size:0.8em;">
+                    <tfoot style="font-size:0.8em;text-align:right;">
                         <tr>
-                            <th colspan="5" class="text-right">
+                            <th colspan="5">
                                 <span t-esc="importe" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                             </th>
                         </tr>
