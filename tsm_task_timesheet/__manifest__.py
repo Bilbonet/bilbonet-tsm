@@ -3,7 +3,7 @@
 
 {
     'name': 'TSM tasks timesheet time control',
-    'version': '12.0.1.0.0',
+    'version': '16.0.1.0.0',
     'category': 'Management',
     'author': 'bilbonet.NET,',
     'website': 'https://github.com/Bilbonet/bilbonet-tsm/',
@@ -17,9 +17,10 @@
         'views/res_config_settings_views.xml',
         'views/tsm_task_view.xml',
         'views/tsm_task_timesheet_view.xml',
+        'views/tsm_task_timesheet_tags_view.xml',
         'views/tsm_task_timesheet_report_view.xml',
         'views/tsm_project_view.xml',
     ],
-    'license': 'AGPL-3',
     'installable': True,
+    'auto_install': False,
 }

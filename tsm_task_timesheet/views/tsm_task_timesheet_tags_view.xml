@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+
+<odoo>
+    <record id="tsm_task_timesheet_tags_tree" model="ir.ui.view">
+        <field name="name">TSM timesheet tsm.task.timesheet.tags.tree</field>
+        <field name="model">tsm.task.timesheet.tags</field>
+        <field name="arch" type="xml">
+            <tree string="Timesheet Tags" decoration-muted="active==False">
+                <field name="sequence" widget="handle" groups="base.group_system"/>
+                <field name="name"/>
+                <field name="default"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="tsm_task_timesheet_tags_form_view" model="ir.ui.view">
+        <field name="name">TSM Timesheet Tags Form</field>
+        <field name="model">tsm.task.timesheet.tags</field>
+        <field name="arch" type="xml">
+            <form string="Timesheet Tags">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"></div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="default"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tsm_task_timesheet_tags_search_view" model="ir.ui.view">
+        <field name="name">TSM Timesheet Tags Seacrh</field>
+        <field name="model">tsm.task.timesheet.tags</field>
+        <field name="arch" type="xml">
+            <search string="Tags">
+                <field name="name"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="tsm_task_timesheet_tags_action" model="ir.actions.act_window">
+        <field name="name">TSM Timesheet Tags</field>
+        <field name="res_model">tsm.task.timesheet.tags</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new timesheet tag.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="tsm_config_timesheet_tags_menu"
+              name="Timesheet Tags"
+              parent="tsm_base.tsm_config_menu"
+              sequence="4"
+              action="tsm_task_timesheet_tags_action"
+              groups="base.group_system"/>
+
+</odoo>

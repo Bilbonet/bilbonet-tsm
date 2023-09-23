@@ -4,7 +4,6 @@
     <record id="tsm_timesheet_lines_by_project" model="ir.actions.act_window">
         <field name="name">Timesheet Project</field>
         <field name="res_model">tsm.task.timesheet</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,kanban</field>
         <field name="view_id" ref="tsm_task_timesheet_line_tree"/>
         <field name="domain">[('project_id', '!=', False)]</field>
@@ -26,9 +25,10 @@
         <field name="inherit_id" ref="tsm_base.tsm_project_form_view"/>
         <field name="priority">24</field>
         <field name="arch" type="xml">
-            <button name="toggle_active" position="before">
-                <button class="oe_stat_button" name="%(tsm_timesheet_lines_by_project)d" type="action" icon="fa-calendar" string="Timesheets"/>
-            </button>
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="action"
+                        name="%(tsm_timesheet_lines_by_project)d" icon="fa-calendar" string="Timesheets"/>
+            </div>
         </field>
     </record>
 
