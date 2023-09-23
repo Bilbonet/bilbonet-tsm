@@ -1,7 +1,5 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -16,13 +14,12 @@ class TsmTask(models.Model):
             user (without timesheet user right) to create task'''
             task.total_hours = sum(task.sudo().timesheet_ids.mapped('amount'))
 
-    total_hours = fields.Float(compute='_hours_get', store=True,
-                            string='Total Spent Hours',
-                            help="Computed as: Sum Time Spent in tasks.")
-    timesheet_ids = fields.One2many('tsm.task.timesheet',
-                                    'task_id', 'Timesheets')
+    total_hours = fields.Float(string='Total Spent Hours',
+        compute='_hours_get', store=True,
+        help="Computed as: Sum Time Spent in tasks.")
+    timesheet_ids = fields.One2many(comodel_name='tsm.task.timesheet',
+        inverse_name='task_id', string='Timesheets')
 
-    @api.multi
     def unlink(self):
         for task in self:
             if task.timesheet_ids:

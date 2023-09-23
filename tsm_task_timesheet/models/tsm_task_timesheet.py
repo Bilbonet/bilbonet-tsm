@@ -1,6 +1,5 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
 from odoo import api, exceptions, fields, models, _
 from datetime import datetime, timedelta
 from odoo.exceptions import ValidationError
@@ -51,7 +50,6 @@ class TsmTaskTimesheet(models.Model):
 
         return super(TsmTaskTimesheet, self).create(values)
 
-    @api.one
     @api.depends('date_time', 'amount')
     def _get_stop_date_time(self):
         for line in self:
@@ -74,7 +72,6 @@ class TsmTaskTimesheet(models.Model):
                 'task_id': [('project_id', '=', False)]
             }}
 
-    @api.multi
     def button_end_work(self):
         end_date = datetime.now()
         for line in self:
@@ -82,7 +79,6 @@ class TsmTaskTimesheet(models.Model):
             line.amount = (end_date - date).total_seconds() / 3600
         return True
 
-    @api.multi
     def button_open_task(self):
         for line in self.filtered('task_id'):
             stage = self.env['tsm.task.type'].search(
@@ -90,7 +86,6 @@ class TsmTaskTimesheet(models.Model):
             if stage:
                 line.task_id.write({'stage_id': stage.id})
 
-    @api.multi
     def button_close_task(self):
         for line in self.filtered('task_id'):
             stage = self.env['tsm.task.type'].search(
@@ -109,40 +104,9 @@ class TsmTaskTimesheet(models.Model):
 
             line.task_id.write({'stage_id': stage.id})
 
-    @api.multi
     def toggle_closed(self):
         self.ensure_one()
         if self.closed:
             self.button_open_task()
         else:
             self.button_close_task()
-
-
-class TsmTaskTimesheeetTags(models.Model):
-    """ Tags of timesheets """
-    _name = "tsm.task.timesheet.tags"
-    _description = "Tags in timesheet"
-    _order = "sequence, id"
-
-    name = fields.Char(required=True)
-    active = fields.Boolean(default=True,
-        help="If the active field is set to False, it will allow you to hide"
-        " the tag without removing it.")
-    default = fields.Boolean('Default', default=False,
-        help="Selected by default when create timesheet.")
-    sequence = fields.Integer(string='Sequence', index=True, default=10,
-        help="Gives the sequence order when displaying a list of tags.")
-
-    _sql_constraints = [
-        ('name_uniq', 'unique (name)', "Tag name already exists!"),
-    ]
-
-    @api.constrains('default')
-    def _check_default(self):
-        if self.default:
-            checked_bool = self.search([
-                                ('id', '!=', self.id),('default', '=', True)])
-            if checked_bool:
-                raise ValidationError(
-                    _("There's already one Tag checked as defautl.\n "
-                      "Tag Checked : %s") % checked_bool[0].name)
