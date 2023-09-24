@@ -1,8 +1,7 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from odoo import api, fields, models, _
-import odoo.addons.decimal_precision as dp
+import odoo.addons.base.models.decimal_precision as dp
 from odoo.exceptions import ValidationError
 
 
@@ -14,7 +13,6 @@ class TsmTimePack(models.Model):
 
     @api.depends('sale_id')
     def _compute_sale_amount(self):
-        # sudo() avoid model security restriction
         sale = self.sudo().sale_id
         currency = (
                 self.partner_id.property_product_pricelist.currency_id or
@@ -35,7 +33,7 @@ class TsmTimePack(models.Model):
     code = fields.Char(string='Time Pack Number',
         required=True, default="/", readonly=True)
     name = fields.Char(string='Time Pack Title',
-        track_visibility='always', index=True, copy=False)
+        tracking=True, index=True, copy=False)
     description = fields.Html(string='Time Pack Description', sanitize=True,
         strip_style=False, translate=False, copy=False,
         help="Details, notes and aclarations about the time pack.")
@@ -43,7 +41,7 @@ class TsmTimePack(models.Model):
         inverse_name='timepack_id', string='Timesheets', copy=False)
     user_id = fields.Many2one(comodel_name='res.users', string='Assigned to',
         default=lambda self: self.env.uid, required=True,
-        index=True, track_visibility='always')
+        index=True, tracking=True)
     partner_id = fields.Many2one(comodel_name='res.partner', string='Customer',
         required=True)
     date_start = fields.Date(string='Start Date', required=True, copy=False,
@@ -125,15 +123,14 @@ class TsmTimePack(models.Model):
                 self.env['ir.sequence'].next_by_code('tsm.time.pack')
         return super(TsmTimePack, self).create(vals)
 
-    @api.multi
     def copy(self, default=None):
         if default is None:
             default = {}
         default['code'] = self.env['ir.sequence'].next_by_code('tsm.time.pack')
         return super(TsmTimePack, self).copy(default)
 
-    @api.multi
     def name_get(self):
+        self.ensure_one()
         result = super(TsmTimePack, self).name_get()
         new_result = []
 
@@ -193,7 +190,6 @@ class TsmTimePack(models.Model):
                 'progress': progress,
             })
 
-    @api.multi
     def action_time_pack_send(self):
         '''
         This function opens a window to compose an email,

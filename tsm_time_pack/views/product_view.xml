@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <record id="tsm_time_pack_product_form_view" model="ir.ui.view">
-        <field name="name">TSM Time Pack Product tsm.time.pack.product.template.form</field>
+        <field name="name">product.template.common.form timepack</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="sale.product_template_form_view_invoice_policy"/>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='invoice_policy']" position="after">
+            <xpath expr="//field[@name='detailed_type']" position="after">
                 <field name="service_time_pack" attrs="{'invisible': [('type','!=','service')]}"/>
             </xpath>
         </field>
