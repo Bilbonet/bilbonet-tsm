@@ -31,7 +31,7 @@ class TsmTaskTimesheet(models.Model):
     project_id = fields.Many2one('tsm.project', 'Project')
     user_id = fields.Many2one('res.users', string='Assigned to',
         default=lambda self: self.env.uid, required=True, index=True,
-        track_visibility='always')
+        tracking=True)
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
     date_time_stop = fields.Datetime(compute='_get_stop_date_time',
         string='End date time for calendar view', store=True, readonly=True)
