@@ -1,14 +1,13 @@
 # Copyright 2019 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     service_time_pack = fields.Boolean(default=False,
-        string='Use in Time Packs',
+        string='Timepack',
         help="If set true, it will allow you to use it in Time Packs")
 
     @api.onchange('type')
