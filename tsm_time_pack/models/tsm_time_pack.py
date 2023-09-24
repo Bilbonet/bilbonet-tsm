@@ -1,7 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models, _
-import odoo.addons.base.models.decimal_precision as dp
 from odoo.exceptions import ValidationError
 
 
@@ -33,15 +32,20 @@ class TsmTimePack(models.Model):
     code = fields.Char(string='Time Pack Number',
         required=True, default="/", readonly=True)
     name = fields.Char(string='Time Pack Title',
-        tracking=True, index=True, copy=False)
+        tracking=20, index=True, copy=False)
     description = fields.Html(string='Time Pack Description', sanitize=True,
         strip_style=False, translate=False, copy=False,
         help="Details, notes and aclarations about the time pack.")
     timesheet_ids = fields.One2many(comodel_name='tsm.task.timesheet',
         inverse_name='timepack_id', string='Timesheets', copy=False)
-    user_id = fields.Many2one(comodel_name='res.users', string='Assigned to',
-        default=lambda self: self.env.uid, required=True,
-        index=True, tracking=True)
+    user_id = fields.Many2one(
+        comodel_name='res.users', 
+        string='Assigned to',
+        default=lambda self: self.env.user, 
+        required=True,
+        index=True, 
+        tracking=30,
+    )
     partner_id = fields.Many2one(comodel_name='res.partner', string='Customer',
         required=True)
     date_start = fields.Date(string='Start Date', required=True, copy=False,
@@ -89,12 +93,15 @@ class TsmTimePack(models.Model):
     product_uom_id = fields.Many2one(comodel_name='uom.uom',
         string='Unit of Measure')
     price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
-    discount = fields.Float(string='Discount (%)',
-        digits=dp.get_precision('Discount'),
+    discount = fields.Float(
+        string='Discount (%)',
+        digits="Discount",
         help='Discount that is applied in generated sale orders.'
              ' It should be less or equal to 100')
-    price_subtotal = fields.Float(compute='_compute_price_subtotal',
-        string='Sub Total', digits=dp.get_precision('Account'),)
+    price_subtotal = fields.Float(
+        compute='_compute_price_subtotal',
+        string='Sub Total', 
+        digits=0)
     sale_autoconfirm = fields.Boolean(string='Sale autoconfirm', default=True,
         help='If it is checked the sale order will be created '
              'and confirmed automatically',)
@@ -116,7 +123,7 @@ class TsmTimePack(models.Model):
          _('The code must be unique!')),
     ]
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         if vals.get('code', '/') == '/':
             vals['code'] = \

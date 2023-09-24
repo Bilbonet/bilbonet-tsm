@@ -4,6 +4,7 @@
 {
     'name': 'TSM tasks timesheet time control',
     'version': '16.0.1.0.0',
+    "license": "AGPL-3",
     'category': 'Management',
     'author': 'bilbonet.NET,',
     'website': 'https://github.com/Bilbonet/bilbonet-tsm/',

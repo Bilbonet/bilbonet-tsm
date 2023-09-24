@@ -11,7 +11,7 @@ class TsmTaskTimesheet(models.Model):
     discount_time = fields.Boolean(default="True", string="Discount Time",
         help="Indicate if discount the time from the time pack")
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         res = super(TsmTaskTimesheet, self).create(values)
 

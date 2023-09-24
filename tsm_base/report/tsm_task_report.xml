@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-
     <record id="tsm_task_report_action" model="ir.actions.report">
         <field name="name">Print Task</field>
         <field name="model">tsm.task</field>
@@ -69,5 +70,4 @@
             </t>
         </t>
     </template>
-
 </odoo>

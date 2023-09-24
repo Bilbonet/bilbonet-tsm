@@ -1,6 +1,6 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from odoo import api, exceptions, fields, models, _
+from odoo import api, fields, models, _
 from datetime import datetime, timedelta
 from odoo.exceptions import ValidationError
 
@@ -18,29 +18,48 @@ class TsmTaskTimesheet(models.Model):
             return False
         return tag_id.id
 
-    company_id = fields.Many2one('res.company', string='Company',
-        required=True, default=lambda self: self.env.user.company_id)
-    active = fields.Boolean('Active',
+    company_id = fields.Many2one(
+        comodel_name='res.company', 
+        string='Company',
+        default=lambda self: self.env.user.company_id,
+        required=True,
+    )
+    active = fields.Boolean(string='Active', default=True,
         help="If the active field is set to False, it will allow "
              "you to hide the account without removing it.",
-        default=True)
-    date_time = fields.Datetime(default=fields.Datetime.now, string='Date')
+    )
+    date_time = fields.Datetime(string='Date', default=fields.Datetime.now)
     name = fields.Char(string='Timesheet Title', default="/", required=True)
     amount = fields.Float(string='Quantity', default=0.0)
-    task_id = fields.Many2one('tsm.task', 'Task', index=True)
-    project_id = fields.Many2one('tsm.project', 'Project')
-    user_id = fields.Many2one('res.users', string='Assigned to',
-        default=lambda self: self.env.uid, required=True, index=True,
-        tracking=True)
+    task_id = fields.Many2one(
+        comodel_name='tsm.task', 
+        string='Task', 
+        index=True,
+    )
+    project_id = fields.Many2one(
+        comodel_name='tsm.project', 
+        string='Project'
+    )
+    user_id = fields.Many2one(
+        comodel_name="res.users", 
+        string='Assigned to',
+        index=True,
+        default=lambda self: self.env.user, 
+        required=True,
+        tracking=20,
+    )
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
     date_time_stop = fields.Datetime(compute='_get_stop_date_time',
         string='End date time for calendar view', store=True, readonly=True)
     task_partner_id = fields.Many2one(related='task_id.partner_id',
         store=True, string='Customer')
-    tag_ids = fields.Many2one('tsm.task.timesheet.tags', string='Timesheet Tags',
-        default=_get_default_tag_id)
+    tag_ids = fields.Many2one(
+        comodel_name='tsm.task.timesheet.tags', 
+        string='Timesheet Tags',
+        default=_get_default_tag_id,
+    )
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         # Assign project_id
         project_id = self.env['tsm.task'].browse(
@@ -92,7 +111,7 @@ class TsmTaskTimesheet(models.Model):
                 [('closed', '=', True)], limit=1,
             )
             if not stage:  # pragma: no cover
-                raise exceptions.UserError(
+                raise ValidationError(
                     _("There isn't any stage with closed check. Please "
                       "mark any.")
                 )
