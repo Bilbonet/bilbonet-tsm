@@ -1,6 +1,5 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
 from odoo import api, exceptions, fields, models, _
 from datetime import datetime, timedelta
 from odoo.exceptions import ValidationError
@@ -29,8 +28,11 @@ class TsmTaskTimesheet(models.Model):
     name = fields.Char(string='Timesheet Title', default="/", required=True)
     amount = fields.Float(string='Quantity', default=0.0)
     task_id = fields.Many2one('tsm.task', 'Task', index=True)
-    project_id = fields.Many2one('tsm.project', 'Project')
-    user_id = fields.Many2one('res.users', string='Assigned to',
+    project_id = fields.Many2one(
+        comodel_name='tsm.project', string='Project',
+        related='task_id.project_id')
+    user_id = fields.Many2one(
+        comodel_name='res.users', string='Assigned to',
         default=lambda self: self.env.uid, required=True, index=True,
         track_visibility='always')
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
@@ -41,16 +43,6 @@ class TsmTaskTimesheet(models.Model):
     tag_ids = fields.Many2one('tsm.task.timesheet.tags', string='Timesheet Tags',
         default=_get_default_tag_id)
 
-    @api.model
-    def create(self, values):
-        # Assign project_id
-        project_id = self.env['tsm.task'].browse(
-                                            values['task_id']).project_id.id
-        if project_id:
-            values['project_id'] = project_id
-
-        return super(TsmTaskTimesheet, self).create(values)
-
     @api.one
     @api.depends('date_time', 'amount')
     def _get_stop_date_time(self):
@@ -59,20 +51,6 @@ class TsmTaskTimesheet(models.Model):
                 str(line.date_time), "%Y-%m-%d %H:%M:%S"
                 ) + timedelta(seconds=line.amount*3600)
 
-
-    @api.onchange('project_id')
-    def onchange_project_id(self):
-        # reset task when changing project
-        self.task_id = False
-        # force domain on task when project is set
-        if self.project_id:
-            return {'domain': {
-                'task_id': [('project_id', '=', self.project_id.id)]
-            }}
-        else:
-            return {'domain': {
-                'task_id': [('project_id', '=', False)]
-            }}
 
     @api.multi
     def button_end_work(self):
