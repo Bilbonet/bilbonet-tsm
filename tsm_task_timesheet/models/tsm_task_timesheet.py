@@ -33,20 +33,22 @@ class TsmTaskTimesheet(models.Model):
     amount = fields.Float(string='Quantity', default=0.0)
     task_id = fields.Many2one(
         comodel_name='tsm.task', 
-        string='Task', 
+        string='Task',
         index=True,
     )
     project_id = fields.Many2one(
         comodel_name='tsm.project', 
-        string='Project'
+        string='Project',
+        related='task_id.project_id',
+        store=True,
+        index='btree_not_null',
     )
     user_id = fields.Many2one(
         comodel_name="res.users", 
         string='Assigned to',
         index=True,
         default=lambda self: self.env.user, 
-        required=True,
-        tracking=20,
+        required=True
     )
     closed = fields.Boolean(related='task_id.stage_id.closed', readonly=True)
     date_time_stop = fields.Datetime(compute='_get_stop_date_time',
@@ -59,37 +61,12 @@ class TsmTaskTimesheet(models.Model):
         default=_get_default_tag_id,
     )
 
-    @api.model_create_multi
-    def create(self, values):
-        # Assign project_id
-        project_id = self.env['tsm.task'].browse(
-                                            values['task_id']).project_id.id
-        if project_id:
-            values['project_id'] = project_id
-
-        return super(TsmTaskTimesheet, self).create(values)
-
     @api.depends('date_time', 'amount')
     def _get_stop_date_time(self):
         for line in self:
             line.date_time_stop = datetime.strptime(
                 str(line.date_time), "%Y-%m-%d %H:%M:%S"
                 ) + timedelta(seconds=line.amount*3600)
-
-
-    @api.onchange('project_id')
-    def onchange_project_id(self):
-        # reset task when changing project
-        self.task_id = False
-        # force domain on task when project is set
-        if self.project_id:
-            return {'domain': {
-                'task_id': [('project_id', '=', self.project_id.id)]
-            }}
-        else:
-            return {'domain': {
-                'task_id': [('project_id', '=', False)]
-            }}
 
     def button_end_work(self):
         end_date = datetime.now()
