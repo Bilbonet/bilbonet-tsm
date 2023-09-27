@@ -17,12 +17,18 @@
                     <field name="can_edit" invisible="1"/>
                     <field name="sale_id" invisible="1"/>
                     <header>
-                        <button name="action_time_pack_send" type="object" groups="tsm_base.group_tsm_user"
-                                string=" Send by Email" class="oe_highlight" icon="fa-envelope"/>
-                        <button name="create_sale" type="object" groups="sales_team.group_sale_manager"
-                                string="Create sale" attrs="{'invisible':[('sale_id','!=',False)]}" />
+                        <button name="action_time_pack_send" type="object"
+                                string=" Send by Email" 
+                                attrs="{'invisible': [('code', '=', '/')]}"
+                                class="oe_highlight" icon="fa-envelope"
+                                groups="tsm_base.group_tsm_user"/>
+                        <button name="create_sale" type="object"
+                                string="Create sale" 
+                                attrs="{'invisible':['|', ('code', '=', '/'), ('sale_id','!=',False)]}"
+                                groups="sales_team.group_sale_manager"/>
                     </header>
                     <sheet string="Task">
+                        <field name="active" invisible="1"/>
                         <div class="oe_button_box" name="button_box">
                             <button class="oe_stat_button" type="object" groups="tsm_base.group_tsm_manager"
                                     attrs="{'invisible': [('sale_id', '=', False)]}"
@@ -33,19 +39,19 @@
                                     <field name="sale_id" readonly="1"/>
                                 </div>
                             </button>
-                            <button name="toggle_active" type="object" groups="tsm_base.group_tsm_manager"
-                                    class="oe_stat_button" icon="fa-archive">
-                                <field name="active" widget="boolean_button"
-                                    options='{"terminology": "archive"}'/>
-                            </button>
                         </div>
-                        <div class="oe_title">
-                            <h1 class="o_row">
-                                <field name="code" class="oe_inline"/>
-                                <span class="oe_inline"> - </span>
-                                <field name="name" placeholder="Time Pack Title..."/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <div class="oe_title pe-0">
+                            <h1 class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex w-100">
+                                    <field name="code" class="me-3" style="flex-basis: 10%"
+                                        attrs="{'invisible': [('code', '=', '/')]}"/>
+                                    <field name="name" class="o_task_name me-3 pe-2" placeholder="Time Pack Title..."/>
+                                </div>
                             </h1>
                         </div>
+
                         <group>
                             <group>
                                 <field name="partner_id" options='{"no_create": True}' attrs="{'readonly':[('can_edit','=',False)]}"/>
@@ -64,12 +70,15 @@
                                         <field name="remaining_hours" widget="float_time"/>
                                     </group>
                                     <group>
-                                        <!--<field name="progress" widget="progressbar"/>-->
-                                        <field name="progress" nolabel="1" widget="gauge" style="width:120px;height:90px;cursor:pointer;"/>
+                                        <field name="progress" widget="progressbar"/>
+                                        <!-- <field name="progress" nolabel="1" widget="gauge"
+                                               options="{'style': 'width:120px; height: 90px;'}"
+                                               style="width:120px;height:120px;cursor:pointer;"/> -->
                                     </group>
                                 </group>
                                 <field name="timesheet_ids">
-                                    <tree string="Timesheet Activities" default_order="date_time" create="false" delete="false">
+                                    <tree string="Timesheet Activities" default_order="date_time" 
+                                          editable="bottom" create="false" delete="false">
                                         <field name="date_time" required="1" readonly="1"/>
                                         <field name="user_id" required="1" readonly="1"/>
                                         <field name="task_id" required="1" readonly="1"/>
@@ -122,6 +131,7 @@
                 </form>
             </field>
         </record>
+
         <record id="tsm_time_pack_tree_view" model="ir.ui.view">
             <field name="name">TSM Time Pack tsm.time.pack.tree</field>
             <field name="model">tsm.time.pack</field>
@@ -142,6 +152,7 @@
                 </tree>
             </field>
         </record>
+
         <record id="tsm_time_pack_search_view" model="ir.ui.view">
             <field name="name">TSM Time Pack tsm.time.pack.search</field>
             <field name="model">tsm.time.pack</field>
@@ -162,6 +173,7 @@
                 </search>
             </field>
         </record>
+
         <record id="tsm_time_pack_mine_kanban_view" model="ir.ui.view">
             <field name="name">TSM Time Pack tsm.time.pack.main.kanban</field>
             <field name="model">tsm.time.pack</field>
