@@ -1,25 +1,32 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-
     <data noupdate="1">
-
         <!-- =============== -->
         <!-- Time Pack Rules -->
         <!-- =============== -->
-        <!-- Group Users: Can view (Public Time Pack or Followers) -->
+        <!-- TSM Managers: can do all -->
+        <record id="tsm_time_pack_manager_rule" model="ir.rule">
+            <field name="name">TSM Time Pack: manager can do all</field>
+            <field name="model_id" ref="model_tsm_time_pack"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('tsm_base.group_tsm_manager'))]"/>
+        </record>
+
+        <!-- TSM Users: Can view if is (Resposible, Follower or Public) -->
         <record id="tsm_time_pack_public_followers_rule" model="ir.rule">
             <field name="name">TSM Time Pack: Public Time Pack or Followers</field>
             <field name="model_id" ref="model_tsm_time_pack"/>
-            <field name="domain_force">['|',
+            <field name="domain_force">['|', '|',
+                ('user_id','=',user.id),
                 ('privacy_visibility', '!=', 'followers'),
                 ('message_partner_ids', 'in', [user.partner_id.id])]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
             <field name="perm_read" eval="True"/>
-            <field name="perm_create" eval="True"/>
+            <field name="perm_create" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_unlink" eval="False"/>
         </record>
-
     </data>
-
 </odoo>

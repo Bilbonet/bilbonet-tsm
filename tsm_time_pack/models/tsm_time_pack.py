@@ -36,8 +36,10 @@ class TsmTimePack(models.Model):
     description = fields.Html(string='Time Pack Description', sanitize=True,
         strip_style=False, translate=False, copy=False,
         help="Details, notes and aclarations about the time pack.")
-    timesheet_ids = fields.One2many(comodel_name='tsm.task.timesheet',
-        inverse_name='timepack_id', string='Timesheets', copy=False)
+    timesheet_ids = fields.One2many(
+        comodel_name='tsm.task.timesheet',
+        inverse_name='timepack_id', 
+        string='Timesheets', copy=False)
     user_id = fields.Many2one(
         comodel_name='res.users', 
         string='Assigned to',
@@ -123,18 +125,26 @@ class TsmTimePack(models.Model):
          _('The code must be unique!')),
     ]
 
+    # ------------------
+    # CRUD overrides
+    # ------------------
     @api.model_create_multi
-    def create(self, vals):
-        if vals.get('code', '/') == '/':
-            vals['code'] = \
-                self.env['ir.sequence'].next_by_code('tsm.time.pack')
-        return super(TsmTimePack, self).create(vals)
+    def create(self, vals_list):
+        # context: no_log, because subtype already handle this
+        context = dict(self.env.context, mail_create_nolog=True)
+        # Assign new code
+        for vals in vals_list:
+            if vals.get('code', '/') == '/':
+                vals['code'] = self.env['ir.sequence'].next_by_code(
+                                                            'tsm.time.pack')
+
+        return super(TsmTimePack, self.with_context(context)).create(vals_list)
 
     def copy(self, default=None):
-        if default is None:
-            default = {}
-        default['code'] = self.env['ir.sequence'].next_by_code('tsm.time.pack')
-        return super(TsmTimePack, self).copy(default)
+        self.ensure_one()
+        default = dict(default or {})
+        default['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
+        return super().copy(default)
 
     def name_get(self):
         self.ensure_one()
