@@ -18,10 +18,10 @@
                         type="object"
                         icon="fa-search-plus text-success"
                         attrs="{'invisible':[('timepack_id','=',False)]}"
-                        class="oe_stat_button"
                         title="View Time Pack Details"
                     />
-                    <field name="discount_time" attrs="{'invisible':[('timepack_id','=',False)]}"/>
+                    <field name="discount_time" 
+                           attrs="{'invisible':[('timepack_id','=',False)]}"/>
                 </xpath>
             </field>
         </record>
