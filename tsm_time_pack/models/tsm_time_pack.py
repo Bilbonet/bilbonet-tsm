@@ -70,26 +70,27 @@ class TsmTimePack(models.Model):
         default=0.0, required=True,
         help='Time contracted by the client for support and it can be '
              'consumed in tasks and timesheet.')
-    consumed_hours = fields.Float(string='Hours Consumed',
-        compute='_hours_get',
-        store=True,
+    consumed_hours = fields.Float(compute='_hours_get',
+        string='Hours Consumed',
+        readonly=True, store=True,
         help="Computed as: The sum of the timesheet checked "
              "to discount time.")
-    remaining_hours = fields.Float(string='Remaining Hours',
-        compute='_hours_get',
+    remaining_hours = fields.Float(compute='_hours_get',
+        string='Remaining Hours',
         readonly=True, store=True,
         help="Computed as: Contrated hours - Consumed hours")
-    total_hours_spent = fields.Float(string='Total Hours Spent',
-        compute='_hours_get',
-        store=True,
+    total_hours_spent = fields.Float(compute='_hours_get',
+        string='Total Hours Spent',
+        readonly=True, store=True,
         help="Computed as: Time Spent in tasks.")
-    complimentary_hours = fields.Float(string='Complimentary Hours.',
-        compute='_hours_get',
-        store=True,
+    complimentary_hours = fields.Float(compute='_hours_get',
+        string='Complimentary Hours.',
+        readonly=True, store=True,
         help="Hours spent but not discounted in time pack.")
-    progress = fields.Float(string='Progress',
-        compute='_hours_get',
-        store=True, group_operator="avg")
+    progress = fields.Float(compute='_hours_get',
+        string='Progress',
+        readonly=True, store=True,
+        group_operator="avg")
     product_id = fields.Many2one(
         comodel_name='product.product', string='Product')
     description_sale = fields.Text(string='Description Sale')
@@ -135,8 +136,12 @@ class TsmTimePack(models.Model):
          _('The code must be unique!')),
     ]
 
-    @api.depends('timesheet_ids.amount', 'timesheet_ids.discount_time',
-                 'contrated_hours')
+    @api.depends(
+        'contrated_hours',
+        'timesheet_ids',
+        'timesheet_ids.amount', 
+        'timesheet_ids.discount_time',
+    )
     def _hours_get(self):
         for time in self.sorted(key='id', reverse=True):
             '''
@@ -167,6 +172,27 @@ class TsmTimePack(models.Model):
                 'remaining_hours': remaining_hours,
                 'progress': progress,
             })
+
+            if progress >= 90:
+                txt_msg = _(
+                    '<h5>Contrated Hours: %s</h5>'
+                    '<h5>Consumed Hours: %s</h5>'
+                    '<h3>Progress: %s %%</h3>'
+                ) % (
+                    time.contrated_hours, 
+                    round(consumed_hours, 2), 
+                    self.progress
+                )
+                title_msg=_(
+                    'Time Pack %s Warning!!\n'
+                    'Plase review the time pack hours left!!'
+                ) % (self.code)
+                user_msg = {
+                    "message": txt_msg,
+                    "title":  title_msg,
+                    "sticky": True
+                }
+                self.env.user.notify_danger(**user_msg)
 
     def action_time_pack_send(self):
         '''
