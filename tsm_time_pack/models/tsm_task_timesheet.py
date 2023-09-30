@@ -32,29 +32,6 @@ class TsmTaskTimesheet(models.Model):
 
         return super(TsmTaskTimesheet, self).create(vals_list)
 
-    # @api.onchange('amount', 'timepack_id', 'discount_time')
-    # def _onchange_timepack(self):
-    #     self.timepack_id._hours_get()
-    #     if self.timepack_id.progress > 90:
-    #         contrated_hours = '{0:02.0f}:{1:02.0f}'.format(
-    #             *divmod(float(self.timepack_id.contrated_hours) * 60, 60)
-    #         )
-    #         consumed_hours = '{0:02.0f}:{1:02.0f}'.format(
-    #             *divmod(float(self.timepack_id.consumed_hours) * 60, 60)
-    #         )
-
-    #         message = _(
-    #             'Hours Contrated: %s'
-    #             '\nHours Consumed:  %s'
-    #             '\nProgress: %s %%') \
-    #             % (contrated_hours, consumed_hours, self.timepack_id.progress)
-    #         warning_mess = {
-    #             'title': _("Alert Time Pack: %s") % self.timepack_id.code,
-    #             'message': message
-    #         }
-    #         return {'warning': warning_mess}
-    #     return {}
-
     def view_time_pack(self):
         self.ensure_one()
         return {
