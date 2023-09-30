@@ -1,5 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from datetime import date
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
@@ -89,12 +90,14 @@ class TsmTimePack(models.Model):
     progress = fields.Float(string='Progress',
         compute='_hours_get',
         store=True, group_operator="avg")
-    product_id = fields.Many2one(comodel_name='product.product', string='Product')
+    product_id = fields.Many2one(
+        comodel_name='product.product', string='Product')
     description_sale = fields.Text(string='Description Sale')
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
     product_uom_id = fields.Many2one(comodel_name='uom.uom',
         string='Unit of Measure')
-    price_unit = fields.Float(string='Unit Price', default=0.0, required=True)
+    price_unit = fields.Float(
+        string='Unit Price', default=0.0, required=True)
     discount = fields.Float(
         string='Discount (%)',
         digits="Discount",
@@ -104,18 +107,25 @@ class TsmTimePack(models.Model):
         compute='_compute_price_subtotal',
         string='Sub Total', 
         digits=0)
-    sale_autoconfirm = fields.Boolean(string='Sale autoconfirm', default=True,
+    sale_autoconfirm = fields.Boolean(
+        string='Sale autoconfirm', default=True,
         help='If it is checked the sale order will be created '
              'and confirmed automatically',)
-    company_currency = fields.Many2one(comodel_name='res.currency',
-        related='company_id.currency_id', string="Company Currency", readonly=True,
+    company_currency = fields.Many2one(
+        comodel_name='res.currency',
+        related='company_id.currency_id',
+        string="Company Currency", readonly=True,
         help='Utility field to express amount currency')
-    sale_id = fields.Many2one(comodel_name='sale.order', string='Sale Order',
-        copy=False,)
-    sale_amount = fields.Monetary(compute='_compute_sale_amount',
-        string='Amount of The Order', copy=False, currency_field='company_currency',
+    sale_id = fields.Many2one(
+        comodel_name='sale.order', 
+        string='Sale Order', copy=False)
+    sale_amount = fields.Monetary(
+        compute='_compute_sale_amount',
+        string='Amount of The Order',
+        currency_field='company_currency', copy=False,
         help='Untaxed Total of The Order',)
-    can_edit = fields.Boolean(compute='_compuete_can_edit',
+    can_edit = fields.Boolean(
+        compute='_compuete_can_edit',
         string='Security: only managers can edit', default=True,
         help='This field is for security purpose. '
              'Only members of managers group can modify some fields.')
@@ -124,55 +134,6 @@ class TsmTimePack(models.Model):
         ('tsm_time_pack_unique_code', 'UNIQUE (code)',
          _('The code must be unique!')),
     ]
-
-    # ------------------
-    # CRUD overrides
-    # ------------------
-    @api.model_create_multi
-    def create(self, vals_list):
-        # context: no_log, because subtype already handle this
-        context = dict(self.env.context, mail_create_nolog=True)
-        # Assign new code
-        for vals in vals_list:
-            if vals.get('code', '/') == '/':
-                vals['code'] = self.env['ir.sequence'].next_by_code(
-                                                            'tsm.time.pack')
-
-        return super(TsmTimePack, self.with_context(context)).create(vals_list)
-
-    def copy(self, default=None):
-        self.ensure_one()
-        default = dict(default or {})
-        default['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
-        return super().copy(default)
-
-    def name_get(self):
-        self.ensure_one()
-        result = super(TsmTimePack, self).name_get()
-        new_result = []
-
-        for tp in result:
-            rec = self.browse(tp[0])
-            if tp[1] != 'False':
-                name = '[%s] %s' % (rec.code, tp[1])
-            else:
-                name = '[%s]' % (rec.code)
-            new_result.append((rec.id, name))
-        return new_result
-
-    def action_view_order(self):
-        '''
-        This function returns an action that display the order
-        given sale order id.
-        '''
-        self.ensure_one()
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "sale.order",
-            "views": [[False, "form"]],
-            "res_id": self.sale_id.id,
-            "context": {"create": False, "show_sale": True},
-        }
 
     @api.depends('timesheet_ids.amount', 'timesheet_ids.discount_time',
                  'contrated_hours')
@@ -246,9 +207,9 @@ class TsmTimePack(models.Model):
             'context': ctx,
         }
 
-    #==========================
+    # -------------------------
     #== Product & Sale Order ==
-    #==========================
+    # -------------------------
     @api.depends('quantity', 'price_unit', 'discount')
     def _compute_price_subtotal(self):
         subtotal = self.quantity * self.price_unit
@@ -293,68 +254,55 @@ class TsmTimePack(models.Model):
             vals['price_unit'] = product.list_price
             self.update(vals)
 
-    def _prepare_sale_line(self, sale_id):
+    def _prepare_sale_line(self):
         self.ensure_one()
+        name = (_(
+                '%s\n Time Pack: [%s] %s' 
+                % (self.description_sale, self.code, self.name or '')
+            ))
         sale_line_vals = {
-            'order_id': sale_id,
             'product_id': self.product_id.id,
-            'product_uom': self.product_uom_id.id,
+            'name': name,
+            'product_uom': self.product_id.uom_id.id,
             'product_uom_qty': self.quantity,
+            'price_unit': self.price_unit,
             'discount': self.discount,
         }
-        sale_line = self.env['sale.order.line'].with_context(
-            force_company=self.company_id.id,
-        ).new(sale_line_vals)
-        # Get other sale line values from product onchange
-        sale_line.product_id_change()
-        # Write the resulting virtual record modifications made by the onchange call
-        sale_line_vals = sale_line._convert_to_write(sale_line._cache)
-
-        sale_line_vals.update(
-            {
-                'name': self.description_sale,
-                'price_unit': self.price_unit,
-            }
-        )
-        return sale_line_vals
+        sale_line = self.env['sale.order.line'].new(sale_line_vals)
+        return sale_line._convert_to_write(sale_line._cache)
 
     def _prepare_sale(self):
         self.ensure_one()
         if not self.partner_id or not self.product_id:
-            raise ValidationError(_("You must first select a Customer "
-                                "and product for Time Pack: %s") % self.code)
+            raise ValidationError(_(
+                "You must first select a Customer and a Product for\n"
+                "Time Pack: %s"
+            ) % self.code)
 
-        currency = (
-                self.company_currency or
-                self.partner_id.property_product_pricelist.currency_id or
-                self.env.user.company_id.currency_id)
+        client_ref = (_(
+                'Time Pack [%s] %s' 
+                % (self.code, self.name or '')
+            ))
 
-        sale = self.env['sale.order'].with_context(
-            force_company=self.company_id.id,
-        ).new({
-            'company_id': self.company_id.id,
-            'partner_id': self.partner_id,
-        })
+        sale = self.env['sale.order'].new(
+            {
+                'partner_id': self.partner_id,
+                'date_order': fields.Date.to_string(date.today()),
+                'origin': self.code,
+                'client_order_ref': client_ref,
+                'company_id': self.company_id.id,
+                'user_id': self.user_id.id,
+            }
+        )
 
-        # Get partner extra fields
-        sale.onchange_partner_id()
-        # Write the resulting virtual record modifications made by the onchange call
-        sale_vals = sale._convert_to_write(sale._cache)
+        if self.partner_id.property_payment_term_id:
+            sale.payment_term_id = self.partner_id.property_payment_term_id
+        if self.partner_id.property_account_position_id:
+            sale.fiscal_position_id = self.partner_id.property_account_position_id
+        if self.partner_id.property_product_pricelist.id:
+            sale.pricelist_id = self.partner_id.property_product_pricelist.id
 
-        sale_vals.update({
-            'client_order_ref': (_(
-                'Time Pack [%s] %s' % (self.code, self.name)
-                if self.name else
-                'Time Pack [%s]' % self.code
-            )),
-            'currency_id': currency.id,
-            'fiscal_position_id': self.partner_id.property_account_position_id.id,
-            'user_id': self.user_id.id,
-            'pricelist_id': self.partner_id.property_product_pricelist.id,
-            'origin': self.name_get()[0][1],
-        })
-
-        return sale_vals
+        return sale._convert_to_write(sale._cache)
 
     def create_sale(self):
         """
@@ -363,17 +311,18 @@ class TsmTimePack(models.Model):
         """
         self.ensure_one()
         sale_vals = self._prepare_sale()
-        sale = self.env['sale.order'].create(sale_vals)
 
-        sale_line_vals = self._prepare_sale_line(sale.id)
+        sale_vals.setdefault('order_line', [])
+        sale_line_vals = self._prepare_sale_line()
         if sale_line_vals:
-            self.env['sale.order.line'].create(sale_line_vals)
-
-        # Write mesage in the chater of the SO
+            sale_vals['order_line'].append(
+                (0, 0, sale_line_vals)
+            )
+        sale = self.env['sale.order'].create(sale_vals)
         sale.message_post_with_view('mail.message_origin_link',
             values={'self': sale, 'origin': self},
             subtype_id=self.env.ref('mail.mt_note').id)
-
+        
         # Update Time Pack with the values from the sale order
         vals = {'sale_id': sale.id}
         self.update(vals)
@@ -383,3 +332,52 @@ class TsmTimePack(models.Model):
             sale.action_confirm()
 
         return sale
+
+    def action_view_order(self):
+        '''
+        This function returns an action that display the order
+        given sale order id.
+        '''
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "views": [[False, "form"]],
+            "res_id": self.sale_id.id,
+            "context": {"create": False, "show_sale": True},
+        }
+
+    # ------------------
+    # CRUD overrides
+    # ------------------
+    @api.model_create_multi
+    def create(self, vals_list):
+        # context: no_log, because subtype already handle this
+        context = dict(self.env.context, mail_create_nolog=True)
+        # Assign new code
+        for vals in vals_list:
+            if vals.get('code', '/') == '/':
+                vals['code'] = self.env['ir.sequence'].next_by_code(
+                                                            'tsm.time.pack')
+
+        return super(TsmTimePack, self.with_context(context)).create(vals_list)
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {})
+        default['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
+        return super().copy(default)
+
+    def name_get(self):
+        self.ensure_one()
+        result = super(TsmTimePack, self).name_get()
+        new_result = []
+
+        for tp in result:
+            rec = self.browse(tp[0])
+            if tp[1] != 'False':
+                name = '[%s] %s' % (rec.code, tp[1])
+            else:
+                name = '[%s]' % (rec.code)
+            new_result.append((rec.id, name))
+        return new_result
