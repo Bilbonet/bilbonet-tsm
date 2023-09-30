@@ -6,15 +6,17 @@ from odoo import api, models, fields, _
 class TsmTaskTimesheet(models.Model):
     _inherit = "tsm.task.timesheet"
 
-    timepack_id = fields.Many2one(comodel_name='tsm.time.pack',
+    timepack_id = fields.Many2one(
+        comodel_name='tsm.time.pack',
         string='Time Packs', index=True)
-    discount_time = fields.Boolean(default="True", string="Discount Time",
+    discount_time = fields.Boolean(
+        string="Discount Time", default="True",
         help="Indicate if discount the time from the time pack")
 
     @api.model_create_multi
     def create(self, vals_list):
         '''If we don't indicate Time Pack in the new Timesheet. 
-           We search a Time Pack available for the partner'''
+           We search any Time Pack available for the partner'''
         for vals in vals_list:
             if not vals['timepack_id']:
                 task = self.env['tsm.task'].browse(vals['task_id'])
@@ -28,54 +30,30 @@ class TsmTaskTimesheet(models.Model):
                         'timepack_id': tp.id
                     })
 
-                    if tp.progress >= 90:
-                        message = _(
-                            '<h5>Plase review the time pack hours left!!<br/>'
-                            'Time Pack: %s </h5>'
-                            '<h2>Progress: %s %%</h2>'
-                        ) % (tp.code, tp.progress)
-                        self.env.user.notify_danger(message=message)                        
-
-        # if res['timepack_id']:
-        #     if res.timepack_id.progress >= 100:
-        #         message = _(
-        #             '<h5>Time Pack Finished<br/>'
-        #             'Time Pack: %s </h5>'
-        #             '<h2>Progress: %s %%</h2>'
-        #         ) % (res.timepack_id.code, res.timepack_id.progress)
-        #         self.env.user.notify_danger(message=message)
-        #     elif res.timepack_id.progress >= 90:
-        #         message = _(
-        #             '<h5>Time Pack Almost Finished<br/>'
-        #             'Time Pack: %s </h5>'
-        #             '<h2>Progress: %s %%</h2>'
-        #         ) % (res.timepack_id.code, res.timepack_id.progress)
-        #         self.env.user.notify_warning(message=message)
-
         return super(TsmTaskTimesheet, self).create(vals_list)
 
-    @api.onchange('amount', 'timepack_id', 'discount_time')
-    def _onchange_timepack(self):
-        self.timepack_id._hours_get()
-        if self.timepack_id.progress > 90:
-            contrated_hours = '{0:02.0f}:{1:02.0f}'.format(
-                *divmod(float(self.timepack_id.contrated_hours) * 60, 60)
-            )
-            consumed_hours = '{0:02.0f}:{1:02.0f}'.format(
-                *divmod(float(self.timepack_id.consumed_hours) * 60, 60)
-            )
+    # @api.onchange('amount', 'timepack_id', 'discount_time')
+    # def _onchange_timepack(self):
+    #     self.timepack_id._hours_get()
+    #     if self.timepack_id.progress > 90:
+    #         contrated_hours = '{0:02.0f}:{1:02.0f}'.format(
+    #             *divmod(float(self.timepack_id.contrated_hours) * 60, 60)
+    #         )
+    #         consumed_hours = '{0:02.0f}:{1:02.0f}'.format(
+    #             *divmod(float(self.timepack_id.consumed_hours) * 60, 60)
+    #         )
 
-            message = _(
-                'Hours Contrated: %s'
-                '\nHours Consumed:  %s'
-                '\nProgress: %s %%') \
-                % (contrated_hours, consumed_hours, self.timepack_id.progress)
-            warning_mess = {
-                'title': _("Alert Time Pack: %s") % self.timepack_id.code,
-                'message': message
-            }
-            return {'warning': warning_mess}
-        return {}
+    #         message = _(
+    #             'Hours Contrated: %s'
+    #             '\nHours Consumed:  %s'
+    #             '\nProgress: %s %%') \
+    #             % (contrated_hours, consumed_hours, self.timepack_id.progress)
+    #         warning_mess = {
+    #             'title': _("Alert Time Pack: %s") % self.timepack_id.code,
+    #             'message': message
+    #         }
+    #         return {'warning': warning_mess}
+    #     return {}
 
     def view_time_pack(self):
         self.ensure_one()
