@@ -17,11 +17,14 @@
                                        groups="tsm_task_timesheet.group_tsm_timesheet_tag"
                                        required="1"/>
                                 <field name="amount" string="Duration" widget="float_time"/>
-                                <button name="button_end_work"
-                                        string="Stop"
-                                        type="object"
-                                        icon="fa-stop-circle"
-                                        attrs="{'invisible': [('amount', '>', 0)]}"/>
+                                <button 
+                                    name="button_end_work"
+                                    type="object"
+                                    icon="fa-stop-circle text-danger"
+                                    attrs="{'invisible': [('amount', '>', 0)]}"
+                                    class="oe_stat_button"
+                                    title="Stop work"
+                                />
                                 <field name="project_id" invisible="1"/>
                             </tree>
                         </field>
