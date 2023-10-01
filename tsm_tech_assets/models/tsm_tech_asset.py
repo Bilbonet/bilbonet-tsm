@@ -1,6 +1,5 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from odoo import api, fields, models, _
 
 
@@ -31,7 +30,8 @@ class TsmTechAsset(models.Model):
             ], order='date_start')
         return task_ids
 
-    company_id = fields.Many2one('res.company',
+    company_id = fields.Many2one(
+        comodel_name='res.company',
         string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
     active = fields.Boolean(default=True,
@@ -47,7 +47,8 @@ class TsmTechAsset(models.Model):
     ], default='0', index=True, string="Priority")
     date = fields.Datetime(string='Date',
         default=fields.Datetime.now, index=True, copy=False)
-    name = fields.Char(string='Asset Title', track_visibility='always',
+    name = fields.Char(string='Asset Title', 
+        tracking=20,
         required=True, index=True)
     tech_notes = fields.Html(string='Technical Notes',
         sanitize=True, strip_style=False, translate=False,
@@ -60,12 +61,17 @@ class TsmTechAsset(models.Model):
         default=lambda self: self.env.uid, index=True, track_visibility='always')
     partner_id = fields.Many2one('res.partner',
         string='Customer', required=True)
-    type_id = fields.Many2one('tsm.tech.asset.type',
+    type_id = fields.Many2one(
+        comodel_name='tsm.tech.asset.type',
         string='Type', required=True, index=True,
-        track_visibility='onchange', change_default=True)
+        tracking=30, change_default=True)
     task_ids = fields.One2many('tsm.task', 'asset_ids',
         string='Tasks', context={'active_test': False})
-    task_count = fields.Integer(compute='_compute_task_count', string="Amount Tasks")
+    task_count = fields.Integer(
+        compute='_compute_task_count', 
+        string="Amount Tasks",
+        readonly=True,
+    )
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
@@ -94,7 +100,6 @@ class TsmTechAsset(models.Model):
                 self.env['ir.sequence'].next_by_code('tsm.tech.asset')
         return super(TsmTechAsset, self).create(vals)
 
-    @api.multi
     def action_tech_asset_send(self):
         '''
         This function opens a window to compose an email,

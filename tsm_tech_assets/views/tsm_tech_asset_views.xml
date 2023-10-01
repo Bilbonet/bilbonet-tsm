@@ -1,5 +1,25 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
+    <!-- Tasks From Asset -->
+     <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('asset_ids', 'in', [active_id]), '|',('active', '=', True), ('active', '=', False)]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Here, you can create new task
+            </p>
+            <p>
+                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+            </p>
+        </field>
+    </record>
+
     <!--
        Asset: Views
     -->
@@ -12,8 +32,8 @@
                     <button name="action_tech_asset_send" type="object" groups="tsm_base.group_tsm_user"
                             string=" Send by Email" class="oe_highlight" icon="fa-envelope"/>
                 </header>
-                <field name="can_edit" invisible="1"/>
                 <sheet string="Asset">
+                    <field name="can_edit" invisible="1"/>
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" type="action"
                                 name="%(tsm_tasks_from_tech_asset_action)d" icon="fa-tasks">
@@ -77,6 +97,7 @@
             </form>
         </field>
     </record>
+
     <record id="tsm_tech_assets_tree_view" model="ir.ui.view">
         <field name="name">TSM Tech Assets tsm.tech.assets.tree</field>
         <field name="model">tsm.tech.asset</field>
@@ -97,6 +118,7 @@
             </tree>
         </field>
     </record>
+
     <record id="tsm_tech_assets_kanban_view" model="ir.ui.view">
         <field name="name">tsm.tech.assets.kanban</field>
         <field name="model">tsm.tech.asset</field>
@@ -158,6 +180,7 @@
             </kanban>
         </field>
     </record>
+
     <record id="tsm_tech_assets_search_view" model="ir.ui.view">
         <field name="name">Tsm Tech Assets Search</field>
         <field name="model">tsm.tech.asset</field>
@@ -206,17 +229,15 @@
     <record id="tsm_tech_assets_open_all_action" model="ir.actions.act_window">
         <field name="name">T.S.M: Tech Assets</field>
         <field name="res_model">tsm.tech.asset</field>
-        <field name="view_type">form</field>
-        <field name="domain">[]</field>
-        <field name="view_mode">tree,form,kanban,activity</field>
         <field name="view_id" ref="tsm_tech_assets_tree_view"/>
-        <field name="target">main</field>
+        <field name="view_mode">tree,form,kanban,activity</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to create a new tech asset.
             </p>
         </field>
     </record>
+
     <menuitem id="tsm_tech_assets_menu"
               action="tsm_tech_assets_open_all_action"
               name="Tech Assets"
@@ -235,6 +256,7 @@
             </search>
         </field>
     </record>
+
     <record id="tsm_tech_asset_type_form_view" model="ir.ui.view">
         <field name="name">TSM Tech Asset Type Form</field>
         <field name="model">tsm.tech.asset.type</field>
@@ -246,39 +268,21 @@
             </form>
         </field>
     </record>
+
     <record id="tsm_tech_asset_type_action" model="ir.actions.act_window">
         <field name="name">TSM Tech Asset Types</field>
         <field name="res_model">tsm.tech.asset.type</field>
-        <field name="view_type">form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to add a new type of tech asset.
             </p>
         </field>
     </record>
+
     <menuitem id="tsm_config_tech_asset_type_menu"
               action="tsm_tech_asset_type_action"
               name="Tech Asset Types"
               parent="tsm_base.tsm_config_menu"
               sequence="10"
               groups="base.group_no_one"/>
-
-
-    <!-- Tasks From Asset -->
-     <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
-        <field name="name">Tasks</field>
-        <field name="res_model">tsm.task</field>
-        <field name="view_mode">tree,kanban,form</field>
-        <field name="domain">[('asset_ids', 'in', [active_id]), '|',('active', '=', True), ('active', '=', False)]</field>
-        <field name="context">{}</field>
-        <field name="search_view_id" ref="tsm_base.tsm_task_search_view"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Here, you can create new task
-            </p>
-            <p>
-                You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
-            </p>
-        </field>
-    </record>
 </odoo>
