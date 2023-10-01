@@ -246,7 +246,6 @@
         <field name="view_mode">kanban,tree,form</field>
         <field name="context">{'search_default_my_tasks': 1}</field>
         <field name="search_view_id" ref="tsm_task_search_view"/>
-        <field name="view_id" ref="tsm_task_kanban_view"/>
         <field name="help" type="html">
             <p>
                 Technical Support Management allows you to manage the pipeline of your tasks efficiently.
