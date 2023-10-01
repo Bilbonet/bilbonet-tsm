@@ -386,15 +386,11 @@ class TsmTimePack(models.Model):
         return super().copy(default)
 
     def name_get(self):
-        self.ensure_one()
-        result = super(TsmTimePack, self).name_get()
-        new_result = []
-
-        for tp in result:
-            rec = self.browse(tp[0])
-            if tp[1] != 'False':
-                name = '[%s] %s' % (rec.code, tp[1])
-            else:
-                name = '[%s]' % (rec.code)
-            new_result.append((rec.id, name))
-        return new_result
+        """Get the proper display name formatted as 'code, name'."""
+        result = []
+        for rec in self:
+            name = ['[%s]' % (rec.code)]
+            if rec.name:
+                name = '[%s] %s' % (rec.code, rec.name)
+            result.append((rec.id, name))
+        return result
