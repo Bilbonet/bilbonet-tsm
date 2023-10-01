@@ -43,7 +43,7 @@
             </div>
         </xpath>
         <xpath expr="//div[@name='task_description']" position="after">
-            <div class="row" t-if="len(t.timesheet_ids) > 0">
+            <div class="row" t-if="len(t.timesheet_ids) > 0" style="page-break-inside: avoid;">
                 <table class="table table-sm table-striped">
                     <thead style="background-color: #3498DB;font-size:0.8em;" >
                         <tr class="text-center">
@@ -61,11 +61,11 @@
                                 <span t-if="ts.name != '/'" t-field="ts.name"/><!-- If name of the timesheet not have default value, then is printed in the report-->
                                 <span t-if="ts.name == '/'" t-field="ts.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
                             </td>
-                            <td style="font-size:0.7em;" class="text-right">
+                            <td style="font-size:0.7em;text-align:right;">
                                 <t t-set="time_total" t-value="time_total+ts.amount"/><!--Contamos el tiempo empleado-->
                                 <span t-field="ts.amount"  t-options="{'widget': 'float_time'}"/>
                             </td>
-                            <td t-if="ts.timepack_id" style="font-size:0.7em;" class="text-right">
+                            <td t-if="ts.timepack_id" style="font-size:0.7em;text-align:right;">
                                 <span t-field="ts.timepack_id.code"/>
                                 <span t-if="ts.discount_time == True">
                                     <span class="fa fa-arrow-circle-down text-danger"/>
@@ -76,16 +76,14 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot style="font-size:0.8em;">
+                    <tfoot style="font-size:0.7em;">
                         <tr>
-                            <th style="font-weight: normal;font-size:0.6em;">
-                                <div t-foreach="t.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]" t-as="tp" t-if="tp.timepack_id">
-                                    <span t-if="time_tp_discount > 0" class="fa fa-arrow-circle-down text-danger">&#160;Discount Time &#160;&#160;&#160;</span>
-                                    <span t-if="time_tp_nodiscount > 0" class="fa fa-arrow-circle-right">&#160;Complimentary Time</span>
-                                </div>
+                            <th colspan="3" style="text-align:right">
+                                <span t-field="t.total_hours" t-options="{'widget': 'float_time'}" style="font-size:1.2em;margin-left: 15px;"/>
                             </th>
-                            <th colspan="2" class="text-right">
-                                <span t-field="t.total_hours" t-options="{'widget': 'float_time'}"/>
+                            <th colspan="99" style="text-align:right;width: 15%;">
+                                <span class="fa fa-arrow-circle-down text-danger"/> Discounts Time<br/>
+                                <span class="fa fa-arrow-circle-right" style="margin-left: 5px;"/> Complimentary time
                             </th>
                         </tr>
                     </tfoot>
