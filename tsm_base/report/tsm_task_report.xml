@@ -12,6 +12,7 @@
         <field name="attachment">'(' + object.code + ')_' + (object.name or '').replace(' ', '-') + '.pdf'</field>
         <field name="binding_model_id" ref="model_tsm_task"/>
         <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
         <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
     </record>
 
