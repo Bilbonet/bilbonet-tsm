@@ -1,9 +1,8 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 {
     'name': 'Client Technical Assets Management',
-    'version': '12.0.1.0.0',
+    'version': '16.0.1.0.0',
     'category': 'Management',
     'license': 'AGPL-3',
     'author': 'Jesus Ramiro (Bilbonet.NET)',
@@ -20,5 +19,6 @@
         'report/tsm_tech_asset_report.xml',
         'data/tsm_tech_asset_email_template.xml',
     ],
-    'installable': True,
+    "application": False,
+    "installable": True,
 }

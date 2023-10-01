@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <!--
        Tech Asset Report
