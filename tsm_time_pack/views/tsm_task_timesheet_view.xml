@@ -36,11 +36,14 @@
                         <field name="timepack_id" class="oe_inline"
                                domain="[('partner_id', '=', task_partner_id)]"
                                options='{"no_open": True, "no_create": True}'/>
-                        <button type="object" name="view_time_pack"
-                                title="View Time Pack Details"
-                                icon="fa-search-plus"
-                                attrs="{'invisible':[('timepack_id','=',False)]}"
-                                class="btn btn-link"/>
+                        <button 
+                            type="object" 
+                            name="view_time_pack"
+                            icon="fa-search-plus"
+                            attrs="{'invisible':[('timepack_id','=',False)]}"
+                            class="oe_stat_button"
+                            title="View Time Pack Details"
+                        />
                     </div>
                     <field name="discount_time" attrs="{'invisible':[('timepack_id','=',False)]}"/>
                 </xpath>
