@@ -58,13 +58,15 @@ class TsmTechAsset(models.Model):
         help="Configurations, notes about the assets.")
     user_id = fields.Many2one('res.users',
         string='Responsible', required=True,
-        default=lambda self: self.env.uid, index=True, track_visibility='always')
+        default=lambda self: self.env.uid, index=True, 
+        tracking=30,
+    )
     partner_id = fields.Many2one('res.partner',
         string='Customer', required=True)
     type_id = fields.Many2one(
         comodel_name='tsm.tech.asset.type',
         string='Type', required=True, index=True,
-        tracking=30, change_default=True)
+        tracking=40, change_default=True)
     task_ids = fields.One2many('tsm.task', 'asset_ids',
         string='Tasks', context={'active_test': False})
     task_count = fields.Integer(
@@ -92,13 +94,6 @@ class TsmTechAsset(models.Model):
         ('tsm_tech_asset_unique_code', 'UNIQUE (code)',
          _('The code must be unique!')),
     ]
-
-    @api.model
-    def create(self, vals):
-        if vals.get('code', '/') == '/':
-            vals['code'] = \
-                self.env['ir.sequence'].next_by_code('tsm.tech.asset')
-        return super(TsmTechAsset, self).create(vals)
 
     def action_tech_asset_send(self):
         '''
@@ -140,6 +135,18 @@ class TsmTechAsset(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    # ------------------
+    # CRUD overrides
+    # ------------------
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Assign new code
+        for vals in vals_list:
+            if vals.get('code', '/') == '/':
+                vals['code'] = self.env['ir.sequence'].next_by_code('tsm.tech.asset')
+
+        return super(TsmTechAsset, self).create(vals)
 
 class TsmTechAssetType(models.Model):
     _name = "tsm.tech.asset.type"

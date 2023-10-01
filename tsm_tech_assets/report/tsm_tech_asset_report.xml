@@ -5,14 +5,19 @@
     <!--
        Tech Asset Report
    -->
-    <report
-        id="tsm_tech_asset_report_action"
-        name="tsm_tech_assets.tsm_tech_asset_report_document"
-        model="tsm.tech.asset"
-        string="Print Asset Report"
-        print_report_name="'('+object.code+')_'+object.name.replace(' ', '-')"
-        report_type="qweb-pdf"
-        paperformat="tsm_base.tsm_paper_format_report"/>
+    <record id="tsm_tech_asset_report_action" model="ir.actions.report">
+        <field name="name">Print Asset Report</field>
+        <field name="model">tsm.tech.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tsm_tech_assets.tsm_tech_asset_report_document</field>
+        <field name="report_file">tsm_tech_assets.tsm_tech_asset_report_document</field>
+        <field name="print_report_name">'(' + object.code + ')_' + object.name.replace(' ', '-')</field>
+        <field name="attachment">'(' + object.code + ')_' + (object.name or '').replace(' ', '-') + '.pdf'</field>
+        <field name="binding_model_id" ref="model_tsm_tech_asset"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+    </record>
 
     <template id="tsm_tech_asset_report_document">
         <t t-call="web.html_container">
@@ -85,14 +90,19 @@
     <!--
        Tech Asset Report Detailed
    -->
-    <report
-        id="tsm_tech_asset_report_detailed_action"
-        name="tsm_tech_assets.tsm_tech_asset_report_detailed_document"
-        model="tsm.tech.asset"
-        string="Print Asset Report Detailed"
-        print_report_name="'('+object.code+')_'+object.name.replace(' ', '-')+'_detailed'"
-        report_type="qweb-pdf"
-        paperformat="tsm_base.tsm_paper_format_report"/>
+    <record id="tsm_tech_asset_report_detailed_action" model="ir.actions.report">
+        <field name="name">Print Asset Report Detailed</field>
+        <field name="model">tsm.tech.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tsm_tech_assets.tsm_tech_asset_report_detailed_document</field>
+        <field name="report_file">tsm_tech_assets.tsm_tech_asset_report_detailed_document</field>
+        <field name="print_report_name">'(' + object.code + ')_' + object.name.replace(' ', '-')</field>
+        <field name="attachment">'(' + object.code + ')_' + (object.name or '').replace(' ', '-') + '.pdf'</field>
+        <field name="binding_model_id" ref="model_tsm_tech_asset"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+    </record>
 
     <template id="tsm_tech_asset_report_detailed_document">
         <t t-call="web.html_container">
