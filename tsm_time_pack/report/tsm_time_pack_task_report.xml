@@ -3,7 +3,7 @@
     <!-- Task Report Modification -->
     <template id="tsm_time_pack_report_document" inherit_id="tsm_base.tsm_task_report_document">
         <xpath expr="//div[@name='task_body_report']" position="after">
-            <div class="row" t-if="len(o.timesheet_ids) > 0">
+            <div class="row" t-if="len(o.timesheet_ids) > 0" style="page-break-inside: avoid;">
                 <table class="table table-sm table-striped">
                     <thead style="background-color: #3498DB;font-size:0.8em;" >
                         <tr class="text-center">
@@ -35,16 +35,14 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot style="font-size:0.8em;">
+                    <tfoot style="font-size:0.7em;">
                         <tr>
-                            <th style="font-weight: normal;font-size:0.6em;">
-                                <div t-if="any(o.timesheet_ids.filtered(lambda l: l.timepack_id))">
-                                    <span class="fa fa-arrow-circle-down text-danger"/>&#160;Discount Time &#160;&#160;&#160;
-                                    <span class="fa fa-arrow-circle-right"/>&#160;Complimentary Time
-                                </div>
+                            <th colspan="3" style="text-align:right">
+                                <span t-field="o.total_hours" t-options="{'widget': 'float_time'}" style="font-size:1.2em;margin-left: 15px;"/>
                             </th>
-                            <th colspan="99" style="text-align:right">
-                                <span t-field="o.total_hours" t-options="{'widget': 'float_time'}"/>
+                            <th colspan="99" style="text-align:right;width: 15%;">
+                                <span class="fa fa-arrow-circle-down text-danger"/> Discounts Time<br/>
+                                <span class="fa fa-arrow-circle-right" style="margin-left: 5px;"/> Complimentary time
                             </th>
                         </tr>
                     </tfoot>
