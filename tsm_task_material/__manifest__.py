@@ -7,8 +7,6 @@
     "category": "Management",
     "author": "Jesus Ramiro,",
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
     "depends": [
         "tsm_base",
         "sale",
@@ -20,4 +18,6 @@
         "report/tsm_task_material_report.xml",
         "report/tsm_material_project_report.xml",
     ],
+    "application": False,
+    "installable": True,
 }
