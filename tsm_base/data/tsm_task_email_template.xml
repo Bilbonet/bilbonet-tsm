@@ -11,7 +11,6 @@
         <field name="report_template" ref="tsm_base.tsm_task_report_action"/>
         <field name="report_name">{{ '(' + object.code + ')_' + (object.name or '').replace(' ', '-') }}</field>
         <field name="lang">{{ object.partner_id.lang }}</field>
-        <field name="description">Used by technicians when they send task report to a customer</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
