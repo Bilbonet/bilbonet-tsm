@@ -3,7 +3,7 @@
 {
     "name": "TSM Task Time Service Pack",
     "summary": "Create packs of time which can be consumed in tasks.",
-    "version": "16.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Management",
     "author": "Jesus Ramiro,",
     "license": "AGPL-3",

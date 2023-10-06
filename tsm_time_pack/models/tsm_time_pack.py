@@ -389,7 +389,7 @@ class TsmTimePack(models.Model):
         """Get the proper display name formatted as 'code, name'."""
         result = []
         for rec in self:
-            name = ['[%s]' % (rec.code)]
+            name = '[%s]' % (rec.code)
             if rec.name:
                 name = '[%s] %s' % (rec.code, rec.name)
             result.append((rec.id, name))

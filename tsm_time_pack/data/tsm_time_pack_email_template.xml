@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
 
     <record id="tsm_time_pack_email_template" model="mail.template">
@@ -10,7 +12,6 @@
         <field name="report_template" ref="tsm_time_pack.tsm_time_pack_report_detailed_action"/>
         <field name="report_name">{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}</field>
         <field name="lang">{{ object.partner_id.lang }}</field>
-        <field name="description">Used by technicians when they send time pack report to a customer</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
