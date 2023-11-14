@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 16:33+0000\n"
-"PO-Revision-Date: 2023-11-14 16:33+0000\n"
+"POT-Creation-Date: 2023-11-14 17:19+0000\n"
+"PO-Revision-Date: 2023-11-14 18:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.report,print_report_name:tsm_tech_assets.tsm_tech_asset_report_action
@@ -25,6 +27,176 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_kanban_view
 msgid "(Un)Archive"
 msgstr "(Des)Archivar"
+
+#. module: tsm_tech_assets
+#: model:mail.template,body_html:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid ""
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; "
+"font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"        Hello, <span style=\"font-weight: bold;\" t-out=\"object.partner_id.name "
+"or ''\"/>\n"
+"        <br/><br/>\n"
+"        We inform you about the following Tech Asset: \n"
+"    </p>\n"
+"\n"
+"    <p style=\"border-left: 4px solid #f2f2f2; margin-left: 30px;padding-"
+"left:15px;\">\n"
+"        Type: <span style=\"font-weight: bold;\" t-out=\"object.type_id.name\"/"
+"><br/>\n"
+"        Name: <span style=\"font-weight: bold;\" t-out=\"'%s - %s' % (object."
+"code, object.name)\"/><br/>\n"
+"        Date: <span style=\"font-weight: bold;\" t-out=\"object.date or ''\" t-"
+"options=\"{'widget': 'date'}\"/><br/>\n"
+"        Your contact: <span style=\"font-weight: bold;\" t-out=\"object.user_id."
+"name or ''\"/>\n"
+"    </p>\n"
+"    <br/>\n"
+"    <p>\n"
+"        If you have any question, do not hesitate to contact us.<br/>\n"
+"        Thank you for trusting in us!\n"
+"    </p>\n"
+"    <t t-if=\"not is_html_empty(object.user_id.signature)\">\n"
+"        <br/>\n"
+"        <t t-out=\"object.user_id.signature or ''\">--<br/>Bilbonet</t>\n"
+"    </t>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; "
+"font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"        Hola, <span style=\"font-weight: bold;\" t-out=\"object.partner_id.name "
+"or ''\"/>\n"
+"        <br/><br/>\n"
+"        Le informamos sobre el siguiente elemento técnico: \n"
+"    </p>\n"
+"\n"
+"    <p style=\"border-left: 4px solid #f2f2f2; margin-left: 30px;padding-"
+"left:15px;\">\n"
+"        Tipo: <span style=\"font-weight: bold;\" t-out=\"object.type_id.name\"/"
+"><br/>\n"
+"        Nomobre: <span style=\"font-weight: bold;\" t-out=\"'%s - %s' % (object."
+"code, object.name)\"/><br/>\n"
+"        Fecha: <span style=\"font-weight: bold;\" t-out=\"object.date or ''\" t-"
+"options=\"{'widget': 'date'}\"/><br/>\n"
+"        Su contacto: <span style=\"font-weight: bold;\" t-out=\"object.user_id."
+"name or ''\"/>\n"
+"    </p>\n"
+"    <br/>\n"
+"    <p>\n"
+"        Si tiene alguna pregunta no dude en contactarnos.<br/>\n"
+"        Gracias por confiar en BilboNET!\n"
+"    </p>\n"
+"    <t t-if=\"not is_html_empty(object.user_id.signature)\">\n"
+"        <br/>\n"
+"        <t t-out=\"object.user_id.signature or ''\">--<br/>BilboNET</t>\n"
+"    </t>\n"
+"</div>\n"
+"        "
+
+#. module: tsm_tech_assets
+#: model:mail.template,body_html:tsm_tech_assets.tsm_tech_asset_email_template
+msgid ""
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; "
+"font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"        Hello, <span style=\"font-weight: bold;\" t-out=\"object.partner_id.name "
+"or ''\"/>\n"
+"        <br/><br/>\n"
+"        We inform you about the following Tech Asset: \n"
+"    </p>\n"
+"\n"
+"    <p style=\"border-left: 4px solid #f2f2f2; margin-left: 30px;padding-"
+"left:15px;\">\n"
+"        Type: <span style=\"font-weight: bold;\" t-out=\"object.type_id.name\"/"
+"><br/>\n"
+"        Name: <span style=\"font-weight: bold;\" t-out=\"'%s - %s' % (object."
+"code, object.name)\"/><br/>\n"
+"        Date: <span style=\"font-weight: bold;\" t-out=\"object.date or ''\" t-"
+"options=\"{'widget': 'date'}\"/><br/>\n"
+"        Your contact: <span style=\"font-weight: bold;\" t-out=\"object.user_id."
+"name or ''\"/>\n"
+"    </p>\n"
+"    <table style=\"width:100%;background-color:#f9f9f9;border:solid 1px #f0f0f0;"
+"\">\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;border-right:solid 1px #a0a0a0;"
+"\"><h4>Technical Notes:</h4></td>\n"
+"            <td style=\"padding:4px;\"><h4>Configuration Notes:</h4></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;width:50%;border-right:solid 1px #a0a0a0;\">\n"
+"                <span t-out=\"object.tech_notes\"/>\n"
+"            </td>\n"
+"            <td style=\"padding:4px;width:50%\">\n"
+"                <span t-out=\"object.config_notes\"/>\n"
+"            </td>\n"
+"        </tr>\n"
+"    </table>\n"
+"    <br/>\n"
+"    <p>\n"
+"        If you have any question, do not hesitate to contact us.<br/>\n"
+"        Thank you for trusting in us!\n"
+"    </p>\n"
+"    <t t-if=\"not is_html_empty(object.user_id.signature)\">\n"
+"        <br/>\n"
+"        <t t-out=\"object.user_id.signature or ''\">--<br/>Bilbonet</t>\n"
+"    </t>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; "
+"font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"        Hola, <span style=\"font-weight: bold;\" t-out=\"object.partner_id.name "
+"or ''\"/>\n"
+"        <br/><br/>\n"
+"        Le informamos sobre el siguiente elemento técnico:: \n"
+"    </p>\n"
+"\n"
+"    <p style=\"border-left: 4px solid #f2f2f2; margin-left: 30px;padding-"
+"left:15px;\">\n"
+"        Tipo: <span style=\"font-weight: bold;\" t-out=\"object.type_id.name\"/"
+"><br/>\n"
+"        Nombre: <span style=\"font-weight: bold;\" t-out=\"'%s - %s' % (object."
+"code, object.name)\"/><br/>\n"
+"        Fecha: <span style=\"font-weight: bold;\" t-out=\"object.date or ''\" t-"
+"options=\"{'widget': 'date'}\"/><br/>\n"
+"        Su contacto: <span style=\"font-weight: bold;\" t-out=\"object.user_id."
+"name or ''\"/>\n"
+"    </p>\n"
+"    <table style=\"width:100%;background-color:#f9f9f9;border:solid 1px #f0f0f0;"
+"\">\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;border-right:solid 1px #a0a0a0;\"><h4>Notas "
+"Técnicas:</h4></td>\n"
+"            <td style=\"padding:4px;\"><h4>Notas Configuración:</h4></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding:4px;width:50%;border-right:solid 1px #a0a0a0;\">\n"
+"                <span t-out=\"object.tech_notes\"/>\n"
+"            </td>\n"
+"            <td style=\"padding:4px;width:50%\">\n"
+"                <span t-out=\"object.config_notes\"/>\n"
+"            </td>\n"
+"        </tr>\n"
+"    </table>\n"
+"    <br/>\n"
+"    <p>\n"
+"        Si tiene alguna pregunta no dude en contactarnos.<br/>\n"
+"        Gracias por confiar en BilboNET!\n"
+"    </p>\n"
+"    <t t-if=\"not is_html_empty(object.user_id.signature)\">\n"
+"        <br/>\n"
+"        <t t-out=\"object.user_id.signature or ''\">--<br/>BilboNET</t>\n"
+"    </t>\n"
+"</div>\n"
+"        "
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_kanban_view
@@ -167,7 +339,7 @@ msgstr "Notas Configuración"
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Configuration Notes:"
-msgstr "Notas Configuración."
+msgstr "Notas Configuración:"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__config_notes
@@ -263,8 +435,7 @@ msgstr "Actividades futuras"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__sequence
 msgid "Gives the sequence order when displaying a list of assets."
-msgstr ""
-"Indica la secuencia de orden cuando se muestra una lista de elementos."
+msgstr "Indica la secuencia de orden cuando se muestra una lista de elementos."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
@@ -289,8 +460,10 @@ msgid ""
 "- Visible by all employees: All employees may see tech asset\n"
 msgstr ""
 "Visibilidad del elemento técnico:\n"
-"- Solo con invitación: Solo los empleados seguidores pueden ver el elemento técnico\n"
-"- Visible para todos los empleados: Todos los empleados pueden ver el elemento técnico\n"
+"- Solo con invitación: Solo los empleados seguidores pueden ver el elemento "
+"técnico\n"
+"- Visible para todos los empleados: Todos los empleados pueden ver el elemento "
+"técnico\n"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__id
@@ -323,11 +496,11 @@ msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__active
 msgid ""
-"If the active field is set to False, it will allow you to hide the asset "
-"without removing it."
+"If the active field is set to False, it will allow you to hide the asset without "
+"removing it."
 msgstr ""
-"Si el campo activo se desactiva, te permitirá ocultar el elemento técnico "
-"sin eliminarlo."
+"Si el campo activo se desactiva, te permitirá ocultar el elemento técnico sin "
+"eliminarlo."
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_is_follower
@@ -450,7 +623,7 @@ msgstr "Número de mensajes no leidos"
 #. module: tsm_tech_assets
 #: model:ir.model.fields.selection,name:tsm_tech_assets.selection__tsm_tech_asset__privacy_visibility__followers
 msgid "On invitation only"
-msgstr ""
+msgstr "Solo con invitación"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
@@ -540,6 +713,16 @@ msgid "T.S.M: Tech Assets"
 msgstr "T.S.M: Elementos Técnicos"
 
 #. module: tsm_tech_assets
+#: model:mail.template,name:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid "TSM Tech Asset - Attached Asset Report"
+msgstr "TSM Elemento Técnico - Informe Adjunto"
+
+#. module: tsm_tech_assets
+#: model:mail.template,name:tsm_tech_assets.tsm_tech_asset_email_template
+msgid "TSM Tech Asset - Send By Email"
+msgstr "TSM Elemento Técnico - Envío por eMail"
+
+#. module: tsm_tech_assets
 #: model:ir.actions.act_window,name:tsm_tech_assets.tsm_tech_asset_type_action
 msgid "TSM Tech Asset Types"
 msgstr "TSM Tipos de elementos técnicos"
@@ -560,6 +743,12 @@ msgstr "Tareas"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_task__asset_ids
 msgid "Tech Asset"
 msgstr "Elemento Técnico"
+
+#. module: tsm_tech_assets
+#: model:mail.template,subject:tsm_tech_assets.tsm_tech_asset_email_template
+#: model:mail.template,subject:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid "Tech Asset ({{object.code or 'n/a'}} - {{object.name or 'n/a'}})"
+msgstr "Elemento Técnico ({{object.code or 'n/a'}} - {{object.name or 'n/a'}})"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__code
@@ -606,16 +795,16 @@ msgstr "Técnico:"
 #: model:ir.model.constraint,message:tsm_tech_assets.constraint_tsm_tech_asset_tsm_tech_asset_unique_code
 #, python-format
 msgid "The code must be unique!"
-msgstr ""
+msgstr "Código del elemento debe ser único!"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__can_edit
 msgid ""
-"This field is for security purpose. Only members of managers group can "
-"modify some fields."
+"This field is for security purpose. Only members of managers group can modify "
+"some fields."
 msgstr ""
-"Este campo es para propositos de seguridad. Solo miembros del grupo de "
-"gerentes pueden modificar campos."
+"Este campo es para propositos de seguridad. Solo miembros del grupo de gerentes "
+"pueden modificar campos."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
@@ -664,7 +853,7 @@ msgstr "Contador de mensajes sin leer"
 #. module: tsm_tech_assets
 #: model:ir.model.fields.selection,name:tsm_tech_assets.selection__tsm_tech_asset__privacy_visibility__employees
 msgid "Visible by all employees"
-msgstr ""
+msgstr "Visible para todos los empleados"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__website_message_ids
@@ -679,13 +868,21 @@ msgstr "Historial de comunicaciones del sitio web"
 #. module: tsm_tech_assets
 #: model_terms:ir.actions.act_window,help:tsm_tech_assets.tsm_tasks_from_tech_asset_action
 msgid ""
-"You can now manage your tasks in order to get things done efficiently. Track"
-" progress, discuss, attach documents, etc."
+"You can now manage your tasks in order to get things done efficiently. Track "
+"progress, discuss, attach documents, etc."
 msgstr ""
-"Ahora usted puede gestionar sus tareas para tenerlas hechas eficientemente. "
-"Siga el progreso, comente, adjunte documentos, etc."
+"Ahora usted puede gestionar sus tareas para tenerlas hechas eficientemente. Siga "
+"el progreso, comente, adjunte documentos, etc."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_kanban_view
 msgid "text-muted"
 msgstr ""
+
+#. module: tsm_tech_assets
+#: model:mail.template,report_name:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
+msgid ""
+"{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}"
+msgstr ""
+"{{ '(' + object.code + ')_' + (object.name or 'Elemento_Técnico').replace(' ', "
+"'-') }}"

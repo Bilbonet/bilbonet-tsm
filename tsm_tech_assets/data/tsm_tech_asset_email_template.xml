@@ -58,7 +58,7 @@
         <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
         <field name="report_template" ref="tsm_tech_assets.tsm_tech_asset_report_action"/>
-        <field name="report_name">{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}</field>
+        <field name="report_name">{{ '(' + object.code + ')_' + (object.name or 'Tech Asset').replace(' ', '-') }}</field>
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
