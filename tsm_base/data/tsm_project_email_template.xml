@@ -18,7 +18,7 @@
     <p style="box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;">
         Hello, <span style="font-weight: bold;" t-out="object.partner_id.name or ''"></span>
         <br/><br/>
-        We inform you about the following task: 
+        We inform you about the following project: 
     </p>
     <p style="border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;">
        Project Title: <span style="font-weight: bold;" t-out="object.name or ''"></span><br/>
