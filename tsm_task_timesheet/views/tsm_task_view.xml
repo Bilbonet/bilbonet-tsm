@@ -46,7 +46,6 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="total_hours" widget="float_time" sum="Total Hours" readonly="1"/>
-                    <field name="stage_id"/>
                 </field>
             </field>
         </record>
