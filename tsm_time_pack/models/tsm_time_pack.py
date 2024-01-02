@@ -382,7 +382,7 @@ class TsmTimePack(models.Model):
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
-        default['code'] = self.env['ir.sequence'].next_by_code('tsm.task')
+        default['code'] = self.env['ir.sequence'].next_by_code('tsm.time.pack')
         return super().copy(default)
 
     def name_get(self):
