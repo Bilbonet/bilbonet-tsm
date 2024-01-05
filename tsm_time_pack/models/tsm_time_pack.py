@@ -181,12 +181,12 @@ class TsmTimePack(models.Model):
                 ) % (
                     time.contrated_hours, 
                     round(consumed_hours, 2), 
-                    self.progress
+                    progress
                 )
                 title_msg=_(
                     'Time Pack %s Warning!!\n'
                     'Plase review the time pack hours left!!'
-                ) % (self.code)
+                ) % (time.code)
                 user_msg = {
                     "message": txt_msg,
                     "title":  title_msg,
