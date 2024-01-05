@@ -17,9 +17,9 @@ class TsmTechAsset(models.Model):
             ], count=True)
 
     def _compute_can_edit(self):
-        if self.env.user.has_group('tsm_base.group_tsm_manager')\
-                or self.env.user.id == self.user_id.id:
-            self.can_edit = True
+        can_edit = self.env.user.sudo().has_group('tsm_base.group_tsm_manager')\
+             or self.env.user.id == self.user_id.id
+        self.can_edit = can_edit
 
     # For the Report Detailed
     def _compute_task_ids(self):
@@ -59,8 +59,7 @@ class TsmTechAsset(models.Model):
     user_id = fields.Many2one('res.users',
         string='Responsible', required=True,
         default=lambda self: self.env.uid, index=True, 
-        tracking=30,
-    )
+        tracking=30)
     partner_id = fields.Many2one('res.partner',
         string='Customer', required=True)
     type_id = fields.Many2one(
@@ -72,8 +71,7 @@ class TsmTechAsset(models.Model):
     task_count = fields.Integer(
         compute='_compute_task_count', 
         string="Amount Tasks",
-        readonly=True,
-    )
+        readonly=True)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
@@ -85,8 +83,9 @@ class TsmTechAsset(models.Model):
              "see the followed tech asset\n"
              "- Visible by all employees: All employees "
              "may see tech asset\n")
-    can_edit = fields.Boolean(compute='_compute_can_edit',
-        string='Security: only managers can edit', default=True,
+    can_edit = fields.Boolean(
+        compute='_compute_can_edit',
+        string='Security: only managers can edit', 
         help='This field is for security purpose. '
         'Only members of managers group can modify some fields.')
 
