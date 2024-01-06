@@ -1,5 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import datetime
 from datetime import date
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
@@ -174,13 +175,16 @@ class TsmTimePack(models.Model):
             })
 
             if progress >= 90:
+                #TODO: Improve the way to express hours
+                cont_hours = str(datetime.timedelta(hours=time.contrated_hours))[:5]
+                consu_hours = str(datetime.timedelta(hours=consumed_hours))[:5]
                 txt_msg = _(
                     '<h6>Contrated Hours: %s</h6>'
                     '<h6>Consumed Hours: %s</h6>'
                     '<h4 class="text-danger">Progress: %s %%</h4>'
                 ) % (
-                    time.contrated_hours, 
-                    round(consumed_hours, 2), 
+                    cont_hours, 
+                    consu_hours, 
                     progress
                 )
                 title_msg=_('Time Pack %s Warning!!') % (time.code)
