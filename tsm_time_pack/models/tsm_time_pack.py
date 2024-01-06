@@ -175,22 +175,20 @@ class TsmTimePack(models.Model):
 
             if progress >= 90:
                 txt_msg = _(
-                    '<h5>Contrated Hours: %s</h5>'
-                    '<h5>Consumed Hours: %s</h5>'
-                    '<h3>Progress: %s %%</h3>'
+                    '<h6>Contrated Hours: %s</h6>'
+                    '<h6>Consumed Hours: %s</h6>'
+                    '<h4 class="text-danger">Progress: %s %%</h4>'
                 ) % (
                     time.contrated_hours, 
                     round(consumed_hours, 2), 
                     progress
                 )
-                title_msg=_(
-                    'Time Pack %s Warning!!\n'
-                    'Plase review the time pack hours left!!'
-                ) % (time.code)
+                title_msg=_('Time Pack %s Warning!!') % (time.code)
                 user_msg = {
                     "message": txt_msg,
                     "title":  title_msg,
-                    "sticky": True
+                    "sticky": True,
+                    "html": True,
                 }
                 self.env.user.notify_danger(**user_msg)
 
