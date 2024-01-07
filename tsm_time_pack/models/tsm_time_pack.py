@@ -175,7 +175,7 @@ class TsmTimePack(models.Model):
             })
 
             if progress >= 90:
-                #TODO: Improve the way to express hours
+                #TODO: Improve the way to express hours in format "%H:%M"
                 cont_hours = str(datetime.timedelta(hours=time.contrated_hours))[:5]
                 consu_hours = str(datetime.timedelta(hours=consumed_hours))[:5]
                 txt_msg = _(
@@ -275,10 +275,16 @@ class TsmTimePack(models.Model):
 
     def _prepare_sale_line(self):
         self.ensure_one()
-        name = (_(
-                '%s\n Time Pack: [%s] %s' 
-                % (self.description_sale, self.code, self.name or '')
-            ))
+        name = (
+            _(
+                '{description_sale}\n Time Pack: [{code}] {name}' 
+            ).format(
+                description_sale = self.description_sale,
+                code = self.code,
+                name = self.name or ''
+            )
+        )
+
         sale_line_vals = {
             'product_id': self.product_id.id,
             'name': name,
@@ -298,10 +304,14 @@ class TsmTimePack(models.Model):
                 "Time Pack: %s"
             ) % self.code)
 
-        client_ref = (_(
-                'Time Pack [%s] %s' 
-                % (self.code, self.name or '')
-            ))
+        client_ref = (
+            _(
+                'Time Pack: [{code}] {name}' 
+            ).format(
+                code = self.code,
+                name = self.name or ''
+            )
+        )
 
         sale = self.env['sale.order'].new(
             {
