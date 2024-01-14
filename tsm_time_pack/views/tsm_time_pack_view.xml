@@ -71,9 +71,6 @@
                                     </group>
                                     <group>
                                         <field name="progress" widget="progressbar"/>
-                                        <!-- <field name="progress" nolabel="1" widget="gauge"
-                                               options="{'style': 'width:120px; height: 90px;'}"
-                                               style="width:120px;height:120px;cursor:pointer;"/> -->
                                     </group>
                                 </group>
                                 <field name="timesheet_ids">
@@ -97,7 +94,7 @@
                                 </group>
                             </page>
                             <page name="description_page" string="Description">
-                                <field name="description" type="html"/>
+                                <field name="description" options="{'codeview':true}"/>
                                 <div class="oe_clear"/>
                             </page>
                             <page name="sale_page" string="Sale Operation" groups="sales_team.group_sale_manager">
