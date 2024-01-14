@@ -72,7 +72,7 @@
 
                     <notebook>
                         <page name="description_page" string="Description">
-                            <field name="description"/>
+                            <field name="description" options="{'codeview':true}"/>
                         </page>
                     </notebook>
                 </sheet>
