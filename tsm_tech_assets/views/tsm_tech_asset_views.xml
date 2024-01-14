@@ -74,11 +74,13 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
                                     <h4>Technical Notes:</h4>
-                                    <field name="tech_notes" type="html"/>
+                                    <field name="tech_notes"
+                                           options="{'codeview':true}"/>
                                 </div>
                                 <div class="col-xs-12 col-sm-6">
                                     <h4>Configuration Notes:</h4>
-                                    <field name="config_notes" type="html"/>
+                                    <field name="config_notes"
+                                           options="{'codeview':true}"/>
                                 </div>
                             </div>
                         </page>
