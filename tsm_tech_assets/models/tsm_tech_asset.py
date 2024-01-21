@@ -19,7 +19,8 @@ class TsmTechAsset(models.Model):
     def _compute_can_edit(self):
         can_edit = self.env.user.sudo().has_group('tsm_base.group_tsm_manager')\
              or self.env.user.id == self.user_id.id
-        self.can_edit = can_edit
+        for asset in self:
+            asset.can_edit = can_edit
 
     # For the Report Detailed
     def _compute_task_ids(self):
@@ -85,7 +86,8 @@ class TsmTechAsset(models.Model):
              "may see tech asset\n")
     can_edit = fields.Boolean(
         compute='_compute_can_edit',
-        string='Security: only managers can edit', 
+        string='Security: only managers can edit',
+        default=True,
         help='This field is for security purpose. '
         'Only members of managers group can modify some fields.')
 

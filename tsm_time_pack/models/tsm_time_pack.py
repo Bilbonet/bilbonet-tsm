@@ -24,7 +24,9 @@ class TsmTimePack(models.Model):
             self.company_id, self.date_start or fields.Date.today())
 
     def _compuete_can_edit(self):
-        self.can_edit = self.env.user.has_group('tsm_base.group_tsm_manager')
+        can_edit = self.env.user.has_group('tsm_base.group_tsm_manager')
+        for tp in self:
+            tp.can_edit = can_edit
 
     company_id = fields.Many2one(comodel_name='res.company', string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
