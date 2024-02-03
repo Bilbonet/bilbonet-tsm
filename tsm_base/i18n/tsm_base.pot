@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 10:50+0000\n"
-"PO-Revision-Date: 2023-11-14 10:50+0000\n"
+"POT-Creation-Date: 2024-02-03 21:13+0000\n"
+"PO-Revision-Date: 2024-02-03 21:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid ""
 "    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "        Hello, <span style=\"font-weight: bold;\" t-out=\"object.partner_id.name or ''\"/>\n"
 "        <br/><br/>\n"
-"        We inform you about the following task: \n"
+"        We inform you about the following project: \n"
 "    </p>\n"
 "    <p style=\"border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;\">\n"
 "       Project Title: <span style=\"font-weight: bold;\" t-out=\"object.name or ''\"/><br/>\n"
@@ -73,6 +73,11 @@ msgid ""
 msgstr ""
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
+msgid "<i class=\"fa fa-check\" role=\"img\" aria-label=\"Active\" title=\"Active\"/>"
+msgstr ""
+
+#. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "<i class=\"fa fa-comments\" role=\"img\" aria-label=\"Unread Messages\"/>"
@@ -81,6 +86,11 @@ msgstr ""
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_kanban_view
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
+msgstr ""
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
+msgid "<i class=\"fa fa-undo\" role=\"img\" aria-label=\"Inactive\" title=\"Inactive\"/>"
 msgstr ""
 
 #. module: tsm_base
@@ -107,6 +117,7 @@ msgstr ""
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__active
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__active
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 msgid "Active"
 msgstr ""
 
@@ -523,6 +534,11 @@ msgstr ""
 #: code:addons/tsm_base/models/tsm_task_type.py:0
 #, python-format
 msgid "In Progress"
+msgstr ""
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
+msgid "Inactive"
 msgstr ""
 
 #. module: tsm_base
