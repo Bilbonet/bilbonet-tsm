@@ -10,7 +10,7 @@
         <field name="report_name">tsm_time_pack.tsm_time_pack_report_summary_document</field>
         <field name="report_file">tsm_time_pack.tsm_time_pack_report_summary_document</field>
         <field name="print_report_name">'Time_Pack_(%s)%s' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
-        <field name="attachment">'Time_Pack_(%s)%s.pdf' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
+        <field name="attachment"></field>
         <field name="binding_model_id" ref="model_tsm_time_pack"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
@@ -172,7 +172,7 @@
         <field name="report_name">tsm_time_pack.tsm_time_pack_report_detailed_document</field>
         <field name="report_file">tsm_time_pack.tsm_time_pack_report_detailed_document</field>
         <field name="print_report_name">'Time_Pack_(%s)%s' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
-        <field name="attachment">'Time_Pack_(%s)%s.pdf' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
+        <field name="attachment"></field>
         <field name="binding_model_id" ref="model_tsm_time_pack"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
