@@ -90,7 +90,8 @@
                     </group>
                     <notebook>
                         <page name="description_page" string="Description">
-                            <field name="description" options="{'codeview':true}" placeholder="Task description..."/>
+                            <field name="description" default_focus="1" type="html" 
+                                   options="{'codeview':true}" placeholder="Task description..."/>
                             <div class="oe_clear"/>
                         </page>
                         <page name="extra_info" string="Extra Info">
@@ -135,7 +136,7 @@
         <field name="name">tsm.task.kanban</field>
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks"
+            <kanban default_group_by="stage_id" class="o_kanban_small_column"
                     on_create="quick_create" quick_create_view="tsm_base.tsm_quick_create_task_form">
                 <field name="tags_in_task" invisible="1"/>
                 <field name="color"/>
@@ -162,6 +163,14 @@
                                     <div class="o_kanban_record_headings">
                                         <small class="text-primary"><field name="partner_id"/></small>
                                         <hr class="mt0 mb4"/>
+                                        <span class="mr-2">
+                                            <a name="action_inactive" type="object" t-if="record.active.raw_value and record.closed.raw_value">
+                                                <i class="fa fa-check" role="img" aria-label="Active" title="Active"/>
+                                            </a>
+                                            <a name="action_active" type="object" t-if="!record.active.raw_value">
+                                                <i class="fa fa-undo" role="img" aria-label="Inactive" title="Inactive"/>
+                                            </a>
+                                        </span>
                                         <t t-if="record.active.raw_value == false" t-set="muted">text-muted</t>
                                         <span t-attf-class="#{muted || 'o_kanban_record_title'}">
                                             [<field name="code"/>]
