@@ -69,6 +69,23 @@
                                 <field name="code" class="me-3" style="flex-basis: 10%"/>
                                 <field name="name" class="o_task_name me-3 pe-2" placeholder="Task Title..."/>
                             </div>
+                            <button type="object" name="action_inactive"
+                                    class="btn btn-link text-danger"
+                                    icon="fa-check fa-2x"
+                                    attrs="{'invisible':['|',
+                                        ('closed', '=', False),
+                                        ('active', '=', False),
+                                    ]}"
+                                    title="Active"
+                                    Help="Archive Task"/>
+                            <button type="object" name="action_active"
+                                    class="btn btn-link text-success"
+                                    icon="fa-undo fa-2x"
+                                    attrs="{'invisible':[
+                                        ('active', '=', True),
+                                    ]}"
+                                    title="Inactive"
+                                    Help="Unarchive Task"/>
                             <field name="kanban_state" widget="state_selection" class=""/>
                         </h1>
                     </div>
