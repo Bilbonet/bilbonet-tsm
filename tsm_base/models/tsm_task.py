@@ -179,6 +179,12 @@ class TsmTask(models.Model):
             'context': ctx,
         }
 
+    def action_inactive(self):
+        return self.write({'active': False})
+
+    def action_active(self):
+        return self.write({'active': True})
+
     # ------------------
     # CRUD overrides
     # ------------------
