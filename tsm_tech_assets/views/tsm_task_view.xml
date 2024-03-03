@@ -22,6 +22,17 @@
                                     <div class="oe_module_vignette">
                                         <div class="oe_module_desc o_kanban_record_title">
                                             <field name="name"/>
+                                            <button
+                                                class="btn btn-link"
+                                                type="object"
+                                                name="open_child_form"
+                                                title="Open full form"
+                                            >
+                                                <i
+                                                    class="fa fa-caret-right fa-2x"
+                                                    style="position:absolute;top:-4px;right:5px;transform:rotateY(0deg) rotate(-45deg);"
+                                                />
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
