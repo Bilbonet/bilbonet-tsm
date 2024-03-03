@@ -126,6 +126,12 @@ class TsmTechAsset(models.Model):
             'context': ctx,
         }
 
+    def action_inactive(self):
+        return self.write({'active': False})
+
+    def action_active(self):
+        return self.write({'active': True})
+
     def open_child_form(self):
         """Open child contact form from the parent partner form view"""
         return {
