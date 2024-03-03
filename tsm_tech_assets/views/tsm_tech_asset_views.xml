@@ -43,19 +43,28 @@
                     </div>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <field name="write_date" invisible="1"/><!-- To make invisible on create -->
-                    <div class="row oe_title" attrs="{'invisible':[('write_date','=',False)]}">
-                        <div class="mr-3">
-                            <h1><field name="priority" widget="priority"/></h1>
-                        </div>
-                        <div>
-                            <h1><field name="code" attrs="{'readonly':[('can_edit','=',False)]}"/></h1>
-                        </div>
-                    </div>
-
-                    <div class="col-10">
-                        <h1>
-                            <field name="name" placeholder="Asset Title..." attrs="{'readonly':[('can_edit','=',False)]}"/>
-                        </h1>
+                    <div class="oe_title pe-0">
+                        <h2 class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex w-100">
+                                <field name="priority" widget="priority" class="me-3" 
+                                       style="flex-basis: 3%" attrs="{'invisible':[('write_date','=',False)]}"/>
+                                <field name="code" class="me-3" 
+                                       style="flex-basis: 15%" attrs="{'invisible':[('write_date','=',False)]}"/>
+                                <field name="name" class="me-3 pe-2" placeholder="Asset Title..."/>
+                            </div>
+                            <button type="object" name="action_inactive"
+                                    class="btn btn-link text-danger"
+                                    icon="fa-check fa-2x"
+                                    attrs="{'invisible':[('active', '=', False)]}"
+                                    title="Active"
+                                    Help="Archive Asset"/>
+                            <button type="object" name="action_active"
+                                    class="btn btn-link text-success"
+                                    icon="fa-undo fa-2x"
+                                    attrs="{'invisible':[('active', '=', True)]}"
+                                    title="Inactive"
+                                    Help="Unarchive Asset"/>
+                        </h2>
                     </div>
                     <group>
                         <group>

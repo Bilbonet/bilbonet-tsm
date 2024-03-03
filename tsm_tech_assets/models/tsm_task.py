@@ -8,5 +8,4 @@ class TsmTask(models.Model):
 
     asset_ids = fields.Many2many(
         comodel_name='tsm.tech.asset', 
-        string='Tech Asset',
-        domain=['|', ('active', '=', False), ('active', '=', True)])
+        string='Tech Asset')
