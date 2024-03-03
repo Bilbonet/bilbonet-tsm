@@ -126,6 +126,17 @@ class TsmTechAsset(models.Model):
             'context': ctx,
         }
 
+    def open_child_form(self):
+        """Open child contact form from the parent partner form view"""
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "tsm.tech.asset",
+            "res_id": self.id,
+            "view_mode": "form",
+            "view_type": "form",
+            "target": "current",
+        }
+
     # ------------------
     # CRUD overrides
     # ------------------

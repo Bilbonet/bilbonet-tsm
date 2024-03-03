@@ -86,7 +86,7 @@ class TsmTask(models.Model):
     partner_id = fields.Many2one('res.partner', string='Customer')
     contact_id = fields.Many2one('res.partner', string='Contact',
         domain="[('parent_id', '=', partner_id),"
-                "('type', 'in', ('contact','invoice'))]",)
+                "('type', 'in', ('contact','other'))]",)
     privacy_visibility = fields.Selection([
         ('followers', 'On invitation only'),
         ('employees', 'Visible by all employees'),
