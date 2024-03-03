@@ -63,11 +63,11 @@
                     <div class="oe_button_box" name="button_box" groups="base.group_user"/>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <div class="oe_title pe-0">
-                        <h1 class="d-flex justify-content-between align-items-center">
+                        <h2 class="d-flex justify-content-between align-items-center">
                             <div class="d-flex w-100">
-                                <field name="priority" widget="priority" class="me-3"/>
-                                <field name="code" class="me-3" style="flex-basis: 10%"/>
-                                <field name="name" class="o_task_name me-3 pe-2" placeholder="Task Title..."/>
+                                <field name="priority" widget="priority" class="me-3" style="flex-basis: 3%"/>
+                                <field name="code" class="me-3" style="flex-basis: 9%"/>
+                                <field name="name" class="me-3 pe-2" placeholder="Task Title..."/>
                             </div>
                             <button type="object" name="action_inactive"
                                     class="btn btn-link text-danger"
@@ -87,7 +87,7 @@
                                     title="Inactive"
                                     Help="Unarchive Task"/>
                             <field name="kanban_state" widget="state_selection" class=""/>
-                        </h1>
+                        </h2>
                     </div>
                     <group>
                         <group>
