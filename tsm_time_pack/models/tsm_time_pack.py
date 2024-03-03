@@ -193,7 +193,7 @@ class TsmTimePack(models.Model):
                 user_msg = {
                     "message": txt_msg,
                     "title":  title_msg,
-                    "sticky": True,
+                    "sticky": False,
                     "html": True,
                 }
                 self.env.user.notify_danger(**user_msg)
