@@ -73,7 +73,7 @@
                                    context="{'default_partner_id':partner_id}"/>
                         </group>
                         <group>
-                            <field name="type_id" options="{'no_open': True}" attrs="{'readonly':[('can_edit','=',False)]}"/>
+                            <field name="type_id" widget="selection"/>
                             <field name="date" attrs="{'readonly':[('can_edit','=',False)]}"/>
                             <field name="privacy_visibility" widget="radio" attrs="{'readonly':[('can_edit','=',False)]}"/>
                         </group>
