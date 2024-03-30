@@ -178,8 +178,8 @@ class TsmTimePack(models.Model):
 
             if progress >= 90:
                 #TODO: Improve the way to express hours in format "%H:%M"
-                cont_hours = str(datetime.timedelta(hours=time.contrated_hours))[:5]
-                consu_hours = str(datetime.timedelta(hours=consumed_hours))[:5]
+                cont_hours = '{0:02.0f}:{1:02.0f}'.format(*divmod(float(time.contrated_hours) * 60, 60))
+                consu_hours = '{0:02.0f}:{1:02.0f}'.format(*divmod(float(consumed_hours) * 60, 60))
                 txt_msg = _(
                     '<h6>Contrated Hours: %s</h6>'
                     '<h6>Consumed Hours: %s</h6>'
