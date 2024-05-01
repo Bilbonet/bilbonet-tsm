@@ -19,7 +19,7 @@
             <tree editable="top" string="Timesheet Activities" import="false">
                 <field name="date_time" string="Date Time"/>
                 <field name="project_id"/>
-                <field name="task_id" required="True" domain="[('project_id', '=', project_id)]"/>
+                <field name="task_id" string="Task Title" required="True" domain="[('project_id', '=', project_id)]"/>
                 <field name="name" groups="tsm_task_timesheet.group_tsm_timesheet_title"/>
                 <field name="tag_ids" options="{'no_create': True, 'no_open': True}"
                        groups="tsm_task_timesheet.group_tsm_timesheet_tag"
@@ -52,12 +52,11 @@
         <field name="model">tsm.task.timesheet</field>
         <field name="arch" type="xml">
             <search string="Timesheet">
-                <field name="date_time"/>
+                <field name="task_id" filter_domain="['|', ('task_id.name', 'ilike', self), ('task_id.code', 'ilike', self)]"/>
                 <field name="task_partner_id"/>
                 <field name="user_id"/>
                 <field name="project_id"/>
-                <field name="task_id"/>
-                <field name="name"/>
+                <field name="name" groups="tsm_task_timesheet.group_tsm_timesheet_title"/>
                 <filter name="mine" string="My Timesheets" domain="[('user_id', '=', uid)]"/>
                 <separator/>
                 <filter string="Today" name="today" domain="[('date_time','&gt;=',time.strftime('%%Y-%%m-%%d'))]"/>
@@ -79,7 +78,7 @@
                     <filter string="User" name="groupby_user" domain="[]" context="{'group_by':'user_id'}"/>
                     <filter string="Project" name="groupby_project" domain="[]" context="{'group_by':'project_id'}"/>
                     <filter string="Task" name="groupby_task" domain="[]" context="{'group_by':'task_id'}"/>
-                    <filter string="Timesheet Month" name="groupby_date" domain="[]" context="{'group_by':'date_time'}" help="Timesheet by Month"/>
+                    <filter string="Timesheet Date" name="groupby_date" domain="[]" context="{'group_by':'date_time'}" help="Timesheet by Month"/>
                 </group>
             </search>
         </field>
