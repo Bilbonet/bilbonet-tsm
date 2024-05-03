@@ -9,9 +9,9 @@
               sequence="5"/>
 
 
-    <!--
+    <!-- =======================
        Timesheet My lines: Views
-    -->
+    ======================== -->
     <record id="tsm_task_timesheet_line_tree" model="ir.ui.view">
         <field name="name">TSM timesheet tsm.task.timesheet.line.tree</field>
         <field name="model">tsm.task.timesheet</field>
@@ -199,7 +199,6 @@
             </calendar>
         </field>
     </record>
-
     <!--
         Timesheet My lines: Menus and Actions
     -->
@@ -247,9 +246,9 @@
               parent="menu_tsm_time_tracking"
               action="tsm_task_timesheet_line_act"/>
 
-    <!--
+    <!-- ========================
        Timesheet All lines: Views
-    -->
+    ========================= -->
     <record id="tsm_task_timesheet_all_line_tree" model="ir.ui.view">
         <field name="name">TSM timesheet tsm.task.timesheet.all.line.tree</field>
         <field name="model">tsm.task.timesheet</field>
@@ -274,7 +273,6 @@
             </xpath>
         </field>
     </record>
-
     <!--
        Timesheet All lines: Menus and Actions
     -->
