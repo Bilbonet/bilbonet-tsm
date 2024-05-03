@@ -1,5 +1,7 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+from datetime import datetime
+import pytz
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -42,3 +44,33 @@ class TsmTask(models.Model):
                     raise ValidationError(_(
                     "There are any timesheet with 00:00 hours in this task.\n"
                     "That is not allowed in stages marked as closed."))
+
+    def create_and_start(self):
+        """
+        Create Task and start timesheet
+        """
+        self.ensure_one()
+        tz = self.env.context.get("tz", self.env.user.partner_id.tz)
+        description = ("<p><b>[%s]</b><br><br></p>") % (datetime.now(pytz.timezone(tz)).strftime('%d/%m/%Y %H:%M:%S'))
+        self.update({'description': description})
+
+        #Create timesheet
+        ts = self.env['tsm.task.timesheet'].new(
+            {
+                'task_id': self.id,
+            }
+        )
+        ts = ts._convert_to_write(ts._cache)
+        self.env['tsm.task.timesheet'].create(ts)
+
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "tsm.task",
+            "res_id": self.id,
+            "view_type": "form",
+            "target": "current",
+            "view_mode": "form",
+            'context': {
+                'form_view_initial_mode': 'edit',
+            },
+        }        

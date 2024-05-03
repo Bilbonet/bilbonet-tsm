@@ -135,13 +135,13 @@
     </record>
 
     <record id="tsm_quick_create_task_form" model="ir.ui.view">
-        <field name="name">project.task.form.quick_create</field>
+        <field name="name">task.form.quick_create</field>
         <field name="model">tsm.task</field>
         <field name="priority">1000</field>
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="name" string = "Task Title"/>
+                    <field name="name" string="Task Title"/>
                     <field name="partner_id" options="{'no_open': True,'no_create': True}" required="1"/>
                 </group>
             </form>
