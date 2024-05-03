@@ -18,7 +18,7 @@ class TsmTaskTimesheet(models.Model):
         '''If we don't indicate Time Pack in the new Timesheet. 
            We search any Time Pack available for the partner'''
         for vals in vals_list:
-            if not vals['timepack_id']:
+            if not vals.get('timepack_id', False):
                 task = self.env['tsm.task'].browse(vals['task_id'])
                 tp = self.env['tsm.time.pack'].search([
                     ('partner_id', '=', task.partner_id.id),
