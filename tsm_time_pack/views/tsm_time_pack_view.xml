@@ -5,9 +5,9 @@
             name="Time Packs"
             parent="tsm_base.tsm_main_menu"
             sequence="6"/>
-         <!--
-            My Time Packs: Views
-        -->
+         <!-- ===============
+            Time Packs: Views
+        ================= -->
         <record id="tsm_time_pack_form_view" model="ir.ui.view">
             <field name="name">TSM Time Pack tsm.time.pack.form</field>
             <field name="model">tsm.time.pack</field>
@@ -143,9 +143,10 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="contrated_hours" string="Contrated (Hours)" sum="Total time" widget="float_time"/>
-                    <field name="consumed_hours" string="Consumed (Hours)" sum="Consumed Time" widget="float_time"/>
-                    <field name="progress" widget="progressbar"/>
-                    <field name="complimentary_hours" string="Comple. (Hours)" sum="Complementary Time" widget="float_time"/>
+                    <field name="consumed_hours" string="Consumed (Hours)" sum="Consumed Time" widget="float_time" optional="show"/>
+                    <field name="remaining_hours" string="Left (Hours)" sum="Left Time" widget="float_time" optional="show"/>
+                    <field name="progress" widget="progressbar" optional="hide"/>
+                    <field name="complimentary_hours" string="Comple. (Hours)" sum="Complementary Time" widget="float_time" optional="hide"/>
                 </tree>
             </field>
         </record>
@@ -166,6 +167,7 @@
                     <separator/>
                     <group expand="0" string="Group By">
                         <filter string="User" name="groupby_user" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Ddate Start" name="date_start" domain="[]" context="{'group_by':'date_start'}"/>
                     </group>
                 </search>
             </field>
@@ -217,9 +219,9 @@
             </field>
         </record>
 
-         <!--
+         <!-- ============================
             My Time Packs: Menus & Actions
-        -->
+        ============================== -->
         <record id="tsm_time_pack_mine_act" model="ir.actions.act_window">
             <field name="name">My Time Packages</field>
             <field name="res_model">tsm.time.pack</field>
@@ -231,18 +233,21 @@
                     Click to add a time pack.</p>
             </field>
         </record>
+
         <record id="tsm_time_pack_mine_tree_act" model="ir.actions.act_window.view">
             <field name="view_mode">tree</field>
             <field name="sequence" eval="4"/>
             <field name="view_id" ref="tsm_time_pack_tree_view"/>
             <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
         </record>
+
         <record id="tsm_time_pack_mine_form_act" model="ir.actions.act_window.view">
             <field name="view_mode">form</field>
             <field name="sequence" eval="5"/>
             <field name="view_id" ref="tsm_time_pack_form_view"/>
             <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
         </record>
+
         <record id="tsm_time_pack_mine_kanban_act" model="ir.actions.act_window.view">
             <field name="view_mode">kanban</field>
             <field name="sequence" eval="6"/>
@@ -255,9 +260,9 @@
             parent="tsm_time_pack_menu"
             action="tsm_time_pack_mine_act"/>
 
-         <!--
+         <!-- ===================
             All Time Packs: Views
-        -->
+        ===================== -->
         <record id="tsm_time_pack_all_tree_view" model="ir.ui.view">
             <field name="name">TSM Time Pack All tsm.time.pack.all.tree</field>
             <field name="model">tsm.time.pack</field>
@@ -270,6 +275,7 @@
                 </xpath>
             </field>
         </record>
+
         <record id="tsm_time_pack_all_form_view" model="ir.ui.view">
             <field name="name">TSM Time Pack All tsm.time.pack.all.form</field>
             <field name="model">tsm.time.pack</field>
@@ -295,18 +301,21 @@
                 'search_default_groupby_user':1
             }</field>
         </record>
+
         <record id="tsm_time_pack_all_view_tree_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="4"/>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="tsm_time_pack_all_tree_view"/>
             <field name="act_window_id" ref="tsm_time_pack_all_act"/>
         </record>
+
         <record id="tsm_time_pack_all_view_form_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="4"/>
             <field name="view_mode">form</field>
             <field name="view_id" ref="tsm_time_pack_all_form_view"/>
             <field name="act_window_id" ref="tsm_time_pack_all_act"/>
         </record>
+
         <record id="tsm_time_pack_all_view_kanban_act" model="ir.actions.act_window.view">
             <field name="sequence" eval="6"/>
             <field name="view_mode">kanban</field>
