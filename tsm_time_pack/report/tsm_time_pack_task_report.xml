@@ -40,7 +40,7 @@
                             <th colspan="3" style="text-align:right">
                                 <span t-field="o.total_hours" t-options="{'widget': 'float_time'}" style="font-size:1.2em;margin-left: 15px;"/>
                             </th>
-                            <th colspan="99" style="text-align:right;width: 15%;">
+                            <th t-if="t.timepack_id" colspan="99" style="text-align:right;width: 15%;">
                                 <span class="fa fa-arrow-circle-down text-danger"/> Discounts Time<br/>
                                 <span class="fa fa-arrow-circle-right" style="margin-left: 5px;"/> Complimentary time
                             </th>
