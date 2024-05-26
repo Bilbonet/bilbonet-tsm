@@ -51,7 +51,7 @@
                         <br/>
                         <!-- Time Pack Sumary -->
                         <div class="row">
-                            <div class="p-3 border border-1 border-dark" style="background-color:#f8f9fa;border-radius: 1rem">
+                            <div class="p-3 border border-1 border-dark" style="width: 100%;background-color:#f8f9fa;border-radius: 1rem">
                                 <div class="col text-center"><h2>Sumary Time Pack</h2></div>
                                 <table class="table table-sm table-borderless" style="color:gray !important;">
                                     <tr style="width: 50%;">
@@ -111,7 +111,10 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                <div t-if="len(o.description) &gt; 11" class="col-auto mt16">
+                                    <strong>Notes:</strong>
+                                    <p class="m-0" t-field="o.description"/>
+                                </div>
                             </div>
                         </div>
                         <br/><br/>
@@ -213,7 +216,7 @@
                         <br/>
                         <!-- Time Pack Sumary -->
                         <div class="row">
-                            <div class="p-3 border border-1 border-dark" style="background-color:#f8f9fa;border-radius: 1rem">
+                            <div class="p-3 border border-1 border-dark" style="width: 100%;background-color:#f8f9fa;border-radius: 1rem">
                                 <div class="col text-center"><h2>Sumary Time Pack</h2></div>
                                 <table class="table table-sm table-borderless" style="color:gray !important;">
                                     <tr style="width: 50%;">
@@ -273,7 +276,10 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                <div t-if="len(o.description) &gt; 11" class="col-auto mt16">
+                                    <strong>Notes:</strong>
+                                    <p class="m-0" t-field="o.description"/>
+                                </div>
                             </div>
                         </div>
                         <br/><br/>
