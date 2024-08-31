@@ -167,7 +167,7 @@
                     <separator/>
                     <group expand="0" string="Group By">
                         <filter string="User" name="groupby_user" domain="[]" context="{'group_by':'user_id'}"/>
-                        <filter string="Ddate Start" name="date_start" domain="[]" context="{'group_by':'date_start'}"/>
+                        <filter string="Date Start" name="date_start" domain="[]" context="{'group_by':'date_start'}"/>
                     </group>
                 </search>
             </field>

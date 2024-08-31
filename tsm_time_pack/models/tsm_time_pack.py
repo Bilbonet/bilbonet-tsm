@@ -81,6 +81,7 @@ class TsmTimePack(models.Model):
     remaining_hours = fields.Float(compute='_hours_get',
         string='Remaining Hours',
         readonly=True, store=True,
+        digits="Time Pack",
         help="Computed as: Contrated hours - Consumed hours")
     total_hours_spent = fields.Float(compute='_hours_get',
         string='Total Hours Spent',
@@ -110,7 +111,7 @@ class TsmTimePack(models.Model):
     price_subtotal = fields.Float(
         compute='_compute_price_subtotal',
         string='Sub Total', 
-        digits=0)
+        digits="Product Price")
     sale_autoconfirm = fields.Boolean(
         string='Sale autoconfirm', default=True,
         help='If it is checked the sale order will be created '

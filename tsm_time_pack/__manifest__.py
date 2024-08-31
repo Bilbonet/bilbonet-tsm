@@ -17,6 +17,7 @@
         "security/ir.model.access.csv",
         "security/tsm_time_pack_security.xml",
         "data/tsm_time_pack_sequence.xml",
+        "data/time_pack_data.xml",
         "views/tsm_task_view.xml",
         "views/tsm_task_timesheet_view.xml",
         'views/product_view.xml',

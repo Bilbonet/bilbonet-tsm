@@ -51,7 +51,7 @@
                                 <span style="font-weight: bold;" t-out="('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))"></span> hours
                             </td>
                         </tr>
-                        <t t-if="object.remaining_hours > 0">
+                        <t t-if="object.remaining_hours >= 0.0">
                             <tr>
                                 <td style="width:100px;padding:5px">Remainig:</td>
                                 <td class="text-right">
