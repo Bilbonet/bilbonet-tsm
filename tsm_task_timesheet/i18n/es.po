@@ -4,18 +4,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-01 19:18+0000\n"
-"PO-Revision-Date: 2022-07-01 21:22+0200\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2024-08-31 11:27+0000\n"
+"PO-Revision-Date: 2024-08-31 13:37+0200\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 3.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_kanban
@@ -29,15 +29,16 @@ msgid "Active"
 msgstr "Activo"
 
 #. module: tsm_task_timesheet
-#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
-msgid "Actived"
-msgstr "Activado"
-
-#. module: tsm_task_timesheet
 #: model:ir.actions.act_window,name:tsm_task_timesheet.tsm_task_timesheet_all_line_act
 #: model:ir.ui.menu,name:tsm_task_timesheet.tsm_task_timesheet_menu_activity_all
 msgid "All Timesheets"
 msgstr "Todos los partes de horas"
+
+#. module: tsm_task_timesheet
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_form_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
+msgid "Archived"
+msgstr "Archivada"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__user_id
@@ -92,7 +93,7 @@ msgstr "Calculado como: Suma de timepo empleado en tareas."
 #. module: tsm_task_timesheet
 #: model:ir.model,name:tsm_task_timesheet.model_res_config_settings
 msgid "Config Settings"
-msgstr "Opciones de Configuración"
+msgstr "Opciones de configuración"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__create_uid
@@ -157,17 +158,24 @@ msgstr "Agrupar por"
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__id
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet__active
-msgid "If the active field is set to False, it will allow you to hide the account without removing it."
-msgstr "Si el campo activo se desmarca, permite ocultar la cuenta sin eliminarla."
+msgid ""
+"If the active field is set to False, it will allow you to hide the account "
+"without removing it."
+msgstr ""
+"Si el campo activo se desmarca, permite ocultar la cuenta sin eliminarla."
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags__active
-msgid "If the active field is set to False, it will allow you to hide the tag without removing it."
-msgstr "Si el campo activo es fijado a falso, te permitira ocultar la tarea sin eliminarla."
+msgid ""
+"If the active field is set to False, it will allow you to hide the tag "
+"without removing it."
+msgstr ""
+"Si el campo activo es fijado a falso, te permitira ocultar la tarea sin "
+"eliminarla."
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet____last_update
@@ -207,12 +215,16 @@ msgstr "Tareas abiertas"
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Open task"
-msgstr "Tarea Abierta"
+msgstr "Abrir Tarea"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
-msgid "Open/Close timesheet line automatically open/close its tasks. Do you want to proceed?"
-msgstr "Abrir/Cerrar partes de horas, automaticamente abre/cierra su tarea. Desea proceder?"
+msgid ""
+"Open/Close timesheet line automatically open/close its tasks. Do you want "
+"to proceed?"
+msgstr ""
+"Abrir/Cerrar partes de horas, automaticamente abre/cierra su tarea. Desea "
+"proceder?"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__project_id
@@ -246,11 +258,20 @@ msgid "Spent time in tasks"
 msgstr "Cosume tiempo en bolsa de horas"
 
 #. module: tsm_task_timesheet
-#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_quick_create_task_timesheet_form
+msgid "Start"
+msgstr "Comenzar"
+
+#. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_form
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
 msgid "Stop"
 msgstr "Parar"
+
+#. module: tsm_task_timesheet
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_form_timesheet_view
+msgid "Stop work"
+msgstr "Parar trabajo"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.view_res_config_settings
@@ -265,12 +286,12 @@ msgstr "TSM Partes de horas Etiquetas"
 #. module: tsm_task_timesheet
 #: model:res.groups,name:tsm_task_timesheet.group_tsm_timesheet_tag
 msgid "Tag in Timesheet"
-msgstr "Etiqueta en partes de horas"
+msgstr "Etiqueta en Partes de horas"
 
 #. module: tsm_task_timesheet
-#: sql_constraint:tsm.task.timesheet.tags:0
+#: model:ir.model.constraint,message:tsm_task_timesheet.constraint_tsm_task_timesheet_tags_name_uniq
 msgid "Tag name already exists!"
-msgstr "El nombre de la etiqueta ya existe!"
+msgstr "La etiqueta ya existe!"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_search_view
@@ -289,9 +310,18 @@ msgid "Task"
 msgstr "Tarea"
 
 #. module: tsm_task_timesheet
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_tree
+msgid "Task Title"
+msgstr "Titulo Tarea"
+
+#. module: tsm_task_timesheet
 #: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet__closed
-msgid "Tasks in this stage are considered closed. You can only archive a task in a stage with state closed."
-msgstr "Las tareas en esta etapa se consideran cerradas. Solo se puede Archivar una tarea si se encuentra en una etapa considerada cerrada."
+msgid ""
+"Tasks in this stage are considered closed. You can only archive a task in a "
+"stage with state closed."
+msgstr ""
+"Las tareas en esta etapa se consideran cerradas. Solo se puede Archivar una "
+"tarea si se encuentra en una etapa considerada cerrada."
 
 #. module: tsm_task_timesheet
 #: model:ir.model,name:tsm_task_timesheet.model_tsm_task
@@ -299,8 +329,8 @@ msgid "Tech Support Management Task"
 msgstr "Gestión Soporte Técnico Tarea"
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task.py:45
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:106
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:0
 #, python-format
 msgid ""
 "There are any timesheet with 00:00 hours in this task.\n"
@@ -310,20 +340,22 @@ msgstr ""
 "Esto no esta permitido es estados marcados como cerrados."
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:101
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:0
 #, python-format
 msgid "There isn't any stage with closed check. Please mark any."
-msgstr "No hay ningun estado de las tareas el cual este marcado como cerrada. Por favor marque alguno."
+msgstr ""
+"No hay ningun estado de las tareas el cual este marcado como cerrada. Por "
+"favor marque alguno."
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:147
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet_tags.py:0
 #, python-format
 msgid ""
 "There's already one Tag checked as defautl.\n"
 " Tag Checked : %s"
 msgstr ""
-"Ya hay alguna etiqueta marcada por defecto.\n"
-" Etiqueta marcada : %s"
+"Ya hay una etiqueta seleccionada por defecto.\n"
+" Etiqueta Seleccionada : %s"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
@@ -361,8 +393,8 @@ msgstr "Actividades Parte de horas"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
-msgid "Timesheet Month"
-msgstr "Horas Mes"
+msgid "Timesheet Date"
+msgstr "Fecha Parte horas"
 
 #. module: tsm_task_timesheet
 #: model:ir.actions.act_window,name:tsm_task_timesheet.tsm_timesheet_lines_by_project
@@ -371,8 +403,9 @@ msgstr "Horas del proyecto"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_res_config_settings__group_tsm_timesheet_tag
+#: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "Timesheet Tag"
-msgstr "Etiqueta parte horas"
+msgstr "Etiqueta Parte horas"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__tag_ids
@@ -380,13 +413,13 @@ msgstr "Etiqueta parte horas"
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_tags_tree
 msgid "Timesheet Tags"
-msgstr "Etiquetas parte horas"
+msgstr "Etiquetas Parte horas"
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_res_config_settings__group_tsm_timesheet_title
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__name
 msgid "Timesheet Title"
-msgstr "Titulo parte horas"
+msgstr "Titulo Parte horas"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
@@ -404,7 +437,7 @@ msgstr "Partes de horas"
 #. module: tsm_task_timesheet
 #: model:res.groups,name:tsm_task_timesheet.group_tsm_timesheet_title
 msgid "Title in Timesheet"
-msgstr "Titulo en parte horas"
+msgstr "Titulo en Parte horas"
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
@@ -450,16 +483,23 @@ msgstr "Usuario"
 #: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_line_act
 #: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_timesheet_lines_by_project
 msgid "You can register and track your workings hours by task every day."
-msgstr "Usted puede registrar y seguir sus horas de trabajo con tareas cada día."
+msgstr ""
+"Usted puede registrar y seguir sus horas de trabajo con tareas cada día."
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_task_act
 #: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_report_by_user_act
 msgid "You can register and track your workings hours by tasks every day."
-msgstr "Usted puede registrar y seguir sus horas de trabajo con tareas cada día."
+msgstr ""
+"Usted puede registrar y seguir sus horas de trabajo con tareas cada día."
 
 #. module: tsm_task_timesheet
-#: code:addons/tsm_task_timesheet/models/tsm_task.py:29
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
 #, python-format
-msgid "You cannot delete a task containing timesheets. You can either delete all the task's timesheet and then delete the task or simply deactivate the task."
-msgstr "No puede eliminar una tarea con partes de horas. Puede eliminar todos los partes de horas de la tarea y luego eliminar la tarea o simplemente desactivar la tarea."
+msgid ""
+"You cannot delete a task containing timesheets. You can either delete all "
+"the task's timesheet and then delete the task or simply deactivate the task."
+msgstr ""
+"No puede eliminar una tarea con partes de horas. Puede eliminar todos los "
+"partes de horas de la tarea y luego eliminar la tarea o simplemente "
+"desactivar la tarea."
