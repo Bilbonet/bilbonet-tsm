@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+
+    <record id="view_timesheet_timepack_agent_form_inherit" model="ir.ui.view">
+        <field name="name">timesheet.timepack.agent.inherit.form</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_time_pack.tsm_task_form_time_pack_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='discount_time']"
+                position="after"
+            >
+                <field name="commission_free" invisible="1" />
+                <button
+                    name="button_edit_agents"
+                    icon="fa-users"
+                    attrs="{'invisible': [('commission_free', '=', True)]}"
+                    type="object"
+                />
+                <field name="commission_status" optional="show" />
+            </xpath>
+            <field name="total_hours" position="after">
+                <field
+                    name="commission_total"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_id'}"
+                />
+            </field>
+            <xpath expr="//group[@name='task_hours']" position="before">
+                <group name="group_recompute_commission">
+                    <button
+                        name="recompute_lines_agents"
+                        type="object"
+                        string="Regenerate agents"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_time_pack_filter_agent" model="ir.ui.view">
+        <field name="name">view_time_pack_filter_agent</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_base.tsm_task_search_view" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="partner_agent_ids" />
+            </field>
+        </field>
+    </record>
+    <!-- This view is needed for proper visualization of the popup / embedded one2many -->
+    <record id="view_time_pack_line_tree" model="ir.ui.view">
+        <field name="name">time.pack.line.agent.tree</field>
+        <field name="model">time.pack.line.agent</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field
+                    name="agent_id"
+                    context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}"
+                />
+                <field
+                    name="commission_id"
+                    domain="['|', ('settlement_type', '=', 'sale_invoice'), ('settlement_type', '=', False)]"
+                />
+                <field name="amount" />
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -69,14 +69,20 @@ class TsmTask(models.Model):
         compute="_compute_kanban_state_label", string="Kanban State Label"
     )
     color = fields.Integer(string="Color Index")
-    date_start = fields.Datetime(
-        string="Starting Date", default=fields.Datetime.now, index=True, copy=False
+    date_start = fields.Date(
+        string="Starting Date",
+        default=fields.Date.context_today,
+        index=True,
+        copy=False,
     )
-    date_assign = fields.Datetime(
-        string="Assigning Date", default=fields.Datetime.now, copy=False, tracking=True
+    date_assign = fields.Date(
+        string="Assigning Date",
+        default=fields.Date.context_today,
+        copy=False,
+        tracking=True,
     )
     date_deadline = fields.Date(string="Deadline", index=True, copy=False)
-    date_end = fields.Datetime(string="Ending Date", index=True, copy=False)
+    date_end = fields.Date(string="Ending Date", index=True, copy=False)
     legend_blocked = fields.Char(
         related="stage_id.legend_blocked",
         string="Kanban Blocked Explanation",
