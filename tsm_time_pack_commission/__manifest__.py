@@ -9,12 +9,13 @@
     "license": "AGPL-3",
     "depends": [
         "tsm_time_pack",
-        "commission",
+        "account_commission",
     ],
     "data": [
         "security/ir.model.access.csv",
         "views/tsm_task_view.xml",
         "views/commission_views.xml",
+        "views/commission_settlement_views.xml",
     ],
     "application": False,
     "installable": True,
