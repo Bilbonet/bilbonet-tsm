@@ -14,6 +14,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/tsm_task_view.xml",
+        "views/commission_views.xml",
     ],
     "application": False,
     "installable": True,

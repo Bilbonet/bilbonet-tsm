@@ -113,7 +113,7 @@ class TsmTaskTimesheet(models.Model):
         for record in self.filtered(lambda x: x.task_id.partner_id):
             if not record.commission_free:
                 record.agent_ids = record._prepare_agents_vals_partner(
-                    record.task_id.partner_id, settlement_type="timepack_invoice"
+                    record.task_id.partner_id, settlement_type="timepack"
                 )
 
 
@@ -129,7 +129,7 @@ class TimePackLineAgent(models.Model):
         related="object_id.task_id",
         store=True,
     )
-    task_date = fields.Date(
+    invoice_date = fields.Date(
         string="Task date",
         related="task_id.date_start",
         store=True,
@@ -193,15 +193,15 @@ class TimePackLineAgent(models.Model):
                     _("You can't modify a settled line"),
                 )
     
-    # def _skip_settlement(self):
-    #     """This function should return False if the commission can be paid.
+    def _skip_settlement(self):
+        """This function should return False if the commission can be paid.
 
-    #     :return: bool
-    #     """
-    #     self.ensure_one()
-    #     return (
-    #         self.commission_id.invoice_state == "paid"
-    #         and self.invoice_id.payment_state not in ["in_payment", "paid", "reversed"]
-    #     ) or self.invoice_id.state != "posted"
+        :return: bool
+        """
+        self.ensure_one()
+        return (
+            self.commission_id.task_stage == "closed"
+            and not self.task_id.stage_id.closed
+        ) or not self.task_id
 
     

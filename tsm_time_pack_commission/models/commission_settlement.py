@@ -7,8 +7,8 @@ class CommissionSettlement(models.Model):
     _inherit = "commission.settlement"
 
     settlement_type = fields.Selection(
-        selection_add=[("timepack_invoice", "Timepack Invoices")],
-        ondelete={"timepack_invoice": "set default"},
+        selection_add=[("timepack", "Timepack")],
+        ondelete={"timepack": "set default"},
     )
     timesheet_line_ids = fields.One2many(
         comodel_name="tsm.task.timesheet",

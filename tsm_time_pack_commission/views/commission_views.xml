@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="commission_form" model="ir.ui.view">
+        <field name="name">commissions form</field>
+        <field name="model">commission</field>
+        <field name="inherit_id" ref="commission.commission_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='commision_params']" position="inside">
+                <field
+                    name="task_stage"
+                    attrs="{'required': [('settlement_type', '=', 'timepack')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
