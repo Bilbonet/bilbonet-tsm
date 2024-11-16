@@ -208,9 +208,9 @@
         </field>
     </record>
 
-    <!--
+    <!-- ========================
         Timesheet My lines: Menus and Actions
-    -->
+    ========================= -->
     <record id="tsm_task_timesheet_line_act" model="ir.actions.act_window">
         <field name="name">My Timesheets</field>
         <field name="res_model">tsm.task.timesheet</field>
@@ -288,9 +288,9 @@
             </xpath>
         </field>
     </record>
-    <!--
+    <!-- ========================
        Timesheet All lines: Menus and Actions
-    -->
+    ========================= -->
     <record id="tsm_task_timesheet_all_line_act" model="ir.actions.act_window">
         <field name="name">All Timesheets</field>
         <field name="res_model">tsm.task.timesheet</field>

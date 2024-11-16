@@ -13,7 +13,7 @@
                         <field name="timesheet_ids">
                             <tree editable="bottom" string="Timesheet Activities" default_order="date_time">
                                 <field name="date_time"/>
-                                <field name="user_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="user_id" options="{'no_create': True, 'no_open': True}"/>
                                 <field name="name" groups="tsm_task_timesheet.group_tsm_timesheet_title"/>
                                 <field 
                                     name="tag_ids" 
