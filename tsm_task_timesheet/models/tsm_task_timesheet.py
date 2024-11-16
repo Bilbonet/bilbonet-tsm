@@ -69,10 +69,9 @@ class TsmTaskTimesheet(models.Model):
                 ) + timedelta(seconds=line.amount*3600)
 
     def button_end_work(self):
-        end_date = datetime.now()
+        end_date = fields.Datetime.now()
         for line in self:
-            date = fields.Datetime.from_string(line.date_time)
-            line.amount = (end_date - date).total_seconds() / 3600
+            line.amount = (end_date - line.date_time).total_seconds() / 3600
         return True
 
     def button_open_task(self):
