@@ -13,7 +13,7 @@
                 />
                 <field
                     name="commission_id"
-                    domain="['|', ('settlement_type', '=', 'sale_invoice'), ('settlement_type', '=', False)]"
+                    domain="['|', ('settlement_type', '=', 'timesheet'), ('settlement_type', '=', False)]"
                 />
                 <field name="amount" />
             </tree>

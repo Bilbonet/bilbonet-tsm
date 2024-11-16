@@ -43,6 +43,9 @@ class SettlementLine(models.Model):
         related="timesheet_agent_line_id.object_id",
         string="Source timesheet line",
     )
+    task_id = fields.Many2one(
+        related="timesheet_line_id.task_id",
+    )
     #!La línea del parte de horas no tiene nombre se utilizan tags. 
     #!Seria necesario hacer un campo timesheet_line_descripction para mostrar los datos
     @api.depends("timesheet_agent_line_id")
@@ -59,3 +62,5 @@ class SettlementLine(models.Model):
     def _compute_settled_amount(self):
         for record in self.filtered("timesheet_agent_line_id"):
             record.settled_amount = record.timesheet_agent_line_id.amount
+            
+    

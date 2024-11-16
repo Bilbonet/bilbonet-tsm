@@ -1,6 +1,7 @@
 # Copyright 2024 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import _, api, exceptions, fields, models
+from odoo.exceptions import UserError
 
 
 class TsmTask(models.Model):
@@ -116,6 +117,11 @@ class TsmTaskTimesheet(models.Model):
                     record.task_id.partner_id, settlement_type="timesheet"
                 )
 
+    def unlink(self):
+        """Avoid delete timesheet withsettled lines."""
+        if any(x.agent_ids.settled for x in self):
+            raise UserError(_("You can't delete a timesheet with settled commission lines."))
+        return super().unlink()
 
 class TsmTaskTimesheetAgent(models.Model):
     _inherit = "commission.line.mixin"
@@ -204,4 +210,8 @@ class TsmTaskTimesheetAgent(models.Model):
             and not self.task_id.stage_id.closed
         ) or not self.task_id
 
-    
+    def unlink(self):
+        """Avoid delete settled lines."""
+        if self.settled:
+            raise UserError(_("You can't delete settled lines."))
+        return super().unlink()
