@@ -7,15 +7,15 @@ class CommissionMakeSettle(models.TransientModel):
     _inherit = "commission.make.settle"
 
     settlement_type = fields.Selection(
-        selection_add=[("timepack", "Timepack")],
-        ondelete={"timepack": "cascade"},
+        selection_add=[("timesheet", "Timesheet")],
+        ondelete={"timesheet": "cascade"},
     )
 
     def _get_agent_lines(self, agent, date_to_agent):
         """Filter sales invoice agent lines for this type of settlement."""
-        if self.settlement_type != "timepack":
+        if self.settlement_type != "timesheet":
             return super()._get_agent_lines(agent, date_to_agent)
-        return self.env["time.pack.line.agent"].search(
+        return self.env["tsm.task.timesheet.agent"].search(
             [
                 ("invoice_date", "<", date_to_agent),
                 ("agent_id", "=", agent.id),
@@ -25,14 +25,14 @@ class CommissionMakeSettle(models.TransientModel):
         )
 
     def _prepare_settlement_line_vals(self, settlement, line):
-        """Prepare extra settlement values when the source is a timepack agent
+        """Prepare extra settlement values when the source is a timesheet agent
         line.
         """
         res = super()._prepare_settlement_line_vals(settlement, line)
-        if self.settlement_type == "timepack":
+        if self.settlement_type == "timesheet":
             res.update(
                 {
-                    "timepack_agent_line_id": line.id,
+                    "timesheet_agent_line_id": line.id,
                     "date": line.invoice_date,
                     "commission_id": line.commission_id.id,
                     "settled_amount": line.amount,

@@ -39,7 +39,7 @@ class TsmTask(models.Model):
 
     @api.model
     def _search_agents(self, operator, value):
-        tts_agents = self.env["time.pack.line.agent"].search(
+        tts_agents = self.env["tsm.task.timesheet.agent"].search(
             [("agent_id", operator, value)]
         )
         return [("id", "in", tts_agents.mapped("object_id.task_id").ids)]
@@ -87,7 +87,7 @@ class TsmTaskTimesheet(models.Model):
     ]
     _name = "tsm.task.timesheet"
 
-    agent_ids = fields.One2many(comodel_name="time.pack.line.agent")
+    agent_ids = fields.One2many(comodel_name="tsm.task.timesheet.agent")
     any_settled = fields.Boolean(compute="_compute_any_settled")
     settlement_id = fields.Many2one(
         comodel_name="commission.settlement",
@@ -113,13 +113,13 @@ class TsmTaskTimesheet(models.Model):
         for record in self.filtered(lambda x: x.task_id.partner_id):
             if not record.commission_free:
                 record.agent_ids = record._prepare_agents_vals_partner(
-                    record.task_id.partner_id, settlement_type="timepack"
+                    record.task_id.partner_id, settlement_type="timesheet"
                 )
 
 
-class TimePackLineAgent(models.Model):
+class TsmTaskTimesheetAgent(models.Model):
     _inherit = "commission.line.mixin"
-    _name = "time.pack.line.agent"
+    _name = "tsm.task.timesheet.agent"
     _description = "Agent detail of commission line in timesheets"
 
     object_id = fields.Many2one(comodel_name="tsm.task.timesheet")
@@ -137,7 +137,7 @@ class TimePackLineAgent(models.Model):
     )
     settlement_line_ids = fields.One2many(
         comodel_name="commission.settlement.line",
-        inverse_name="timepack_agent_line_id",
+        inverse_name="timesheet_agent_line_id",
     )
     settled = fields.Boolean(compute="_compute_settled", store=True)
     company_id = fields.Many2one(

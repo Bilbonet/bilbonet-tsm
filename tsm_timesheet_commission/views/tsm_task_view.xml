@@ -2,16 +2,30 @@
 <!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-
-    <record id="view_timesheet_timepack_agent_form_inherit" model="ir.ui.view">
-        <field name="name">timesheet.timepack.agent.inherit.form</field>
-        <field name="model">tsm.task</field>
-        <field name="inherit_id" ref="tsm_time_pack.tsm_task_form_time_pack_view" />
+    <!-- This view is needed for proper visualization of the popup / embedded one2many -->
+    <record id="view_timesheet_line_agent_tree" model="ir.ui.view">
+        <field name="model">tsm.task.timesheet.agent</field>
         <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='discount_time']"
-                position="after"
-            >
+            <tree editable="bottom">
+                <field
+                    name="agent_id"
+                    context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}"
+                />
+                <field
+                    name="commission_id"
+                    domain="['|', ('settlement_type', '=', 'sale_invoice'), ('settlement_type', '=', False)]"
+                />
+                <field name="amount" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_timesheet_form_agent" model="ir.ui.view">
+        <field name="name">tsm.task.form.agent</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_form_timesheet_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='project_id']" position="after">
                 <field name="commission_free" invisible="1" />
                 <button
                     name="button_edit_agents"
@@ -40,32 +54,14 @@
         </field>
     </record>
 
-    <record id="view_time_pack_filter_agent" model="ir.ui.view">
-        <field name="name">view_time_pack_filter_agent</field>
+    <record id="view_timesheet_filter_agent" model="ir.ui.view">
+        <field name="name">view_timesheet_filter_agent</field>
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_base.tsm_task_search_view" />
         <field name="arch" type="xml">
             <field name="user_id" position="after">
                 <field name="partner_agent_ids" />
             </field>
-        </field>
-    </record>
-    <!-- This view is needed for proper visualization of the popup / embedded one2many -->
-    <record id="view_time_pack_line_tree" model="ir.ui.view">
-        <field name="name">time.pack.line.agent.tree</field>
-        <field name="model">time.pack.line.agent</field>
-        <field name="arch" type="xml">
-            <tree editable="bottom">
-                <field
-                    name="agent_id"
-                    context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}"
-                />
-                <field
-                    name="commission_id"
-                    domain="['|', ('settlement_type', '=', 'sale_invoice'), ('settlement_type', '=', False)]"
-                />
-                <field name="amount" />
-            </tree>
         </field>
     </record>
 </odoo>

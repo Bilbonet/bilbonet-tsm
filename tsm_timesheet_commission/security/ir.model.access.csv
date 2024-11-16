@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_tsm_task_timesheet_agent,access_tsm_task_timesheet_agent,model_time_pack_line_agent,tsm_base.group_tsm_user,1,1,1,1
+access_tsm_task_timesheet_agent,access_tsm_task_timesheet_agent,model_tsm_task_timesheet_agent,tsm_base.group_tsm_user,1,1,1,1
 access_commission,access_commission,commission.model_commission,tsm_base.group_tsm_user,1,0,0,0
 access_commission_section_user,access_commission_section_user,commission.model_commission_section,tsm_base.group_tsm_user,1,0,0,0

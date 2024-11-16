@@ -1,5 +1,5 @@
 =========================
-TSM Time Pack Commissions
+TSM Timesheet Commissions
 =========================
 
 
@@ -15,6 +15,6 @@ TSM Time Pack Commissions
 
 |badge1| |badge2| |badge3|
 
-This module links tsm_time_pack with commissions module.
+This module links tsm_task_timesheet with commissions module.
 
 

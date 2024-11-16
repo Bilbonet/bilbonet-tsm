@@ -1,8 +1,8 @@
 # Copyright 2024 - Bilbonet <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    "name": "TSM Time Pack Commissions",
-    "summary": "Links TSM Time Pack with commissions.",
+    "name": "TSM Timesheet Commissions",
+    "summary": "Links TSM Task Timesheet with commissions.",
     "version": "15.0.1.0.0",
     "author": "Jesus Ramiro,",
     "category": "Commissions",
