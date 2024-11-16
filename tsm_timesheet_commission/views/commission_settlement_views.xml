@@ -13,8 +13,12 @@
                 position="after"
             >
                 <field
+                    name="task_id"
+                    attrs="{'column_invisible': [('parent.settlement_type', '!=', 'timesheet')]}"
+                />
+                <field
                     name="timesheet_line_id"
-                    attrs="{'column_invisible': [('parent.settlement_type', '!=', 'timepack')]}"
+                    attrs="{'column_invisible': [('parent.settlement_type', '!=', 'timesheet')]}"
                 />
             </xpath>
         </field>
