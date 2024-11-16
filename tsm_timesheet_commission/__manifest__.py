@@ -1,0 +1,22 @@
+# Copyright 2024 - Bilbonet <jesus@bilbonet.net>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+{
+    "name": "TSM Timesheet Commissions",
+    "summary": "Links TSM Task Timesheet with commissions.",
+    "version": "15.0.1.0.0",
+    "author": "Jesus Ramiro,",
+    "category": "Commissions",
+    "license": "AGPL-3",
+    "depends": [
+        "tsm_time_pack",
+        "account_commission",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/tsm_task_view.xml",
+        "views/commission_views.xml",
+        "views/commission_settlement_views.xml",
+    ],
+    "application": False,
+    "installable": True,
+}
