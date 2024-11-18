@@ -103,9 +103,7 @@ class TsmTaskTimesheet(models.Model):
 
     def _filter_commission_applicable_lines(self):
         return self.filtered(
-            lambda x: x.timepack_id
-            and x.discount_time
-            and x.amount > 0
+            lambda x: x.timepack_id and x.discount_time and x.amount > 0
         )
 
     @api.depends("task_id.partner_id")
@@ -118,10 +116,13 @@ class TsmTaskTimesheet(models.Model):
                 )
 
     def unlink(self):
-        """Avoid delete timesheet withsettled lines."""
+        """Avoid delete timesheet with settled lines."""
         if any(x.agent_ids.settled for x in self):
-            raise UserError(_("You can't delete a timesheet with settled commission lines."))
+            raise UserError(
+                _("You can't delete a timesheet with settled commission lines.")
+            )
         return super().unlink()
+
 
 class TsmTaskTimesheetAgent(models.Model):
     _inherit = "commission.line.mixin"
@@ -136,8 +137,10 @@ class TsmTaskTimesheetAgent(models.Model):
         store=True,
     )
     invoice_date = fields.Date(
-        string="Task date",
-        related="task_id.date_start",
+        string="Timesheet Date",
+        #!No funciona. Necesito la fecha hora del parte con solo fecha
+        # default=lambda self: self.object_id.date_time.date(),
+        default=fields.Date.today(),
         store=True,
         readonly=True,
     )
@@ -151,24 +154,55 @@ class TsmTaskTimesheetAgent(models.Model):
         compute="_compute_company",
         store=True,
     )
+    product_id = fields.Many2one(
+        comodel_name="product.product", 
+        string="Product",
+        compute="_compute_product_and_price_unit",
+        store=True,
+    )
+    price_unit = fields.Float(
+        string="Commission Price",
+        compute="_compute_product_and_price_unit",
+        store=True,
+        default=0.0,
+        digits="Product Price",
+        help="Price at which the commission is calculated.",
+    )
     currency_id = fields.Many2one(
+        comodel_name="res.currency",
+        string="Currency",
+        readonly=True,
         related="company_id.currency_id",
     )
-    
+
     @api.depends(
         "commission_id",
-        "object_id.timepack_id.price_unit",
-        "object_id.timepack_id.product_id",
+        "object_id.discount_time",
+        "object_id.timepack_id",
+    )
+    def _compute_product_and_price_unit(self):
+        for line in self:
+            if line.object_id.timepack_id and line.object_id.discount_time:
+                line.product_id = line.object_id.timepack_id.product_id
+                line.price_unit = line.object_id.timepack_id.price_unit
+                continue
+            if not line.object_id.timepack_id:
+                line.product_id = line.commission_id.timesheet_product_id
+                line.price_unit = line.commission_id.timesheet_product_id.list_price
+
+    @api.depends(
+        "commission_id",
+        "object_id.discount_time",
         "object_id.amount",
     )
     def _compute_amount(self):
         for line in self:
             timesheet_line = line.object_id
-            subtotal = timesheet_line.timepack_id.price_unit * timesheet_line.amount
+            subtotal = line.price_unit * timesheet_line.amount
             line.amount = line._get_commission_amount(
                 line.commission_id,
                 subtotal,
-                timesheet_line.timepack_id.product_id,
+                line.product_id,
                 timesheet_line.amount,
             )
 
@@ -190,7 +224,7 @@ class TsmTaskTimesheetAgent(models.Model):
     def _compute_company(self):
         for line in self:
             line.company_id = line.object_id.company_id
-            
+
     @api.constrains("agent_id", "amount")
     def _check_settle_integrity(self):
         for record in self:
@@ -198,7 +232,7 @@ class TsmTaskTimesheetAgent(models.Model):
                 raise exceptions.ValidationError(
                     _("You can't modify a settled line"),
                 )
-    
+
     def _skip_settlement(self):
         """This function should return False if the commission can be paid.
 

@@ -10,8 +10,12 @@
             <xpath expr="//group[@name='commision_params']" position="inside">
                 <field
                     name="task_stage"
-                    attrs="{'required': [('settlement_type', '=', 'timepack')]}"
+                    attrs="{'required': [('settlement_type', '=', 'timesheet')]}"
                 />
+                <field 
+                    name="timesheet_product_id" 
+                    attrs="{'required': [('settlement_type', '=', 'timesheet')]}"
+                    options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
             </xpath>
         </field>
     </record>
