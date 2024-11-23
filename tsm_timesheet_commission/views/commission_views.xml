@@ -15,7 +15,7 @@
                 <field 
                     name="timesheet_product_id" 
                     attrs="{'required': [('settlement_type', '=', 'timesheet')]}"
-                    options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                    options="{'no_edit': True, 'no_create': True}"/>
             </xpath>
         </field>
     </record>

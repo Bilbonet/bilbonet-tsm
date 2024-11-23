@@ -7,13 +7,22 @@
         <field name="model">tsm.task.timesheet.agent</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
+                <field name="timepack_id" invisible="1"/>
+                <field name="specific_price" invisible="1" />
+                <field name="settled" invisible="1"/>
                 <field
                     name="agent_id"
                     context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}"
+                    attrs="{'readonly': [('settled', '=', True)]}"
                 />
                 <field
                     name="commission_id"
                     domain="['|', ('settlement_type', '=', 'timesheet'), ('settlement_type', '=', False)]"
+                    attrs="{'readonly': [('settled', '=', True)]}"
+                />
+                <field 
+                    name="price_unit" 
+                    attrs="{'readonly': ['|',('timepack_id', '!=', False), ('settled', '=', True)]}"
                 />
                 <field name="amount" />
             </tree>
@@ -25,6 +34,15 @@
         <field name="model">tsm.task</field>
         <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_form_timesheet_view" />
         <field name="arch" type="xml">
+            <!-- <xpath expr="//field[@name='timesheet_ids']" position="inside">
+                <field name="any_settled" invisible="1" />
+            </xpath>         -->
+            <!-- <xpath expr="//field[@name='timesheet_ids']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('any_settled', '=', True)]}</attribute>
+            </xpath> -->
+
             <xpath expr="//field[@name='timesheet_ids']//field[@name='project_id']" position="after">
                 <field name="commission_free" invisible="1" />
                 <button
