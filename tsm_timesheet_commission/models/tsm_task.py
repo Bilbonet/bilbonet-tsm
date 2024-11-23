@@ -20,7 +20,7 @@ class TsmTask(models.Model):
     )
     settlement_count = fields.Integer(compute="_compute_settlement")
     settlement_ids = fields.One2many(
-        "commission.settlement",
+        comodel_name="commission.settlement",
         string="Settlements",
         compute="_compute_settlement",
     )
@@ -92,8 +92,8 @@ class TsmTaskTimesheet(models.Model):
     any_settled = fields.Boolean(compute="_compute_any_settled")
     settlement_id = fields.Many2one(
         comodel_name="commission.settlement",
-        help="Settlement that generates this invoice line",
         copy=False,
+        help="Settlement that generates this invoice line",
     )
 
     @api.depends("agent_ids", "agent_ids.settled")
@@ -123,6 +123,17 @@ class TsmTaskTimesheet(models.Model):
             )
         return super().unlink()
 
+    def write(self, vals):
+        if "date_time" in vals or "user_id" in vals:
+            for record in self:
+                if record.agent_ids:
+                    raise UserError(
+                        _(
+                            "You can't change date or user from a timesheet with commission lines."
+                        )
+                    )
+        return super().write(vals)
+
 
 class TsmTaskTimesheetAgent(models.Model):
     _inherit = "commission.line.mixin"
@@ -138,9 +149,7 @@ class TsmTaskTimesheetAgent(models.Model):
     )
     invoice_date = fields.Date(
         string="Timesheet Date",
-        #!No funciona. Necesito la fecha hora del parte con solo fecha
-        # default=lambda self: self.object_id.date_time.date(),
-        default=fields.Date.today(),
+        compute="_compute_invoice_date",
         store=True,
         readonly=True,
     )
@@ -154,19 +163,26 @@ class TsmTaskTimesheetAgent(models.Model):
         compute="_compute_company",
         store=True,
     )
+    timepack_id = fields.Many2one(
+        comodel_name="tsm.time.pack",
+        string="Timepack",
+        readonly=True,
+        related="object_id.timepack_id",
+    )
     product_id = fields.Many2one(
-        comodel_name="product.product", 
+        comodel_name="product.product",
         string="Product",
-        compute="_compute_product_and_price_unit",
+        compute="_compute_product_id",
         store=True,
     )
+    specific_price = fields.Float()
     price_unit = fields.Float(
-        string="Commission Price",
-        compute="_compute_product_and_price_unit",
-        store=True,
+        string="Hour Price",
+        compute="_compute_price_unit",
+        inverse="_inverse_price_unit",
         default=0.0,
         digits="Product Price",
-        help="Price at which the commission is calculated.",
+        help="Hour price at which the commission is calculated.",
     )
     currency_id = fields.Many2one(
         comodel_name="res.currency",
@@ -175,25 +191,47 @@ class TsmTaskTimesheetAgent(models.Model):
         related="company_id.currency_id",
     )
 
-    @api.depends(
-        "commission_id",
-        "object_id.discount_time",
-        "object_id.timepack_id",
-    )
-    def _compute_product_and_price_unit(self):
+    @api.depends("object_id.date_time")
+    def _compute_invoice_date(self):
         for line in self:
-            if line.object_id.timepack_id and line.object_id.discount_time:
-                line.product_id = line.object_id.timepack_id.product_id
-                line.price_unit = line.object_id.timepack_id.price_unit
-                continue
-            if not line.object_id.timepack_id:
-                line.product_id = line.commission_id.timesheet_product_id
-                line.price_unit = line.commission_id.timesheet_product_id.list_price
+            line.invoice_date = line.object_id.date_time.date()
 
     @api.depends(
         "commission_id",
+        "object_id.timepack_id",
+    )
+    def _compute_product_id(self):
+        for line in self:
+            if line.object_id.timepack_id:
+                line.product_id = line.object_id.timepack_id.product_id
+            else:
+                line.product_id = line.commission_id.timesheet_product_id
+                
+    @api.depends(
+        "product_id",
+        "specific_price",
         "object_id.discount_time",
+    )
+    def _compute_price_unit(self):
+        for line in self:
+            if line.object_id.timepack_id and line.object_id.discount_time:
+                line.price_unit = line.object_id.timepack_id.price_unit
+            elif not line.object_id.timepack_id and not line.specific_price:
+                line.price_unit = line.commission_id.timesheet_product_id.list_price
+            else:
+                line.price_unit = line.specific_price
+
+    @api.onchange("price_unit")
+    def _inverse_price_unit(self):
+        for line in self:
+            line.specific_price = line.price_unit
+            line._compute_amount()
+            
+    @api.depends(
+        "commission_id",
         "object_id.amount",
+        "object_id.timepack_id",
+        "object_id.discount_time",
     )
     def _compute_amount(self):
         for line in self:
