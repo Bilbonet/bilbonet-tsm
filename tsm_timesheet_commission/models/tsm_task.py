@@ -191,6 +191,11 @@ class TsmTaskTimesheetAgent(models.Model):
         related="company_id.currency_id",
     )
 
+    @api.depends("agent_id")
+    def _compute_commission_id(self):
+        for record in self:
+            record.commission_id = record.agent_id.tsm_commission_id
+
     @api.depends("object_id.date_time")
     def _compute_invoice_date(self):
         for line in self:
