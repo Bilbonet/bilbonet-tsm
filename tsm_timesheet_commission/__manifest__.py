@@ -13,6 +13,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "views/res_partner_views.xml",
         "views/tsm_task_view.xml",
         "views/commission_views.xml",
         "views/commission_settlement_views.xml",
