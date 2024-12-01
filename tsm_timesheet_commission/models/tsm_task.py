@@ -2,6 +2,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import UserError
+from odoo.osv import expression
 
 
 class TsmTask(models.Model):
@@ -140,7 +141,26 @@ class TsmTaskTimesheetAgent(models.Model):
     _name = "tsm.task.timesheet.agent"
     _description = "Agent detail of commission line in timesheets"
 
+    def _domain_agent_id(self):
+        domain = [("agent", "=", True)]
+        if not self.user_has_groups("commission.group_commission_manager"):
+            return expression.AND(
+                [
+                    domain,
+                    [
+                        ("id", "=", self.env.user.partner_id.id),
+                    ],
+                ]
+            )
+        return domain
+    
     object_id = fields.Many2one(comodel_name="tsm.task.timesheet")
+    agent_id = fields.Many2one(
+        comodel_name="res.partner",
+        domain=_domain_agent_id,
+        ondelete="restrict",
+        required=True,
+    )
     task_id = fields.Many2one(
         string="Task",
         comodel_name="tsm.task",
