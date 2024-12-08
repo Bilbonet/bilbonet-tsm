@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+
+  <record id="view_partner_form_timesheet_agent" model="ir.ui.view">
+    <field name="name">res.partner.form.timesheet.agent</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="commission.view_partner_form_agent" />
+    <field name="priority" eval="18" />
+    <field name="arch" type="xml">
+      <field name="commission_id" position="after">
+        <field name="tsm_commission_id" attrs="{'required': [('agent', '=', True)]}"/>
+      </field>
+    </field>
+  </record>
+
+</odoo>
