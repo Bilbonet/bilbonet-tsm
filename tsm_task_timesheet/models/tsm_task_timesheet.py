@@ -46,12 +46,6 @@ class TsmTaskTimesheet(models.Model):
         default=lambda self: self.env.user.company_id,
         required=True,
     )
-    # active = fields.Boolean(
-    #     string="Active",
-    #     default=True,
-    #     help="If the active field is set to False, it will allow "
-    #     "you to hide the account without removing it.",
-    # )
     date_time = fields.Datetime(string="Date", default=fields.Datetime.now)
     amount = fields.Float(string="Quantity", default=0.0)
     task_id = fields.Many2one(

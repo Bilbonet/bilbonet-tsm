@@ -71,6 +71,7 @@ class TsmTask(models.Model):
         ts = self.env["tsm.task.timesheet"].new(
             {
                 "task_id": self.id,
+                "name": "/"
             }
         )
         ts = ts._convert_to_write(ts._cache)
