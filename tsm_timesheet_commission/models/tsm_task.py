@@ -197,9 +197,9 @@ class TsmTaskTimesheetAgent(models.Model):
     )
     specific_price = fields.Float()
     price_unit = fields.Float(
-        string="Hour Price",
-        compute="_compute_price_unit",
-        inverse="_inverse_price_unit",
+        string="Price",
+        store=True,
+        readonly=False,
         default=0.0,
         digits="Product Price",
         help="Hour price at which the commission is calculated.",
@@ -210,7 +210,7 @@ class TsmTaskTimesheetAgent(models.Model):
         readonly=True,
         related="company_id.currency_id",
     )
-
+    
     @api.depends("agent_id")
     def _compute_commission_id(self):
         for record in self:
@@ -218,6 +218,7 @@ class TsmTaskTimesheetAgent(models.Model):
 
     @api.depends("object_id.date_time")
     def _compute_invoice_date(self):
+        """ Change Datetime to Date"""
         for line in self:
             line.invoice_date = line.object_id.date_time.date()
 
@@ -232,36 +233,36 @@ class TsmTaskTimesheetAgent(models.Model):
             else:
                 line.product_id = line.commission_id.timesheet_product_id
                 
-    @api.depends(
-        "product_id",
-        "specific_price",
-        "object_id.discount_time",
-    )
     def _compute_price_unit(self):
         for line in self:
-            if line.object_id.timepack_id and line.object_id.discount_time:
-                line.price_unit = line.object_id.timepack_id.price_unit
-            elif not line.object_id.timepack_id and not line.specific_price:
+            if line.object_id.timepack_id:
+                if line.object_id.discount_time:
+                    line.price_unit = line.object_id.timepack_id.price_unit
+                else:
+                    line.price_unit = 0.0
+            elif not line.object_id.timepack_id:
                 line.price_unit = line.commission_id.timesheet_product_id.list_price
-            else:
-                line.price_unit = line.specific_price
 
     @api.onchange("price_unit")
     def _inverse_price_unit(self):
-        for line in self:
+        """ Store the specific price for calculating amount."""
+        for line in self.filtered(lambda x: not x.object_id.timepack_id):
             line.specific_price = line.price_unit
-            line._compute_amount()
-            
+
     @api.depends(
         "commission_id",
+        "price_unit",
         "object_id.amount",
-        "object_id.timepack_id",
         "object_id.discount_time",
     )
     def _compute_amount(self):
         for line in self:
             timesheet_line = line.object_id
-            subtotal = line.price_unit * timesheet_line.amount
+            if line.specific_price:
+                subtotal = line.specific_price * timesheet_line.amount
+            else:
+                self._compute_price_unit()
+                subtotal = line.price_unit * timesheet_line.amount
             line.amount = line._get_commission_amount(
                 line.commission_id,
                 subtotal,
