@@ -37,17 +37,19 @@ class SettlementLine(models.Model):
     timesheet_agent_line_id = fields.Many2one(
         comodel_name="tsm.task.timesheet.agent", index=True
     )
+    partner_id = fields.Many2one(
+        related="timesheet_line_id.task_partner_id"
+    )
+    task_id = fields.Many2one(
+        related="timesheet_line_id.task_id",
+    )
     timesheet_line_id = fields.Many2one(
         comodel_name="tsm.task.timesheet",
         store=True,
         related="timesheet_agent_line_id.object_id",
         string="Source timesheet line",
     )
-    task_id = fields.Many2one(
-        related="timesheet_line_id.task_id",
-    )
-    #!La línea del parte de horas no tiene nombre se utilizan tags. 
-    #!Seria necesario hacer un campo timesheet_line_descripction para mostrar los datos
+
     @api.depends("timesheet_agent_line_id")
     def _compute_date(self):
         for record in self.filtered("timesheet_agent_line_id"):
