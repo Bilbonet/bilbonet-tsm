@@ -23,6 +23,12 @@
                 <field 
                     name="price_unit" 
                     attrs="{'readonly': ['|',('timepack_id', '!=', False), ('settled', '=', True)]}"
+                    groups="!commission.group_commission_manager"
+                />
+                <field 
+                    name="price_unit" 
+                    attrs="{'readonly': [('settled', '=', True)]}"
+                    groups="commission.group_commission_manager"
                 />
                 <field name="amount" />
             </tree>
