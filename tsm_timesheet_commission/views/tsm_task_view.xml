@@ -44,15 +44,6 @@
                     }"
                     type="object"
                 />
-                <!-- <button
-                    name="button_edit_agents"
-                    icon="fa-users"
-                    attrs="{
-                        'invisible': [('commission_free', '=', True)],
-                        'readonly': [('timepack_id', '=', []), ('discount_time', '=', False)]
-                    }"
-                    type="object"
-                /> -->
                 <field name="commission_status" optional="show" />
             </xpath>
             <field name="total_hours" position="after">
@@ -68,6 +59,7 @@
                         name="recompute_lines_agents"
                         type="object"
                         string="Regenerate agents"
+                        groups="commission.group_commission_manager"
                     />
                 </group>
             </xpath>
