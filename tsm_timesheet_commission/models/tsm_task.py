@@ -232,22 +232,25 @@ class TsmTaskTimesheetAgent(models.Model):
                 line.product_id = line.object_id.timepack_id.product_id
             else:
                 line.product_id = line.commission_id.timesheet_product_id
-                
+
     def _compute_price_unit(self):
         for line in self:
-            if line.object_id.timepack_id:
-                if line.object_id.discount_time:
-                    line.price_unit = line.object_id.timepack_id.price_unit
-                else:
-                    line.price_unit = 0.0
-            elif not line.object_id.timepack_id:
-                line.price_unit = line.commission_id.timesheet_product_id.list_price
+            if line.specific_price:
+                line.price_unit = line.specific_price
+            else:
+                if line.object_id.timepack_id:
+                    if line.object_id.discount_time:
+                        line.price_unit = line.object_id.timepack_id.price_unit
+                    else:
+                        line.price_unit = 0.0
+                elif not line.object_id.timepack_id:
+                    line.price_unit = line.commission_id.timesheet_product_id.list_price
 
     @api.onchange("price_unit")
     def _inverse_price_unit(self):
-        """ Store the specific price for calculating amount."""
-        for line in self.filtered(lambda x: not x.object_id.timepack_id):
-            line.specific_price = line.price_unit
+        """ Store the specific price when price unit change manually."""
+        self.ensure_one()
+        self.specific_price = self.price_unit
 
     @api.depends(
         "commission_id",
