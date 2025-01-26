@@ -300,13 +300,6 @@ class TsmTimePack(models.Model):
                         "Please, contact them to do this."
                     )
                 )
-            # if task is archived reset some values
-            # task.update(
-            #     {
-            #         "priority": 0,
-            #         "kanban_state": "normal",
-            #     }
-            # )
 
     # -------------------------
     # == Product & Sale Order ==
