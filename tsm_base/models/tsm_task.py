@@ -47,7 +47,7 @@ class TsmTask(models.Model):
         help="Important task order",
     )
     stage_id = fields.Many2one(
-        "tsm.task.type",
+        comodel_name="tsm.task.type",
         string="Stage",
         index=True,
         copy=False,
@@ -57,7 +57,7 @@ class TsmTask(models.Model):
     closed = fields.Boolean(related="stage_id.closed", readonly=True)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
     tag_ids = fields.Many2many(
-        "tsm.task.tags",
+        comodel_name="tsm.task.tags",
         string="Tags",
     )
     kanban_state = fields.Selection(
@@ -118,7 +118,7 @@ class TsmTask(models.Model):
         help="Details, notes and aclarations about the task.",
     )
     project_id = fields.Many2one(
-        "tsm.project", string="Project", index=True, tracking=True
+        comodel_name="tsm.project", string="Project", index=True, tracking=True
     )
     manager_id = fields.Many2one(
         "res.users",
@@ -137,13 +137,13 @@ class TsmTask(models.Model):
     )
     partner_id = fields.Many2one("res.partner", string="Customer")
     contact_id = fields.Many2one(
-        "res.partner",
+        comodel_name="res.partner",
         string="Contact",
         domain="[('parent_id', '=', partner_id),"
         "('type', 'in', ('contact','other'))]",
     )
     privacy_visibility = fields.Selection(
-        [
+        selection=[
             ("followers", "On invitation only"),
             ("employees", "Visible by all employees"),
         ],
@@ -157,7 +157,7 @@ class TsmTask(models.Model):
         "may see all tasks\n",
     )
     company_id = fields.Many2one(
-        "res.company",
+        comodel_name="res.company",
         string="Company",
         default=lambda self: self.env["res.company"]._company_default_get(),
     )
