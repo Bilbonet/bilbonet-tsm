@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 17:54+0000\n"
-"PO-Revision-Date: 2024-08-31 17:54+0000\n"
+"POT-Creation-Date: 2025-01-26 19:03+0000\n"
+"PO-Revision-Date: 2025-01-26 19:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,7 +66,7 @@ msgid ""
 "                            </td>\n"
 "                        </tr>\n"
 "                        <tr style=\"background-color:#dc3545;color:#FFFFFF;\">\n"
-"                            <td style=\"width:100px;padding:5px\">Consumed<span class=\"fa fa-arrow-circle-down text-danger\"/>:</td>\n"
+"                            <td style=\"width:100px;padding:5px\">Consumed:</td>\n"
 "                            <td class=\"text-right\">\n"
 "                                <span style=\"font-weight: bold;\" t-out=\"('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))\"/> hours\n"
 "                            </td>\n"
@@ -182,6 +182,7 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__active
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
 msgid "Active"
 msgstr ""
 
@@ -365,14 +366,14 @@ msgid "Customer"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
-#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
-msgid "Date:"
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_search_view
+msgid "Date Start"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_search_view
-msgid "Ddate Start"
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
+msgid "Date:"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -537,6 +538,11 @@ msgid ""
 msgstr ""
 
 #. module: tsm_time_pack
+#: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_form_view
+msgid "Inactive"
+msgstr ""
+
+#. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_task_timesheet__discount_time
 msgid "Indicate if discount the time from the time pack"
 msgstr ""
@@ -655,6 +661,14 @@ msgstr ""
 #. module: tsm_time_pack
 #: model:ir.model.fields.selection,name:tsm_time_pack.selection__tsm_time_pack__privacy_visibility__followers
 msgid "On invitation only"
+msgstr ""
+
+#. module: tsm_time_pack
+#: code:addons/tsm_time_pack/models/tsm_time_pack.py:0
+#, python-format
+msgid ""
+"Only managers can archive a time pack.\n"
+"Please, contact them to do this."
 msgstr ""
 
 #. module: tsm_time_pack
