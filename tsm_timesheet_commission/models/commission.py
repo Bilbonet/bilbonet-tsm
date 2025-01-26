@@ -7,7 +7,7 @@ class Commission(models.Model):
     _inherit = "commission"
 
     task_stage = fields.Selection(
-        [("open", "Task Based"), ("closed", "Task Closed")],
+        selection=[("open", "Task Based"), ("closed", "Task Closed")],
         string="Task Status",
         default="open",
         help="Select the task status for settling the commissions:\n"
