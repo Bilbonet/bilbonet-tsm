@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class TsmTask(models.Model):
     _name = "tsm.task"
     _description = "Tech Support Management Task"
-    _order = "priority desc, date_start desc"
+    _order = "priority desc, sequence, id desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     def _get_default_stage_id(self):
@@ -27,6 +27,11 @@ class TsmTask(models.Model):
         return stages.browse(stage_ids)
 
     code = fields.Char(string="Task Code", required=True, default="/", readonly=True)
+    sequence = fields.Integer(
+        default=10,
+        copy=False,
+        help="Sequence of the task when displaying tasks",
+    )
     name = fields.Char(string="Task Title", required=True, index=True)
     active = fields.Boolean(
         default=True,
@@ -35,7 +40,11 @@ class TsmTask(models.Model):
         " the task without removing it.",
     )
     priority = fields.Selection(
-        [("0", "Low"), ("1", "Normal")], default="0", index=True, string="Priority"
+        string="Priority",
+        selection=[("0", "Low"), ("1", "Normal")],
+        default="0",
+        index=True,
+        help="Important task order",
     )
     stage_id = fields.Many2one(
         "tsm.task.type",
