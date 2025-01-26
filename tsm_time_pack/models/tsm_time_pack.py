@@ -40,6 +40,7 @@ class TsmTimePack(models.Model):
     active = fields.Boolean(
         default=True,
         copy=False,
+        tracking=True,
         help="If the active field is set to False, it will allow you to hide"
         " the time pack without removing it.",
     )
@@ -283,6 +284,29 @@ class TsmTimePack(models.Model):
 
     def action_active(self):
         return self.write({"active": True})
+
+    @api.constrains("active")
+    def _check_archiving_restrictions(self):
+        """
+        Constraint should be tested just after archiving a time pack,
+        but shouldn't be raised when unarchiving a time pack.
+        """
+        for tp in self.filtered(lambda t: not t.active):
+            user = self.env.user
+            if not user.has_group("sales_team.group_sale_manager"):
+                raise ValidationError(
+                    _(
+                        "Only managers can archive a time pack.\n"
+                        "Please, contact them to do this."
+                    )
+                )
+            # if task is archived reset some values
+            # task.update(
+            #     {
+            #         "priority": 0,
+            #         "kanban_state": "normal",
+            #     }
+            # )
 
     # -------------------------
     # == Product & Sale Order ==
