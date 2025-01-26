@@ -96,7 +96,9 @@ class TsmTechAsset(models.Model):
         index=True,
         tracking=30,
     )
-    partner_id = fields.Many2one("res.partner", string="Customer", required=True)
+    partner_id = fields.Many2one(
+        comodel_name="res.partner", string="Customer", required=True
+    )
     type_id = fields.Many2one(
         comodel_name="tsm.tech.asset.type",
         string="Type",
@@ -106,13 +108,16 @@ class TsmTechAsset(models.Model):
         change_default=True,
     )
     task_ids = fields.One2many(
-        "tsm.task", "asset_ids", string="Tasks", context={"active_test": False}
+        comodel_name="tsm.task",
+        inverse_name="asset_ids",
+        string="Tasks",
+        context={"active_test": False},
     )
     task_count = fields.Integer(
         compute="_compute_task_count", string="Amount Tasks", readonly=True
     )
     privacy_visibility = fields.Selection(
-        [
+        selection=[
             ("followers", "On invitation only"),
             ("employees", "Visible by all employees"),
         ],
