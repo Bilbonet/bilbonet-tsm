@@ -81,7 +81,7 @@ class TsmTimePack(models.Model):
     )
     date_end = fields.Date(string="Ending Date", index=True, copy=False)
     privacy_visibility = fields.Selection(
-        [
+        selection=[
             ("followers", "On invitation only"),
             ("employees", "Visible by all employees"),
         ],
@@ -277,6 +277,12 @@ class TsmTimePack(models.Model):
             "target": "new",
             "context": ctx,
         }
+
+    def action_inactive(self):
+        return self.write({"active": False})
+
+    def action_active(self):
+        return self.write({"active": True})
 
     # -------------------------
     # == Product & Sale Order ==
