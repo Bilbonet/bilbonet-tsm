@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <data>
         <menuitem id="tsm_time_pack_menu"
@@ -245,10 +247,6 @@
             <field name="name">My Time Packages</field>
             <field name="res_model">tsm.time.pack</field>
             <field name="view_mode">tree,form</field>
-            <!-- <field name="domain">['|',
-                ('user_id', '=', uid),
-                ('message_partner_ids', 'in', [user.partner_id.id])
-            ]</field> -->
             <field name="domain">[('user_id', '=', uid)]</field>
             <field name="view_id" ref="tsm_time_pack_search_view"/>
             <field name="help" type="html">
