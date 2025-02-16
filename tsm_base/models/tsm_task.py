@@ -36,6 +36,7 @@ class TsmTask(models.Model):
     active = fields.Boolean(
         default=True,
         copy=False,
+        tracking=True,
         help="If the active field is set to False, it will allow you to hide"
         " the task without removing it.",
     )
