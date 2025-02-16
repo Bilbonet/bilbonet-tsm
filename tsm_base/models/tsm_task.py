@@ -199,7 +199,11 @@ class TsmTask(models.Model):
 
     @api.constrains("active")
     def _check_archiving_restrictions(self):
-        # constraint should be tested just after archiving a task, but shouldn't be raised when unarchiving a task
+        """
+        Only archive task in closed stages.
+        Constraint should be tested just after archiving a task,
+        but shouldn't be raised when unarchiving a task.
+        """
         for task in self.filtered(lambda t: not t.active):
             if task.closed == False:
                 raise ValidationError(

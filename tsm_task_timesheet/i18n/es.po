@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:27+0000\n"
-"PO-Revision-Date: 2024-08-31 13:37+0200\n"
+"POT-Creation-Date: 2025-02-16 19:19+0000\n"
+"PO-Revision-Date: 2025-02-16 20:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -23,7 +23,6 @@ msgid "<strong>Duration: </strong>"
 msgstr "<strong>Duración: </strong>"
 
 #. module: tsm_task_timesheet
-#: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet__active
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__active
 msgid "Active"
 msgstr "Activo"
@@ -159,14 +158,6 @@ msgstr "Agrupar por"
 #: model:ir.model.fields,field_description:tsm_task_timesheet.field_tsm_task_timesheet_tags__id
 msgid "ID"
 msgstr "ID (identificación)"
-
-#. module: tsm_task_timesheet
-#: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet__active
-msgid ""
-"If the active field is set to False, it will allow you to hide the account "
-"without removing it."
-msgstr ""
-"Si el campo activo se desmarca, permite ocultar la cuenta sin eliminarla."
 
 #. module: tsm_task_timesheet
 #: model:ir.model.fields,help:tsm_task_timesheet.field_tsm_task_timesheet_tags__active
@@ -478,6 +469,13 @@ msgstr "Utilizar titulo para describir el parte de horas."
 #: model_terms:ir.ui.view,arch_db:tsm_task_timesheet.tsm_task_timesheet_line_search
 msgid "User"
 msgstr "Usuario"
+
+#. module: tsm_task_timesheet
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
+#, python-format
+msgid "You can not archive a task with timesheets that have no time spent."
+msgstr ""
+"No puede archivar una tarea con un parte de horas sin tiempo invertido."
 
 #. module: tsm_task_timesheet
 #: model_terms:ir.actions.act_window,help:tsm_task_timesheet.tsm_task_timesheet_line_act
