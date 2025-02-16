@@ -88,3 +88,20 @@ class TsmTask(models.Model):
                 "form_view_initial_mode": "edit",
             },
         }
+
+    @api.constrains("active")
+    def _check_archiving_restrictions(self):
+        """
+        Not archive task with some time sheet with no time spent.
+        Constraint should be tested just after archiving a task,
+        but shouldn't be raised when unarchiving a task.
+        """
+        for task in self.filtered(lambda t: not t.active):
+            if any(not ts.amount for ts in task.timesheet_ids):
+                raise ValidationError(
+                    _(
+                        "You can not archive a task with timesheets "
+                        "that have no time spent."
+                    )
+                )
+        return super()._check_archiving_restrictions()
