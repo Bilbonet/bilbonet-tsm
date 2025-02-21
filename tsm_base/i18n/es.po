@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-03 21:14+0000\n"
-"PO-Revision-Date: 2024-02-03 22:20+0100\n"
+"POT-Creation-Date: 2025-02-21 17:11+0000\n"
+"PO-Revision-Date: 2025-02-21 18:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. module: tsm_base
 #: model:ir.actions.report,print_report_name:tsm_base.tsm_task_report_action
@@ -229,6 +229,21 @@ msgid "Archived"
 msgstr "Archivado"
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.follower_assignment_wizard_view
+msgid "Assign"
+msgstr "Asignar"
+
+#. module: tsm_base
+#: model:ir.model,name:tsm_base.model_follower_assignment_wizard
+msgid "Assign and Unassign Followers to Record"
+msgstr "Asignar y Desasignar seguidores al registro"
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.follower_assignment_wizard_view
+msgid "Assign/Unassign Followers"
+msgstr "Asignar/Desasignar Seguidores"
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__user_id
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Assigned to"
@@ -262,6 +277,11 @@ msgstr "Número de adjuntos"
 #, python-format
 msgid "Blocked"
 msgstr "Bloqueada"
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.follower_assignment_wizard_view
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. module: tsm_base
 #: model_terms:ir.actions.act_window,help:tsm_base.tsm_task_tags_action
@@ -328,6 +348,7 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__create_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__create_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__create_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__create_uid
@@ -336,6 +357,7 @@ msgid "Created by"
 msgstr "Creado por"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__create_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__create_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__create_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__create_date
@@ -399,6 +421,7 @@ msgid "Details, notes and aclarations about the task."
 msgstr "Detalles, notas y aclaraciones sobre la tarea."
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__display_name
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__display_name
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__display_name
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__display_name
@@ -461,6 +484,7 @@ msgid "Followed by Me"
 msgstr "Seguido por mi"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__record_followers_ids
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__message_follower_ids
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__message_follower_ids
 msgid "Followers"
@@ -476,17 +500,12 @@ msgstr "Seguidores (Empresas)"
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_type_icon
 #: model:ir.model.fields,help:tsm_base.field_tsm_task__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Fuente awesome icono e.j. fa-tasks"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__sequence
 msgid "Gives the sequence order when displaying a list of Projects."
 msgstr "Indica el orden de secuencia cuando se muestra una lista de proyectos."
-
-#. module: tsm_base
-#: model:ir.model.fields,help:tsm_base.field_tsm_task__sequence
-msgid "Gives the sequence order when displaying a list of tasks."
-msgstr "Indica el orden de las tareas al mostrarlas en la lista."
 
 #. module: tsm_base
 #: model:ir.model.fields.selection,name:tsm_base.selection__tsm_task__kanban_state__done
@@ -548,6 +567,7 @@ msgstr ""
 "- Visible para todos los empleados: Todos los empleados pueden ver las tareas del proyecto\n"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__id
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__id
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__id
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__id
@@ -559,7 +579,7 @@ msgstr "ID (identificación)"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_exception_icon
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Icono"
 
 #. module: tsm_base
 #: model:ir.model.fields,help:tsm_base.field_tsm_project__activity_exception_icon
@@ -594,6 +614,11 @@ msgstr "Si el campo activo se desmarca, permite ocultar el proyecto sin eliminar
 msgid ""
 "If the active field is set to False, it will allow you to hide the task without removing it."
 msgstr "Si se desactiva, te permite ocultar la tarea sin elimiarla."
+
+#. module: tsm_base
+#: model:ir.model.fields,help:tsm_base.field_tsm_task__priority
+msgid "Important task order"
+msgstr "Importante orden de tareas"
 
 #. module: tsm_base
 #: code:addons/tsm_base/models/tsm_task_type.py:0
@@ -638,6 +663,7 @@ msgid "Kanban Valid Explanation"
 msgstr "Explicación del kanban válido"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard____last_update
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project____last_update
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task____last_update
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags____last_update
@@ -646,6 +672,7 @@ msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__write_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__write_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__write_uid
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__write_uid
@@ -654,6 +681,7 @@ msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: tsm_base
+#: model:ir.model.fields,field_description:tsm_base.field_follower_assignment_wizard__write_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__write_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__write_date
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_tags__write_date
@@ -909,6 +937,11 @@ msgid "Red Kanban Label"
 msgstr "Etiqueta Kanban roja"
 
 #. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.follower_assignment_wizard_view
+msgid "Remove"
+msgstr "Eliminar"
+
+#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__activity_user_id
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__activity_user_id
 msgid "Responsible User"
@@ -942,6 +975,11 @@ msgstr "Enviar por eMail"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__sequence
 msgid "Sequence"
 msgstr "Secuencia"
+
+#. module: tsm_base
+#: model:ir.model.fields,help:tsm_base.field_tsm_task__sequence
+msgid "Sequence of the task when displaying tasks"
+msgstr "Secuencia de las tareas cuando se muestran"
 
 #. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.tsm_config_settings_action
@@ -1340,6 +1378,11 @@ msgstr ""
 "eliminarlo o simplemente archivar el proyecto."
 
 #. module: tsm_base
+#: model:ir.actions.act_window,name:tsm_base.task_follower_assignment_action
+msgid "[Un]Assign Followers"
+msgstr "[Des]Asignar Seguidores"
+
+#. module: tsm_base
 #: model:ir.actions.report,print_report_name:tsm_base.tsm_project_report_action
 msgid "object.name.replace(' ', '-')"
 msgstr ""
@@ -1348,6 +1391,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view
 msgid "oe_kanban_text_red"
 msgstr ""
+
+#. module: tsm_base
+#: model_terms:ir.ui.view,arch_db:tsm_base.follower_assignment_wizard_view
+msgid "or"
+msgstr "o"
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_kanban_view

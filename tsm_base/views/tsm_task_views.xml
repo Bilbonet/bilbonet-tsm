@@ -267,7 +267,9 @@
         </field>
     </record>
 
-    <!-- Tasks Antions & Menus -->
+    <!--=================
+        Menus and Actions
+    ==================-->
     <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
         <field name="name">TSM My Tasks from menu</field>
         <field name="res_model">tsm.task</field>
@@ -293,7 +295,7 @@
               action="base.action_partner_form"
               sequence="10"/>
 
-    <!-- Assign/Unassign Followers in Tasks -->
+    <!-- Assign/Unassign Followers to Tasks -->
     <record id="task_follower_assignment_action" model="ir.actions.act_window">
         <field name="name">[Un]Assign Followers</field>
         <field name="type">ir.actions.act_window</field>
