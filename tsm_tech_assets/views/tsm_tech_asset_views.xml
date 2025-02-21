@@ -229,9 +229,9 @@
         </field>
     </record>
 
-    <!--
+    <!--========================
         Asset: Menus and Actions
-    -->
+    =========================-->
     <record id="tsm_tech_assets_open_all_action" model="ir.actions.act_window">
         <field name="name">T.S.M: Tech Assets</field>
         <field name="res_model">tsm.tech.asset</field>
@@ -249,6 +249,17 @@
               name="Tech Assets"
               parent="tsm_base.tsm_main_menu"
               sequence="7"/>
+
+    <!-- Assign/Unassign Followers to Assets -->
+    <record id="assets_follower_assignment_action" model="ir.actions.act_window">
+        <field name="name">[Un]Assign Followers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">follower.assignment.wizard</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="tsm_base.follower_assignment_wizard_view" />
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="tsm_tech_assets.model_tsm_tech_asset" />
+    </record>
 
     <!--
         Asset Types: views
@@ -291,4 +302,5 @@
               parent="tsm_base.tsm_config_menu"
               sequence="10"
               groups="base.group_no_one"/>
+
 </odoo>

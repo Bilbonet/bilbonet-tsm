@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 17:18+0000\n"
-"PO-Revision-Date: 2023-11-14 17:18+0000\n"
+"POT-Creation-Date: 2025-02-21 17:25+0000\n"
+"PO-Revision-Date: 2025-02-21 17:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -121,6 +121,7 @@ msgstr ""
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__active
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Active"
 msgstr ""
 
@@ -396,6 +397,11 @@ msgid ""
 msgstr ""
 
 #. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
+msgid "Inactive"
+msgstr ""
+
+#. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_is_follower
 msgid "Is Follower"
 msgstr ""
@@ -519,6 +525,11 @@ msgid "On invitation only"
 msgstr ""
 
 #. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_task_tech_asset_form_view
+msgid "Open full form"
+msgstr ""
+
+#. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_document
 msgid "Phone:"
@@ -580,6 +591,11 @@ msgstr ""
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__sequence
 msgid "Sequence"
+msgstr ""
+
+#. module: tsm_tech_assets
+#: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__priority
+msgid "Sequence of the asset when displaying assets"
 msgstr ""
 
 #. module: tsm_tech_assets
@@ -760,6 +776,11 @@ msgid ""
 msgstr ""
 
 #. module: tsm_tech_assets
+#: model:ir.actions.act_window,name:tsm_tech_assets.assets_follower_assignment_action
+msgid "[Un]Assign Followers"
+msgstr ""
+
+#. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_kanban_view
 msgid "text-muted"
 msgstr ""
@@ -767,6 +788,6 @@ msgstr ""
 #. module: tsm_tech_assets
 #: model:mail.template,report_name:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
 msgid ""
-"{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-')"
-" }}"
+"{{ '(' + object.code + ')_' + (object.name or 'Tech Asset').replace(' ', "
+"'-') }}"
 msgstr ""
