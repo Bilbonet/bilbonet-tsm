@@ -5,3 +5,4 @@ access_tsm_task_type_user,tsm.task.type.user,model_tsm_task_type,tsm_base.group_
 access_tsm_task_type_manager,tsm.task.type.manager,model_tsm_task_type,tsm_base.group_tsm_manager,1,1,1,1
 access_tsm_task_tags_user,tsm.task.tags.user,model_tsm_task_tags,tsm_base.group_tsm_user,1,0,0,0
 access_tsm_task_tags_manager,tsm.task.tags.manager,model_tsm_task_tags,tsm_base.group_tsm_manager,1,1,1,1
+access_follower_assignment_wizard_manager,access_follower_assignment_wizard_manager,model_follower_assignment_wizard,tsm_base.group_tsm_manager,1,1,1,1
