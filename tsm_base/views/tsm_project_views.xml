@@ -201,9 +201,9 @@
         </field>
     </record>
 
-    <!--
+    <!--=================
         Menus and Actions
-    -->
+    ==================-->
     <record id="tsm_project_open_all_action" model="ir.actions.act_window">
         <field name="name">T.S.M: Projects</field>
         <field name="res_model">tsm.project</field>
@@ -223,8 +223,8 @@
     <menuitem id="tsm_project_menu" name="Projects" parent="tsm_main_menu"
               action="tsm_project_open_all_action" sequence="3"/>
 
-    <!-- Assign/Unassign Followers in Projects -->
-    <record id="task_follower_assignment_action" model="ir.actions.act_window">
+    <!-- Assign/Unassign Followers to Projects -->
+    <record id="project_follower_assignment_action" model="ir.actions.act_window">
         <field name="name">[Un]Assign Followers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">follower.assignment.wizard</field>

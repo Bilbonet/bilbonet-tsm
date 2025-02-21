@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 17:19+0000\n"
-"PO-Revision-Date: 2023-11-14 18:31+0100\n"
+"POT-Creation-Date: 2025-02-21 17:26+0000\n"
+"PO-Revision-Date: 2025-02-21 18:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.5\n"
 
 #. module: tsm_tech_assets
 #: model:ir.actions.report,print_report_name:tsm_tech_assets.tsm_tech_asset_report_action
@@ -221,6 +221,7 @@ msgstr "Acción Necesaria"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__active
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
 msgid "Active"
 msgstr "Activo"
 
@@ -232,7 +233,7 @@ msgstr "Actividades"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Decoración Excepción de Actividad"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_state
@@ -242,7 +243,7 @@ msgstr "Estado de la actividad"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Tipo Icono Actividad"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
@@ -415,7 +416,7 @@ msgstr "Seguidores (Empresas)"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Fuente awesome icono e.j. fa-tasks"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
@@ -445,7 +446,7 @@ msgstr "Agrupar por"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Tiene Mensaje"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.actions.act_window,help:tsm_tech_assets.tsm_tasks_from_tech_asset_action
@@ -474,12 +475,12 @@ msgstr "ID (identificación)"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Icono"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Icono para indicar una excepción de actividad."
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__message_needaction
@@ -501,6 +502,11 @@ msgid ""
 msgstr ""
 "Si el campo activo se desactiva, te permitirá ocultar el elemento técnico sin "
 "eliminarlo."
+
+#. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_form_view
+msgid "Inactive"
+msgstr "Desactivada"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_is_follower
@@ -533,7 +539,7 @@ msgstr "Actividades tardías"
 #. module: tsm_tech_assets
 #: model:ir.model.fields.selection,name:tsm_tech_assets.selection__tsm_tech_asset__priority__0
 msgid "Low"
-msgstr ""
+msgstr "Bajo"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_main_attachment_id
@@ -558,7 +564,7 @@ msgstr "Mis actividades"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Fecha Límite Mi Actividad"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
@@ -568,7 +574,7 @@ msgstr "Mis Elementos"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Próxima Actividad Calendario Evento"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__activity_date_deadline
@@ -603,7 +609,7 @@ msgstr "Número de acciones"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Número de errores"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__message_needaction_counter
@@ -624,6 +630,11 @@ msgstr "Número de mensajes no leidos"
 #: model:ir.model.fields.selection,name:tsm_tech_assets.selection__tsm_tech_asset__privacy_visibility__followers
 msgid "On invitation only"
 msgstr "Solo con invitación"
+
+#. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_task_tech_asset_form_view
+msgid "Open full form"
+msgstr "Abrir formulario completo"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_report_detailed_document
@@ -672,7 +683,7 @@ msgstr "Responsable:"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS error de entrega"
 
 #. module: tsm_tech_assets
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__can_edit
@@ -688,6 +699,11 @@ msgstr "Enviar por correo electrónico"
 #: model:ir.model.fields,field_description:tsm_tech_assets.field_tsm_tech_asset__sequence
 msgid "Sequence"
 msgstr "Secuencia"
+
+#. module: tsm_tech_assets
+#: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__priority
+msgid "Sequence of the asset when displaying assets"
+msgstr "Secuencia del elemento técnico cuando se muestran"
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_search_view
@@ -825,7 +841,7 @@ msgstr "Type de elemento"
 #. module: tsm_tech_assets
 #: model:ir.model.fields,help:tsm_tech_assets.field_tsm_tech_asset__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Tipo excepción de actividad en el registro."
 
 #. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_asset_type_form_view
@@ -875,6 +891,11 @@ msgstr ""
 "el progreso, comente, adjunte documentos, etc."
 
 #. module: tsm_tech_assets
+#: model:ir.actions.act_window,name:tsm_tech_assets.assets_follower_assignment_action
+msgid "[Un]Assign Followers"
+msgstr "[Des]Asignar Seguidores"
+
+#. module: tsm_tech_assets
 #: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_tech_assets_kanban_view
 msgid "text-muted"
 msgstr ""
@@ -882,7 +903,7 @@ msgstr ""
 #. module: tsm_tech_assets
 #: model:mail.template,report_name:tsm_tech_assets.tsm_tech_asset_email_template_report_attached
 msgid ""
-"{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}"
+"{{ '(' + object.code + ')_' + (object.name or 'Tech Asset').replace(' ', '-') }}"
 msgstr ""
 "{{ '(' + object.code + ')_' + (object.name or 'Elemento_Técnico').replace(' ', "
 "'-') }}"
