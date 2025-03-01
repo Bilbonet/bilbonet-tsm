@@ -43,13 +43,13 @@
                 ('message_partner_ids', 'in', [user.partner_id.id])]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
             <field name="perm_read" eval="True"/>
-            <field name="perm_create" eval="True"/>
+            <field name="perm_create" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_unlink" eval="False"/>
         </record>
-        <!-- Group Users: Only Managers of the project can create, modify and delete-->
+        <!-- Group Users: Only User Asigned to the project can create, modify and delete-->
         <record id="tsm_project_modify_only_managers" model="ir.rule">
-            <field name="name">TSM Project: Modify only managers</field>
+            <field name="name">TSM Project: Modify only user asigned</field>
             <field name="model_id" ref="model_tsm_project"/>
             <field name="domain_force">[('user_id','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
