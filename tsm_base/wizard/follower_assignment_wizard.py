@@ -26,7 +26,9 @@ class FollowerAssignmentWizard(models.TransientModel):
             followers_ids = self.record_followers_ids.ids
             if context.get("active_ids"):
                 # get values from current active_ids
-                for value in model_obj.search([("id", "in", context["active_ids"])]):
+                for value in model_obj.with_context(active_test=False).search(
+                    [("id", "in", context["active_ids"])]
+                ):
                     existing_followers_id = followers_to_assign = []
                     existing_followers_id = [
                         val.partner_id.id for val in value.message_follower_ids
@@ -52,7 +54,7 @@ class FollowerAssignmentWizard(models.TransientModel):
         if context.get("active_model"):
             model_obj = self.env[context["active_model"]]
             model_follower_obj = self.env["mail.followers"]
-            active_model_id = model_obj.search(
+            active_model_id = model_obj.with_context(active_test=False).search(
                 [("id", "in", self._context.get("active_ids"))]
             )
             followers_ids = [val.id for val in self.record_followers_ids]
