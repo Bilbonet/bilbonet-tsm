@@ -7,5 +7,7 @@ class TsmTask(models.Model):
     _inherit = "tsm.task"
 
     asset_ids = fields.Many2many(
-        comodel_name='tsm.tech.asset', 
-        string='Tech Asset')
+        comodel_name="tsm.tech.asset",
+        string="Tech Asset",
+        context={"active_test": False},
+    )
