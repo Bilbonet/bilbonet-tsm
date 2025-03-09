@@ -44,11 +44,24 @@
                 <field name="commission_free" invisible="1" />
                 <button
                     name="button_edit_agents"
+                    type="object"
+                    title="Edit agents"
                     icon="fa-users"
                     attrs="{
-                        'invisible': [('timepack_id', '!=', []), ('discount_time', '=', False)]
+                        'invisible': ['|', ('timepack_id', '=', False), ('discount_time', '=', False)]
                     }"
+                />
+                <!-- This button managers can set commission when there's no timepack_id or discount_time -->
+                <button
+                    name="button_edit_agents"
                     type="object"
+                    tittle="Set commission when there is no timepack or discount time"
+                    icon="fa-users"
+                    style="color: red"
+                    attrs="{
+                        'invisible': [('timepack_id', '!=', False), ('discount_time', '!=', False)]
+                    }"
+                    groups="commission.group_commission_manager"
                 />
                 <field name="commission_status" optional="show" />
             </xpath>
