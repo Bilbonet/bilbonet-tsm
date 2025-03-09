@@ -3,6 +3,7 @@
 
 from odoo import _, api, fields, models
 
+
 class CommissionSettlement(models.Model):
     _inherit = "commission.settlement"
 
@@ -22,24 +23,22 @@ class CommissionSettlement(models.Model):
         comodel_name="tsm.task",
         compute="_compute_task_id",
     )
-    
+
     @api.depends("timesheet_line_ids")
     def _compute_task_id(self):
         for record in self:
             record.task_id = record.timesheet_line_ids.filtered(
                 lambda x: x.task_id.stage_id.closed
             )[:1].task_id
-            
-            
+
+
 class SettlementLine(models.Model):
     _inherit = "commission.settlement.line"
 
     timesheet_agent_line_id = fields.Many2one(
         comodel_name="tsm.task.timesheet.agent", index=True
     )
-    partner_id = fields.Many2one(
-        related="timesheet_line_id.task_partner_id"
-    )
+    partner_id = fields.Many2one(related="timesheet_line_id.task_partner_id")
     task_id = fields.Many2one(
         related="timesheet_line_id.task_id",
     )
@@ -64,5 +63,3 @@ class SettlementLine(models.Model):
     def _compute_settled_amount(self):
         for record in self.filtered("timesheet_agent_line_id"):
             record.settled_amount = record.timesheet_agent_line_id.amount
-            
-    

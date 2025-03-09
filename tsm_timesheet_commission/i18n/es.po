@@ -1,0 +1,354 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tsm_timesheet_commission
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-09 16:58+0000\n"
+"PO-Revision-Date: 2025-03-09 18:19+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__agent_id
+msgid "Agent"
+msgstr "Agente"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_tsm_task_timesheet_agent
+msgid "Agent detail of commission line in timesheets"
+msgstr "Agente detalle de comisión en el parte de horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task__partner_agent_ids
+msgid "Agents"
+msgstr "Agentes"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__agent_ids
+msgid "Agents & commissions"
+msgstr "Agentes & Comisiones"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_tsm_task_timesheet__agent_ids
+msgid "Agents/Commissions related to the invoice line."
+msgstr "Agentes/Comisiones relacionadas con la línea de factura."
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__any_settled
+msgid "Any Settled"
+msgstr "Alguna liquidada"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_free
+msgid "Comm. free"
+msgstr ""
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_status
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__commission_id
+msgid "Commission"
+msgstr "Comisión"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__amount
+msgid "Commission Amount"
+msgstr "Importe Comisión"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task__commission_total
+msgid "Commissions"
+msgstr "Comisiones"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__company_id
+msgid "Company"
+msgstr "Compañia"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement_line__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: tsm_timesheet_commission
+#: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.view_timesheet_form_agent
+msgid "Edit agents"
+msgstr "Editar agentes"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement__task_id
+msgid "Generated Task"
+msgstr "Tarea Generada"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement__timesheet_line_ids
+msgid "Generated timepack lines"
+msgstr ""
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_tsm_task_timesheet_agent__price_unit
+msgid "Hour price at which the commission is calculated."
+msgstr "Precio hora de la cual se calcula la comisión."
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__id
+msgid "ID"
+msgstr "ID (Identificador)"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__write_uid
+msgid "Last Updated by"
+msgstr "Ultima actualización por"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__write_date
+msgid "Last Updated on"
+msgstr "Ultima actualización el"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_commission_settlement_line
+msgid "Line of a commission settlement"
+msgstr "Línea de liquidación de una comisión"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__object_id
+msgid "Parent"
+msgstr ""
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__price_unit
+msgid "Price"
+msgstr "Precio"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__product_id
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__timesheet_product_id
+msgid ""
+"Product used to set commissions when there is not time pack in the "
+"timesheet line"
+msgstr ""
+"Producto utilizado para calcular comisiones cuando no hay una bolsa de "
+"horas en los partes de trabajo"
+
+#. module: tsm_timesheet_commission
+#: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.view_timesheet_form_agent
+msgid "Regenerate agents"
+msgstr "Regenerar agentes"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__task_stage
+msgid ""
+"Select the task status for settling the commissions:\n"
+"* 'Task Based': Commissions are settled when the task is in any stage.\n"
+"* 'Task Closed': Commissions are settled when the task is in a closed stage."
+msgstr ""
+"Selecciona el estado de la tarea para fijar comisiones:\n"
+"* 'Basado en tarea': Comisiones son liquidadas cuando la tarea está en "
+"cualquier estado. .\n"
+"* 'Tareas cerradas': Comisiones son liquidadas cuando las tareas está "
+"estado cerradas."
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__settled
+msgid "Settled"
+msgstr "Liquidada"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_commission_settlement
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__settlement_id
+msgid "Settlement"
+msgstr "Liquidación"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task__settlement_count
+msgid "Settlement Count"
+msgstr "Cantidad Liquidacioes"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__settlement_line_ids
+msgid "Settlement Line"
+msgstr "Línea Liquidación"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_make_settle__settlement_type
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement__settlement_type
+#: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.view_settlement_search
+msgid "Settlement Type"
+msgstr "Tipo de liquidación"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_tsm_task_timesheet__settlement_id
+msgid "Settlement that generates this invoice line"
+msgstr "Liquidación que genera esta línea de factura"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task__settlement_ids
+msgid "Settlements"
+msgstr "Liquidaciones"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement_line__timesheet_line_id
+msgid "Source timesheet line"
+msgstr "Origen línea parte de horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__specific_price
+msgid "Specific Price"
+msgstr "Precio Especifico"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_tsm_task_timesheet
+msgid "Spent time in tasks"
+msgstr "Cosume tiempo en bolsa de horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_res_partner__tsm_commission_id
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_res_users__tsm_commission_id
+msgid "TSM Commission"
+msgstr "TSM Comisiones"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement_line__task_id
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__task_id
+msgid "Task"
+msgstr "Tarea"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields.selection,name:tsm_timesheet_commission.selection__commission__task_stage__open
+msgid "Task Based"
+msgstr "Basado en tareas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields.selection,name:tsm_timesheet_commission.selection__commission__task_stage__closed
+msgid "Task Closed"
+msgstr "Tarea Cerrada"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission__task_stage
+msgid "Task Status"
+msgstr "Estado Tarea"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_tsm_task
+msgid "Tech Support Management Task"
+msgstr "Gestión Soporte Técnico Tarea"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission_settlement__settlement_type
+msgid ""
+"The source of the settlement, e.g. 'Sales invoice', 'Sales order', "
+"'Purchase order'..."
+msgstr ""
+"El origen de esta liquidación, por ej. 'Factura de venta','Pedido de "
+"venta','Pedido de compra'..."
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_res_partner__tsm_commission_id
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_res_users__tsm_commission_id
+msgid ""
+"This is the default commission used in the TSM timesheets where this agent "
+"is assigned. It can be changed on each operation if needed."
+msgstr ""
+"Esta es la comisión por defecto utilizada en los partes de horas donde esta "
+"agente es asignado. Puede ser modificada en cada operación si es necesario."
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission__timesheet_product_id
+msgid "TimeSheet Product"
+msgstr "Producto Partes de Horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__timepack_id
+msgid "Timepack"
+msgstr "Bolsa Horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields.selection,name:tsm_timesheet_commission.selection__commission_make_settle__settlement_type__timesheet
+#: model:ir.model.fields.selection,name:tsm_timesheet_commission.selection__commission_settlement__settlement_type__timesheet
+msgid "Timesheet"
+msgstr "Parte de horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_commission_settlement_line__timesheet_agent_line_id
+msgid "Timesheet Agent Line"
+msgstr "Agenta Línea Parte de Horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__invoice_date
+msgid "Timesheet Date"
+msgstr "Fecha Parte horas"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model,name:tsm_timesheet_commission.model_commission_make_settle
+msgid "Wizard for settling commissions"
+msgstr "Asistente para liquidación de comisiones"
+
+#. module: tsm_timesheet_commission
+#: code:addons/tsm_timesheet_commission/models/tsm_task.py:0
+#, python-format
+msgid "You can't change date or user from a timesheet with commission lines."
+msgstr ""
+"No puede modificar fecha o usuario de un parte de horas con líneas de "
+"comisiones."
+
+#. module: tsm_timesheet_commission
+#: code:addons/tsm_timesheet_commission/models/tsm_task.py:0
+#, python-format
+msgid "You can't delete a timesheet with settled commission lines."
+msgstr "No puede eliminar un parte de horas con comisiones liquidadas."
+
+#. module: tsm_timesheet_commission
+#: code:addons/tsm_timesheet_commission/models/tsm_task.py:0
+#, python-format
+msgid "You can't delete settled lines."
+msgstr "No puede eliminar líneas comisionadas."
+
+#. module: tsm_timesheet_commission
+#: code:addons/tsm_timesheet_commission/models/tsm_task.py:0
+#, python-format
+msgid "You can't modify a settled line"
+msgstr "No puede modificar una línea comisionada"
