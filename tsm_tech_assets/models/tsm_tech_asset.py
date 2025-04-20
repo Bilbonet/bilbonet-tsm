@@ -55,7 +55,12 @@ class TsmTechAsset(models.Model):
         help="If the active field is set to False, it will allow you to hide"
         " the asset without removing it.",
     )
-    code = fields.Char(string="Tech Asset Code", default="/", required=True, copy=False)
+    code = fields.Char(
+        string="Tech Asset Code", 
+        default="/", 
+        required=True, 
+        copy=False,
+    )
     sequence = fields.Integer(
         string="Sequence",
         index=True,
@@ -73,9 +78,17 @@ class TsmTechAsset(models.Model):
         help="Sequence of the asset when displaying assets",
     )
     date = fields.Date(
-        string="Date", default=fields.Date.context_today, index=True, copy=False
+        string="Date", 
+        default=fields.Date.context_today, 
+        index=True, 
+        copy=False,
     )
-    name = fields.Char(string="Asset Title", tracking=20, required=True, index=True)
+    name = fields.Char(
+        string="Asset Title", 
+        tracking=20, 
+        required=True,
+        index=True,
+    )
     tech_notes = fields.Html(
         string="Technical Notes",
         sanitize=True,
@@ -93,13 +106,16 @@ class TsmTechAsset(models.Model):
     user_id = fields.Many2one(
         "res.users",
         string="Responsible",
-        required=True,
         default=lambda self: self.env.uid,
+        required=True,
+        copy=False,
         index=True,
         tracking=30,
     )
     partner_id = fields.Many2one(
-        comodel_name="res.partner", string="Customer", required=True
+        comodel_name="res.partner", 
+        string="Customer", 
+        required=True,
     )
     type_id = fields.Many2one(
         comodel_name="tsm.tech.asset.type",
@@ -116,7 +132,9 @@ class TsmTechAsset(models.Model):
         context={"active_test": False},
     )
     task_count = fields.Integer(
-        compute="_compute_task_count", string="Amount Tasks", readonly=True
+        compute="_compute_task_count", 
+        string="Amount Tasks", 
+        readonly=True
     )
     privacy_visibility = fields.Selection(
         selection=[
@@ -204,6 +222,12 @@ class TsmTechAsset(models.Model):
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.tech.asset")
 
         return super(TsmTechAsset, self).create(vals)
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {})
+        default['name'] = f"{self.name} (copy)"
+        return super(TsmTechAsset, self).copy(default)
 
 
 class TsmTechAssetType(models.Model):

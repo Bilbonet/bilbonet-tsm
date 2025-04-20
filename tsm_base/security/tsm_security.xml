@@ -49,7 +49,7 @@
         </record>
         <!-- Group Users: Only User Asigned to the project can create, modify and delete-->
         <record id="tsm_project_modify_only_managers" model="ir.rule">
-            <field name="name">TSM Project: Modify only user asigned</field>
+            <field name="name">TSM Project: User asigned can do all</field>
             <field name="model_id" ref="model_tsm_project"/>
             <field name="domain_force">[('user_id','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
@@ -85,7 +85,7 @@
         </record>
         <!-- Group Users: Only User Asigned to the task can create, modify and delete-->
         <record id="tsm_task_modify_only_managers" model="ir.rule">
-            <field name="name">TSM Task: Modify only user asigned</field>
+            <field name="name">TSM Task: User asigned can do all</field>
             <field name="model_id" ref="model_tsm_task"/>
             <field name="domain_force">[('user_id','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>

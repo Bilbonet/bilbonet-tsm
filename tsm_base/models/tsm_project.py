@@ -28,7 +28,11 @@ class TsmProject(models.Model):
         for project in self:
             project.task_count = result.get(project.id, 0)
 
-    name = fields.Char(string="Project Name", index=True, required=True)
+    name = fields.Char(
+        string="Project Name", 
+        index=True, 
+        required=True,
+    )
     active = fields.Boolean(
         default=True,
         tracking=True,
@@ -45,19 +49,25 @@ class TsmProject(models.Model):
         string="Priority",
     )
     sequence = fields.Integer(
-        default=10, help="Gives the sequence order when displaying a list of Projects."
+        default=10, 
+        help="Gives the sequence order when displaying a list of Projects."
     )
     color = fields.Integer(string="Color Index")
     user_id = fields.Many2one(
-        "res.users",
+        comodel_name="res.users",
         string="Project Manager",
         default=lambda self: self.env.user,
         required=True,
+        copy=False,
         tracking=True,
     )
     # use auto_join to speed up name_search call
     partner_id = fields.Many2one(
-        "res.partner", string="Customer", required=True, auto_join=True, tracking=True
+        comodel_name="res.partner", 
+        string="Customer", 
+        required=True, 
+        auto_join=True, 
+        tracking=True,
     )
     privacy_visibility = fields.Selection(
         [
@@ -82,10 +92,13 @@ class TsmProject(models.Model):
         help="Details, notes and aclarations about the project.",
     )
     date_start = fields.Datetime(
-        string="Starting Date", default=fields.Datetime.now, index=True, copy=False
+        string="Starting Date", 
+        default=fields.Datetime.now, 
+        index=True, 
+        copy=False,
     )
     company_id = fields.Many2one(
-        "res.company",
+        comodel_name="res.company",
         string="Company",
         default=lambda self: self.env["res.company"]._company_default_get(),
     )
@@ -161,3 +174,9 @@ class TsmProject(models.Model):
                     )
                 )
         return super().unlink()
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {})
+        default['name'] = f"{self.name} (copy)"
+        return super(TsmProject, self).copy(default)

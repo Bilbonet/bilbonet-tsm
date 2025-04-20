@@ -32,7 +32,11 @@ class TsmTask(models.Model):
         copy=False,
         help="Sequence of the task when displaying tasks",
     )
-    name = fields.Char(string="Task Title", required=True, index=True)
+    name = fields.Char(
+        string="Task Title", 
+        required=True, 
+        index=True
+    )
     active = fields.Boolean(
         default=True,
         copy=False,
@@ -122,17 +126,18 @@ class TsmTask(models.Model):
         comodel_name="tsm.project", string="Project", index=True, tracking=True
     )
     manager_id = fields.Many2one(
-        "res.users",
+        comodel_name="res.users",
         string="Project Manager",
         related="project_id.user_id",
         readonly=True,
         related_sudo=False,
     )
     user_id = fields.Many2one(
-        "res.users",
+        comodel_name="res.users",
         string="Assigned to",
         default=lambda self: self.env.uid,
         required=True,
+        copy=False,
         index=True,
         tracking=True,
     )
@@ -289,4 +294,5 @@ class TsmTask(models.Model):
         self.ensure_one()
         default = dict(default or {})
         default["code"] = self.env["ir.sequence"].next_by_code("tsm.task")
-        return super().copy(default)
+        default['name'] = f"{self.name} (copy)"
+        return super(TsmTask, self).copy(default)
