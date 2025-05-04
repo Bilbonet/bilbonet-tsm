@@ -176,7 +176,6 @@
         <field name="model">tsm.tech.asset</field>
         <field name="arch" type="xml">
             <tree
-                string="Tech Assets"
                 decoration-muted="active == False"
                 decoration-bf="priority == '1'"
                 decoration-danger="activity_state != False"
