@@ -1,13 +1,18 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 {
     "name": "Technical Support Management",
+    "summary": "Helps manage work of your technical support team",
     "version": "15.0.1.0.0",
+    "development_status": "Beta",
     "category": "Management",
+    "website": "https://github.com/Bilbonet/bilbonet-tsm",
+    "author": "Jesus Ramiro,",
+    "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "author": "Jesus Ramiro (Bilbonet.NET)",
-    "website": "https://www.bilbonet.net",
+    "application": True,
+    "installable": True,
+    "preloadable": True,
     "depends": [
         "base_setup",
         "product",
@@ -32,7 +37,4 @@
         "views/res_config_settings_views.xml",
         "views/res_partner_views.xml",
     ],
-    "installable": True,
-    "auto_install": False,
-    "application": True,
 }
