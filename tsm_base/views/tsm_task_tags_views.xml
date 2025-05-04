@@ -41,7 +41,6 @@
         action="tsm_task_tags_action"
         parent="tsm_config_menu"
         sequence="3"
-        groups="base.group_no_one"
     />
 
 </odoo>

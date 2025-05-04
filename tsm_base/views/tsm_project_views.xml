@@ -172,7 +172,6 @@
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
             <tree
-                string="Projects"
                 decoration-muted="active == False"
                 decoration-bf="priority == '1'"
                 decoration-danger="activity_state != False"
@@ -322,7 +321,7 @@
         Menus and Actions
     ==================-->
     <record id="tsm_project_open_all_action" model="ir.actions.act_window">
-        <field name="name">T.S.M: Projects</field>
+        <field name="name">TSM: Projects</field>
         <field name="res_model">tsm.project</field>
         <field name="domain">[]</field>
         <field name="view_mode">kanban,tree,form</field>

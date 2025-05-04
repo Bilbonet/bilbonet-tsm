@@ -76,7 +76,7 @@
         <field name="name">tsm.task.type.tree</field>
         <field name="model">tsm.task.type</field>
         <field name="arch" type="xml">
-            <tree string="Task Stage">
+            <tree>
                 <field name="sequence" widget="handle" groups="base.group_no_one" />
                 <field name="name" />
                 <field name="description" />
@@ -87,7 +87,7 @@
     </record>
 
     <record id="tsm_task_type_open_action" model="ir.actions.act_window">
-        <field name="name">TSM Task Stages</field>
+        <field name="name">TSM: Task Stages</field>
         <field name="res_model">tsm.task.type</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="tsm_task_type_tree" />
@@ -106,6 +106,5 @@
         action="tsm_task_type_open_action"
         parent="tsm_config_menu"
         sequence="2"
-        groups="base.group_no_one"
     />
 </odoo>

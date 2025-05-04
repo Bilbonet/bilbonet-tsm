@@ -11,13 +11,13 @@
         sequence="50"
     />
 
-    <menuitem
+    <!-- <menuitem
         id="menu_tsm_search"
         name="Search"
         parent="tsm_main_menu"
         groups="base.group_no_one,tsm_base.group_tsm_user"
         sequence="4"
-    />
+    /> -->
 
     <menuitem
         id="tsm_config_menu"
@@ -460,7 +460,6 @@
         <field name="model">tsm.task</field>
         <field name="arch" type="xml">
             <tree
-                string="Tasks"
                 decoration-danger="date_deadline and (date_deadline&lt;current_date) and active == True"
                 decoration-muted="active == False"
             >
@@ -495,7 +494,7 @@
         Menus and Actions
     ==================-->
     <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
-        <field name="name">TSM My Tasks from menu</field>
+        <field name="name">TSM: My Tasks</field>
         <field name="res_model">tsm.task</field>
         <field name="view_id" ref="tsm_task_kanban_view" />
         <field name="view_mode">kanban,tree,form</field>
@@ -527,7 +526,7 @@
 
     <!-- Assign/Unassign Followers to Tasks -->
     <record id="task_follower_assignment_action" model="ir.actions.act_window">
-        <field name="name">[Un]Assign Followers</field>
+        <field name="name">Add/Remove Followers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">follower.assignment.wizard</field>
         <field name="view_mode">form,tree</field>
