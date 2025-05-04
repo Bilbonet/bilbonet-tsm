@@ -100,6 +100,14 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
+.. |maintainer-bilbonet| image:: https://github.com/bilbonet.png?size=40px
+    :target: https://github.com/bilbonet
+    :alt: bilbonet
+
+Current maintainer:
+
+|maintainer-bilbonet| 
+
 This module is part of the `Bilbonet/bilbonet-tsm <https://github.com/Bilbonet/bilbonet-tsm/tree/15.0/tsm_timesheet_commission>`_ project on GitHub.
 
 You are welcome to contribute.

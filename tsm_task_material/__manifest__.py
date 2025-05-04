@@ -3,9 +3,9 @@
 {
     "name": "TSM Task Material",
     "summary": "Record products spent in a Task and create Sale Order",
+    "category": "Management",
     "version": "15.0.1.0.0",
     "development_status": "Beta",
-    "category": "Management",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
     "author": "Jesus Ramiro,",
     "maintainers": ["bilbonet"],

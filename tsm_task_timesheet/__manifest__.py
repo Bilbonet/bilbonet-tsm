@@ -1,13 +1,18 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
 {
     "name": "TSM tasks timesheet time control",
-    "version": "15.0.1.0.0",
-    "license": "AGPL-3",
+    "summary": "Users can encode and track their time spent on the different tasks",
     "category": "Management",
-    "author": "bilbonet.NET,",
-    "website": "https://github.com/Bilbonet/bilbonet-tsm/",
+    "version": "15.0.1.0.0",
+    "development_status": "Beta",
+    "website": "https://github.com/Bilbonet/bilbonet-tsm",
+    "author": "Jesus Ramiro,",
+    "maintainers": ["bilbonet"],
+    "license": "AGPL-3",
+    "application": True,
+    "installable": True,
+    "preloadable": True,
     "depends": [
         "tsm_base",
     ],
@@ -22,6 +27,4 @@
         "views/tsm_task_timesheet_report_view.xml",
         "views/tsm_project_view.xml",
     ],
-    "installable": True,
-    "auto_install": False,
 }

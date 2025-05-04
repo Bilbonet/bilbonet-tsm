@@ -3,10 +3,16 @@
 {
     "name": "TSM Task Time Service Pack",
     "summary": "Create packs of time which can be consumed in tasks.",
-    "version": "15.0.1.0.0",
     "category": "Management",
+    "version": "15.0.1.0.0",
+    "development_status": "Beta",
+    "website": "https://github.com/Bilbonet/bilbonet-tsm",
     "author": "Jesus Ramiro,",
+    "maintainers": ["bilbonet"],
     "license": "AGPL-3",
+    "application": False,
+    "installable": True,
+    "preloadable": True,
     "depends": [
         "product",
         "tsm_task_timesheet",
@@ -27,6 +33,4 @@
         "report/tsm_time_pack_project_report.xml",
         "data/tsm_time_pack_email_template.xml",
     ],
-    "application": False,
-    "installable": True,
 }
