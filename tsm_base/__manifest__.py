@@ -3,9 +3,9 @@
 {
     "name": "Technical Support Management",
     "summary": "Helps manage work of your technical support team",
+    "category": "Management",
     "version": "15.0.1.0.0",
     "development_status": "Beta",
-    "category": "Management",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
     "author": "Jesus Ramiro,",
     "maintainers": ["bilbonet"],
