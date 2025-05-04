@@ -1,11 +1,9 @@
 <?xml version="1.0" ?>
 <!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
-<odoo>
-    <data noupdate="1">
-        <record forcecreate="True" id="decimal_time_pack" model="decimal.precision">
-            <field name="name">Time Pack</field>
-            <field name="digits">2</field>
-        </record>
-    </data>
+<odoo noupdate="1">
+    <record forcecreate="True" id="decimal_time_pack" model="decimal.precision">
+        <field name="name">Time Pack</field>
+        <field name="digits">2</field>
+    </record>
 </odoo>

@@ -2,73 +2,69 @@
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-    <data>
+    <!-- Timesheet Lines Tree -->
+    <record id="tsm_task_timesheet_line_tree_time_pack_view" model="ir.ui.view">
+        <field name="name">TSM Task Tmesheet Line Tree Time Pack</field>
+        <field name="model">tsm.task.timesheet</field>
+        <field
+            name="inherit_id"
+            ref="tsm_task_timesheet.tsm_task_timesheet_line_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount']" position="before">
+                <field name="task_partner_id" invisible="1" />
+                <field
+                    name="timepack_id"
+                    domain="[('partner_id', '=', task_partner_id)]"
+                    options='{"no_open": True, "no_create": True}'
+                />
+                <button
+                    type="object"
+                    name="view_time_pack"
+                    title="View Time Pack Details"
+                    icon="fa-search-plus"
+                    attrs="{'invisible':[('timepack_id','=',False)]}"
+                />
+                <field
+                    name="discount_time"
+                    attrs="{'invisible':[('timepack_id','=',False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
 
-        <!-- Timesheet Lines Tree -->
-        <record id="tsm_task_timesheet_line_tree_time_pack_view" model="ir.ui.view">
-            <field name="name">TSM Task Tmesheet Line Tree Time Pack</field>
-            <field name="model">tsm.task.timesheet</field>
-            <field
-                name="inherit_id"
-                ref="tsm_task_timesheet.tsm_task_timesheet_line_tree"
-            />
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='amount']" position="before">
-                    <field name="task_partner_id" invisible="1" />
+    <!-- Timesheet Lines Form -->
+    <record id="tsm_task_timesheet_line_form_time_pack_view" model="ir.ui.view">
+        <field name="name">TSM Task Tmesheet Line Form Time Pack</field>
+        <field name="model">tsm.task.timesheet</field>
+        <field
+            name="inherit_id"
+            ref="tsm_task_timesheet.tsm_task_timesheet_line_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='duration']" position="after">
+                <label for="timepack_id" string="Time Pack" />
+                <div name="time_pack">
                     <field
                         name="timepack_id"
+                        class="oe_inline"
                         domain="[('partner_id', '=', task_partner_id)]"
                         options='{"no_open": True, "no_create": True}'
                     />
                     <button
                         type="object"
                         name="view_time_pack"
-                        title="View Time Pack Details"
                         icon="fa-search-plus"
                         attrs="{'invisible':[('timepack_id','=',False)]}"
+                        class="oe_stat_button"
+                        title="View Time Pack Details"
                     />
-                    <field
-                        name="discount_time"
-                        attrs="{'invisible':[('timepack_id','=',False)]}"
-                    />
-                </xpath>
-            </field>
-        </record>
-
-        <!-- Timesheet Lines Form -->
-        <record id="tsm_task_timesheet_line_form_time_pack_view" model="ir.ui.view">
-            <field name="name">TSM Task Tmesheet Line Form Time Pack</field>
-            <field name="model">tsm.task.timesheet</field>
-            <field
-                name="inherit_id"
-                ref="tsm_task_timesheet.tsm_task_timesheet_line_form"
-            />
-            <field name="arch" type="xml">
-                <xpath expr="//div[@name='duration']" position="after">
-                    <label for="timepack_id" string="Time Pack" />
-                    <div name="time_pack">
-                        <field
-                            name="timepack_id"
-                            class="oe_inline"
-                            domain="[('partner_id', '=', task_partner_id)]"
-                            options='{"no_open": True, "no_create": True}'
-                        />
-                        <button
-                            type="object"
-                            name="view_time_pack"
-                            icon="fa-search-plus"
-                            attrs="{'invisible':[('timepack_id','=',False)]}"
-                            class="oe_stat_button"
-                            title="View Time Pack Details"
-                        />
-                    </div>
-                    <field
-                        name="discount_time"
-                        attrs="{'invisible':[('timepack_id','=',False)]}"
-                    />
-                </xpath>
-            </field>
-        </record>
-
-    </data>
+                </div>
+                <field
+                    name="discount_time"
+                    attrs="{'invisible':[('timepack_id','=',False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>
