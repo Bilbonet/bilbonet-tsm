@@ -11,7 +11,7 @@
         "product",
         "tsm_task_timesheet",
         "sale",
-        'web_notify',
+        "web_notify",
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -20,7 +20,7 @@
         "data/time_pack_data.xml",
         "views/tsm_task_view.xml",
         "views/tsm_task_timesheet_view.xml",
-        'views/product_view.xml',
+        "views/product_view.xml",
         "views/tsm_time_pack_view.xml",
         "report/tsm_time_pack_task_report.xml",
         "report/tsm_time_pack_report.xml",

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
@@ -7,14 +7,20 @@
         <field name="name">Print Time Pack Summary</field>
         <field name="model">tsm.time.pack</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">tsm_time_pack.tsm_time_pack_report_summary_document</field>
-        <field name="report_file">tsm_time_pack.tsm_time_pack_report_summary_document</field>
-        <field name="print_report_name">'Time_Pack_(%s)%s' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
-        <field name="attachment"></field>
-        <field name="binding_model_id" ref="model_tsm_time_pack"/>
+        <field
+            name="report_name"
+        >tsm_time_pack.tsm_time_pack_report_summary_document</field>
+        <field
+            name="report_file"
+        >tsm_time_pack.tsm_time_pack_report_summary_document</field>
+        <field
+            name="print_report_name"
+        >'Time_Pack_(%s)%s' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
+        <field name="attachment" />
+        <field name="binding_model_id" ref="model_tsm_time_pack" />
         <field name="binding_type">report</field>
-        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
-        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report" />
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
     </record>
 
     <template id="tsm_time_pack_report_summary_document">
@@ -27,40 +33,53 @@
                             <table class="table table-bordered table-sm">
                                 <tr>
                                     <td>Client:</td>
-                                    <td><span t-field="o.partner_id"/></td>
+                                    <td><span t-field="o.partner_id" /></td>
                                     <td>Phone:</td>
                                     <td>
-                                        <span t-field="o.partner_id.phone"/> /
-                                        <span t-field="o.partner_id.mobile"/>
+                                        <span t-field="o.partner_id.phone" /> /
+                                        <span t-field="o.partner_id.mobile" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Address:</td>
                                     <td>
-                                        <span t-field="o.partner_id.street"/>
-                                        <span t-field="o.partner_id.street2"/><br/>
-                                        <span t-field="o.partner_id.zip"/> -
-                                        <span t-field="o.partner_id.city"/> -
-                                        <span t-field="o.partner_id.state_id"/>
+                                        <span t-field="o.partner_id.street" />
+                                        <span t-field="o.partner_id.street2" /><br />
+                                        <span t-field="o.partner_id.zip" /> -
+                                        <span t-field="o.partner_id.city" /> -
+                                        <span t-field="o.partner_id.state_id" />
                                     </td>
                                     <td>@mail:</td>
-                                    <td><span t-field="o.partner_id.email"/></td>
+                                    <td><span t-field="o.partner_id.email" /></td>
                                 </tr>
                             </table>
                         </div>
-                        <br/>
+                        <br />
                         <!-- Time Pack Sumary -->
                         <div class="row">
-                            <div class="p-3 border border-1 border-dark" style="width: 100%;background-color:#f8f9fa;border-radius: 1rem">
-                                <div class="col text-center"><h2>Sumary Time Pack</h2></div>
-                                <table class="table table-sm table-borderless" style="color:gray !important;">
+                            <div
+                                class="p-3 border border-1 border-dark"
+                                style="width: 100%;background-color:#f8f9fa;border-radius: 1rem"
+                            >
+                                <div class="col text-center"><h2
+                                    >Sumary Time Pack</h2></div>
+                                <table
+                                    class="table table-sm table-borderless"
+                                    style="color:gray !important;"
+                                >
                                     <tr style="width: 50%;">
-                                        <td>Date: <b><span t-field="o.date_start"/></b></td>
-                                        <td>Code: <b><span t-field="o.code"/></b></td>
+                                        <td>Date: <b><span
+                                                    t-field="o.date_start"
+                                                /></b></td>
+                                        <td>Code: <b><span t-field="o.code" /></b></td>
                                     </tr>
                                     <tr>
-                                        <td>Responsible: <b><span t-field="o.user_id.name"/></b></td>
-                                        <td><span t-if="o.name">Title <b><span t-field="o.name"/></b></span></td>
+                                        <td>Responsible: <b><span
+                                                    t-field="o.user_id.name"
+                                                /></b></td>
+                                        <td><span t-if="o.name">Title <b><span
+                                                        t-field="o.name"
+                                                    /></b></span></td>
                                     </tr>
                                 </table>
                                 <!-- ================= -->
@@ -70,91 +89,162 @@
                                             <tr>
                                                 <td>Contrated:</td>
                                                 <td class="text-right text-primary">
-                                                    <span t-field="o.contrated_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.contrated_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
                                             <tr t-if="o.consumed_hours &gt;= 0">
-                                                <td>Consumed <span class="fa fa-arrow-circle-down text-danger"/> :</td>
+                                                <td>Consumed <span
+                                                        class="fa fa-arrow-circle-down text-danger"
+                                                    /> :</td>
                                                 <td class="text-right text-danger">
-                                                    <span t-field="o.consumed_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.consumed_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
-                                            <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
+                                            <tr
+                                                t-if="o.remaining_hours &gt;= 0"
+                                                class="border-black"
+                                            >
                                                 <td>Remainig:</td>
                                                 <td class="text-right text-success">
-                                                    <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.remaining_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
-                                            <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
+                                            <tr
+                                                t-if="o.remaining_hours &lt; 0"
+                                                class="border-black text-danger"
+                                            >
                                                 <td>Exceded:</td>
                                                 <td class="text-right text-danger">
-                                                    <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.remaining_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
-                                    <div class="col-2"></div>
+                                    <div class="col-2" />
                                     <div class="col-4">
-                                        <table t-if="o.complimentary_hours" class="table table-sm table-borderless">
+                                        <table
+                                            t-if="o.complimentary_hours"
+                                            class="table table-sm table-borderless"
+                                        >
                                             <tr>
-                                                <td>Complimentary <span class="fa fa-arrow-circle-right"/> :</td>
+                                                <td>Complimentary <span
+                                                        class="fa fa-arrow-circle-right"
+                                                    /> :</td>
                                                 <td class="text-right">
-                                                    <span t-field="o.complimentary_hours"  t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.complimentary_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" style="font-size:0.7em;">
-                                                    <b>Complimentary time</b> is time used by the technician but
+                                                <td
+                                                    colspan="2"
+                                                    style="font-size:0.7em;"
+                                                >
+                                                    <b
+                                                    >Complimentary time</b> is time used by the technician but
                                                     doesn't discount time of the hours contracted by the client..
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <div t-if="len(o.description) &gt; 11" class="col-auto mt16">
+                                <div
+                                    t-if="len(o.description) &gt; 11"
+                                    class="col-auto mt16"
+                                >
                                     <strong>Notes:</strong>
-                                    <p class="m-0" t-field="o.description"/>
+                                    <p class="m-0" t-field="o.description" />
                                 </div>
                             </div>
                         </div>
-                        <br/><br/>
+                        <br /><br />
                         <!-- Timesheet Lines -->
                         <div class="row" t-if="len(o.timesheet_ids) &gt; 0">
                             <table class="table table-sm table-striped">
-                                <thead style="background-color: #3498DB;font-size:0.9em;">
+                                <thead
+                                    style="background-color: #3498DB;font-size:0.9em;"
+                                >
                                     <tr class="text-center">
-                                        <th colspan="5" class="text-center" style="color:#fff;">Detail Time spent</th>
+                                        <th
+                                            colspan="5"
+                                            class="text-center"
+                                            style="color:#fff;"
+                                        >Detail Time spent</th>
                                     </tr>
                                  </thead>
                                 <tbody>
-                                    <tr t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="t">
+                                    <tr
+                                        t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)"
+                                        t-as="t"
+                                    >
                                         <td style="font-size:0.7em;">
-                                            <span t-field="t.date_time" t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                                            <span
+                                                t-field="t.date_time"
+                                                t-options="{'format': 'dd/MM/yyyy - HH:mm'}"
+                                            />
                                         </td>
                                         <td style="font-size:0.7em;">
-                                            <span t-field="t.task_id"/>
+                                            <span t-field="t.task_id" />
                                         </td>
                                         <td style="font-size:0.7em;">
-                                            <span t-if="t.name != '/'" t-field="t.name"/><!-- If name of the timesheet not have default value, then is printed in the report-->
-                                            <span t-if="t.name == '/'" t-field="t.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
+                                            <span
+                                                t-if="t.name != '/'"
+                                                t-field="t.name"
+                                            /><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                            <span
+                                                t-if="t.name == '/'"
+                                                t-field="t.tag_ids"
+                                                groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                            />
                                         </td>
                                         <td style="font-size:0.7em;text-align:right;">
                                             <span t-if="t.discount_time == True">
-                                                <span class="fa fa-arrow-circle-down text-danger"/>
+                                                <span
+                                                    class="fa fa-arrow-circle-down text-danger"
+                                                />
                                             </span>
                                             <span t-if="t.discount_time == False">
-                                                <span class="fa fa-arrow-circle-right"/>
+                                                <span
+                                                    class="fa fa-arrow-circle-right"
+                                                />
                                             </span>
-                                            <span t-field="t.amount" t-options="{'widget': 'float_time'}" style="margin-left: 5px;"/>
+                                            <span
+                                                t-field="t.amount"
+                                                t-options="{'widget': 'float_time'}"
+                                                style="margin-left: 5px;"
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot style="font-size:0.7em;">
                                     <tr>
                                         <th colspan="99" style="text-align:right">
-                                            <span class="fa fa-arrow-circle-down text-danger"/> Discounts Time 
-                                            <span class="fa fa-arrow-circle-right" style="margin-left: 5px;"/> Complimentary time
-                                            <span t-field="o.total_hours_spent" t-options="{'widget': 'float_time'}" style="font-size:1.2em;margin-left: 15px;"/>
+                                            <span
+                                                class="fa fa-arrow-circle-down text-danger"
+                                            /> Discounts Time
+                                            <span
+                                                class="fa fa-arrow-circle-right"
+                                                style="margin-left: 5px;"
+                                            /> Complimentary time
+                                            <span
+                                                t-field="o.total_hours_spent"
+                                                t-options="{'widget': 'float_time'}"
+                                                style="font-size:1.2em;margin-left: 15px;"
+                                            />
                                         </th>
                                     </tr>
                                 </tfoot>
@@ -172,14 +262,20 @@
         <field name="name">Print Time Pack Detailed</field>
         <field name="model">tsm.time.pack</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">tsm_time_pack.tsm_time_pack_report_detailed_document</field>
-        <field name="report_file">tsm_time_pack.tsm_time_pack_report_detailed_document</field>
-        <field name="print_report_name">'Time_Pack_(%s)%s' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
-        <field name="attachment"></field>
-        <field name="binding_model_id" ref="model_tsm_time_pack"/>
+        <field
+            name="report_name"
+        >tsm_time_pack.tsm_time_pack_report_detailed_document</field>
+        <field
+            name="report_file"
+        >tsm_time_pack.tsm_time_pack_report_detailed_document</field>
+        <field
+            name="print_report_name"
+        >'Time_Pack_(%s)%s' % (object.code, ('_'+object.name if object.name else '').replace(' ', '-'))</field>
+        <field name="attachment" />
+        <field name="binding_model_id" ref="model_tsm_time_pack" />
         <field name="binding_type">report</field>
-        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
-        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report" />
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
     </record>
 
     <template id="tsm_time_pack_report_detailed_document">
@@ -192,40 +288,53 @@
                             <table class="table table-bordered table-sm">
                                 <tr>
                                     <td>Client:</td>
-                                    <td><span t-field="o.partner_id"/></td>
+                                    <td><span t-field="o.partner_id" /></td>
                                     <td>Phone:</td>
                                     <td>
-                                        <span t-field="o.partner_id.phone"/> /
-                                        <span t-field="o.partner_id.mobile"/>
+                                        <span t-field="o.partner_id.phone" /> /
+                                        <span t-field="o.partner_id.mobile" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Address:</td>
                                     <td>
-                                        <span t-field="o.partner_id.street"/>
-                                        <span t-field="o.partner_id.street2"/><br/>
-                                        <span t-field="o.partner_id.zip"/> -
-                                        <span t-field="o.partner_id.city"/> -
-                                        <span t-field="o.partner_id.state_id"/>
+                                        <span t-field="o.partner_id.street" />
+                                        <span t-field="o.partner_id.street2" /><br />
+                                        <span t-field="o.partner_id.zip" /> -
+                                        <span t-field="o.partner_id.city" /> -
+                                        <span t-field="o.partner_id.state_id" />
                                     </td>
                                     <td>@mail:</td>
-                                    <td><span t-field="o.partner_id.email"/></td>
+                                    <td><span t-field="o.partner_id.email" /></td>
                                 </tr>
                             </table>
                         </div>
-                        <br/>
+                        <br />
                         <!-- Time Pack Sumary -->
                         <div class="row">
-                            <div class="p-3 border border-1 border-dark" style="width: 100%;background-color:#f8f9fa;border-radius: 1rem">
-                                <div class="col text-center"><h2>Sumary Time Pack</h2></div>
-                                <table class="table table-sm table-borderless" style="color:gray !important;">
+                            <div
+                                class="p-3 border border-1 border-dark"
+                                style="width: 100%;background-color:#f8f9fa;border-radius: 1rem"
+                            >
+                                <div class="col text-center"><h2
+                                    >Sumary Time Pack</h2></div>
+                                <table
+                                    class="table table-sm table-borderless"
+                                    style="color:gray !important;"
+                                >
                                     <tr style="width: 50%;">
-                                        <td>Date: <b><span t-field="o.date_start"/></b></td>
-                                        <td>Code: <b><span t-field="o.code"/></b></td>
+                                        <td>Date: <b><span
+                                                    t-field="o.date_start"
+                                                /></b></td>
+                                        <td>Code: <b><span t-field="o.code" /></b></td>
                                     </tr>
                                     <tr>
-                                        <td>Responsible: <b><span t-field="o.user_id.name"/></b></td>
-                                        <td><span t-if="o.name">Title <b><span t-field="o.name"/></b></span></td>
+                                        <td>Responsible: <b><span
+                                                    t-field="o.user_id.name"
+                                                /></b></td>
+                                        <td><span t-if="o.name">Title <b><span
+                                                        t-field="o.name"
+                                                    /></b></span></td>
                                     </tr>
                                 </table>
                                 <!-- ================= -->
@@ -235,106 +344,186 @@
                                             <tr>
                                                 <td>Contrated:</td>
                                                 <td class="text-right text-primary">
-                                                    <span t-field="o.contrated_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.contrated_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
                                             <tr t-if="o.consumed_hours &gt;= 0">
-                                                <td>Consumed <span class="fa fa-arrow-circle-down text-danger"/> :</td>
+                                                <td>Consumed <span
+                                                        class="fa fa-arrow-circle-down text-danger"
+                                                    /> :</td>
                                                 <td class="text-right text-danger">
-                                                    <span t-field="o.consumed_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.consumed_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
-                                            <tr t-if="o.remaining_hours &gt;= 0" class="border-black">
+                                            <tr
+                                                t-if="o.remaining_hours &gt;= 0"
+                                                class="border-black"
+                                            >
                                                 <td>Remainig:</td>
                                                 <td class="text-right text-success">
-                                                    <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.remaining_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
-                                            <tr t-if="o.remaining_hours &lt; 0" class="border-black text-danger">
+                                            <tr
+                                                t-if="o.remaining_hours &lt; 0"
+                                                class="border-black text-danger"
+                                            >
                                                 <td>Exceded:</td>
                                                 <td class="text-right text-danger">
-                                                    <span t-field="o.remaining_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.remaining_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
-                                    <div class="col-2"></div>
+                                    <div class="col-2" />
                                     <div class="col-4">
-                                        <table t-if="o.complimentary_hours" class="table table-sm table-borderless">
+                                        <table
+                                            t-if="o.complimentary_hours"
+                                            class="table table-sm table-borderless"
+                                        >
                                             <tr>
-                                                <td>Complimentary <span class="fa fa-arrow-circle-right"/> :</td>
+                                                <td>Complimentary <span
+                                                        class="fa fa-arrow-circle-right"
+                                                    /> :</td>
                                                 <td class="text-right">
-                                                    <span t-field="o.complimentary_hours" t-options="{'widget': 'float_time'}"/> hours
+                                                    <span
+                                                        t-field="o.complimentary_hours"
+                                                        t-options="{'widget': 'float_time'}"
+                                                    /> hours
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" style="font-size:0.7em;">
-                                                    <b>Complimentary time</b> is time used by the technician but
+                                                <td
+                                                    colspan="2"
+                                                    style="font-size:0.7em;"
+                                                >
+                                                    <b
+                                                    >Complimentary time</b> is time used by the technician but
                                                     doesn't discount time of the hours contracted by the client..
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <div t-if="len(o.description) &gt; 11" class="col-auto mt16">
+                                <div
+                                    t-if="len(o.description) &gt; 11"
+                                    class="col-auto mt16"
+                                >
                                     <strong>Notes:</strong>
-                                    <p class="m-0" t-field="o.description"/>
+                                    <p class="m-0" t-field="o.description" />
                                 </div>
                             </div>
                         </div>
-                        <br/><br/>
+                        <br /><br />
                         <!-- Timesheet Lines -->
                         <div class="row" t-if="len(o.timesheet_ids) &gt; 0">
                             <table class="table table-sm table-striped">
-                                <thead style="background-color: #3498DB;font-size:0.9em;">
+                                <thead
+                                    style="background-color: #3498DB;font-size:0.9em;"
+                                >
                                     <tr class="text-center">
-                                        <th colspan="5" class="text-center" style="color:#fff;">Detail Time spent</th>
+                                        <th
+                                            colspan="5"
+                                            class="text-center"
+                                            style="color:#fff;"
+                                        >Detail Time spent</th>
                                     </tr>
                                  </thead>
                                 <tbody>
-                                    <tr t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="t">
+                                    <tr
+                                        t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)"
+                                        t-as="t"
+                                    >
                                         <td style="font-size:0.7em;">
-                                            <span t-field="t.date_time" t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                                            <span
+                                                t-field="t.date_time"
+                                                t-options="{'format': 'dd/MM/yyyy - HH:mm'}"
+                                            />
                                         </td>
                                         <td style="font-size:0.7em;">
-                                            <span t-field="t.task_id"/>
+                                            <span t-field="t.task_id" />
                                         </td>
                                         <td style="font-size:0.7em;">
-                                            <span t-if="t.name != '/'" t-field="t.name"/><!-- If name of the timesheet not have default value, then is printed in the report-->
-                                            <span t-if="t.name == '/'" t-field="t.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
+                                            <span
+                                                t-if="t.name != '/'"
+                                                t-field="t.name"
+                                            /><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                            <span
+                                                t-if="t.name == '/'"
+                                                t-field="t.tag_ids"
+                                                groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                            />
                                         </td>
                                         <td style="font-size:0.7em;text-align:right;">
                                             <span t-if="t.discount_time == True">
-                                                <span class="fa fa-arrow-circle-down text-danger"/>
+                                                <span
+                                                    class="fa fa-arrow-circle-down text-danger"
+                                                />
                                             </span>
                                             <span t-if="t.discount_time == False">
-                                                <span class="fa fa-arrow-circle-right"/>
+                                                <span
+                                                    class="fa fa-arrow-circle-right"
+                                                />
                                             </span>
-                                            <span t-field="t.amount" t-options="{'widget': 'float_time'}" style="margin-left: 5px;"/>
+                                            <span
+                                                t-field="t.amount"
+                                                t-options="{'widget': 'float_time'}"
+                                                style="margin-left: 5px;"
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot style="font-size:0.7em;">
                                     <tr>
                                         <th colspan="99" style="text-align:right">
-                                            <span class="fa fa-arrow-circle-down text-danger"/> Discounts Time 
-                                            <span class="fa fa-arrow-circle-right" style="margin-left: 5px;"/> Complimentary time
-                                            <span t-field="o.total_hours_spent" t-options="{'widget': 'float_time'}" style="font-size:1.2em;margin-left: 15px;"/>
+                                            <span
+                                                class="fa fa-arrow-circle-down text-danger"
+                                            /> Discounts Time
+                                            <span
+                                                class="fa fa-arrow-circle-right"
+                                                style="margin-left: 5px;"
+                                            /> Complimentary time
+                                            <span
+                                                t-field="o.total_hours_spent"
+                                                t-options="{'widget': 'float_time'}"
+                                                style="font-size:1.2em;margin-left: 15px;"
+                                            />
                                         </th>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                         <!-- /Timesheets Line -->
-                        <p style="page-break-after:always;"></p>
+                        <p style="page-break-after:always;" />
                         <!-- Taks in Time Pack-->
-                        <t t-set="timesheet_tasks" t-value="[]"/>
-                        <t t-set="timesheet_sorted" t-value="[]"/>
-                        <t t-foreach="o.timesheet_ids.sudo().sorted(key=lambda b: b.task_id.code)" t-as="tt">
-                            <t t-set="timesheet_tasks" t-value="timesheet_tasks+[tt.task_id]"/>
+                        <t t-set="timesheet_tasks" t-value="[]" />
+                        <t t-set="timesheet_sorted" t-value="[]" />
+                        <t
+                            t-foreach="o.timesheet_ids.sudo().sorted(key=lambda b: b.task_id.code)"
+                            t-as="tt"
+                        >
+                            <t
+                                t-set="timesheet_tasks"
+                                t-value="timesheet_tasks+[tt.task_id]"
+                            />
                         </t>
                         <!-- This function delete duplicates -->
-                        <t t-set="timesheet_tasks" t-value="list(dict.fromkeys(timesheet_tasks))"/>
+                        <t
+                            t-set="timesheet_tasks"
+                            t-value="list(dict.fromkeys(timesheet_tasks))"
+                        />
 
                         <div t-if="len(timesheet_tasks) > 0">
                             <t t-foreach="timesheet_tasks" t-as="task">
@@ -343,70 +532,123 @@
                                     <table class="table table-sm">
                                         <tr class="bg-success">
                                             <td>
-                                                Task: <span t-field="task.code"/> -
-                                                <span t-field="task.name"/>
+                                                Task: <span t-field="task.code" /> -
+                                                <span t-field="task.name" />
                                             </td>
                                             <td>
-                                                Date: <span t-field="task.date_start" t-options="{'widget': 'date'}"/>
+                                                Date: <span
+                                                    t-field="task.date_start"
+                                                    t-options="{'widget': 'date'}"
+                                                />
                                             </td>
                                             <td>
-                                                Responsible: <span t-field="task.user_id.name"/>
+                                                Responsible: <span
+                                                    t-field="task.user_id.name"
+                                                />
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
                                 <div class="row">
-                                    <span t-field="task.description"/>
+                                    <span t-field="task.description" />
                                 </div>
                                 <!-- /Print Task -->
                                 <!-- Timesheets of the task -->
                                 <t t-set="total" t-value="0" />
                                 <div class="row" t-if="len(o.timesheet_ids) &gt; 0">
                                     <table class="table table-sm table-striped">
-                                        <thead style="background-color: #3498DB;font-size:0.9em;">
+                                        <thead
+                                            style="background-color: #3498DB;font-size:0.9em;"
+                                        >
                                             <tr class="text-center">
-                                                <th colspan="5" class="text-center" style="color:#fff;">Detail Time spent</th>
+                                                <th
+                                                    colspan="5"
+                                                    class="text-center"
+                                                    style="color:#fff;"
+                                                >Detail Time spent</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)" t-as="t">
+                                            <tr
+                                                t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)"
+                                                t-as="t"
+                                            >
                                             <t t-if="task.id==t.task_id.id">
-                                                <t t-set="total" t-value="total+t.amount"/>
+                                                <t
+                                                        t-set="total"
+                                                        t-value="total+t.amount"
+                                                    />
                                                 <td style="font-size:0.7em;">
-                                                    <span t-field="t.date_time" t-options="{'format': 'dd/MM/yyyy - HH:mm'}"/>
+                                                    <span
+                                                            t-field="t.date_time"
+                                                            t-options="{'format': 'dd/MM/yyyy - HH:mm'}"
+                                                        />
                                                 </td>
                                                 <td style="font-size:0.7em;">
-                                                    <span t-field="t.task_id"/>
+                                                    <span t-field="t.task_id" />
                                                 </td>
                                                 <td style="font-size:0.7em;">
-                                                    <span t-if="t.name != '/'" t-field="t.name"/><!-- If name of the timesheet not have default value, then is printed in the report-->
-                                                    <span t-if="t.name == '/'" t-field="t.tag_ids" groups="tsm_task_timesheet.group_tsm_timesheet_tag"/>
+                                                    <span
+                                                            t-if="t.name != '/'"
+                                                            t-field="t.name"
+                                                        /><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                                    <span
+                                                            t-if="t.name == '/'"
+                                                            t-field="t.tag_ids"
+                                                            groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                                        />
                                                 </td>
-                                                <td style="font-size:0.7em;text-align:right;">
-                                                    <span t-if="t.discount_time == True">
-                                                        <span class="fa fa-arrow-circle-down text-danger"/>
+                                                <td
+                                                        style="font-size:0.7em;text-align:right;"
+                                                    >
+                                                    <span
+                                                            t-if="t.discount_time == True"
+                                                        >
+                                                        <span
+                                                                class="fa fa-arrow-circle-down text-danger"
+                                                            />
                                                     </span>
-                                                    <span t-if="t.discount_time == False">
-                                                        <span class="fa fa-arrow-circle-right"/>
+                                                    <span
+                                                            t-if="t.discount_time == False"
+                                                        >
+                                                        <span
+                                                                class="fa fa-arrow-circle-right"
+                                                            />
                                                     </span>
-                                                    <span t-field="t.amount" t-options="{'widget': 'float_time'}" style="margin-left: 5px;"/>
+                                                    <span
+                                                            t-field="t.amount"
+                                                            t-options="{'widget': 'float_time'}"
+                                                            style="margin-left: 5px;"
+                                                        />
                                                 </td>
                                             </t>
                                             </tr>
                                         </tbody>
                                         <tfoot style="font-size:0.7em;">
                                             <tr>
-                                                <th colspan="99" style="text-align:right">
-                                                    <span class="fa fa-arrow-circle-down text-danger"/> Discounts Time 
-                                                    <span class="fa fa-arrow-circle-right" style="margin-left: 5px;"/> Complimentary time
-                                                    <span t-field="o.total_hours_spent" t-options="{'widget': 'float_time'}" style="font-size:1.2em;margin-left: 15px;"/>
+                                                <th
+                                                    colspan="99"
+                                                    style="text-align:right"
+                                                >
+                                                    <span
+                                                        class="fa fa-arrow-circle-down text-danger"
+                                                    /> Discounts Time
+                                                    <span
+                                                        class="fa fa-arrow-circle-right"
+                                                        style="margin-left: 5px;"
+                                                    /> Complimentary time
+                                                    <span
+                                                        t-field="o.total_hours_spent"
+                                                        t-options="{'widget': 'float_time'}"
+                                                        style="font-size:1.2em;margin-left: 15px;"
+                                                    />
                                                 </th>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                                 <!-- /Timesheet of the task -->
-                            <p style="page-break-after:always;"></p>
+                            <p style="page-break-after:always;" />
                             </t>
                         </div>
                         <!-- /Tareas -->

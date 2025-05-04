@@ -1,8 +1,8 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import datetime
 from datetime import date
-from odoo import api, fields, models, _
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -227,10 +227,10 @@ class TsmTimePack(models.Model):
 
             if progress >= 90:
                 # TODO: Improve the way to express hours in format "%H:%M"
-                cont_hours = "{0:02.0f}:{1:02.0f}".format(
+                cont_hours = "{:02.0f}:{:02.0f}".format(
                     *divmod(float(time.contrated_hours) * 60, 60)
                 )
-                consu_hours = "{0:02.0f}:{1:02.0f}".format(
+                consu_hours = "{:02.0f}:{:02.0f}".format(
                     *divmod(float(consumed_hours) * 60, 60)
                 )
                 txt_msg = _(
@@ -253,12 +253,12 @@ class TsmTimePack(models.Model):
         with the time pack template message loaded by default
         """
         self.ensure_one()
-        lang = self.env.context.get("lang")
+        self.env.context.get("lang")
         mail_template = self.env.ref(
             "tsm_time_pack.tsm_time_pack_email_template", raise_if_not_found=False
         )
         if mail_template and mail_template.lang:
-            lang = mail_template._render_lang(self.ids)[self.id]
+            mail_template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": "tsm.time.pack",
             "default_res_id": self.id,
