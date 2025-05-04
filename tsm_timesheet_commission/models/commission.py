@@ -1,6 +1,6 @@
 # Copyright 2024 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class Commission(models.Model):

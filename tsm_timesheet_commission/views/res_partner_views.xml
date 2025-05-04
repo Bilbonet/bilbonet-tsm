@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
@@ -10,7 +10,7 @@
     <field name="priority" eval="18" />
     <field name="arch" type="xml">
       <field name="commission_id" position="after">
-        <field name="tsm_commission_id" attrs="{'required': [('agent', '=', True)]}"/>
+        <field name="tsm_commission_id" attrs="{'required': [('agent', '=', True)]}" />
       </field>
     </field>
   </record>
