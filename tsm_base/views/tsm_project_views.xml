@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
@@ -14,7 +14,7 @@
             'active_test': False,
             'search_default_project_id': [active_id],
             }</field>
-        <field name="search_view_id" ref="tsm_task_search_view"/>
+        <field name="search_view_id" ref="tsm_task_search_view" />
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Here, you can create new task
@@ -24,7 +24,7 @@
             </p>
         </field>
     </record>
-    
+
     <!--
         Project Views
     -->
@@ -34,53 +34,89 @@
         <field name="arch" type="xml">
             <form string="Project">
                 <header>
-                    <button name="action_project_send" type="object" groups="tsm_base.group_tsm_user"
-                            string=" Send by Email" class="oe_highlight" icon="fa-envelope"/>
+                    <button
+                        name="action_project_send"
+                        type="object"
+                        groups="tsm_base.group_tsm_user"
+                        string=" Send by Email"
+                        class="oe_highlight"
+                        icon="fa-envelope"
+                    />
                 </header>
                 <sheet string="Project">
-                    <div class="oe_button_box" name="button_box" groups="base.group_user">
-                        <button class="oe_stat_button" icon="fa-tasks"
-                                type="action"
-                                name="%(tsm_tasks_from_project_action)d">
-                            <field string="Tasks" name="task_count" widget="statinfo"/>
+                    <div
+                        class="oe_button_box"
+                        name="button_box"
+                        groups="base.group_user"
+                    >
+                        <button
+                            class="oe_stat_button"
+                            icon="fa-tasks"
+                            type="action"
+                            name="%(tsm_tasks_from_project_action)d"
+                        >
+                            <field string="Tasks" name="task_count" widget="statinfo" />
                         </button>
                     </div>
-                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <div class="oe_title pe-0">
                         <h1 class="d-flex justify-content-between align-items-center">
                             <div class="d-flex w-100">
-                                <field name="priority" widget="priority" class="me-3"/>
-                                <field name="name" class="me-3 pe-2" placeholder="Project Name..."/>
+                                <field name="priority" widget="priority" class="me-3" />
+                                <field
+                                    name="name"
+                                    class="me-3 pe-2"
+                                    placeholder="Project Name..."
+                                />
                             </div>
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field name="active" invisible="1"/>
-                            <field name="user_id" string="Project Manager"
-                                   attrs="{'readonly':[('active','=',False)]}"/>
-                            <field name="partner_id" string="Customer"
-                                   attrs="{'readonly':[('active','=',False)]}"/>
+                            <field name="active" invisible="1" />
+                            <field
+                                name="user_id"
+                                string="Project Manager"
+                                attrs="{'readonly':[('active','=',False)]}"
+                            />
+                            <field
+                                name="partner_id"
+                                string="Customer"
+                                attrs="{'readonly':[('active','=',False)]}"
+                            />
                         </group>
                         <group>
-                            <field name="privacy_visibility" widget="radio"/>
-                            <field name="sequence" groups="base.group_no_one"/>
-                            <field name="date_start"/>
-                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="privacy_visibility" widget="radio" />
+                            <field name="sequence" groups="base.group_no_one" />
+                            <field name="date_start" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                                options="{'no_create': True}"
+                            />
                         </group>
                     </group>
 
                     <notebook>
                         <page name="description_page" string="Description">
-                            <field name="description" options="{'codeview':true}"/>
+                            <field name="description" options="{'codeview':true}" />
                         </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"  groups="base.group_user"
-                           help="Follow this project to automatically track the events associated to tasks and issues of this project."/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                        help="Follow this project to automatically track the events associated to tasks and issues of this project."
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
                 </div>
             </form>
         </field>
@@ -91,18 +127,41 @@
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
             <search string="Search Project">
-                <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
-                <field name="name" string="Project Name"/>
-                <field name="description" string="Project Description"/>
-                <field name="user_id" string="Project Manager"/>
-                <filter name="my_projects" string="My Projects" domain="[('user_id','=',uid)]"/>
-                <separator/>
-                <filter name="followed_by_me" string="Followed by Me" domain="[('message_is_follower','=',True)]"/>
-                <separator/>
-                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <field
+                    name="partner_id"
+                    filter_domain="[('partner_id', 'child_of', self)]"
+                />
+                <field name="name" string="Project Name" />
+                <field name="description" string="Project Description" />
+                <field name="user_id" string="Project Manager" />
+                <filter
+                    name="my_projects"
+                    string="My Projects"
+                    domain="[('user_id','=',uid)]"
+                />
+                <separator />
+                <filter
+                    name="followed_by_me"
+                    string="Followed by Me"
+                    domain="[('message_is_follower','=',True)]"
+                />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
                 <group expand="0" string="Group By">
-                    <filter string="Manager" name="Manager" context="{'group_by':'user_id'}"/>
-                    <filter string="Contact" name="Partner" context="{'group_by':'partner_id'}"/>
+                    <filter
+                        string="Manager"
+                        name="Manager"
+                        context="{'group_by':'user_id'}"
+                    />
+                    <filter
+                        string="Contact"
+                        name="Partner"
+                        context="{'group_by':'partner_id'}"
+                    />
                 </group>
             </search>
         </field>
@@ -112,18 +171,21 @@
         <field name="name">tsm.project.tree</field>
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
-            <tree string="Projects"  decoration-muted="active == False"
-                  decoration-bf="priority == '1'"
-                  decoration-danger="activity_state != False">
-                <field name="active" invisible="1"/>
-                <field name="priority" invisible="1"/>
-                <field name="activity_state" invisible="1"/>
-                <field name="sequence" widget="handle"/>
-                <field name="name" string="Project Name"/>
-                <field name="user_id" string="Project Manager"/>
-                <field name="partner_id" string="Contact"/>
-                <field name="date_start" widget="date"/>
-                <field name="task_count" string="Tasks"/>
+            <tree
+                string="Projects"
+                decoration-muted="active == False"
+                decoration-bf="priority == '1'"
+                decoration-danger="activity_state != False"
+            >
+                <field name="active" invisible="1" />
+                <field name="priority" invisible="1" />
+                <field name="activity_state" invisible="1" />
+                <field name="sequence" widget="handle" />
+                <field name="name" string="Project Name" />
+                <field name="user_id" string="Project Manager" />
+                <field name="partner_id" string="Contact" />
+                <field name="date_start" widget="date" />
+                <field name="task_count" string="Tasks" />
             </tree>
         </field>
     </record>
@@ -132,65 +194,120 @@
         <field name="name">tsm.project.kanban</field>
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
-            <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors">
-                <field name="color"/>
-                <field name="priority"/>
-                <field name="name"/>
-                <field name="user_id"/>
-                <field name="partner_id"/>
-                <field name="task_count"/>
-                <field name="message_needaction_counter"/>
-                <field name="activity_ids"/>
-                <field name="activity_state"/>
+            <kanban
+                class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors"
+            >
+                <field name="color" />
+                <field name="priority" />
+                <field name="name" />
+                <field name="user_id" />
+                <field name="partner_id" />
+                <field name="task_count" />
+                <field name="message_needaction_counter" />
+                <field name="activity_ids" />
+                <field name="activity_state" />
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
+                        <div
+                            t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon"
+                        >
                             <div class="o_project_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
                                         <div class="o_primary">
-                                            <span><t t-esc="record.name.value"/></span>
+                                            <span><t t-esc="record.name.value" /></span>
                                             <span t-if="record.partner_id.value">
-                                                <strong><t t-esc="record.partner_id.value"/></strong>
+                                                <strong><t
+                                                        t-esc="record.partner_id.value"
+                                                    /></strong>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="o_kanban_card_manage_pane dropdown-menu" role="menu">
-                                    <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                <div
+                                    class="o_kanban_card_manage_pane dropdown-menu"
+                                    role="menu"
+                                >
+                                    <div
+                                        class="o_kanban_card_manage_section o_kanban_manage_reports"
+                                    >
                                         <div role="menuitem">
                                             <a type="edit">Edit</a>
                                         </div>
                                     </div>
-                                    <div role="menuitem" aria-haspopup="true" class="o_no_padding_kanban_colorpicker">
-                                        <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                                    <div
+                                        role="menuitem"
+                                        aria-haspopup="true"
+                                        class="o_no_padding_kanban_colorpicker"
+                                    >
+                                        <ul
+                                            class="oe_kanban_colorpicker"
+                                            data-field="color"
+                                            role="popup"
+                                        />
                                     </div>
                                 </div>
-                                <a class="o_kanban_manage_toggle_button o_left" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                                <a
+                                    class="o_kanban_manage_toggle_button o_left"
+                                    href="#"
+                                ><i
+                                        class="fa fa-ellipsis-v"
+                                        role="img"
+                                        aria-label="Manage"
+                                        title="Manage"
+                                    /></a>
                             </div>
 
                             <div class="o_kanban_record_bottom">
                                 <div class="oe_kanban_bottom_left">
-                                    <field name="priority" widget="priority"/>
-                                    <field name="activity_ids" widget="kanban_activity"/>
-                                    <t t-if="record.message_needaction_counter.raw_value">
-                                        <span role="alert" class='oe_kanban_mail_new' title='Unread Messages'>
-                                            <i class='fa fa-comments' role="img" aria-label="Unread Messages"/>
-                                            <t t-raw="record.message_needaction_counter.raw_value"/>
+                                    <field name="priority" widget="priority" />
+                                    <field
+                                        name="activity_ids"
+                                        widget="kanban_activity"
+                                    />
+                                    <t
+                                        t-if="record.message_needaction_counter.raw_value"
+                                    >
+                                        <span
+                                            role="alert"
+                                            class='oe_kanban_mail_new'
+                                            title='Unread Messages'
+                                        >
+                                            <i
+                                                class='fa fa-comments'
+                                                role="img"
+                                                aria-label="Unread Messages"
+                                            />
+                                            <t
+                                                t-raw="record.message_needaction_counter.raw_value"
+                                            />
                                         </span>
                                     </t>
-                                    <a name="%(tsm_tasks_from_project_action)d" type="action">
+                                    <a
+                                        name="%(tsm_tasks_from_project_action)d"
+                                        type="action"
+                                    >
                                         <div>
-                                            <span class="o_value"><t t-esc="record.task_count.value"/> Tasks</span>
+                                            <span class="o_value"><t
+                                                    t-esc="record.task_count.value"
+                                                /> Tasks</span>
                                         </div>
                                     </a>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
-                                    <span class="oe_kanban_text_red"><field name="date_start" widget="date"/></span>
-                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
-                                         t-att-title="record.user_id.value" t-att-alt="record.user_id.value"
-                                         width="24" height="24" class="oe_kanban_avatar float-right"/>
+                                    <span class="oe_kanban_text_red"><field
+                                            name="date_start"
+                                            widget="date"
+                                        /></span>
+                                    <img
+                                        t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
+                                        t-att-title="record.user_id.value"
+                                        t-att-alt="record.user_id.value"
+                                        width="24"
+                                        height="24"
+                                        class="oe_kanban_avatar float-right"
+                                    />
                                 </div>
                             </div>
 
@@ -209,9 +326,9 @@
         <field name="res_model">tsm.project</field>
         <field name="domain">[]</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="view_id" ref="tsm_project_kanban_view"/>
+        <field name="view_id" ref="tsm_project_kanban_view" />
         <field name="context">{'search_default_my_projects': 1}</field>
-        <field name="search_view_id" ref="tsm_project_filter_view"/>
+        <field name="search_view_id" ref="tsm_project_filter_view" />
         <field name="target">main</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
@@ -220,8 +337,13 @@
         </field>
     </record>
 
-    <menuitem id="tsm_project_menu" name="Projects" parent="tsm_main_menu"
-              action="tsm_project_open_all_action" sequence="3"/>
+    <menuitem
+        id="tsm_project_menu"
+        name="Projects"
+        parent="tsm_main_menu"
+        action="tsm_project_open_all_action"
+        sequence="3"
+    />
 
     <!-- Assign/Unassign Followers to Projects -->
     <record id="project_follower_assignment_action" model="ir.actions.act_window">

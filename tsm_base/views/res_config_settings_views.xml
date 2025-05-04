@@ -1,35 +1,47 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <record id="res_config_settings_view_form" model="ir.ui.view">
         <field name="name">TSM Task Settings</field>
         <field name="model">res.config.settings</field>
-        <field name="priority" eval="71"/>
-        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="priority" eval="71" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div class="app_settings_block" data-string="TSM" string="T.S.M" data-key="tsm_base" groups="tsm_base.group_tsm_manager">
+                <div
+                    class="app_settings_block"
+                    data-string="TSM"
+                    string="T.S.M"
+                    data-key="tsm_base"
+                    groups="tsm_base.group_tsm_manager"
+                >
                     <h2>TSM Task Settings</h2>
                     <div class="row mt16 o_settings_container">
-                        <div class="col-xs-12 col-md-6 o_setting_box" title="Use tags in tasks">
+                        <div
+                            class="col-xs-12 col-md-6 o_setting_box"
+                            title="Use tags in tasks"
+                        >
                             <div class="o_setting_left_pane">
-                                <field name="default_tags_in_task"/>
+                                <field name="default_tags_in_task" />
                             </div>
                             <div class="o_setting_right_pane">
-                                <label for="default_tags_in_task"/>
+                                <label for="default_tags_in_task" />
                                 <div class="text-muted">
                                     Use tags to classify tasks.
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-md-6 o_setting_box" title="Use contact in tasks">
+                        <div
+                            class="col-xs-12 col-md-6 o_setting_box"
+                            title="Use contact in tasks"
+                        >
                             <div class="o_setting_left_pane">
-                                <field name="group_tsm_task_contact"/>
+                                <field name="group_tsm_task_contact" />
                             </div>
                             <div class="o_setting_right_pane">
-                                <label for="group_tsm_task_contact"/>
+                                <label for="group_tsm_task_contact" />
                                 <div class="text-muted">
                                     Use contact in task to assign partners responsible.
                                 </div>
@@ -50,10 +62,12 @@
         <field name="context">{'module' : 'tsm_base'}</field>
     </record>
 
-    <menuitem id="tsm_menu_configuration"
+    <menuitem
+        id="tsm_menu_configuration"
         name="Settings"
         parent="tsm_config_menu"
         sequence="0"
         action="tsm_config_settings_action"
-        groups="base.group_system"/>
+        groups="base.group_system"
+    />
 </odoo>

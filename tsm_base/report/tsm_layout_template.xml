@@ -1,21 +1,26 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
 
     <template id="tsm_report_layout">
         <!-- Multicompany -->
         <t t-if="not o and doc">
-            <t t-set="o" t-value="doc"/>
+            <t t-set="o" t-value="doc" />
         </t>
 
         <t t-if="o and 'company_id' in o">
-            <t t-set="company" t-value="o.company_id.sudo()"/>
+            <t t-set="company" t-value="o.company_id.sudo()" />
         </t>
         <t t-if="not o or not 'company_id' in o">
-            <t t-set="company" t-value="res_company"/>
+            <t t-set="company" t-value="res_company" />
         </t>
 
         <t t-call="tsm_base.tsm_report_layout_header" />
-        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <div
+            class="article"
+            t-att-data-oe-model="o and o._name"
+            t-att-data-oe-id="o and o.id"
+            t-att-data-oe-lang="o and o.env.context.get('lang')"
+        >
             <t t-out="0" />
         </div>
         <t t-call="tsm_base.tsm_report_layout_footer" />
@@ -25,19 +30,30 @@
         <div class="header">
             <div class="row">
                 <div class="col-8">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                    <img
+                        t-if="company.logo"
+                        t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo"
+                    />
                 </div>
                 <div class="col-4" style="font-size:0.8em;">
                     <ul class="list-unstyled">
-                        <li t-if="company.phone"><small>Phone: <span t-field="company.phone"/></small></li>
-                        <li t-if="company.email"><small>Email: <span t-field="company.email"/></small></li>
-                        <li t-if="company.website"><small>Website: <span t-field="company.website"/></small></li>
+                        <li t-if="company.phone"><small>Phone: <span
+                                    t-field="company.phone"
+                                /></small></li>
+                        <li t-if="company.email"><small>Email: <span
+                                    t-field="company.email"
+                                /></small></li>
+                        <li t-if="company.website"><small>Website: <span
+                                    t-field="company.website"
+                                /></small></li>
                     </ul>
                 </div>
             </div>
             <div class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"></div>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
             </div>
         </div>
@@ -45,8 +61,11 @@
 
     <template id="tsm_report_layout_footer">
         <div t-if="report_type == 'pdf'" class="footer">
-            <div class="text-center" style="border-top: 1px solid black;font-size:0.8em;">
-                Page: <span class="page"/> / <span class="topage"/>
+            <div
+                class="text-center"
+                style="border-top: 1px solid black;font-size:0.8em;"
+            >
+                Page: <span class="page" /> / <span class="topage" />
             </div>
         </div>
     </template>
