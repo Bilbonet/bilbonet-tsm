@@ -153,7 +153,7 @@ class TsmTaskTimesheetAgent(models.Model):
                 ]
             )
         return domain
-    
+
     object_id = fields.Many2one(comodel_name="tsm.task.timesheet")
     agent_id = fields.Many2one(
         comodel_name="res.partner",
@@ -210,7 +210,7 @@ class TsmTaskTimesheetAgent(models.Model):
         readonly=True,
         related="company_id.currency_id",
     )
-    
+
     @api.depends("agent_id")
     def _compute_commission_id(self):
         for record in self:
@@ -218,7 +218,7 @@ class TsmTaskTimesheetAgent(models.Model):
 
     @api.depends("object_id.date_time")
     def _compute_invoice_date(self):
-        """ Change Datetime to Date"""
+        """Change Datetime to Date"""
         for line in self:
             line.invoice_date = line.object_id.date_time.date()
 
@@ -248,7 +248,7 @@ class TsmTaskTimesheetAgent(models.Model):
 
     @api.onchange("price_unit")
     def _inverse_price_unit(self):
-        """ Store the specific price when price unit change manually."""
+        """Store the specific price when price unit change manually."""
         self.ensure_one()
         self.specific_price = self.price_unit
 

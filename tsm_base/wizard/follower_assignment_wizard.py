@@ -1,6 +1,6 @@
 # Copyright 2025 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class FollowerAssignmentWizard(models.TransientModel):

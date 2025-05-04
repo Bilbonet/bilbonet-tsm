@@ -1,8 +1,10 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from datetime import datetime
+
 import pytz
-from odoo import models, fields, api, _
+
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 

@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 
 
 class TsmTechAsset(models.Model):
@@ -56,9 +56,9 @@ class TsmTechAsset(models.Model):
         " the asset without removing it.",
     )
     code = fields.Char(
-        string="Tech Asset Code", 
-        default="/", 
-        required=True, 
+        string="Tech Asset Code",
+        default="/",
+        required=True,
         copy=False,
     )
     sequence = fields.Integer(
@@ -78,14 +78,14 @@ class TsmTechAsset(models.Model):
         help="Sequence of the asset when displaying assets",
     )
     date = fields.Date(
-        string="Date", 
-        default=fields.Date.context_today, 
-        index=True, 
+        string="Date",
+        default=fields.Date.context_today,
+        index=True,
         copy=False,
     )
     name = fields.Char(
-        string="Asset Title", 
-        tracking=20, 
+        string="Asset Title",
+        tracking=20,
         required=True,
         index=True,
     )
@@ -113,8 +113,8 @@ class TsmTechAsset(models.Model):
         tracking=30,
     )
     partner_id = fields.Many2one(
-        comodel_name="res.partner", 
-        string="Customer", 
+        comodel_name="res.partner",
+        string="Customer",
         required=True,
     )
     type_id = fields.Many2one(
@@ -132,9 +132,7 @@ class TsmTechAsset(models.Model):
         context={"active_test": False},
     )
     task_count = fields.Integer(
-        compute="_compute_task_count", 
-        string="Amount Tasks", 
-        readonly=True
+        compute="_compute_task_count", string="Amount Tasks", readonly=True
     )
     privacy_visibility = fields.Selection(
         selection=[
@@ -168,12 +166,12 @@ class TsmTechAsset(models.Model):
         with the tech asset template message loaded by default
         """
         self.ensure_one()
-        lang = self.env.context.get("lang")
+        self.env.context.get("lang")
         mail_template = self.env.ref(
             "tsm_tech_assets.tsm_tech_asset_email_template", raise_if_not_found=False
         )
         if mail_template and mail_template.lang:
-            lang = mail_template._render_lang(self.ids)[self.id]
+            mail_template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": "tsm.tech.asset",
             "default_res_id": self.id,
@@ -226,7 +224,7 @@ class TsmTechAsset(models.Model):
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
-        default['name'] = f"{self.name} (copy)"
+        default["name"] = f"{self.name} (copy)"
         return super(TsmTechAsset, self).copy(default)
 
 

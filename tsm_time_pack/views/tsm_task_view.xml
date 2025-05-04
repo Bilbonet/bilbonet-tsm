@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
@@ -7,12 +7,18 @@
         <record id="tsm_task_form_time_pack_view" model="ir.ui.view">
             <field name="name">TSM Time Pack tsm.task.form</field>
             <field name="model">tsm.task</field>
-            <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_form_timesheet_view" />
+            <field
+                name="inherit_id"
+                ref="tsm_task_timesheet.tsm_task_form_timesheet_view"
+            />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='timesheet_ids']//field[@name='project_id']" position="before">
-                    <field 
-                        name="timepack_id" 
-                        domain="[('partner_id', '=', parent.partner_id)]" 
+                <xpath
+                    expr="//field[@name='timesheet_ids']//field[@name='project_id']"
+                    position="before"
+                >
+                    <field
+                        name="timepack_id"
+                        domain="[('partner_id', '=', parent.partner_id)]"
                         options='{"no_open": True, "no_create": True}'
                     />
                     <button
@@ -22,8 +28,10 @@
                         attrs="{'invisible':[('timepack_id','=',False)]}"
                         title="View Time Pack Details"
                     />
-                    <field name="discount_time" 
-                           attrs="{'invisible':[('timepack_id','=',False)]}"/>
+                    <field
+                        name="discount_time"
+                        attrs="{'invisible':[('timepack_id','=',False)]}"
+                    />
                 </xpath>
             </field>
         </record>

@@ -1,28 +1,42 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <record id="tsm_task_tech_asset_form_view" model="ir.ui.view">
         <field name="name">TSM Task Tech Asset</field>
         <field name="model">tsm.task</field>
-        <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
+        <field name="inherit_id" ref="tsm_base.tsm_task_form_view" />
         <field name="arch" type="xml">
             <field name="date_deadline" position="after">
-                <field name="asset_ids"
-                       options="{'no_create_edit': True}"
-                       domain="[('partner_id', 'child_of', partner_id)]"
-                       context="{'default_partner_id':partner_id}">
+                <field
+                    name="asset_ids"
+                    options="{'no_create_edit': True}"
+                    domain="[('partner_id', 'child_of', partner_id)]"
+                    context="{'default_partner_id':partner_id}"
+                >
                     <kanban quick_create="false" edit="true">
-                        <field name="name"/>
+                        <field name="name" />
                         <templates>
                             <t t-name="kanban-box">
-                                <div class="oe_kanban_global_click" style="position: relative">
-                                    <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">
-                                        <i class="fa fa-times text-danger" title="Manage"/>
+                                <div
+                                    class="oe_kanban_global_click"
+                                    style="position: relative"
+                                >
+                                    <a
+                                        t-if="! read_only_mode"
+                                        type="delete"
+                                        style="position: absolute; right: 0; padding: 4px; diplay: inline-block"
+                                    >
+                                        <i
+                                            class="fa fa-times text-danger"
+                                            title="Manage"
+                                        />
                                     </a>
                                     <div class="oe_module_vignette">
-                                        <div class="oe_module_desc o_kanban_record_title">
-                                            <field name="name"/>
+                                        <div
+                                            class="oe_module_desc o_kanban_record_title"
+                                        >
+                                            <field name="name" />
                                             <button
                                                 class="btn btn-link"
                                                 type="object"

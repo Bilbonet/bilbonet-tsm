@@ -32,11 +32,7 @@ class TsmTask(models.Model):
         copy=False,
         help="Sequence of the task when displaying tasks",
     )
-    name = fields.Char(
-        string="Task Title", 
-        required=True, 
-        index=True
-    )
+    name = fields.Char(string="Task Title", required=True, index=True)
     active = fields.Boolean(
         default=True,
         copy=False,
@@ -232,12 +228,12 @@ class TsmTask(models.Model):
         with the task template message loaded by default
         """
         self.ensure_one()
-        lang = self.env.context.get("lang")
+        self.env.context.get("lang")
         mail_template = self.env.ref(
             "tsm_base.tsm_task_email_template", raise_if_not_found=False
         )
         if mail_template and mail_template.lang:
-            lang = mail_template._render_lang(self.ids)[self.id]
+            mail_template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": "tsm.task",
             "default_res_id": self.id,
@@ -294,5 +290,5 @@ class TsmTask(models.Model):
         self.ensure_one()
         default = dict(default or {})
         default["code"] = self.env["ir.sequence"].next_by_code("tsm.task")
-        default['name'] = f"{self.name} (copy)"
+        default["name"] = f"{self.name} (copy)"
         return super(TsmTask, self).copy(default)

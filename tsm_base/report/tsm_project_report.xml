@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
 
     <record id="tsm_project_report_action" model="ir.actions.report">
@@ -8,11 +8,11 @@
         <field name="report_name">tsm_base.tsm_project_report_document</field>
         <field name="report_file">tsm_base.tsm_project_report_document</field>
         <field name="print_report_name">object.name.replace(' ', '-')</field>
-        <field name="attachment"></field>
-        <field name="binding_model_id" ref="model_tsm_project"/>
+        <field name="attachment" />
+        <field name="binding_model_id" ref="model_tsm_project" />
         <field name="binding_type">report</field>
-        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report"/>
-        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report" />
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
     </record>
 
     <template id="tsm_project_report_document">
@@ -21,56 +21,69 @@
                 <t t-call="tsm_base.tsm_report_layout">
                     <div class="page">
                         <div class="row" name="head_report">
-                            <table class="table table-bordered table-condensed" style="margin-top:0px;">
+                            <table
+                                class="table table-bordered table-condensed"
+                                style="margin-top:0px;"
+                            >
                                 <tr>
                                     <td>Client:</td>
-                                    <td><span t-field="o.partner_id"/></td>
+                                    <td><span t-field="o.partner_id" /></td>
                                     <td>Phone:</td>
                                     <td>
-                                        <span t-field="o.partner_id.phone"/> /
-                                        <span t-field="o.partner_id.mobile"/>
+                                        <span t-field="o.partner_id.phone" /> /
+                                        <span t-field="o.partner_id.mobile" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Address:</td>
                                     <td>
-                                        <span t-field="o.partner_id.street"/>
-                                        <span t-field="o.partner_id.street2"/><br/>
-                                        <span t-field="o.partner_id.zip"/> -
-                                        <span t-field="o.partner_id.city"/> -
-                                        <span t-field="o.partner_id.state_id"/>
+                                        <span t-field="o.partner_id.street" />
+                                        <span t-field="o.partner_id.street2" /><br />
+                                        <span t-field="o.partner_id.zip" /> -
+                                        <span t-field="o.partner_id.city" /> -
+                                        <span t-field="o.partner_id.state_id" />
                                     </td>
                                     <td>@mail:</td>
-                                    <td><span t-field="o.partner_id.email"/></td>
+                                    <td><span t-field="o.partner_id.email" /></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="jumbotron">
-                            <h1><span t-field="o.name"/></h1>
-                            <span t-field="o.description" name="projec_description"/>
+                            <h1><span t-field="o.name" /></h1>
+                            <span t-field="o.description" name="projec_description" />
                         </div>
                         <!-- Tasks -->
-                        <div t-if="len(o.task_ids) > 0" t-foreach="o.task_ids.sorted(key=lambda t: t.id)" t-as="t" name="tasks">
+                        <div
+                            t-if="len(o.task_ids) > 0"
+                            t-foreach="o.task_ids.sorted(key=lambda t: t.id)"
+                            t-as="t"
+                            name="tasks"
+                        >
                             <div class="row">
                                 <table class="table table-sm">
                                     <tr class="bg-success">
                                         <td>
-                                            Task: <span t-field="t.code"/> -
-                                            <span t-field="t.name"/>
+                                            Task: <span t-field="t.code" /> -
+                                            <span t-field="t.name" />
                                         </td>
                                         <td>
-                                            Date: <span t-field="t.date_start" t-options="{'widget': 'date'}"/>
+                                            Date: <span
+                                                t-field="t.date_start"
+                                                t-options="{'widget': 'date'}"
+                                            />
                                         </td>
                                         <td>
-                                            Technician: <span t-field="t.user_id.name"/>
+                                            Technician: <span
+                                                t-field="t.user_id.name"
+                                            />
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="row" name="task_description">
-                                <span t-field="t.description"/>
+                                <span t-field="t.description" />
                             </div>
-                            <p style="page-break-after:always;" name="page-break"></p>
+                            <p style="page-break-after:always;" name="page-break" />
                         </div>
                         <!-- /Tasks -->
                     </div>

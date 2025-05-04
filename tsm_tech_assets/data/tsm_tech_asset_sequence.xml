@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo noupdate="1">
@@ -7,7 +7,7 @@
         <field name="code">tsm.tech.asset</field>
         <field name="prefix">AS/%(y)s</field>
         <field eval="4" name="padding" />
-        <field eval="1" name="number_increment"/>
-        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment" />
+        <field eval="1" name="number_next" />
     </record>
 </odoo>

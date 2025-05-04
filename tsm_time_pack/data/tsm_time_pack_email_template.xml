@@ -1,37 +1,55 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
 
     <record id="tsm_time_pack_email_template" model="mail.template">
         <field name="name">TSM Time Pack - Send by Email</field>
-        <field name="model_id" ref="tsm_time_pack.model_tsm_time_pack"/>
-        <field name="subject">{{ object.company_id.partner_id.comercial }} Time Pack ({{ object.code + ' - ' + object.name if object.name else object.code }})</field>
-        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="model_id" ref="tsm_time_pack.model_tsm_time_pack" />
+        <field
+            name="subject"
+        >{{ object.company_id.partner_id.comercial }} Time Pack ({{ object.code + ' - ' + object.name if object.name else object.code }})</field>
+        <field
+            name="email_from"
+        >{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
-        <field name="report_template" ref="tsm_time_pack.tsm_time_pack_report_detailed_action"/>
-        <field name="report_name">{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}</field>
+        <field
+            name="report_template"
+            ref="tsm_time_pack.tsm_time_pack_report_detailed_action"
+        />
+        <field
+            name="report_name"
+        >{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}</field>
         <field name="lang">{{ object.partner_id.lang }}</field>
-        <field name="auto_delete" eval="True"/>
+        <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
     <p style="box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;">
-        Hello, <span style="font-weight: bold;" t-out="object.partner_id.name or ''"></span>
-        <br/><br/>
-        We inform you about the following time pack: 
+        Hello, <span style="font-weight: bold;" t-out="object.partner_id.name or ''" />
+        <br /><br />
+        We inform you about the following time pack:
     </p>
     <p style="border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;">
-        Time Pack: 
-            <span style="font-weight: bold;" t-out="object.code"></span>
+        Time Pack:
+            <span style="font-weight: bold;" t-out="object.code" />
             <t t-if="object.name">
-                - <span style="font-weight: bold;" t-out="object.name"></span>
-            </t><br/>
-        Date: <span style="font-weight: bold;" t-out="object.date_start or ''" t-options="{'widget': 'date'}"></span><br/>
-        Your contact: <span style="font-weight: bold;" t-out="object.user_id.name or ''"></span>
+                - <span style="font-weight: bold;" t-out="object.name" />
+            </t><br />
+        Date: <span
+                        style="font-weight: bold;"
+                        t-out="object.date_start or ''"
+                        t-options="{'widget': 'date'}"
+                    /><br />
+        Your contact: <span
+                        style="font-weight: bold;"
+                        t-out="object.user_id.name or ''"
+                    />
     </p>
 
-    <br/>
-    <table style="padding:0px;width:800px;background-color:#f9f9f9;border:solid 1px #f0f0f0;">
+    <br />
+    <table
+                    style="padding:0px;width:800px;background-color:#f9f9f9;border:solid 1px #f0f0f0;"
+                >
         <tr>
             <td colspan="2" style="text-align:center;"><h2>HOURS SUMMARY</h2></td>
         </tr>
@@ -42,20 +60,29 @@
                         <tr style="color:#875A7B;">
                             <td style="width:100px;padding:5px">Contrated:</td>
                             <td class="text-right">
-                                <span style="font-weight: bold;" t-out="('%d:%02d' % (object.contrated_hours,(object.contrated_hours*60)%60))"></span> hours
+                                <span
+                                                style="font-weight: bold;"
+                                                t-out="('%d:%02d' % (object.contrated_hours,(object.contrated_hours*60)%60))"
+                                            /> hours
                             </td>
                         </tr>
                         <tr style="background-color:#dc3545;color:#FFFFFF;">
                             <td style="width:100px;padding:5px">Consumed:</td>
                             <td class="text-right">
-                                <span style="font-weight: bold;" t-out="('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))"></span> hours
+                                <span
+                                                style="font-weight: bold;"
+                                                t-out="('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))"
+                                            /> hours
                             </td>
                         </tr>
                         <t t-if="object.remaining_hours >= 0.0">
                             <tr>
                                 <td style="width:100px;padding:5px">Remainig:</td>
                                 <td class="text-right">
-                                    <span style="font-weight: bold;" t-out="('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))"></span> hours
+                                    <span
+                                                    style="font-weight: bold;"
+                                                    t-out="('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))"
+                                                /> hours
                                 </td>
                             </tr>
                         </t>
@@ -63,7 +90,10 @@
                             <tr style="color:#dc3545;">
                                 <td style="width:100px;padding:5px">Exceded:</td>
                                 <td class="text-right">
-                                    <span style="font-weight: bold;" t-out="('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))"></span> hours
+                                    <span
+                                                    style="font-weight: bold;"
+                                                    t-out="('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))"
+                                                /> hours
                                 </td>
                             </tr>
                         </t>
@@ -77,27 +107,30 @@
                         <tr style="color:#875A7B;">
                             <td style="width:100px;padding:5px">Complimentary:</td>
                             <td>
-                                <span style="font-weight: bold;" t-out="('%d:%02d' % (object.complimentary_hours,(object.complimentary_hours*60)%60))"></span> hours
+                                <span
+                                                    style="font-weight: bold;"
+                                                    t-out="('%d:%02d' % (object.complimentary_hours,(object.complimentary_hours*60)%60))"
+                                                /> hours
                             </td>
                         </tr>
-                        <tr><td style="width:100px;padding:5px"></td></tr>
-                        <tr><td style="width:100px;padding:5px"></td></tr>
+                        <tr><td style="width:100px;padding:5px" /></tr>
+                        <tr><td style="width:100px;padding:5px" /></tr>
                     </tbody>
                 </table>
             </t>
             </td>
         </tr>
     </table>
-    <br/>
+    <br />
     <p>
-        If you have any question, do not hesitate to contact us.<br/>
+        If you have any question, do not hesitate to contact us.<br />
         Thank you for trusting in us!
     </p>
     <t t-if="not is_html_empty(object.user_id.signature)">
-        <br/>
-        <t t-out="object.user_id.signature or ''">--<br/>Bilbonet</t>
+        <br />
+        <t t-out="object.user_id.signature or ''">--<br />Bilbonet</t>
     </t>
-</div>        
+</div>
         </field>
     </record>
 </odoo>

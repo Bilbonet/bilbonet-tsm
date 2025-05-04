@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
@@ -7,9 +7,9 @@
         <field name="model">tsm.task.timesheet.agent</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
-                <field name="timepack_id" invisible="1"/>
-                <field name="specific_price" invisible="1"/>
-                <field name="settled" invisible="1"/>
+                <field name="timepack_id" invisible="1" />
+                <field name="specific_price" invisible="1" />
+                <field name="settled" invisible="1" />
                 <field
                     name="agent_id"
                     context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}"
@@ -20,13 +20,13 @@
                     domain="['|', ('settlement_type', '=', 'timesheet'), ('settlement_type', '=', False)]"
                     attrs="{'readonly': [('settled', '=', True)]}"
                 />
-                <field 
-                    name="price_unit" 
+                <field
+                    name="price_unit"
                     attrs="{'readonly': ['|',('timepack_id', '!=', False), ('settled', '=', True)]}"
                     groups="!commission.group_commission_manager"
                 />
-                <field 
-                    name="price_unit" 
+                <field
+                    name="price_unit"
                     attrs="{'readonly': [('settled', '=', True)]}"
                     groups="commission.group_commission_manager"
                 />
@@ -38,9 +38,15 @@
     <record id="view_timesheet_form_agent" model="ir.ui.view">
         <field name="name">tsm.task.form.agent</field>
         <field name="model">tsm.task</field>
-        <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_form_timesheet_view" />
+        <field
+            name="inherit_id"
+            ref="tsm_task_timesheet.tsm_task_form_timesheet_view"
+        />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='timesheet_ids']//field[@name='project_id']" position="after">
+            <xpath
+                expr="//field[@name='timesheet_ids']//field[@name='project_id']"
+                position="after"
+            >
                 <field name="commission_free" invisible="1" />
                 <button
                     name="button_edit_agents"

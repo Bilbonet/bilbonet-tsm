@@ -31,7 +31,7 @@
 
     <record id="view_settlement_search" model="ir.ui.view">
         <field name="model">commission.settlement</field>
-        <field name="inherit_id" ref="commission.view_settlement_search"/>
+        <field name="inherit_id" ref="commission.view_settlement_search" />
         <field name="arch" type="xml">
             <filter name="group_agent" position="after">
                 <filter

@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import fields, models, _
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
@@ -22,15 +22,13 @@ class TsmProject(models.Model):
             ["project_id"],
         )
 
-        result = dict(
-            (data["project_id"][0], data["project_id_count"]) for data in task_data
-        )
+        result = {data["project_id"][0]: data["project_id_count"] for data in task_data}
         for project in self:
             project.task_count = result.get(project.id, 0)
 
     name = fields.Char(
-        string="Project Name", 
-        index=True, 
+        string="Project Name",
+        index=True,
         required=True,
     )
     active = fields.Boolean(
@@ -49,8 +47,7 @@ class TsmProject(models.Model):
         string="Priority",
     )
     sequence = fields.Integer(
-        default=10, 
-        help="Gives the sequence order when displaying a list of Projects."
+        default=10, help="Gives the sequence order when displaying a list of Projects."
     )
     color = fields.Integer(string="Color Index")
     user_id = fields.Many2one(
@@ -63,10 +60,10 @@ class TsmProject(models.Model):
     )
     # use auto_join to speed up name_search call
     partner_id = fields.Many2one(
-        comodel_name="res.partner", 
-        string="Customer", 
-        required=True, 
-        auto_join=True, 
+        comodel_name="res.partner",
+        string="Customer",
+        required=True,
+        auto_join=True,
         tracking=True,
     )
     privacy_visibility = fields.Selection(
@@ -92,9 +89,9 @@ class TsmProject(models.Model):
         help="Details, notes and aclarations about the project.",
     )
     date_start = fields.Datetime(
-        string="Starting Date", 
-        default=fields.Datetime.now, 
-        index=True, 
+        string="Starting Date",
+        default=fields.Datetime.now,
+        index=True,
         copy=False,
     )
     company_id = fields.Many2one(
@@ -111,12 +108,12 @@ class TsmProject(models.Model):
         with the project template message loaded by default
         """
         self.ensure_one()
-        lang = self.env.context.get("lang")
+        self.env.context.get("lang")
         mail_template = self.env.ref(
             "tsm_base.tsm_project_email_template", raise_if_not_found=False
         )
         if mail_template and mail_template.lang:
-            lang = mail_template._render_lang(self.ids)[self.id]
+            mail_template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": "tsm.project",
             "default_res_id": self.id,
@@ -178,5 +175,5 @@ class TsmProject(models.Model):
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
-        default['name'] = f"{self.name} (copy)"
+        default["name"] = f"{self.name} (copy)"
         return super(TsmProject, self).copy(default)
