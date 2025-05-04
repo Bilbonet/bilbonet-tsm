@@ -2,11 +2,17 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Client Technical Assets Management",
-    "version": "15.0.1.0.0",
+    "summary": "Helps your team control the different technical equipments of your clients",
     "category": "Management",
+    "version": "15.0.1.0.0",
+    "development_status": "Beta",
+    "website": "https://github.com/Bilbonet/bilbonet-tsm",
+    "author": "Jesus Ramiro,",
+    "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "author": "Jesus Ramiro (Bilbonet.NET)",
-    "website": "https://www.bilbonet.net",
+    "application": False,
+    "installable": True,
+    "preloadable": True,
     "depends": [
         "tsm_base",
     ],
@@ -19,6 +25,4 @@
         "report/tsm_tech_asset_report.xml",
         "data/tsm_tech_asset_email_template.xml",
     ],
-    "application": False,
-    "installable": True,
 }
