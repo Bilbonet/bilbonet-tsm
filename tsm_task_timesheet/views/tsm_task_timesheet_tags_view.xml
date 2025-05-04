@@ -1,17 +1,16 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
-
 <odoo>
     <record id="tsm_task_timesheet_tags_tree" model="ir.ui.view">
         <field name="name">TSM timesheet tsm.task.timesheet.tags.tree</field>
         <field name="model">tsm.task.timesheet.tags</field>
         <field name="arch" type="xml">
             <tree string="Timesheet Tags" decoration-muted="active==False">
-                <field name="sequence" widget="handle" groups="base.group_system"/>
-                <field name="name"/>
-                <field name="default"/>
-                <field name="active" invisible="1"/>
+                <field name="sequence" widget="handle" groups="base.group_system" />
+                <field name="name" />
+                <field name="default" />
+                <field name="active" invisible="1" />
             </tree>
         </field>
     </record>
@@ -22,15 +21,20 @@
         <field name="arch" type="xml">
             <form string="Timesheet Tags">
                 <sheet>
-                    <div class="oe_button_box" name="button_box"></div>
-                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_button_box" name="button_box" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <group>
                         <group>
-                            <field name="active" invisible="1"/>
-                            <field name="name"/>
+                            <field name="active" invisible="1" />
+                            <field name="name" />
                         </group>
                         <group>
-                            <field name="default"/>
+                            <field name="default" />
                         </group>
                     </group>
                 </sheet>
@@ -43,8 +47,12 @@
         <field name="model">tsm.task.timesheet.tags</field>
         <field name="arch" type="xml">
             <search string="Tags">
-                <field name="name"/>
-                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <field name="name" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
             </search>
         </field>
     </record>
@@ -61,11 +69,13 @@
         </field>
     </record>
 
-    <menuitem id="tsm_config_timesheet_tags_menu"
-              name="Timesheet Tags"
-              parent="tsm_base.tsm_config_menu"
-              sequence="4"
-              action="tsm_task_timesheet_tags_action"
-              groups="base.group_system"/>
+    <menuitem
+        id="tsm_config_timesheet_tags_menu"
+        name="Timesheet Tags"
+        parent="tsm_base.tsm_config_menu"
+        sequence="4"
+        action="tsm_task_timesheet_tags_action"
+        groups="base.group_system"
+    />
 
 </odoo>

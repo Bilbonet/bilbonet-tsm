@@ -1,6 +1,6 @@
 # Copyright 2019 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
@@ -19,7 +19,7 @@ class ResConfigSettings(models.TransientModel):
     def onchange_group_tsm_timesheet_title(self):
         if self.group_tsm_timesheet_title:
             self.group_tsm_timesheet_tag = False
-            
+
     @api.onchange("group_tsm_timesheet_tag")
     def onchange_group_tsm_timesheet_tag(self):
         if self.group_tsm_timesheet_tag:
