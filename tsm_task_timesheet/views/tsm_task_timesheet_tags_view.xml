@@ -6,7 +6,7 @@
         <field name="name">TSM timesheet tsm.task.timesheet.tags.tree</field>
         <field name="model">tsm.task.timesheet.tags</field>
         <field name="arch" type="xml">
-            <tree string="Timesheet Tags" decoration-muted="active==False">
+            <tree decoration-muted="active==False">
                 <field name="sequence" widget="handle" groups="base.group_system" />
                 <field name="name" />
                 <field name="default" />

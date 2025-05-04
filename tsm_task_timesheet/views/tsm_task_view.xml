@@ -2,113 +2,104 @@
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-    <data>
-        <record id="tsm_task_form_timesheet_view" model="ir.ui.view">
-            <field name="name">TSM timesheet tsm.task.form</field>
-            <field name="model">tsm.task</field>
-            <field name="inherit_id" ref="tsm_base.tsm_task_form_view" />
-            <field name="arch" type="xml">
-                <xpath
-                    expr="//notebook/page[@name='description_page']"
-                    position="after"
-                >
-                    <page string="Timesheets">
-                        <field name="timesheet_ids">
-                            <tree
-                                editable="bottom"
-                                string="Timesheet Activities"
-                                default_order="date_time"
-                            >
-                                <field name="date_time" />
-                                <field
-                                    name="user_id"
-                                    options="{'no_create': True, 'no_open': True}"
-                                />
-                                <field
-                                    name="name"
-                                    groups="tsm_task_timesheet.group_tsm_timesheet_title"
-                                />
-                                <field
-                                    name="tag_ids"
-                                    options="{'no_create': True, 'no_open': True}"
-                                    groups="tsm_task_timesheet.group_tsm_timesheet_tag"
-                                    required="1"
-                                />
-                                <!-- ! TODO: El widge selection da un error java cuando lo utilizamos aqui -->
-                                <!-- <field
-                                    name="tag_ids"
-                                    widget="selection"
-                                    groups="tsm_task_timesheet.group_tsm_timesheet_tag"
-                                    required="1"/> -->
-                                <field
-                                    name="amount"
-                                    string="Duration"
-                                    widget="float_time"
-                                />
-                                <button
-                                    name="button_end_work"
-                                    type="object"
-                                    icon="fa-stop-circle text-danger"
-                                    attrs="{'invisible': [('amount', '>', 0)]}"
-                                    class="oe_stat_button"
-                                    title="Stop work"
-                                />
-                                <field name="project_id" invisible="1" />
-                            </tree>
-                        </field>
-                        <group>
-                             <group
-                                name="task_hours"
-                                class="oe_subtotal_footer oe_right"
-                            >
-                                <field
-                                    name="total_hours"
-                                    widget="float_time"
-                                    class="oe_subtotal_footer_separator"
-                                    readonly="1"
-                                />
-                             </group>
-                        </group>
-                    </page>
-                </xpath>
-            </field>
-        </record>
+    <record id="tsm_task_form_timesheet_view" model="ir.ui.view">
+        <field name="name">TSM timesheet tsm.task.form</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_base.tsm_task_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='description_page']" position="after">
+                <page string="Timesheets">
+                    <field name="timesheet_ids">
+                        <tree editable="bottom" default_order="date_time">
+                            <field name="date_time" />
+                            <field
+                                name="user_id"
+                                options="{'no_create': True, 'no_open': True}"
+                            />
+                            <field
+                                name="name"
+                                groups="tsm_task_timesheet.group_tsm_timesheet_title"
+                            />
+                            <field
+                                name="tag_ids"
+                                options="{'no_create': True, 'no_open': True}"
+                                groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                required="1"
+                            />
+                            <!-- ! TODO: El widge selection da un error java cuando lo utilizamos aqui -->
+                            <!-- <field
+                                name="tag_ids"
+                                widget="selection"
+                                groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                required="1"/> -->
+                            <field
+                                name="amount"
+                                string="Duration"
+                                widget="float_time"
+                            />
+                            <button
+                                name="button_end_work"
+                                type="object"
+                                icon="fa-stop-circle text-danger"
+                                attrs="{'invisible': [('amount', '>', 0)]}"
+                                class="oe_stat_button"
+                                title="Stop work"
+                            />
+                            <field name="project_id" invisible="1" />
+                        </tree>
+                    </field>
+                    <group>
+                            <group
+                            name="task_hours"
+                            class="oe_subtotal_footer oe_right"
+                        >
+                            <field
+                                name="total_hours"
+                                widget="float_time"
+                                class="oe_subtotal_footer_separator"
+                                readonly="1"
+                            />
+                            </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
 
-        <record id="view_task_tree2_inherited" model="ir.ui.view">
-            <field name="name">TSM timesheet tsm.task.tree</field>
-            <field name="model">tsm.task</field>
-            <field name="inherit_id" ref="tsm_base.tsm_task_tree_view" />
-            <field eval="2" name="priority" />
-            <field name="arch" type="xml">
-                <field name="name" position="after">
-                    <field
-                        name="total_hours"
-                        widget="float_time"
-                        sum="Total Hours"
-                        readonly="1"
+    <record id="view_task_tree2_inherited" model="ir.ui.view">
+        <field name="name">TSM timesheet tsm.task.tree</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_base.tsm_task_tree_view" />
+        <field eval="2" name="priority" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field
+                    name="total_hours"
+                    widget="float_time"
+                    sum="Total Hours"
+                    readonly="1"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="tsm_quick_create_task_timesheet_form" model="ir.ui.view">
+        <field name="name">task.timesheet.form.quick_create</field>
+        <field name="model">tsm.task</field>
+        <field name="inherit_id" ref="tsm_base.tsm_quick_create_task_form" />
+        <field eval="1001" name="priority" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <div class="o_row mb8">
+                    <button
+                        name="create_and_start"
+                        type="object"
+                        class="btn btn-success"
+                        string=" Start"
+                        icon="fa-play"
                     />
-                </field>
+                </div>
             </field>
-        </record>
-
-        <record id="tsm_quick_create_task_timesheet_form" model="ir.ui.view">
-            <field name="name">task.timesheet.form.quick_create</field>
-            <field name="model">tsm.task</field>
-            <field name="inherit_id" ref="tsm_base.tsm_quick_create_task_form" />
-            <field eval="1001" name="priority" />
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <div class="o_row mb8">
-                        <button
-                            name="create_and_start"
-                            type="object"
-                            class="btn btn-success"
-                            string=" Start"
-                            icon="fa-play"
-                        />
-                    </div>
-                </field>
-            </field>
-        </record>
-    </data>
+        </field>
+    </record>
 </odoo>
