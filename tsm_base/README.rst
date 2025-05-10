@@ -22,9 +22,6 @@ Technical Support Management
 
 |badge1| |badge2| |badge3|
 
-Technical Support Management
-============================
-
 Technical support management helps your team get work done.
 
 **Table of contents**

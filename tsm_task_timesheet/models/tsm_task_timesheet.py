@@ -70,7 +70,7 @@ class TsmTaskTimesheet(models.Model):
     )
     closed = fields.Boolean(related="task_id.stage_id.closed", readonly=True)
     date_time_stop = fields.Datetime(
-        compute="_get_stop_date_time",
+        compute="_compute_stop_date_time",
         string="End date time for calendar view",
         store=True,
         readonly=True,
@@ -80,7 +80,7 @@ class TsmTaskTimesheet(models.Model):
     )
 
     @api.depends("date_time", "amount")
-    def _get_stop_date_time(self):
+    def _compute_stop_date_time(self):
         for line in self:
             line.date_time_stop = datetime.strptime(
                 str(line.date_time), "%Y-%m-%d %H:%M:%S"
