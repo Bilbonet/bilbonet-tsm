@@ -53,12 +53,12 @@ class TsmTask(models.Model):
             for line in record.timesheet_ids:
                 record.commission_total += sum(x.amount for x in line.agent_ids)
 
-    #!Cuando damos las comisiones por facturadas!!!
+    # !Cuando damos las comisiones por facturadas!!!
     # def action_post(self):
     #     """Put settlements associated to the invoices in invoiced state."""
     #     self.mapped("line_ids.settlement_id").write({"state": "invoiced"})
     #     return super().action_post()
-    #!Esto impide cancelar facturas con comisiones. Adaptar a nuestro caso
+    # !Esto impide cancelar facturas con comisiones. Adaptar a nuestro caso
     # def button_cancel(self):
     #     """Check settled lines and put settlements associated to the invoices in
     #     exception.
@@ -73,7 +73,7 @@ class TsmTask(models.Model):
     def recompute_lines_agents(self):
         self.mapped("timesheet_ids").recompute_agents()
 
-    #!Si borramos una liquidación de comisiones. Las comisiones pasarán a no liquidadas
+    # !Si borramos una liquidación de comisiones. Las comisiones pasarán a no liquidadas
     # def unlink(self):
     #     """Put 'invoiced' settlements associated to the invoices back in settled state."""
     #     self.invoice_line_ids.settlement_id.filtered(
@@ -130,7 +130,8 @@ class TsmTaskTimesheet(models.Model):
                 if record.agent_ids:
                     raise UserError(
                         _(
-                            "You can't change date or user from a timesheet with commission lines."
+                            """You can't change date or user from a timesheet
+                            with commission lines."""
                         )
                     )
         return super().write(vals)
