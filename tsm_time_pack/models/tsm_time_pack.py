@@ -27,7 +27,7 @@ class TsmTimePack(models.Model):
             self.date_start or fields.Date.today(),
         )
 
-    def _compuete_can_edit(self):
+    def _compute_can_edit(self):
         can_edit = self.env.user.has_group("tsm_base.group_tsm_manager")
         for tp in self:
             tp.can_edit = can_edit
@@ -97,51 +97,46 @@ class TsmTimePack(models.Model):
         "may see all time packs\n",
     )
     contrated_hours = fields.Float(
-        string="Contrated Hours",
         default=0.0,
         required=True,
         help="Time contracted by the client for support and it can be "
         "consumed in tasks and timesheet.",
     )
     consumed_hours = fields.Float(
-        compute="_hours_get",
-        string="Hours Consumed",
+        compute="_compute_hours",
         readonly=True,
         store=True,
         help="Computed as: The sum of the timesheet checked " "to discount time.",
     )
     remaining_hours = fields.Float(
-        compute="_hours_get",
-        string="Remaining Hours",
+        compute="_compute_hours",
         readonly=True,
         store=True,
         digits="Time Pack",
         help="Computed as: Contrated hours - Consumed hours",
     )
     total_hours_spent = fields.Float(
-        compute="_hours_get",
-        string="Total Hours Spent",
+        compute="_compute_hours",
         readonly=True,
         store=True,
         help="Computed as: Time Spent in tasks.",
     )
     complimentary_hours = fields.Float(
-        compute="_hours_get",
+        compute="_compute_hours",
         string="Complimentary Hours.",
         readonly=True,
         store=True,
         help="Hours spent but not discounted in time pack.",
     )
     progress = fields.Float(
-        compute="_hours_get",
-        string="Progress",
+        compute="_compute_hours",
         readonly=True,
         store=True,
         group_operator="avg",
     )
     product_id = fields.Many2one(comodel_name="product.product", string="Product")
-    description_sale = fields.Text(string="Description Sale")
-    quantity = fields.Float(string="Quantity", default=1.0, required=True)
+    description_sale = fields.Text()
+    quantity = fields.Float(default=1.0, required=True)
     product_uom_id = fields.Many2one(comodel_name="uom.uom", string="Unit of Measure")
     price_unit = fields.Float(string="Unit Price", default=0.0, required=True)
     discount = fields.Float(
@@ -177,7 +172,7 @@ class TsmTimePack(models.Model):
         help="Untaxed Total of The Order",
     )
     can_edit = fields.Boolean(
-        compute="_compuete_can_edit",
+        compute="_compute_can_edit",
         string="Security: only managers can edit",
         default=True,
         help="This field is for security purpose. "
@@ -194,14 +189,14 @@ class TsmTimePack(models.Model):
         "timesheet_ids.amount",
         "timesheet_ids.discount_time",
     )
-    def _hours_get(self):
-        for time in self.sorted(key="id", reverse=True):
-            """
-            use "sudo" here to allow user (without timesheet user right)
-            to access timesheets
-            """
+    def _compute_hours(self):
+        """
+        use "sudo" here to allow user (without timesheet user right)
+        to access timesheets.
 
-            """Filter timesheet ids checked to discount time"""
+        Filter timesheet ids checked to discount time
+        """
+        for time in self.sorted(key="id", reverse=True):
             timesheet_consu_ids = (
                 time.sudo().mapped("timesheet_ids").filtered(lambda x: x.discount_time)
             )
@@ -234,10 +229,14 @@ class TsmTimePack(models.Model):
                     *divmod(float(consumed_hours) * 60, 60)
                 )
                 txt_msg = _(
-                    "<h6>Contrated Hours: %s</h6>"
-                    "<h6>Consumed Hours: %s</h6>"
-                    '<h4 class="text-danger">Progress: %s %%</h4>'
-                ) % (cont_hours, consu_hours, progress)
+                    "<h6>Contrated Hours: {cont_hours}</h6>"
+                    "<h6>Consumed Hours: {consu_hours}</h6>"
+                    '<h4 class="text-danger">Progress: {progress} %</h4>'
+                ).format(
+                    cont_hours=cont_hours,
+                    consu_hours=consu_hours,
+                    progress=progress,
+                )
                 title_msg = _("Time Pack %s Warning!!") % (time.code)
                 user_msg = {
                     "message": txt_msg,
@@ -440,14 +439,11 @@ class TsmTimePack(models.Model):
     # ------------------
     @api.model_create_multi
     def create(self, vals_list):
-        # context: no_log, because subtype already handle this
-        context = dict(self.env.context, mail_create_nolog=True)
-        # Assign new code
         for vals in vals_list:
             if vals.get("code", "/") == "/":
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.time.pack")
 
-        return super(TsmTimePack, self.with_context(context)).create(vals_list)
+        return super(TsmTimePack, self).create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()

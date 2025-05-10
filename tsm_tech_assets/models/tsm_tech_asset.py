@@ -62,13 +62,11 @@ class TsmTechAsset(models.Model):
         copy=False,
     )
     sequence = fields.Integer(
-        string="Sequence",
         index=True,
         default=10,
         help="Gives the sequence order when displaying a list of assets.",
     )
     priority = fields.Selection(
-        string="Priority",
         selection=[
             ("0", "Low"),
             ("1", "Normal"),
@@ -78,7 +76,6 @@ class TsmTechAsset(models.Model):
         help="Sequence of the asset when displaying assets",
     )
     date = fields.Date(
-        string="Date",
         default=fields.Date.context_today,
         index=True,
         copy=False,

@@ -44,7 +44,6 @@ class TsmProject(models.Model):
         ],
         default="0",
         index=True,
-        string="Priority",
     )
     sequence = fields.Integer(
         default=10, help="Gives the sequence order when displaying a list of Projects."

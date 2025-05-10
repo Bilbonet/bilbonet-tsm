@@ -16,7 +16,7 @@ class TsmTaskMaterial(models.Model):
         comodel_name="product.product", string="Product", required=True
     )
     name = fields.Text(string="Description")
-    quantity = fields.Float(string="Quantity", default=1.0, required=True)
+    quantity = fields.Float(default=1.0, required=True)
     product_uom_id = fields.Many2one(comodel_name="uom.uom", string="Unit of Measure")
     price_unit = fields.Float(string="Unit Price", default=0.0, required=True)
     price_subtotal = fields.Float(
@@ -29,7 +29,6 @@ class TsmTaskMaterial(models.Model):
         " It should be less or equal to 100",
     )
     sequence = fields.Integer(
-        string="Sequence",
         default=10,
         help="Sequence of the line in the list of materials",
     )
