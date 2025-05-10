@@ -207,7 +207,7 @@ class TsmTask(models.Model):
         but shouldn't be raised when unarchiving a task.
         """
         for task in self.filtered(lambda t: not t.active):
-            if task.closed == False:
+            if not task.closed:
                 raise ValidationError(
                     _(
                         "You can not archive a task in a stage not considered closed.\n"
@@ -224,25 +224,22 @@ class TsmTask(models.Model):
 
     def action_task_send(self):
         """
-        This function opens a window to compose an email,
+        This function opens a wizard to compose an email,
         with the task template message loaded by default
         """
         self.ensure_one()
-        self.env.context.get("lang")
-        mail_template = self.env.ref(
-            "tsm_base.tsm_task_email_template", raise_if_not_found=False
+        template_id = self.env["ir.model.data"]._xmlid_to_res_id(
+            "tsm_base.tsm_task_email_template",
+            raise_if_not_found=False,
         )
-        if mail_template and mail_template.lang:
-            mail_template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": "tsm.task",
             "default_res_id": self.id,
-            "default_use_template": bool(mail_template),
-            "default_template_id": mail_template.id if mail_template else None,
+            "default_use_template": bool(template_id),
+            "default_template_id": template_id,
             "default_composition_mode": "comment",
-            "default_email_layout_xmlid": "mail.mail_notification_layout_with_responsible_signature",
+            "is_sent": True,
             "force_email": True,
-            "model_description": "TSM Task",
         }
         return {
             "type": "ir.actions.act_window",

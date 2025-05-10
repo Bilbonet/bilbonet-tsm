@@ -108,21 +108,18 @@ class TsmProject(models.Model):
         with the project template message loaded by default
         """
         self.ensure_one()
-        self.env.context.get("lang")
-        mail_template = self.env.ref(
-            "tsm_base.tsm_project_email_template", raise_if_not_found=False
+        template_id = self.env["ir.model.data"]._xmlid_to_res_id(
+            "tsm_base.tsm_project_email_template",
+            raise_if_not_found=False,
         )
-        if mail_template and mail_template.lang:
-            mail_template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": "tsm.project",
             "default_res_id": self.id,
-            "default_use_template": bool(mail_template),
-            "default_template_id": mail_template.id if mail_template else None,
+            "default_use_template": bool(template_id),
+            "default_template_id": template_id,
             "default_composition_mode": "comment",
-            "default_email_layout_xmlid": "mail.mail_notification_layout_with_responsible_signature",
+            "is_sent": True,
             "force_email": True,
-            "model_description": "TSM Project",
         }
         return {
             "type": "ir.actions.act_window",
@@ -138,18 +135,13 @@ class TsmProject(models.Model):
     # CRUD overrides
     # ------------------
     def write(self, vals):
-        # archiving/unarchiving a project does it on its tasks, too
-        # if 'active' in vals:
-        #     self.with_context(active_test=False).mapped('task_ids').write(
-        #                                         {'active': vals['active']})
-
         # First all tasks of the project must be archived
-        if "active" in vals and vals["active"] == False:
+        if "active" in vals and not vals["active"]:
             actives = self.browse(self.task_ids)
             if actives:
                 raise UserError(
                     _(
-                        "You cannot archive a project with active tasks. "
+                        "You cannot archive a project with active tasks.\n"
                         "You need to archive all tasks of the project first."
                     )
                 )
