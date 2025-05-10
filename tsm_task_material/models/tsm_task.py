@@ -132,9 +132,9 @@ class TsmTask(models.Model):
             if task.sale_id:
                 raise UserError(
                     _(
-                        "You cannot delete a task with sale order. "
-                        "You can either delete the task's sale order and then delete "
-                        "the task or simply deactivate the task."
+                        "You cannot delete a task with sale order.\n"
+                        "You can either delete the task's sale order and then "
+                        "delete the task or simply deactivate the task."
                     )
                 )
         res = super(TsmTask, self).unlink()
@@ -151,8 +151,10 @@ class TsmTask(models.Model):
                             "Only sales manager can archive tasks "
                             "with materials and no sale order.\n"
                             "Ask for manager to archive the task.\n\n"
-                            "Task:[%s] - %s"
+                            "Task:[{task_code}] - {task_name}"
+                        ).format(
+                            task_code=task.code,
+                            task_name=task.name,
                         )
-                        % (task.code, task.name)
                     )
         return super()._check_archiving_restrictions()
