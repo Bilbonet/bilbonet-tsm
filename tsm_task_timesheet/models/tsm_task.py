@@ -12,20 +12,24 @@ class TsmTask(models.Model):
     _inherit = "tsm.task"
 
     @api.depends("timesheet_ids.amount")
-    def _hours_get(self):
+    def _compute_hours(self):
+        """
+        use 'sudo' here to allow project
+        user (without timesheet user right) to create task
+        """
         for task in self.sorted(key="id", reverse=True):
-            """use 'sudo' here to allow project
-            user (without timesheet user right) to create task"""
             task.total_hours = sum(task.sudo().timesheet_ids.mapped("amount"))
 
     total_hours = fields.Float(
         string="Total Spent Hours",
-        compute="_hours_get",
+        compute="_compute_hours",
         store=True,
         help="Computed as: Sum Time Spent in tasks.",
     )
     timesheet_ids = fields.One2many(
-        comodel_name="tsm.task.timesheet", inverse_name="task_id", string="Timesheets"
+        comodel_name="tsm.task.timesheet",
+        inverse_name="task_id",
+        string="Timesheets",
     )
 
     def unlink(self):
