@@ -10,7 +10,6 @@ class TsmTaskTimesheet(models.Model):
         comodel_name="tsm.time.pack", string="Time Packs", index=True
     )
     discount_time = fields.Boolean(
-        string="Discount Time",
         default="True",
         help="Indicate if discount the time from the time pack",
     )
