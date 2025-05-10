@@ -10,13 +10,19 @@ class Commission(models.Model):
         selection=[("open", "Task Based"), ("closed", "Task Closed")],
         string="Task Status",
         default="open",
-        help="Select the task status for settling the commissions:\n"
-        "* 'Task Based': Commissions are settled when the task is in any stage.\n"
-        "* 'Task Closed': Commissions are settled when the task is in a closed stage.",
+        help="""
+        Select the task status for settling the commissions:\n
+        * 'Task Based': Commissions are settled when the task is in
+                        any stage.\n
+        * 'Task Closed': Commissions are settled when the task is in
+                        a closedstage.
+        """,
     )
     timesheet_product_id = fields.Many2one(
         comodel_name="product.product",
         string="TimeSheet Product",
         domain="[('commission_free', '=', False)]",
-        help="Product used to set commissions when there is not time pack in the timesheet line",
+        help="""
+        Product used to set commissions when there is not time pack in
+        the timesheet line""",
     )
