@@ -18,10 +18,9 @@ class TsmTaskTimesheeetTags(models.Model):
         " the tag without removing it.",
     )
     default = fields.Boolean(
-        "Default", default=False, help="Selected by default when create timesheet."
+        default=False, help="Selected by default when create timesheet."
     )
     sequence = fields.Integer(
-        string="Sequence",
         index=True,
         default=10,
         help="Gives the sequence order when displaying a list of tags.",
