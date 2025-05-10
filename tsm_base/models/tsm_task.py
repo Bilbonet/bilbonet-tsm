@@ -12,11 +12,11 @@ class TsmTask(models.Model):
 
     def _get_default_stage_id(self):
         """Gives default stage_id"""
-        id = self.env["tsm.task.type"].search([], order="sequence", limit=1)
-        if not id:
+        stage_id = self.env["tsm.task.type"].search([], order="sequence", limit=1)
+        if not stage_id:
             return False
 
-        return id
+        return stage_id
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
@@ -41,7 +41,6 @@ class TsmTask(models.Model):
         " the task without removing it.",
     )
     priority = fields.Selection(
-        string="Priority",
         selection=[("0", "Low"), ("1", "Normal")],
         default="0",
         index=True,
@@ -63,7 +62,6 @@ class TsmTask(models.Model):
     )
     kanban_state = fields.Selection(
         selection=[("normal", "Grey"), ("done", "Green"), ("blocked", "Red")],
-        string="Kanban State",
         copy=False,
         default="normal",
         required=True,
@@ -76,7 +74,7 @@ class TsmTask(models.Model):
         "pulled to the next stage",
     )
     kanban_state_label = fields.Char(
-        compute="_compute_kanban_state_label", string="Kanban State Label"
+        compute="_compute_kanban_state_label",
     )
     color = fields.Integer(string="Color Index")
     date_start = fields.Date(
@@ -273,15 +271,11 @@ class TsmTask(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        # context: no_log, because subtype already handle this
-        context = dict(self.env.context, mail_create_nolog=True)
-
-        # Assign new code
         for vals in vals_list:
             if vals.get("code", "/") == "/":
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.task")
 
-        return super(TsmTask, self.with_context(context)).create(vals_list)
+        return super(TsmTask, self).create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()
