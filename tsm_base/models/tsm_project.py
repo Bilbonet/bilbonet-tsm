@@ -117,7 +117,6 @@ class TsmProject(models.Model):
             "default_use_template": bool(template_id),
             "default_template_id": template_id,
             "default_composition_mode": "comment",
-            "is_sent": True,
             "force_email": True,
         }
         return {
