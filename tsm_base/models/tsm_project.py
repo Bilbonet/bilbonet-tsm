@@ -87,9 +87,9 @@ class TsmProject(models.Model):
         translate=False,
         help="Details, notes and aclarations about the project.",
     )
-    date_start = fields.Datetime(
+    date_start = fields.Date(
         string="Starting Date",
-        default=fields.Datetime.now,
+        default=fields.Date.context_today,
         index=True,
         copy=False,
     )

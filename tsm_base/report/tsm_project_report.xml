@@ -52,6 +52,7 @@
                             <h1><span t-field="o.name" /></h1>
                             <span t-field="o.description" name="projec_description" />
                         </div>
+                        <p style="page-break-after:always;" name="page-break" />
                         <!-- Tasks -->
                         <div
                             t-if="len(o.task_ids) > 0"
