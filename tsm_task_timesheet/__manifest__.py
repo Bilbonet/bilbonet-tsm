@@ -7,7 +7,7 @@
     "version": "15.0.1.0.0",
     "development_status": "Beta",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
-    "author": "Jesus Ramiro,",
+    "author": "Jesus Ramiro (Bilbonet),",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
     "application": True,
