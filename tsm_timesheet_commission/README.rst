@@ -22,10 +22,11 @@ TSM Timesheet Commissions
 
 |badge1| |badge2| |badge3|
 
+This module adds the function to calculate commissions in tasks with
+timesheet and timepacks
 
-This module adds the function to calculate commissions in tasks with timesheet and timepacks
-
-It also allows to create vendor bills from settlements for external agents.
+It also allows to create vendor bills from settlements for external
+agents.
 
 This module depends on the commission module.
 
@@ -37,41 +38,42 @@ This module depends on the commission module.
 Usage
 =====
 
-
-#. Go to *T.S.M > Tasks*
-#. Edit or create a new task
-#. When you have selected a partner, each new invoice line you add will have the agents and commissions set at customer level
-#. You can add, modify or delete these agents discretely clicking on the
-   icon with several persons represented, next to the "Commission" field in the
-   list. This icon will be available only if the line hasn't been invoiced yet.
-#. If you have configured your system for editing lines in a popup window,
-   agents will appear also in this window.
-#. The agents icon will be in this ocassion visible when the line hasn't been
-   settled.
-#. You have a button "Regenerate agents" on the bottom of the page
-   "Invoice Lines" for forcing a recompute of all agents from the partner setup.
-   This is needed for example when you have changed the partner on the
-   invoice having already inserted lines.
+1. Go to *T.S.M > Tasks*
+2. Edit or create a new task
+3. When you have selected a partner, each new invoice line you add will
+   have the agents and commissions set at customer level
+4. You can add, modify or delete these agents discretely clicking on the
+   icon with several persons represented, next to the "Commission" field
+   in the list. This icon will be available only if the line hasn't been
+   invoiced yet.
+5. If you have configured your system for editing lines in a popup
+   window, agents will appear also in this window.
+6. The agents icon will be in this ocassion visible when the line hasn't
+   been settled.
+7. You have a button "Regenerate agents" on the bottom of the page
+   "Invoice Lines" for forcing a recompute of all agents from the
+   partner setup. This is needed for example when you have changed the
+   partner on the invoice having already inserted lines.
 
 For invoicing the settlements (only for external agents):
 
-#. Go to *Invoicing > Commissions > Create Commission Invoices*.
-#. On the window that appears, you can select following data:
+1. Go to *Invoicing > Commissions > Create Commission Invoices*.
+2. On the window that appears, you can select following data:
 
-   * Product. It should be a service product for being coherent.
-   * Journal: To be selected between existing purchase journals.
-   * Date: If you want to choose a specific invoice date. You can leave it
-     blank if you prefer.
-   * Settlements: For selecting specific settlements to invoice. You can leave
-     it blank as well for invoicing all the pending settlements.
+   - Product. It should be a service product for being coherent.
+   - Journal: To be selected between existing purchase journals.
+   - Date: If you want to choose a specific invoice date. You can leave
+     it blank if you prefer.
+   - Settlements: For selecting specific settlements to invoice. You can
+     leave it blank as well for invoicing all the pending settlements.
 
 If you want to invoice a/some specific settlement/s:
 
-#. Navigate to *Invoicing > Commissions > Invoices Settlements*.
-#. Select it/them on the list.
-#. Click on *Action > Create Commission Invoices*.
-#. You can as well enter in one settlement, and click on the "Make invoice"
-   button.
+1. Navigate to *Invoicing > Commissions > Invoices Settlements*.
+2. Select it/them on the list.
+3. Click on *Action > Create Commission Invoices*.
+4. You can as well enter in one settlement, and click on the "Make
+   invoice" button.
 
 Bug Tracker
 ===========
@@ -87,18 +89,18 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
-* Jesus Ramiro
+* Jesus Ramiro (Bilbonet)
 * 
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Jesus Ramiro <jesus@bilbonet.net>
+- Jesus Ramiro <jesus@bilbonet.net>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 .. |maintainer-bilbonet| image:: https://github.com/bilbonet.png?size=40px
     :target: https://github.com/bilbonet

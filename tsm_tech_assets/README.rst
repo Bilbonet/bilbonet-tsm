@@ -53,7 +53,7 @@ Credits
 Authors
 -------
 
-* Jesus Ramiro
+* Jesus Ramiro (Bilbonet)
 * 
 
 Contributors
