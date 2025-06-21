@@ -297,10 +297,11 @@ class TsmTimePack(models.Model):
     # -------------------------
     @api.depends("quantity", "price_unit", "discount")
     def _compute_price_subtotal(self):
-        subtotal = self.quantity * self.price_unit
-        discount = self.discount / 100
-        subtotal *= 1 - discount
-        self.price_subtotal = subtotal
+        for rec in self:
+            subtotal = rec.quantity * rec.price_unit
+            discount = rec.discount / 100
+            subtotal *= 1 - discount
+            rec.price_subtotal = subtotal
 
     @api.constrains("quantity")
     def _check_quantity(self):
