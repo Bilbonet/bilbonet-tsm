@@ -8,6 +8,9 @@ class TsmTask(models.Model):
 
     asset_ids = fields.Many2many(
         comodel_name="tsm.tech.asset",
-        string="Tech Asset",
+        relation="tsm_task_tsm_tech_asset_rel",
+        column1="tsm_task_id",
+        column2="tsm_tech_asset_id",
+        string="Tech Assets",
         context={"active_test": False},
     )

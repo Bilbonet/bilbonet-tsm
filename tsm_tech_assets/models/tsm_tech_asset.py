@@ -29,20 +29,6 @@ class TsmTechAsset(models.Model):
         for asset in self:
             asset.can_edit = can_edit
 
-    # For the Report Detailed
-    def _compute_task_ids(self):
-        for asset in self:
-            task_ids = self.env["tsm.task"].search(
-                [
-                    ("asset_ids", "in", asset.id),
-                    "|",
-                    ("active", "=", True),
-                    ("active", "=", False),
-                ],
-                order="date_start",
-            )
-        return task_ids
-
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
@@ -122,14 +108,18 @@ class TsmTechAsset(models.Model):
         tracking=40,
         change_default=True,
     )
-    task_ids = fields.One2many(
+    task_ids = fields.Many2many(
         comodel_name="tsm.task",
-        inverse_name="asset_ids",
+        relation="tsm_task_tsm_tech_asset_rel",
+        column1="tsm_tech_asset_id",
+        column2="tsm_task_id",
         string="Tasks",
         context={"active_test": False},
-    )
+    )    
     task_count = fields.Integer(
-        compute="_compute_task_count", string="Amount Tasks", readonly=True
+        compute="_compute_task_count", 
+        string="Amount Tasks",
+        readonly=True
     )
     privacy_visibility = fields.Selection(
         selection=[
@@ -202,9 +192,9 @@ class TsmTechAsset(models.Model):
             "target": "current",
         }
 
-    # ------------------
+    # -------------------------------------------------------
     # CRUD overrides
-    # ------------------
+    # -------------------------------------------------------
     @api.model_create_multi
     def create(self, vals_list):
         # Assign new code
@@ -212,7 +202,7 @@ class TsmTechAsset(models.Model):
             if vals.get("code", "/") == "/":
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.tech.asset")
 
-        return super(TsmTechAsset, self).create(vals)
+        return super(TsmTechAsset, self).create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()
