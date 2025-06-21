@@ -14,17 +14,18 @@ class TsmTimePack(models.Model):
 
     @api.depends("sale_id")
     def _compute_sale_amount(self):
-        sale = self.sudo().sale_id
-        currency = (
-            self.partner_id.property_product_pricelist.currency_id
-            or self.company_currency
-            or self.env.user.company_id.currency_id
-        )
-        self.sale_amount = sale.currency_id._convert(
-            sale.amount_untaxed,
-            currency,
-            self.company_id,
-            self.date_start or fields.Date.today(),
+        for record in self:
+            sale = record.sudo().sale_id
+            currency = (
+                record.partner_id.property_product_pricelist.currency_id
+                or record.company_currency
+                or record.env.user.company_id.currency_id
+            )
+            record.sale_amount = sale.currency_id._convert(
+                sale.amount_untaxed,
+                currency,
+                record.company_id,
+                record.date_start or fields.Date.today(),
         )
 
     def _compute_can_edit(self):
