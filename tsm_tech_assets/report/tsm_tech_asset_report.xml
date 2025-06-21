@@ -199,7 +199,7 @@
                         <!-- Tareas -->
                         <div
                             t-if="o.task_count > 0"
-                            t-foreach="o._compute_task_ids()"
+                            t-foreach="o.task_ids"
                             t-as="t"
                         >
                             <div class="row mt16">
