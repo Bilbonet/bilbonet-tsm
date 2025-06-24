@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from datetime import date
+from datetime import date, timedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -32,6 +32,14 @@ class TsmTimePack(models.Model):
         can_edit = self.env.user.has_group("tsm_base.group_tsm_manager")
         for tp in self:
             tp.can_edit = can_edit
+
+    @staticmethod
+    def _format_hours(hours):
+        """Return hours formatted as ``HH:MM``"""
+        duration = timedelta(hours=hours)
+        total_minutes = int(duration.total_seconds() // 60)
+        h, m = divmod(total_minutes, 60)
+        return "{:02d}:{:02d}".format(h, m)
 
     company_id = fields.Many2one(
         comodel_name="res.company",
@@ -222,13 +230,8 @@ class TsmTimePack(models.Model):
             )
 
             if progress >= 90:
-                # TODO: Improve the way to express hours in format "%H:%M"
-                cont_hours = "{:02.0f}:{:02.0f}".format(
-                    *divmod(float(time.contrated_hours) * 60, 60)
-                )
-                consu_hours = "{:02.0f}:{:02.0f}".format(
-                    *divmod(float(consumed_hours) * 60, 60)
-                )
+                cont_hours = self._format_hours(time.contrated_hours)
+                consu_hours = self._format_hours(consumed_hours)
                 txt_msg = _(
                     "<h6>Contrated Hours: {cont_hours}</h6>"
                     "<h6>Consumed Hours: {consu_hours}</h6>"
