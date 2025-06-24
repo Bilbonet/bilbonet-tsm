@@ -58,11 +58,11 @@
                 <table style="width:100%;background:inherit;color:inherit;">
                     <tbody>
                         <tr style="color:#875A7B;">
-                            <td style="width:100px;padding:5px">Contrated:</td>
+                            <td style="width:100px;padding:5px">Contracted:</td>
                             <td class="text-right">
                                 <span
                                                 style="font-weight: bold;"
-                                                t-out="('%d:%02d' % (object.contrated_hours,(object.contrated_hours*60)%60))"
+                                                t-out="('%d:%02d' % (object.contracted_hours,(object.contracted_hours*60)%60))"
                                             /> hours
                             </td>
                         </tr>

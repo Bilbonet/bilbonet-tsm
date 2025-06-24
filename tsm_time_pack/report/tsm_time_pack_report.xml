@@ -87,10 +87,10 @@
                                     <div class="col-4">
                                         <table class="table table-sm table-borderless">
                                             <tr>
-                                                <td>Contrated:</td>
+                                                <td>Contracted:</td>
                                                 <td class="text-right text-primary">
                                                     <span
-                                                        t-field="o.contrated_hours"
+                                                        t-field="o.contracted_hours"
                                                         t-options="{'widget': 'float_time'}"
                                                     /> hours
                                                 </td>
@@ -342,10 +342,10 @@
                                     <div class="col-4">
                                         <table class="table table-sm table-borderless">
                                             <tr>
-                                                <td>Contrated:</td>
+                                                <td>Contracted:</td>
                                                 <td class="text-right text-primary">
                                                     <span
-                                                        t-field="o.contrated_hours"
+                                                        t-field="o.contracted_hours"
                                                         t-options="{'widget': 'float_time'}"
                                                     /> hours
                                                 </td>
