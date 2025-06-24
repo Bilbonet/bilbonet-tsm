@@ -37,7 +37,7 @@ class TsmTaskTimesheeetTags(models.Model):
             if checked_bool:
                 raise ValidationError(
                     _(
-                        "There's already one Tag checked as defautl.\n "
+                        "There's already one Tag checked as default.\n "
                         "Tag Checked : %s"
                     )
                     % checked_bool[0].name
