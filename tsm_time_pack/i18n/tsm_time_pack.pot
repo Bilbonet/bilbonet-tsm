@@ -60,9 +60,9 @@ msgid ""
 "                <table style=\"width:100%;background:inherit;color:inherit;\">\n"
 "                    <tbody>\n"
 "                        <tr style=\"color:#875A7B;\">\n"
-"                            <td style=\"width:100px;padding:5px\">Contrated:</td>\n"
+"                            <td style=\"width:100px;padding:5px\">Contracted:</td>\n"
 "                            <td class=\"text-right\">\n"
-"                                <span style=\"font-weight: bold;\" t-out=\"('%d:%02d' % (object.contrated_hours,(object.contrated_hours*60)%60))\"/> hours\n"
+"                                <span style=\"font-weight: bold;\" t-out=\"('%d:%02d' % (object.contracted_hours,(object.contracted_hours*60)%60))\"/> hours\n"
 "                            </td>\n"
 "                        </tr>\n"
 "                        <tr style=\"background-color:#dc3545;color:#FFFFFF;\">\n"
@@ -125,7 +125,7 @@ msgstr ""
 #: code:addons/tsm_time_pack/models/tsm_time_pack.py:0
 #, python-format
 msgid ""
-"<h6>Contrated Hours: %s</h6><h6>Consumed Hours: %s</h6><h4 class=\"text-"
+"<h6>Contracted Hours: %s</h6><h6>Consumed Hours: %s</h6><h4 class=\"text-"
 "danger\">Progress: %s %%</h4>"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_mine_kanban_view
-msgid "<strong>Contrated Hours: </strong>"
+msgid "<strong>Contracted Hours: </strong>"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -300,7 +300,7 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__remaining_hours
-msgid "Computed as: Contrated hours - Consumed hours"
+msgid "Computed as: Contracted hours - Consumed hours"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -331,18 +331,18 @@ msgstr ""
 
 #. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_tree_view
-msgid "Contrated (Hours)"
+msgid "Contracted (Hours)"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__contrated_hours
-msgid "Contrated Hours"
+#: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_time_pack__contracted_hours
+msgid "Contracted Hours"
 msgstr ""
 
 #. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_summary_document
-msgid "Contrated:"
+msgid "Contracted:"
 msgstr ""
 
 #. module: tsm_time_pack
@@ -720,7 +720,7 @@ msgstr ""
 #. module: tsm_time_pack
 #: code:addons/tsm_time_pack/models/tsm_time_pack.py:0
 #, python-format
-msgid "Quantity of hours contrated must be greater than 0."
+msgid "Quantity of hours contracted must be greater than 0."
 msgstr ""
 
 #. module: tsm_time_pack
@@ -894,7 +894,7 @@ msgid "Time Packs"
 msgstr ""
 
 #. module: tsm_time_pack
-#: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__contrated_hours
+#: model:ir.model.fields,help:tsm_time_pack.field_tsm_time_pack__contracted_hours
 msgid ""
 "Time contracted by the client for support and it can be consumed in tasks "
 "and timesheet."

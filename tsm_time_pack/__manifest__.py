@@ -4,7 +4,7 @@
     "name": "TSM Task Time Service Pack",
     "summary": "Create packs of time which can be consumed in tasks.",
     "category": "Management",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.1",
     "development_status": "Beta",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
     "author": "Jesus Ramiro (Bilbonet),",

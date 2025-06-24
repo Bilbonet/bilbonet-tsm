@@ -105,9 +105,10 @@ class TsmTimePack(models.Model):
         "- Visible by all employees: Employees "
         "may see all time packs\n",
     )
-    contrated_hours = fields.Float(
+    contracted_hours = fields.Float(
         default=0.0,
         required=True,
+        oldname="contrated_hours",
         help="Time contracted by the client for support and it can be "
         "consumed in tasks and timesheet.",
     )
@@ -122,7 +123,7 @@ class TsmTimePack(models.Model):
         readonly=True,
         store=True,
         digits="Time Pack",
-        help="Computed as: Contrated hours - Consumed hours",
+        help="Computed as: Contracted hours - Consumed hours",
     )
     total_hours_spent = fields.Float(
         compute="_compute_hours",
@@ -193,7 +194,7 @@ class TsmTimePack(models.Model):
     ]
 
     @api.depends(
-        "contrated_hours",
+        "contracted_hours",
         "timesheet_ids",
         "timesheet_ids.amount",
         "timesheet_ids.discount_time",
@@ -213,9 +214,9 @@ class TsmTimePack(models.Model):
             total_hours_spent = sum(time.sudo().timesheet_ids.mapped("amount"))
             consumed_hours = sum(timesheet_consu_ids.mapped("amount"))
             complimentary_hours = total_hours_spent - consumed_hours
-            remaining_hours = time.contrated_hours - consumed_hours
-            if time.contrated_hours > 0.0:
-                progress = round((100.0 * consumed_hours) / time.contrated_hours, 2)
+            remaining_hours = time.contracted_hours - consumed_hours
+            if time.contracted_hours > 0.0:
+                progress = round((100.0 * consumed_hours) / time.contracted_hours, 2)
             else:
                 progress = 0.0
 
@@ -230,10 +231,10 @@ class TsmTimePack(models.Model):
             )
 
             if progress >= 90:
-                cont_hours = self._format_hours(time.contrated_hours)
+                cont_hours = self._format_hours(time.contracted_hours)
                 consu_hours = self._format_hours(consumed_hours)
                 txt_msg = _(
-                    "<h6>Contrated Hours: {cont_hours}</h6>"
+                    "<h6>Contracted Hours: {cont_hours}</h6>"
                     "<h6>Consumed Hours: {consu_hours}</h6>"
                     '<h4 class="text-danger">Progress: {progress} %</h4>'
                 ).format(
@@ -310,10 +311,10 @@ class TsmTimePack(models.Model):
     def _check_quantity(self):
         if not self.quantity > 0.0:
             raise ValidationError(
-                _("Quantity of hours contrated must be greater than 0.")
+                _("Quantity of hours contracted must be greater than 0.")
             )
         else:
-            self.contrated_hours = self.quantity
+            self.contracted_hours = self.quantity
 
     @api.constrains("discount")
     def _check_discount(self):
