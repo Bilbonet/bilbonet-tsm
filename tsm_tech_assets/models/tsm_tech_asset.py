@@ -115,11 +115,9 @@ class TsmTechAsset(models.Model):
         column2="tsm_task_id",
         string="Tasks",
         context={"active_test": False},
-    )    
+    )
     task_count = fields.Integer(
-        compute="_compute_task_count", 
-        string="Amount Tasks",
-        readonly=True
+        compute="_compute_task_count", string="Amount Tasks", readonly=True
     )
     privacy_visibility = fields.Selection(
         selection=[

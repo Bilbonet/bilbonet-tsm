@@ -197,11 +197,7 @@
                         </div>
                         <!-- /Notes -->
                         <!-- Tareas -->
-                        <div
-                            t-if="o.task_count > 0"
-                            t-foreach="o.task_ids"
-                            t-as="t"
-                        >
+                        <div t-if="o.task_count > 0" t-foreach="o.task_ids" t-as="t">
                             <div class="row mt16">
                                 <table class="table table-sm">
                                     <tr class="bg-success">
