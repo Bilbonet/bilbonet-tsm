@@ -26,7 +26,7 @@ class TsmTimePack(models.Model):
                 currency,
                 record.company_id,
                 record.date_start or fields.Date.today(),
-        )
+            )
 
     def _compute_can_edit(self):
         can_edit = self.env.user.has_group("tsm_base.group_tsm_manager")
