@@ -26,7 +26,7 @@
                                 groups="tsm_task_timesheet.group_tsm_timesheet_tag"
                                 required="1"
                             />
-                            <!-- ! TODO: El widge selection da un error java cuando lo utilizamos aqui -->
+                            <!--TODO!: 'selection' widget fails in editable tree views, so we use the default -->
                             <!-- <field
                                 name="tag_ids"
                                 widget="selection"
