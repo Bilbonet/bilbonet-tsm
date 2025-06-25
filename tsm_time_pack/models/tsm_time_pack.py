@@ -108,7 +108,6 @@ class TsmTimePack(models.Model):
     contracted_hours = fields.Float(
         default=0.0,
         required=True,
-        oldname="contrated_hours",
         help="Time contracted by the client for support and it can be "
         "consumed in tasks and timesheet.",
     )
