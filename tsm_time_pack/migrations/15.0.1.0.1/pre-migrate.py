@@ -1,11 +1,9 @@
 from openupgradelib import openupgrade
+
 from odoo.tools import parse_version
 
 _field_renames = [
-    (
-        "tsm.time.pack", "tsm_time_pack", 
-        "contrated_hours", "contracted_hours"
-    ),
+    ("tsm.time.pack", "tsm_time_pack", "contrated_hours", "contracted_hours"),
 ]
 
 
