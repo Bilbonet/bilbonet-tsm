@@ -258,8 +258,8 @@ class TsmTask(models.Model):
     # CRUD overrides
     # ------------------
     @api.model
-    def default_get(self, fields):
-        result = super(TsmTask, self).default_get(fields)
+    def default_get(self, fields_list):
+        result = super(TsmTask, self).default_get(fields_list)
         active_model = self._context.get("active_model")
         if active_model == "tsm.project":
             active_id = self._context.get("active_id")
