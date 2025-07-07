@@ -33,17 +33,14 @@ This module lets you:
 - Create **Projects** that group customer-facing support work.
 - Track **Tasks** with priorities, Kanban stages, deadlines and tags.
 - Discuss directly on tasks via chatter, send project/task e-mails from
-  pre-loaded templates. :contentReference[oaicite:1]{index=1}
+  pre-loaded templates.
 - Manage privacy: visible to followers only or to all employees.
 - Archive/restore Projects and Tasks with business-logic safeguards
   (e.g. you cannot archive a project that still has active tasks).
-  :contentReference[oaicite:2]{index=2}
 - Assign / unassign followers in bulk through a wizard.
-  :contentReference[oaicite:3]{index=3}
 - Configure default behaviour in *Settings ▸ Technical ▸ TSM Task
-  Settings*. :contentReference[oaicite:4]{index=4}
+  Settings*.
 - Print neat PDF reports for projects and tasks (custom QWeb layouts).
-  :contentReference[oaicite:5]{index=5}
 
 **Table of contents**
 
@@ -81,15 +78,15 @@ Usage
    - Use the **chatter** to log notes, send e-mails and attach files.
    - Drag & drop tasks on the **Kanban** board to move them through
      stages; colour badges reflect kanban state (grey = normal, red =
-     blocked, green = ready). :contentReference[oaicite:7]{index=7}
+     blocked, green = ready).
 
 4. | **Bulk follower management**
    | Select tasks or projects → *Action ▸ Add/Remove Followers* to open
-     the wizard. :contentReference[oaicite:8]{index=8}
+     the wizard.
 
 5. | **Reports**
    | From a task/project click *Print* to generate PDF reports (layout
-     files in ``report/``). :contentReference[oaicite:9]{index=9}
+     files in ``report/``).
 
 Bug Tracker
 ===========
