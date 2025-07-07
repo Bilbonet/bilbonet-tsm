@@ -13,4 +13,5 @@ class TsmTask(models.Model):
         column2="tsm_tech_asset_id",
         string="Tech Assets",
         context={"active_test": False},
+        copy=False,
     )
