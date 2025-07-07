@@ -22,17 +22,74 @@ Technical Support Management
 
 |badge1| |badge2| |badge3|
 
-Technical support management helps your team get work done.
+| Helps you organise and monitor the workload of your technical-support
+  team in Odoo.
+| It introduces Projects and Tasks tailored to support operations,
+  complete with stages, tags, deadlines, follower management and mail
+  integration.
+
+This module lets you:
+
+- Create **Projects** that group customer-facing support work.
+- Track **Tasks** with priorities, Kanban stages, deadlines and tags.
+- Discuss directly on tasks via chatter, send project/task e-mails from
+  pre-loaded templates. :contentReference[oaicite:1]{index=1}
+- Manage privacy: visible to followers only or to all employees.
+- Archive/restore Projects and Tasks with business-logic safeguards
+  (e.g. you cannot archive a project that still has active tasks).
+  :contentReference[oaicite:2]{index=2}
+- Assign / unassign followers in bulk through a wizard.
+  :contentReference[oaicite:3]{index=3}
+- Configure default behaviour in *Settings ▸ Technical ▸ TSM Task
+  Settings*. :contentReference[oaicite:4]{index=4}
+- Print neat PDF reports for projects and tasks (custom QWeb layouts).
+  :contentReference[oaicite:5]{index=5}
 
 **Table of contents**
 
 .. contents::
    :local:
 
+Use Cases / Context
+===================
+
+Technical support management
+
+Installation
+============
+
+No additional installation steps are required.
+
+Configuration
+=============
+
+No extra configuration is needed for standard usage.
+
 Usage
 =====
 
-#. Go to *T.S.M* aplication #. We will add explanations soon...
+1. | **Create a Project**
+   | *Technical Support ▸ Projects* → *New*. Pick a customer and
+     optionally a manager.
+
+2. | **Add Tasks**
+   | Inside a project click *New Task* or use the global *Tasks* menu.
+     Set title, stage, deadlines and assign responsible user.
+
+3. **Collaborate & track**
+
+   - Use the **chatter** to log notes, send e-mails and attach files.
+   - Drag & drop tasks on the **Kanban** board to move them through
+     stages; colour badges reflect kanban state (grey = normal, red =
+     blocked, green = ready). :contentReference[oaicite:7]{index=7}
+
+4. | **Bulk follower management**
+   | Select tasks or projects → *Action ▸ Add/Remove Followers* to open
+     the wizard. :contentReference[oaicite:8]{index=8}
+
+5. | **Reports**
+   | From a task/project click *Print* to generate PDF reports (layout
+     files in ``report/``). :contentReference[oaicite:9]{index=9}
 
 Bug Tracker
 ===========
@@ -56,7 +113,11 @@ Authors
 Contributors
 ------------
 
-- Jesus Ramiro jesus@bilbonet.net
+======================= ===========================================
+Name                    GitHub
+======================= ===========================================
+Jesús Ramiro – Bilbonet `@bilbonet <https://github.com/bilbonet>`__
+======================= ===========================================
 
 Maintainers
 -----------
