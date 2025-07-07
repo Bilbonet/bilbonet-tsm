@@ -8,10 +8,10 @@
 3. **Collaborate & track**  
    * Use the **chatter** to log notes, send e-mails and attach files.  
    * Drag & drop tasks on the **Kanban** board to move them through stages; colour
-     badges reflect kanban state (grey = normal, red = blocked, green = ready). :contentReference[oaicite:7]{index=7}
-
+     badges reflect kanban state (grey = normal, red = blocked, green = ready).
+ 
 4. **Bulk follower management**  
-   Select tasks or projects → *Action ▸ Add/Remove Followers* to open the wizard. :contentReference[oaicite:8]{index=8}
+   Select tasks or projects → *Action ▸ Add/Remove Followers* to open the wizard. 
 
 5. **Reports**  
-   From a task/project click *Print* to generate PDF reports (layout files in `report/`). :contentReference[oaicite:9]{index=9}
+   From a task/project click *Print* to generate PDF reports (layout files in `report/`).
