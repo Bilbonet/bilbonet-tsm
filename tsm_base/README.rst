@@ -116,6 +116,13 @@ Name                    GitHub
 Jesús Ramiro – Bilbonet `@bilbonet <https://github.com/bilbonet>`__
 ======================= ===========================================
 
+Other credits
+-------------
+
+The development of this module has been financially supported by:
+
+- Bilbonet
+
 Maintainers
 -----------
 
