@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="tsm_task_timesheet_line_tree_commission_view" model="ir.ui.view">
+        <field name="name">tsm.task.timesheet.line.tree.commission</field>
+        <field name="model">tsm.task.timesheet</field>
+        <field
+            name="inherit_id"
+            ref="tsm_task_timesheet.tsm_task_timesheet_line_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount']" position="after">
+                <field
+                    name="commission_amount"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_id'}"
+                    readonly="1"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
