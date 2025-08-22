@@ -96,6 +96,16 @@ class TsmTaskTimesheet(models.Model):
         copy=False,
         help="Settlement that generates this invoice line",
     )
+    currency_id = fields.Many2one(
+        "res.currency", related="company_id.currency_id", store=True, readonly=True
+    )
+    commission_amount = fields.Monetary(
+        string="Commission",
+        compute="_compute_commission_amount",
+        currency_field="currency_id",
+        store=True,
+        readonly=True,
+    )
 
     @api.depends("agent_ids", "agent_ids.settled")
     def _compute_any_settled(self):
@@ -115,6 +125,11 @@ class TsmTaskTimesheet(models.Model):
                 record.agent_ids = record._prepare_agents_vals_partner(
                     record.task_id.partner_id, settlement_type="timesheet"
                 )
+
+    @api.depends("agent_ids.amount")
+    def _compute_commission_amount(self):
+        for record in self:
+            record.commission_amount = sum(record.agent_ids.mapped("amount"))
 
     def unlink(self):
         """Avoid delete timesheet with settled lines."""
