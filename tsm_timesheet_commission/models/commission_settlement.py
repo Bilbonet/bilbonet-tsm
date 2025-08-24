@@ -14,7 +14,7 @@ class CommissionSettlement(models.Model):
     timesheet_line_ids = fields.One2many(
         comodel_name="tsm.task.timesheet",
         inverse_name="settlement_id",
-        string="Generated timepack lines",
+        string="Generated timesheet lines",
         readonly=True,
     )
     task_id = fields.Many2one(

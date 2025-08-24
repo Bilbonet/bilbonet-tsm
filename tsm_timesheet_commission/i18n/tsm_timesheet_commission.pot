@@ -6,14 +6,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-09 16:57+0000\n"
-"PO-Revision-Date: 2025-03-09 16:57+0000\n"
+"POT-Creation-Date: 2025-08-24 08:12+0000\n"
+"PO-Revision-Date: 2025-08-24 08:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__timesheet_product_id
+msgid ""
+"\n"
+"        Product used to set commissions when there is not time pack in\n"
+"        the timesheet line"
+msgstr ""
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__task_stage
+msgid ""
+"\n"
+"        Select the task status for settling the commissions:\n"
+"\n"
+"        * 'Task Based': Commissions are settled when the task is in\n"
+"                        any stage.\n"
+"\n"
+"        * 'Task Closed': Commissions are settled when the task is in\n"
+"                        a closedstage.\n"
+"        "
+msgstr ""
 
 #. module: tsm_timesheet_commission
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__agent_id
@@ -52,6 +74,7 @@ msgstr ""
 
 #. module: tsm_timesheet_commission
 #: model:ir.model,name:tsm_timesheet_commission.model_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_amount
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_status
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__commission_id
 msgid "Commission"
@@ -88,6 +111,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__currency_id
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__currency_id
 msgid "Currency"
 msgstr ""
@@ -164,23 +188,8 @@ msgid "Product"
 msgstr ""
 
 #. module: tsm_timesheet_commission
-#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__timesheet_product_id
-msgid ""
-"Product used to set commissions when there is not time pack in the timesheet"
-" line"
-msgstr ""
-
-#. module: tsm_timesheet_commission
 #: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.view_timesheet_form_agent
 msgid "Regenerate agents"
-msgstr ""
-
-#. module: tsm_timesheet_commission
-#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__task_stage
-msgid ""
-"Select the task status for settling the commissions:\n"
-"* 'Task Based': Commissions are settled when the task is in any stage.\n"
-"* 'Task Closed': Commissions are settled when the task is in a closed stage."
 msgstr ""
 
 #. module: tsm_timesheet_commission
@@ -310,6 +319,11 @@ msgid "Timesheet Date"
 msgstr ""
 
 #. module: tsm_timesheet_commission
+#: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.tsm_task_timesheet_line_tree_commission_view
+msgid "Total Commission"
+msgstr ""
+
+#. module: tsm_timesheet_commission
 #: model:ir.model,name:tsm_timesheet_commission.model_commission_make_settle
 msgid "Wizard for settling commissions"
 msgstr ""
@@ -317,7 +331,9 @@ msgstr ""
 #. module: tsm_timesheet_commission
 #: code:addons/tsm_timesheet_commission/models/tsm_task.py:0
 #, python-format
-msgid "You can't change date or user from a timesheet with commission lines."
+msgid ""
+"You can't change date or user from a timesheet\n"
+"                            with commission lines."
 msgstr ""
 
 #. module: tsm_timesheet_commission

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-09 16:58+0000\n"
-"PO-Revision-Date: 2025-03-09 18:19+0100\n"
+"POT-Creation-Date: 2025-08-24 08:13+0000\n"
+"PO-Revision-Date: 2025-08-24 10:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__timesheet_product_id
+msgid ""
+"\n"
+"        Product used to set commissions when there is not time pack in\n"
+"        the timesheet line"
+msgstr ""
+"\n"
+"        Producto utilizado para calcular comisiones cuando no hay una bolsa "
+"de horas\n"
+" \n"
+"        en los partes de trabajo"
+
+#. module: tsm_timesheet_commission
+#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__task_stage
+msgid ""
+"\n"
+"        Select the task status for settling the commissions:\n"
+"\n"
+"        * 'Task Based': Commissions are settled when the task is in\n"
+"                        any stage.\n"
+"\n"
+"        * 'Task Closed': Commissions are settled when the task is in\n"
+"                        a closedstage.\n"
+"        "
+msgstr ""
+"\n"
+"Selecciona el estado de la tarea para fijar comisiones:\n"
+"\n"
+"        * 'Basado en tarea': Son comisionadas cuando la tarea está en "
+"cualquier estado. .\n"
+"\n"
+"        * 'Tareas cerradas': Son comisionadas cuando las tareas está estado "
+"cerradas.\n"
+"        "
 
 #. module: tsm_timesheet_commission
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__agent_id
@@ -50,10 +86,11 @@ msgstr "Alguna liquidada"
 #. module: tsm_timesheet_commission
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_free
 msgid "Comm. free"
-msgstr ""
+msgstr "Libre de comisión"
 
 #. module: tsm_timesheet_commission
 #: model:ir.model,name:tsm_timesheet_commission.model_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_amount
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_status
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__commission_id
 msgid "Commission"
@@ -90,6 +127,7 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__currency_id
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__currency_id
 msgid "Currency"
 msgstr "Moneda"
@@ -152,7 +190,7 @@ msgstr "Línea de liquidación de una comisión"
 #. module: tsm_timesheet_commission
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__object_id
 msgid "Parent"
-msgstr ""
+msgstr "Padre"
 
 #. module: tsm_timesheet_commission
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__price_unit
@@ -166,31 +204,9 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: tsm_timesheet_commission
-#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__timesheet_product_id
-msgid ""
-"Product used to set commissions when there is not time pack in the "
-"timesheet line"
-msgstr ""
-"Producto utilizado para calcular comisiones cuando no hay una bolsa de "
-"horas en los partes de trabajo"
-
-#. module: tsm_timesheet_commission
 #: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.view_timesheet_form_agent
 msgid "Regenerate agents"
 msgstr "Regenerar agentes"
-
-#. module: tsm_timesheet_commission
-#: model:ir.model.fields,help:tsm_timesheet_commission.field_commission__task_stage
-msgid ""
-"Select the task status for settling the commissions:\n"
-"* 'Task Based': Commissions are settled when the task is in any stage.\n"
-"* 'Task Closed': Commissions are settled when the task is in a closed stage."
-msgstr ""
-"Selecciona el estado de la tarea para fijar comisiones:\n"
-"* 'Basado en tarea': Comisiones son liquidadas cuando la tarea está en "
-"cualquier estado. .\n"
-"* 'Tareas cerradas': Comisiones son liquidadas cuando las tareas está "
-"estado cerradas."
 
 #. module: tsm_timesheet_commission
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__settled
@@ -323,6 +339,11 @@ msgid "Timesheet Date"
 msgstr "Fecha Parte horas"
 
 #. module: tsm_timesheet_commission
+#: model_terms:ir.ui.view,arch_db:tsm_timesheet_commission.tsm_task_timesheet_line_tree_commission_view
+msgid "Total Commission"
+msgstr "Comisión Total"
+
+#. module: tsm_timesheet_commission
 #: model:ir.model,name:tsm_timesheet_commission.model_commission_make_settle
 msgid "Wizard for settling commissions"
 msgstr "Asistente para liquidación de comisiones"
@@ -330,7 +351,9 @@ msgstr "Asistente para liquidación de comisiones"
 #. module: tsm_timesheet_commission
 #: code:addons/tsm_timesheet_commission/models/tsm_task.py:0
 #, python-format
-msgid "You can't change date or user from a timesheet with commission lines."
+msgid ""
+"You can't change date or user from a timesheet\n"
+"                            with commission lines."
 msgstr ""
 "No puede modificar fecha o usuario de un parte de horas con líneas de "
 "comisiones."

@@ -9,10 +9,14 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount']" position="after">
+                <field name="currency_id" invisible="1"/>
                 <field
                     name="commission_amount"
-                    widget="monetary"
+                    optional="hide"
+                    sum="Total Commission"
                     options="{'currency_field': 'currency_id'}"
+                    attrs="{'invisible': [('commission_amount', '==', 0)]}"
+                    widget="monetary"
                     readonly="1"
                 />
             </xpath>
