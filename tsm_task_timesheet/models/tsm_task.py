@@ -46,9 +46,10 @@ class TsmTask(models.Model):
         return res
 
     @api.onchange("project_id")
-    def _onchange_project_timesheet(self):
+    def _onchange_project(self):
         for t in self.timesheet_ids:
             t.project_id = self.project_id.id
+        return super(TsmTask, self)._onchange_project()
 
     @api.onchange("stage_id")
     def _onchange_task_stage(self):

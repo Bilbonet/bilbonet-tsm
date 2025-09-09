@@ -1,1 +1,1 @@
-- Jesus Ramiro \<<jesus@bilbonet.net>\>
+- Jesus Ramiro <jesus@bilbonet.net>

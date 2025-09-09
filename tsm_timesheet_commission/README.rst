@@ -35,16 +35,32 @@ This module depends on the commission module.
 .. contents::
    :local:
 
+Use Cases / Context
+===================
+
+In many business logic it's necessary to control commissions for
+technicians.
+
+Installation
+============
+
+No additional installation steps are required.
+
+Configuration
+=============
+
+No extra configuration is needed for standard usage.
+
 Usage
 =====
 
 1. Go to *T.S.M > Tasks*
 2. Edit or create a new task
-3. When you have selected a partner, each new invoice line you add will
-   have the agents and commissions set at customer level
+3. In the timesheet tab, in each spent time record, you have a new
+   button *"icon with several persons represented"*, to edit commission
+   agents of the line.
 4. You can add, modify or delete these agents discretely clicking on the
-   icon with several persons represented, next to the "Commission" field
-   in the list. This icon will be available only if the line hasn't been
+   button. This icon will be available only if the line hasn't been
    invoiced yet.
 5. If you have configured your system for editing lines in a popup
    window, agents will appear also in this window.
@@ -53,9 +69,12 @@ Usage
 7. You have a button "Regenerate agents" on the bottom of the page
    "Invoice Lines" for forcing a recompute of all agents from the
    partner setup. This is needed for example when you have changed the
-   partner on the invoice having already inserted lines.
+   partner on the task having already inserted lines.
+
+|Task with timesheet and commissions|
 
 For invoicing the settlements (only for external agents):
+---------------------------------------------------------
 
 1. Go to *Invoicing > Commissions > Create Commission Invoices*.
 2. On the window that appears, you can select following data:
@@ -74,6 +93,18 @@ If you want to invoice a/some specific settlement/s:
 3. Click on *Action > Create Commission Invoices*.
 4. You can as well enter in one settlement, and click on the "Make
    invoice" button.
+
+.. |Task with timesheet and commissions| image:: https://raw.githubusercontent.com/Bilbonet/bilbonet-tsm/15.0/tsm_timesheet_commission/static/description/task_timesheet_commission.png
+
+Known issues / Roadmap
+======================
+
+There are no future improvments in sight.
+
+Changelog
+=========
+
+What's your history.
 
 Bug Tracker
 ===========
@@ -97,7 +128,14 @@ Authors
 Contributors
 ------------
 
-- Jesus Ramiro <jesus@bilbonet.net>
+- Jesus Ramiro jesus@bilbonet.net
+
+Other credits
+-------------
+
+The development of this module has been financially supported by:
+
+- Bilbonet
 
 Maintainers
 -----------
