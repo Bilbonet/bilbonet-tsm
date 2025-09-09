@@ -1,10 +1,10 @@
 1.  Go to *T.S.M \> Tasks*
 2.  Edit or create a new task
-3.  When you have selected a partner, each new invoice line you add will
-    have the agents and commissions set at customer level
+3.  In the timesheet tab, in each spent time record, 
+    you have a new button *"icon with several persons represented"*, 
+    to edit commission agents of the line.
 4.  You can add, modify or delete these agents discretely clicking on
-    the icon with several persons represented, next to the "Commission"
-    field in the list. This icon will be available only if the line
+    the button. This icon will be available only if the line
     hasn't been invoiced yet.
 5.  If you have configured your system for editing lines in a popup
     window, agents will appear also in this window.
@@ -13,9 +13,11 @@
 7.  You have a button "Regenerate agents" on the bottom of the page
     "Invoice Lines" for forcing a recompute of all agents from the
     partner setup. This is needed for example when you have changed the
-    partner on the invoice having already inserted lines.
+    partner on the task having already inserted lines.
 
-For invoicing the settlements (only for external agents):
+![Task with timesheet and commissions](static/description/task_timesheet_commission.png)
+
+## For invoicing the settlements (only for external agents):
 
 1.  Go to *Invoicing \> Commissions \> Create Commission Invoices*.
 2.  On the window that appears, you can select following data:

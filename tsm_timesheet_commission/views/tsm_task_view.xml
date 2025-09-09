@@ -48,6 +48,8 @@
                 position="after"
             >
                 <field name="commission_free" invisible="1" />
+                <field name="agent_ids" invisible="1" />
+                <field name="any_settled" invisible="1" />
                 <button
                     name="button_edit_agents"
                     type="object"
@@ -70,6 +72,31 @@
                     groups="commission.group_commission_manager"
                 />
                 <field name="commission_status" optional="show" />
+            </xpath>
+            <!-- Avoid changes in some fields if there is any commission set -->
+            <xpath
+                expr="//field[@name='timesheet_ids']//field[@name='date_time']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='timesheet_ids']//field[@name='user_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='timesheet_ids']//field[@name='amount']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
             </xpath>
             <field name="total_hours" position="after">
                 <field

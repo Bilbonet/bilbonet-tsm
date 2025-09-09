@@ -378,26 +378,48 @@ agents.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
+<li><a class="reference internal" href="#use-cases-context" id="toc-entry-1">Use Cases / Context</a></li>
+<li><a class="reference internal" href="#installation" id="toc-entry-2">Installation</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-3">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-4">Usage</a><ul>
+<li><a class="reference internal" href="#for-invoicing-the-settlements-only-for-external-agents" id="toc-entry-5">For invoicing the settlements (only for external agents):</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-6">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="toc-entry-7">Changelog</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-8">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-9">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-10">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-11">Contributors</a></li>
+<li><a class="reference internal" href="#other-credits" id="toc-entry-12">Other credits</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-13">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="use-cases-context">
+<h1><a class="toc-backref" href="#toc-entry-1">Use Cases / Context</a></h1>
+<p>In many business logic it’s necessary to control commissions for
+technicians.</p>
+</div>
+<div class="section" id="installation">
+<h1><a class="toc-backref" href="#toc-entry-2">Installation</a></h1>
+<p>No additional installation steps are required.</p>
+</div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-3">Configuration</a></h1>
+<p>No extra configuration is needed for standard usage.</p>
+</div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-4">Usage</a></h1>
 <ol class="arabic simple">
 <li>Go to <em>T.S.M &gt; Tasks</em></li>
 <li>Edit or create a new task</li>
-<li>When you have selected a partner, each new invoice line you add will
-have the agents and commissions set at customer level</li>
+<li>In the timesheet tab, in each spent time record, you have a new
+button <em>“icon with several persons represented”</em>, to edit commission
+agents of the line.</li>
 <li>You can add, modify or delete these agents discretely clicking on the
-icon with several persons represented, next to the “Commission” field
-in the list. This icon will be available only if the line hasn’t been
+button. This icon will be available only if the line hasn’t been
 invoiced yet.</li>
 <li>If you have configured your system for editing lines in a popup
 window, agents will appear also in this window.</li>
@@ -406,9 +428,11 @@ been settled.</li>
 <li>You have a button “Regenerate agents” on the bottom of the page
 “Invoice Lines” for forcing a recompute of all agents from the
 partner setup. This is needed for example when you have changed the
-partner on the invoice having already inserted lines.</li>
+partner on the task having already inserted lines.</li>
 </ol>
-<p>For invoicing the settlements (only for external agents):</p>
+<p><img alt="Task with timesheet and commissions" src="https://raw.githubusercontent.com/Bilbonet/bilbonet-tsm/15.0/tsm_timesheet_commission/static/description/task_timesheet_commission.png" /></p>
+<div class="section" id="for-invoicing-the-settlements-only-for-external-agents">
+<h2><a class="toc-backref" href="#toc-entry-5">For invoicing the settlements (only for external agents):</a></h2>
 <ol class="arabic simple">
 <li>Go to <em>Invoicing &gt; Commissions &gt; Create Commission Invoices</em>.</li>
 <li>On the window that appears, you can select following data:<ul>
@@ -430,8 +454,17 @@ leave it blank as well for invoicing all the pending settlements.</li>
 invoice” button.</li>
 </ol>
 </div>
+</div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#toc-entry-6">Known issues / Roadmap</a></h1>
+<p>There are no future improvments in sight.</p>
+</div>
+<div class="section" id="changelog">
+<h1><a class="toc-backref" href="#toc-entry-7">Changelog</a></h1>
+<p>What’s your history.</p>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-8">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/Bilbonet/bilbonet-tsm/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -439,22 +472,29 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-9">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-10">Authors</a></h2>
 <ul class="simple">
 <li>Jesus Ramiro (Bilbonet)</li>
 <li></li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-11">Contributors</a></h2>
 <ul class="simple">
-<li>Jesus Ramiro &lt;<a class="reference external" href="mailto:jesus&#64;bilbonet.net">jesus&#64;bilbonet.net</a>&gt;</li>
+<li>Jesus Ramiro <a class="reference external" href="mailto:jesus&#64;bilbonet.net">jesus&#64;bilbonet.net</a></li>
+</ul>
+</div>
+<div class="section" id="other-credits">
+<h2><a class="toc-backref" href="#toc-entry-12">Other credits</a></h2>
+<p>The development of this module has been financially supported by:</p>
+<ul class="simple">
+<li>Bilbonet</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-13">Maintainers</a></h2>
 <p>Current maintainer:</p>
 <p><a class="reference external image-reference" href="https://github.com/bilbonet"><img alt="bilbonet" src="https://github.com/bilbonet.png?size=40px" /></a></p>
 <p>This module is part of the <a class="reference external" href="https://github.com/Bilbonet/bilbonet-tsm/tree/15.0/tsm_timesheet_commission">Bilbonet/bilbonet-tsm</a> project on GitHub.</p>

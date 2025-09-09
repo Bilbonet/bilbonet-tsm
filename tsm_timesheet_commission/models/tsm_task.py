@@ -139,18 +139,6 @@ class TsmTaskTimesheet(models.Model):
             )
         return super().unlink()
 
-    def write(self, vals):
-        if "date_time" in vals or "user_id" in vals:
-            for record in self:
-                if record.agent_ids:
-                    raise UserError(
-                        _(
-                            """You can't change date or user from a timesheet
-                            with commission lines."""
-                        )
-                    )
-        return super().write(vals)
-
 
 class TsmTaskTimesheetAgent(models.Model):
     _inherit = "commission.line.mixin"
