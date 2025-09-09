@@ -189,7 +189,7 @@ class TsmTask(models.Model):
     @api.onchange("project_id")
     def _onchange_project(self):
         if self.project_id:
-            if self.project_id.partner_id:
+            if self.project_id.partner_id != self.partner_id:
                 self.partner_id = self.project_id.partner_id
 
     @api.onchange("user_id")
