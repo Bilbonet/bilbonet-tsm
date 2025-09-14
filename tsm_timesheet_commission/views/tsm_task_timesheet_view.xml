@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- =======================
+       Timesheet My lines: Views
+    ======================== -->
     <record id="tsm_task_timesheet_line_tree_commission_view" model="ir.ui.view">
-        <field name="name">tsm.task.timesheet.line.tree.commission</field>
+        <field name="name">tsm.task.timesheet.line.tree Commission</field>
         <field name="model">tsm.task.timesheet</field>
         <field
             name="inherit_id"
             ref="tsm_task_timesheet.tsm_task_timesheet_line_tree"
         />
         <field name="arch" type="xml">
+            <!-- Show total commissions in the line -->
             <xpath expr="//field[@name='amount']" position="after">
+                <field name="agent_ids" invisible="1" />
                 <field name="currency_id" invisible="1" />
                 <field
                     name="commission_amount"
@@ -19,6 +24,48 @@
                     widget="monetary"
                     readonly="1"
                 />
+            </xpath>
+            <!-- Avoid changes in some fields if there is any commission set -->
+            <xpath expr="//field[@name='date_time']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='task_id']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='amount']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================
+       Timesheet All lines: Views
+    ========================= -->
+    <record id="tsm_task_timesheet_all_line_tree_commission_view" model="ir.ui.view">
+        <field name="name">tsm.task.timesheet.all.line.tree Commission</field>
+        <field name="model">tsm.task.timesheet</field>
+        <field
+            name="inherit_id"
+            ref="tsm_task_timesheet.tsm_task_timesheet_all_line_tree"
+        />
+        <field name="arch" type="xml">
+            <!-- Avoid changes in some fields if there is any commission set -->
+            <xpath
+                expr="//field[@name='user_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
             </xpath>
         </field>
     </record>
