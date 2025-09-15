@@ -38,10 +38,7 @@
                     name="attrs"
                 >{'readonly': [('agent_ids', '!=', [])]}</attribute>
             </xpath>
-            <xpath
-                expr="//field[@name='amount']"
-                position="attributes"
-            >
+            <xpath expr="//field[@name='amount']" position="attributes">
                 <attribute
                     name="attrs"
                 >{'readonly': [('agent_ids', '!=', [])]}</attribute>
@@ -61,10 +58,7 @@
         />
         <field name="arch" type="xml">
             <!-- Avoid changes in some fields if there is any commission set -->
-            <xpath
-                expr="//field[@name='user_id']"
-                position="attributes"
-            >
+            <xpath expr="//field[@name='user_id']" position="attributes">
                 <attribute
                     name="attrs"
                 >{'readonly': [('agent_ids', '!=', [])]}</attribute>
@@ -75,7 +69,10 @@
     <!-- ========================
        Time Pack: Timesheet Views
     ========================= -->
-    <record id="tsm_task_timesheet_line_tree_time_pack_commission_view" model="ir.ui.view">
+    <record
+        id="tsm_task_timesheet_line_tree_time_pack_commission_view"
+        model="ir.ui.view"
+    >
         <field name="name">tsm.task.timesheet Time Pack Commission</field>
         <field name="model">tsm.task.timesheet</field>
         <field
@@ -84,18 +81,12 @@
         />
         <field name="arch" type="xml">
             <!-- Avoid changes in some fields if there is any commission set -->
-            <xpath
-                expr="//field[@name='timepack_id']"
-                position="attributes"
-            >
+            <xpath expr="//field[@name='timepack_id']" position="attributes">
                 <attribute
                     name="attrs"
                 >{'readonly': [('agent_ids', '!=', [])]}</attribute>
             </xpath>
-            <xpath
-                expr="//field[@name='discount_time']"
-                position="attributes"
-            >
+            <xpath expr="//field[@name='discount_time']" position="attributes">
                 <attribute name="attrs">
                     {
                         'invisible':[('timepack_id','=',False)],

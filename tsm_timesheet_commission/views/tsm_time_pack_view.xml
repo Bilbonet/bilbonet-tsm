@@ -6,7 +6,7 @@
     <record id="commission_tsm_time_pack_form_view" model="ir.ui.view">
         <field name="name">tsm.time.pack Commission</field>
         <field name="model">tsm.time.pack</field>
-        <field name="inherit_id" ref="tsm_time_pack.tsm_time_pack_form_view"/>
+        <field name="inherit_id" ref="tsm_time_pack.tsm_time_pack_form_view" />
         <field name="arch" type="xml">
             <!-- Avoid changes in some fields if there is any commission set -->
             <xpath expr="//field[@name='timesheet_ids']/tree" position="inside">
