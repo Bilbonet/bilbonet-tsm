@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" ?>
+<!-- Copyright 2025 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <!-- =======================
        Timesheet My lines: Views
@@ -66,6 +68,40 @@
                 <attribute
                     name="attrs"
                 >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================
+       Time Pack: Timesheet Views
+    ========================= -->
+    <record id="tsm_task_timesheet_line_tree_time_pack_commission_view" model="ir.ui.view">
+        <field name="name">tsm.task.timesheet Time Pack Commission</field>
+        <field name="model">tsm.task.timesheet</field>
+        <field
+            name="inherit_id"
+            ref="tsm_time_pack.tsm_task_timesheet_line_tree_time_pack_view"
+        />
+        <field name="arch" type="xml">
+            <!-- Avoid changes in some fields if there is any commission set -->
+            <xpath
+                expr="//field[@name='timepack_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='discount_time']"
+                position="attributes"
+            >
+                <attribute name="attrs">
+                    {
+                        'invisible':[('timepack_id','=',False)],
+                        'readonly': [('agent_ids', '!=', [])]
+                    }
+                </attribute>
             </xpath>
         </field>
     </record>
