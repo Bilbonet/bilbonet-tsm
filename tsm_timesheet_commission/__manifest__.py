@@ -24,5 +24,6 @@
         "views/tsm_task_timesheet_view.xml",
         "views/commission_views.xml",
         "views/commission_settlement_views.xml",
+        "views/tsm_time_pack_view.xml"
     ],
 }
