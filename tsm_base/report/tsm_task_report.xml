@@ -30,7 +30,9 @@
                             >
                                 <tr>
                                     <td>Client:</td>
-                                    <td><span t-field="o.partner_id" /></td>
+                                    <td>
+                                        <span t-field="o.partner_id" />
+                                    </td>
                                     <td>Phone:</td>
                                     <td>
                                         <span t-field="o.partner_id.phone" /> /
@@ -47,7 +49,9 @@
                                         <span t-field="o.partner_id.state_id" />
                                     </td>
                                     <td>@mail:</td>
-                                    <td><span t-field="o.partner_id.email" /></td>
+                                    <td>
+                                        <span t-field="o.partner_id.email" />
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -60,9 +64,9 @@
                                     </td>
                                     <td>
                                         Date: <span
-                                            t-field="o.date_start"
-                                            t-options="{'widget': 'date'}"
-                                        />
+                                        t-field="o.date_start"
+                                        t-options="{'widget': 'date'}"
+                                    />
                                     </td>
                                     <td>
                                         Technician: <span t-field="o.user_id.name" />
@@ -73,7 +77,6 @@
                         <div class="row" name="task_body_report">
                             <span t-field="o.description" />
                         </div>
-
                     </div>
                 </t>
             </t>

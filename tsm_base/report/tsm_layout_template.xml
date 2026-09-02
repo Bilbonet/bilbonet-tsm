@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <odoo>
-
     <template id="tsm_report_layout">
         <!-- Multicompany -->
         <t t-if="not o and doc">
@@ -39,15 +38,15 @@
                 </div>
                 <div class="col-4" style="font-size:0.8em;">
                     <ul class="list-unstyled">
-                        <li t-if="company.phone"><small>Phone: <span
-                                    t-field="company.phone"
-                                /></small></li>
-                        <li t-if="company.email"><small>Email: <span
-                                    t-field="company.email"
-                                /></small></li>
-                        <li t-if="company.website"><small>Website: <span
-                                    t-field="company.website"
-                                /></small></li>
+                        <li t-if="company.phone">
+                            <small>Phone: <span t-field="company.phone" /></small>
+                        </li>
+                        <li t-if="company.email">
+                            <small>Email: <span t-field="company.email" /></small>
+                        </li>
+                        <li t-if="company.website">
+                            <small>Website: <span t-field="company.website" /></small>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -69,5 +68,4 @@
             </div>
         </div>
     </template>
-
 </odoo>

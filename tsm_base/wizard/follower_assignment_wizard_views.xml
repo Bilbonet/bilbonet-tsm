@@ -2,7 +2,6 @@
 <!-- Copyright 2025 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-
     <record id="follower_assignment_wizard_view" model="ir.ui.view">
         <field name="name">follower.assignment.wizard form</field>
         <field name="model">follower.assignment.wizard</field>
@@ -13,23 +12,22 @@
                 </group>
                 <footer>
                     <button
-                        name="assign_followers"
-                        string="Assign"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="assign_followers"
+                    string="Assign"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button
-                        name="update_followers"
-                        string="Remove"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="update_followers"
+                    string="Remove"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>
         </field>
     </record>
-
 </odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <odoo>
-
     <record id="tsm_project_report_action" model="ir.actions.report">
         <field name="name">Print Project Report</field>
         <field name="model">tsm.project</field>
@@ -27,7 +26,9 @@
                             >
                                 <tr>
                                     <td>Client:</td>
-                                    <td><span t-field="o.partner_id" /></td>
+                                    <td>
+                                        <span t-field="o.partner_id" />
+                                    </td>
                                     <td>Phone:</td>
                                     <td>
                                         <span t-field="o.partner_id.phone" /> /
@@ -44,12 +45,16 @@
                                         <span t-field="o.partner_id.state_id" />
                                     </td>
                                     <td>@mail:</td>
-                                    <td><span t-field="o.partner_id.email" /></td>
+                                    <td>
+                                        <span t-field="o.partner_id.email" />
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="jumbotron">
-                            <h1><span t-field="o.name" /></h1>
+                            <h1>
+                                <span t-field="o.name" />
+                            </h1>
                             <span t-field="o.description" name="projec_description" />
                         </div>
                         <p style="page-break-after:always;" name="page-break" />
@@ -69,14 +74,14 @@
                                         </td>
                                         <td>
                                             Date: <span
-                                                t-field="t.date_start"
-                                                t-options="{'widget': 'date'}"
-                                            />
+                                            t-field="t.date_start"
+                                            t-options="{'widget': 'date'}"
+                                        />
                                         </td>
                                         <td>
                                             Technician: <span
-                                                t-field="t.user_id.name"
-                                            />
+                                            t-field="t.user_id.name"
+                                        />
                                         </td>
                                     </tr>
                                 </table>
@@ -92,5 +97,4 @@
             </t>
         </t>
     </template>
-
 </odoo>

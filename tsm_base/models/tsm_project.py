@@ -166,4 +166,4 @@ class TsmProject(models.Model):
         self.ensure_one()
         default = dict(default or {})
         default["name"] = f"{self.name} (copy)"
-        return super(TsmProject, self).copy(default)
+        return super().copy(default)

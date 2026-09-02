@@ -167,7 +167,7 @@ class TsmTask(models.Model):
     ]
 
     def name_get(self):
-        result = super(TsmTask, self).name_get()
+        result = super().name_get()
         new_result = []
 
         for task in result:
@@ -259,7 +259,7 @@ class TsmTask(models.Model):
     # ------------------
     @api.model
     def default_get(self, fields_list):
-        result = super(TsmTask, self).default_get(fields_list)
+        result = super().default_get(fields_list)
         active_model = self._context.get("active_model")
         if active_model == "tsm.project":
             active_id = self._context.get("active_id")
@@ -274,11 +274,11 @@ class TsmTask(models.Model):
             if vals.get("code", "/") == "/":
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.task")
 
-        return super(TsmTask, self).create(vals_list)
+        return super().create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
         default["code"] = self.env["ir.sequence"].next_by_code("tsm.task")
         default["name"] = f"{self.name} (copy)"
-        return super(TsmTask, self).copy(default)
+        return super().copy(default)

@@ -19,34 +19,37 @@
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">
-<div style="margin: 0px; padding: 0px;">
-    <p style="box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;">
+            <div style="margin: 0px; padding: 0px;">
+                <p
+                    style="box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;"
+                >
         Hello, <span style="font-weight: bold;" t-out="object.partner_id.name or ''" />
         <br /><br />
         We inform you about the following task:
     </p>
-    <p style="border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;">
+                <p
+                    style="border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;"
+                >
        Title: <span style="font-weight: bold;" t-out="object.name or ''" /><br />
        Task Start: <span
-                        style="font-weight: bold;"
-                        t-out="object.date_start or ''"
-                        t-options="{'widget': 'date'}"
-                    /><br />
+                    style="font-weight: bold;"
+                    t-out="object.date_start or ''"
+                    t-options="{'widget': 'date'}"
+                /><br />
        Your contact: <span
-                        style="font-weight: bold;"
-                        t-out="object.user_id.name or ''"
-                    />
+                    style="font-weight: bold;"
+                    t-out="object.user_id.name or ''"
+                />
     </p>
-    <p>
+                <p>
         If you have any question, do not hesitate to contact us.<br />
         Thank you for trusting in us!
     </p>
-    <t t-if="not is_html_empty(object.user_id.signature)">
-        <br />
-        <t t-out="object.user_id.signature or ''">--<br />Bilbonet</t>
-    </t>
-</div>
+                <t t-if="not is_html_empty(object.user_id.signature)">
+                    <br />
+                    <t t-out="object.user_id.signature or ''">--<br />Bilbonet</t>
+                </t>
+            </div>
         </field>
     </record>
-
 </odoo>

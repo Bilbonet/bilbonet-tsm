@@ -2,7 +2,6 @@
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-
     <!--  Partner Task Button -->
     <record id="tsm_task_action_from_partner" model="ir.actions.act_window">
         <field name="name">Tasks</field>
@@ -43,5 +42,4 @@
         <field name="target">new</field>
         <field name="binding_model_id" ref="base.model_res_partner" />
     </record>
-
 </odoo>

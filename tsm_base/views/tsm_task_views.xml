@@ -298,12 +298,11 @@
                             t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click"
                         >
                             <div class="oe_kanban_content">
-
                                 <div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings">
-                                        <small class="text-primary"><field
-                                                name="partner_id"
-                                            /></small>
+                                        <small class="text-primary">
+                                            <field name="partner_id" />
+                                        </small>
                                         <hr class="mt0 mb4" />
                                         <span class="mr-2">
                                             <a
@@ -345,9 +344,11 @@
                                             t-if="record.date_deadline.raw_value and record.date_deadline.raw_value lt (new Date())"
                                             t-set="red"
                                         >oe_kanban_text_red</t>
-                                        <span t-attf-class="#{red || ''}"><i><field
-                                                    name="date_deadline"
-                                                /></i></span>
+                                        <span t-attf-class="#{red || ''}">
+                                            <i>
+                                                <field name="date_deadline" />
+                                            </i>
+                                        </span>
                                     </div>
                                     <div
                                         class="o_dropdown_kanban dropdown"
@@ -389,9 +390,11 @@
                                 </div>
 
                                 <div class="o_kanban_record_body">
-                                    <span
-                                        style="color:mediumorchid;font-size:0.86em;"
-                                    ><i><field name="project_id" /></i></span>
+                                    <span style="color:mediumorchid;font-size:0.86em;">
+                                        <i>
+                                            <field name="project_id" />
+                                        </i>
+                                    </span>
                                     <field
                                         name="tag_ids"
                                         widget="many2many_tags"

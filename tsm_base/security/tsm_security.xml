@@ -105,5 +105,4 @@
         <field name="name">Contac in Task</field>
         <field name="category_id" ref="base.module_category_hidden" />
     </record>
-
 </odoo>
