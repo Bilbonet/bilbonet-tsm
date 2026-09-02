@@ -8,47 +8,23 @@
         <field name="priority" eval="71" />
         <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div
-                    class="app_settings_block"
-                    data-string="TSM"
-                    string="T.S.M"
-                    data-key="tsm_base"
-                    groups="tsm_base.group_tsm_manager"
-                >
-                    <h2>TSM Task Settings</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div
-                            class="col-xs-12 col-md-6 o_setting_box"
-                            title="Use tags in tasks"
+            <xpath expr="//form" position="inside">
+                <app name="tsm_base" string="T.S.M" groups="tsm_base.group_tsm_manager">
+                    <block title="TSM Task Settings">
+                        <setting
+                            id="use_tags_in_tasks"
+                            help="Use tags to classify tasks."
                         >
-                            <div class="o_setting_left_pane">
-                                <field name="default_tags_in_task" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label for="default_tags_in_task" />
-                                <div class="text-muted">
-                                    Use tags to classify tasks.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="col-xs-12 col-md-6 o_setting_box"
-                            title="Use contact in tasks"
+                            <field name="default_tags_in_task" />
+                        </setting>
+                        <setting
+                            id="use_contact_in_tasks"
+                            help="Use a contact on tasks."
                         >
-                            <div class="o_setting_left_pane">
-                                <field name="group_tsm_task_contact" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label for="group_tsm_task_contact" />
-                                <div class="text-muted">
-                                    Use contact in task to assign partners responsible.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            <field name="group_tsm_task_contact" />
+                        </setting>
+                    </block>
+                </app>
             </xpath>
         </field>
     </record>
@@ -68,6 +44,6 @@
         parent="tsm_config_menu"
         sequence="0"
         action="tsm_config_settings_action"
-        groups="base.group_system"
+        groups="tsm_base.group_tsm_manager"
     />
 </odoo>

@@ -1,7 +1,7 @@
 # Copyright 2019 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
@@ -14,9 +14,12 @@ class ResConfigSettings(models.TransientModel):
         "Task Contact", implied_group="tsm_base.group_tsm_task_contact"
     )
 
-    # Update field in active tasks
-    @api.onchange("default_tags_in_task")
-    def _onchange_default_tags_in_task(self):
-        self.env["tsm.task"].search([("active", "=", True)]).write(
-            {"tags_in_task": self.default_tags_in_task}
-        )
+    def set_values(self):
+        result = super().set_values()
+        self.env["tsm.task"].search(
+            [
+                ("active", "=", True),
+                ("company_id", "in", self.env.companies.ids),
+            ]
+        ).write({"tags_in_task": self.default_tags_in_task})
+        return result

@@ -19,12 +19,11 @@ class TsmTask(models.Model):
         return stage_id
 
     @api.model
-    def _read_group_stage_ids(self, stages, domain, order):
+    def _read_group_stage_ids(self, stages, domain):
         """Read group customization in order to display all the stages in the
         kanban view, even if they are empty
         """
-        stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
-        return stages.browse(stage_ids)
+        return stages.with_user(SUPERUSER_ID).search([], order="sequence, id")
 
     code = fields.Char(string="Task Code", required=True, default="/", readonly=True)
     sequence = fields.Integer(
@@ -166,15 +165,10 @@ class TsmTask(models.Model):
         ("tsm_task_unique_code", "UNIQUE (code)", _("The code must be unique!")),
     ]
 
-    def name_get(self):
-        result = super().name_get()
-        new_result = []
-
-        for task in result:
-            rec = self.browse(task[0])
-            name = "[%s] %s" % (rec.code, task[1])
-            new_result.append((rec.id, name))
-        return new_result
+    @api.depends("code", "name")
+    def _compute_display_name(self):
+        for task in self:
+            task.display_name = f"[{task.code}] {task.name}"
 
     @api.depends("stage_id", "kanban_state")
     def _compute_kanban_state_label(self):
@@ -215,7 +209,7 @@ class TsmTask(models.Model):
             # if task is archived reset some values
             task.update(
                 {
-                    "priority": 0,
+                    "priority": "0",
                     "kanban_state": "normal",
                 }
             )
@@ -232,7 +226,10 @@ class TsmTask(models.Model):
         )
         ctx = {
             "default_model": "tsm.task",
-            "default_res_id": self.id,
+            "default_res_ids": [self.id],
+            "active_model": "tsm.task",
+            "active_id": self.id,
+            "active_ids": [self.id],
             "default_use_template": bool(template_id),
             "default_template_id": template_id,
             "default_composition_mode": "comment",
@@ -277,8 +274,13 @@ class TsmTask(models.Model):
         return super().create(vals_list)
 
     def copy(self, default=None):
-        self.ensure_one()
         default = dict(default or {})
-        default["code"] = self.env["ir.sequence"].next_by_code("tsm.task")
-        default["name"] = f"{self.name} (copy)"
-        return super().copy(default)
+        copies = self.browse()
+        for task in self:
+            values = dict(
+                default,
+                code=self.env["ir.sequence"].next_by_code("tsm.task"),
+                name=f"{task.name} (copy)",
+            )
+            copies |= super(TsmTask, task).copy(values)
+        return copies

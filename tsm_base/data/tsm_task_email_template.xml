@@ -12,10 +12,10 @@
         <field
             name="partner_to"
         >{{ object.contact_id.id if object.contact_id.email else object.partner_id.id }}</field>
-        <field name="report_template" ref="tsm_base.tsm_task_report_action" />
         <field
-            name="report_name"
-        >{{ '(' + object.code + ')_' + (object.name or '').replace(' ', '-') }}</field>
+            name="report_template_ids"
+            eval="[(4, ref('tsm_base.tsm_task_report_action'))]"
+        />
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">

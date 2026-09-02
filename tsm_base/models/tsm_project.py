@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -11,18 +11,22 @@ class TsmProject(models.Model):
     _order = "priority desc, sequence, date_start"
 
     def _compute_task_count(self):
-        task_data = self.env["tsm.task"].read_group(
-            [
-                ("project_id", "in", self.ids),
-                "|",
-                ("active", "=", True),
-                ("active", "=", False),
-            ],
-            ["project_id"],
-            ["project_id"],
+        task_data = (
+            self.env["tsm.task"]
+            .with_context(active_test=False)
+            ._read_group(
+                [
+                    ("project_id", "in", self.ids),
+                    "|",
+                    ("active", "=", True),
+                    ("active", "=", False),
+                ],
+                ["project_id"],
+                ["__count"],
+            )
         )
 
-        result = {data["project_id"][0]: data["project_id_count"] for data in task_data}
+        result = {project.id: count for project, count in task_data}
         for project in self:
             project.task_count = result.get(project.id, 0)
 
@@ -113,7 +117,10 @@ class TsmProject(models.Model):
         )
         ctx = {
             "default_model": "tsm.project",
-            "default_res_id": self.id,
+            "default_res_ids": [self.id],
+            "active_model": "tsm.project",
+            "active_id": self.id,
+            "active_ids": [self.id],
             "default_use_template": bool(template_id),
             "default_template_id": template_id,
             "default_composition_mode": "comment",
@@ -135,7 +142,7 @@ class TsmProject(models.Model):
     def write(self, vals):
         # First all tasks of the project must be archived
         if "active" in vals and not vals["active"]:
-            actives = self.browse(self.task_ids)
+            actives = self.mapped("task_ids").filtered("active")
             if actives:
                 raise UserError(
                     _(
@@ -145,13 +152,14 @@ class TsmProject(models.Model):
                 )
             else:
                 # if project is archived reset some values
-                vals["priority"] = 0
+                vals["priority"] = "0"
 
         res = super().write(vals) if vals else True
         return res
 
-    def unlink(self):
-        for project in self:
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_tasks_exist(self):
+        for project in self.with_context(active_test=False):
             if project.task_ids:
                 raise UserError(
                     _(
@@ -160,10 +168,11 @@ class TsmProject(models.Model):
                         "project or simply deactivate the project."
                     )
                 )
-        return super().unlink()
 
     def copy(self, default=None):
-        self.ensure_one()
         default = dict(default or {})
-        default["name"] = f"{self.name} (copy)"
-        return super().copy(default)
+        copies = self.browse()
+        for project in self:
+            values = dict(default, name=f"{project.name} (copy)")
+            copies |= super(TsmProject, project).copy(values)
+        return copies

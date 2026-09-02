@@ -19,28 +19,24 @@
         <field name="name">Manager</field>
         <field name="category_id" ref="tsm_base.module_tsm" />
         <field name="implied_ids" eval="[(4, ref('group_tsm_user'))]" />
-        <field name="users" eval="[(4, ref('base.user_root'))]" />
     </record>
 
     <data noupdate="1">
         <!-- ============= -->
         <!-- Project Rules -->
         <!-- ============= -->
-        <record id="base.default_user" model="res.users">
-            <field name="groups_id" eval="[(4,ref('tsm_base.group_tsm_manager'))]" />
-        </record>
         <!-- Group Managers: can do all -->
         <record id="tsm_project_manager_rule" model="ir.rule">
             <field name="name">TSM Project: manager do all</field>
             <field name="model_id" ref="model_tsm_project" />
-            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_manager'))]" />
         </record>
         <!-- Group Users: Can view (Public Project or Project Followers) -->
         <record id="tsm_project_public_followers_rule" model="ir.rule">
             <field name="name">TSM Project: Public Project or Followers</field>
             <field name="model_id" ref="model_tsm_project" />
-            <field name="domain_force">['|',
+            <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|',
                 ('privacy_visibility', '!=', 'followers'),
                 ('message_partner_ids', 'in', [user.partner_id.id])]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
@@ -53,7 +49,9 @@
         <record id="tsm_project_modify_only_managers" model="ir.rule">
             <field name="name">TSM Project: User asigned can do all</field>
             <field name="model_id" ref="model_tsm_project" />
-            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field
+                name="domain_force"
+            >['&amp;', ('company_id', 'in', company_ids), ('user_id','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
             <field name="perm_read" eval="False" />
             <field name="perm_create" eval="True" />
@@ -68,14 +66,14 @@
         <record id="tsm_project_task_manager_rule" model="ir.rule">
             <field name="name">TSM Task: manager can do all</field>
             <field name="model_id" ref="model_tsm_task" />
-            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_manager'))]" />
         </record>
         <!-- Group Users: Can view (Public Task or Task Followers) -->
         <record id="tsm_project_task_public_followers_rule" model="ir.rule">
             <field name="name">TSM Task: Public Task or Followers</field>
             <field name="model_id" ref="model_tsm_task" />
-            <field name="domain_force">['|',
+            <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|',
                 ('privacy_visibility', '!=', 'followers'),
                 ('message_partner_ids', 'in', [user.partner_id.id])
                 ]</field>
@@ -89,7 +87,9 @@
         <record id="tsm_task_modify_only_managers" model="ir.rule">
             <field name="name">TSM Task: User asigned can do all</field>
             <field name="model_id" ref="model_tsm_task" />
-            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field
+                name="domain_force"
+            >['&amp;', ('company_id', 'in', company_ids), ('user_id','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
             <field name="perm_read" eval="False" />
             <field name="perm_create" eval="True" />

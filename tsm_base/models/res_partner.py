@@ -29,19 +29,18 @@ class ResPartner(models.Model):
         tsm_task_groups = (
             self.with_context(active_test=False)
             .env["tsm.task"]
-            .read_group(
+            ._read_group(
                 domain=[("partner_id", "in", all_partners.ids)],
-                fields=["partner_id"],
                 groupby=["partner_id"],
+                aggregates=["__count"],
             )
         )
 
-        partners = self.browse()
-        for group in tsm_task_groups:
-            partner = self.browse(group["partner_id"][0])
+        task_counts = {partner.id: 0 for partner in self}
+        for partner, count in tsm_task_groups:
             while partner:
-                if partner in self:
-                    partner.tsm_task_count += group["partner_id_count"]
-                    partners |= partner
+                if partner.id in task_counts:
+                    task_counts[partner.id] += count
                 partner = partner.parent_id
-        (self - partners).tsm_task_count = 0
+        for partner in self:
+            partner.tsm_task_count = task_counts[partner.id]

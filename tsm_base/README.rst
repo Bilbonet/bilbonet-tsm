@@ -104,8 +104,8 @@ Credits
 Authors
 -------
 
-* Jesus Ramiro (Bilbonet)
-* 
+* Jesus Ramiro
+* Bilbonet
 
 Contributors
 ------------

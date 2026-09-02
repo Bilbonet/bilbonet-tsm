@@ -15,58 +15,28 @@ class FollowerAssignmentWizard(models.TransientModel):
         column2="partner_id",
     )
 
+    _allowed_models = {"res.partner", "tsm.project", "tsm.task"}
+
+    def _selected_records(self):
+        active_model = self.env.context.get("active_model")
+        active_ids = self.env.context.get("active_ids")
+        if active_model not in self._allowed_models or not active_ids:
+            return False
+        return (
+            self.env[active_model]
+            .with_context(active_test=False)
+            .browse(active_ids)
+            .exists()
+        )
+
     def assign_followers(self):
-        context = self._context
-        if context is None:
-            context = {}
-        if context.get("active_model"):
-            # Current model name
-            model_obj = self.env[context["active_model"]]
-            model_follower_obj = self.env["mail.followers"]
-            followers_ids = self.record_followers_ids.ids
-            if context.get("active_ids"):
-                # get values from current active_ids
-                for value in model_obj.with_context(active_test=False).search(
-                    [("id", "in", context["active_ids"])]
-                ):
-                    existing_followers_id = [
-                        val.partner_id.id for val in value.message_follower_ids
-                    ]
-                    # check existing message followers and assigned followers
-                    followers_to_assign = list(
-                        set(followers_ids) - set(existing_followers_id)
-                    )
-                    for val_loop in followers_to_assign:
-                        model_follower_obj.create(
-                            {
-                                "partner_id": val_loop,
-                                "res_model": context["active_model"],
-                                "res_id": value.id,
-                            }
-                        )
+        records = self._selected_records()
+        if records:
+            records.message_subscribe(partner_ids=self.record_followers_ids.ids)
         return True
 
     def update_followers(self):
-        context = self._context
-        if context is None:
-            context = {}
-        if context.get("active_model"):
-            model_obj = self.env[context["active_model"]]
-            model_follower_obj = self.env["mail.followers"]
-            active_model_id = model_obj.with_context(active_test=False).search(
-                [("id", "in", self._context.get("active_ids"))]
-            )
-            followers_ids = [val.id for val in self.record_followers_ids]
-            for line in active_model_id:
-                # check existing message followers and record_followers_ids
-                followers_to_unassign = list(set(followers_ids))
-                for val_loop in followers_to_unassign:
-                    model_follower_obj.search(
-                        [
-                            ("partner_id", "=", val_loop),
-                            ("res_model", "=", self._context.get("active_model")),
-                            ("res_id", "=", line.id),
-                        ]
-                    ).unlink()
-
+        records = self._selected_records()
+        if records:
+            records.message_unsubscribe(partner_ids=self.record_followers_ids.ids)
         return True

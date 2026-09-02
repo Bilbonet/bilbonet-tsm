@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
@@ -8,10 +8,10 @@
     <record id="tsm_tasks_from_project_action" model="ir.actions.act_window">
         <field name="name">TSM Project's Tasks</field>
         <field name="res_model">tsm.task</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="context">{
             'active_test': False,
-            'search_default_project_id': [active_id],
+            'search_default_project_id': [id],
             }</field>
         <field name="search_view_id" ref="tsm_task_search_view" />
         <field name="help" type="html">
@@ -61,7 +61,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <div class="oe_title pe-0">
                         <h1 class="d-flex justify-content-between align-items-center">
@@ -81,12 +81,12 @@
                             <field
                                 name="user_id"
                                 string="Project Manager"
-                                attrs="{'readonly':[('active','=',False)]}"
+                                readonly="not active"
                             />
                             <field
                                 name="partner_id"
                                 string="Customer"
-                                attrs="{'readonly':[('active','=',False)]}"
+                                readonly="not active"
                             />
                         </group>
                         <group>
@@ -107,16 +107,7 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                        help="Follow this project to automatically track the events associated to tasks and issues of this project."
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
@@ -167,10 +158,10 @@
     </record>
 
     <record id="tsm_project_tree_view" model="ir.ui.view">
-        <field name="name">tsm.project.tree</field>
+        <field name="name">tsm.project.list</field>
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-muted="active == False"
                 decoration-bf="priority == '1'"
                 decoration-danger="activity_state != False"
@@ -184,7 +175,7 @@
                 <field name="partner_id" string="Contact" />
                 <field name="date_start" widget="date" />
                 <field name="task_count" string="Tasks" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -193,6 +184,7 @@
         <field name="model">tsm.project</field>
         <field name="arch" type="xml">
             <kanban
+                highlight_color="color"
                 class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors"
             >
                 <field name="color" />
@@ -205,7 +197,7 @@
                 <field name="activity_ids" />
                 <field name="activity_state" />
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div
                             t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon"
                         >
@@ -275,16 +267,16 @@
                                     >
                                         <span
                                             role="alert"
-                                            class='oe_kanban_mail_new'
-                                            title='Unread Messages'
+                                            class="oe_kanban_mail_new"
+                                            title="Unread Messages"
                                         >
                                             <i
-                                                class='fa fa-comments'
+                                                class="fa fa-comments"
                                                 role="img"
                                                 aria-label="Unread Messages"
                                             />
                                             <t
-                                                t-raw="record.message_needaction_counter.raw_value"
+                                                t-out="record.message_needaction_counter.raw_value"
                                             />
                                         </span>
                                     </t>
@@ -327,7 +319,7 @@
         <field name="name">TSM: Projects</field>
         <field name="res_model">tsm.project</field>
         <field name="domain">[]</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="view_id" ref="tsm_project_kanban_view" />
         <field name="context">{'search_default_my_projects': 1}</field>
         <field name="search_view_id" ref="tsm_project_filter_view" />
@@ -352,7 +344,7 @@
         <field name="name">[Un]Assign Followers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">follower.assignment.wizard</field>
-        <field name="view_mode">form,tree</field>
+        <field name="view_mode">form,list</field>
         <field name="view_id" ref="tsm_base.follower_assignment_wizard_view" />
         <field name="target">new</field>
         <field name="binding_model_id" ref="tsm_base.model_tsm_project" />

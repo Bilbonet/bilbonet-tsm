@@ -1,0 +1,109 @@
+(odoo18-venv) bilbonet@dev ~/odoo18/_ext/bilbonet/bilbonet-tsm (18.0)$ oca-port origin/15.0 origin/18.0 tsm_base   --source-version 15.0   --target-version 18.0   --upstream-org Bilbonet   --repo-name bilbonet-tsm   --verbose
+Source: origin/15.0, remote origin git@github.com:Bilbonet/bilbonet-tsm.git
+Target: origin/18.0, remote origin git@github.com:Bilbonet/bilbonet-tsm.git
+Destination:
+Migrate tsm_base from 15.0 to 18.0? [y/N]: y
+        Create branch 18.0-mig-tsm_base from origin/18.0...
+        Generate patches...
+        Apply 132 patches...
+                Commits history of tsm_base has been migrated.
+        Run pre-commit...
+pre-commit installed at .git/hooks/pre-commit
+forbidden files......................................(no files to check)Skipped
+en.po files cannot exist.............................(no files to check)Skipped
+obsolete dotfiles....................................(no files to check)Skipped
+init pyproject.toml with whool...........................................Failed
+- hook id: whool-init
+- exit code: 1
+
+pyproject.toml was generated or modified in tsm_base
+
+Update pre-commit excluded addons........................................Passed
+Fix the manifest website key.............................................Passed
+Generate addons README files from fragments..............................Failed
+- hook id: oca-gen-addon-readme
+- files were modified by this hook
+Generate requirements.txt for an addons directory........................Passed
+Checks for Odoo modules..................................................Passed
+Checks for .po[t] files..................................................Passed
+prettier (with plugin-xml)...............................................Failed
+- hook id: prettier
+- files were modified by this hook
+
+tsm_base/views/tsm_task_tags_views.xml
+tsm_base/report/tsm_task_report.xml
+tsm_base/data/tsm_project_email_template.xml
+tsm_base/views/tsm_project_views.xml
+tsm_base/views/res_partner_views.xml
+tsm_base/views/tsm_task_views.xml
+tsm_base/report/tsm_project_report.xml
+tsm_base/report/tsm_layout_template.xml
+tsm_base/wizard/follower_assignment_wizard_views.xml
+tsm_base/data/tsm_task_email_template.xml
+tsm_base/security/tsm_security.xml
+tsm_base/data/tsm_task_sequence.xml
+tsm_base/views/tsm_task_type_views.xml
+
+eslint...............................................(no files to check)Skipped
+- hook id: eslint
+trim trailing whitespace.................................................Passed
+fix end of files.........................................................Passed
+debug statements (python)................................................Passed
+fix python encoding pragma (deprecated)..................................Passed
+check for case conflicts.................................................Passed
+check docstring is first.................................................Passed
+check that executables have shebangs.................(no files to check)Skipped
+check for merge conflicts................................................Passed
+check for broken symlinks............................(no files to check)Skipped
+check xml................................................................Passed
+mixed line ending........................................................Passed
+ruff.....................................................................Failed
+- hook id: ruff
+- exit code: 1
+- files were modified by this hook
+
+tsm_base/models/tsm_task.py:175:20: UP031 Use format specifiers instead of percent format
+    |
+173 |         for task in result:
+174 |             rec = self.browse(task[0])
+175 |             name = "[%s] %s" % (rec.code, task[1])
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ UP031
+176 |             new_result.append((rec.id, name))
+177 |         return new_result
+    |
+    = help: Replace with format specifiers
+
+Found 6 errors (5 fixed, 1 remaining).
+No fixes available (1 hidden fix can be enabled with the `--unsafe-fixes` option).
+
+ruff-format..............................................................Passed
+pylint with optional checks..............................................Passed
+- hook id: pylint_odoo
+- duration: 1.64s
+
+************* Module tsm_base.__manifest__
+tsm_base/__manifest__.py:10: [C8101(manifest-required-author), ] One of the following authors must be present in manifest: 'Bilbonet'
+tsm_base/__manifest__.py:7: [C8106(manifest-version-format), ] Wrong Version Format "15.0.1.0.0" in manifest file. Regex to match: "(18\.0)\.\d+\.\d+\.\d+$"
+
+Check for Odoo modules using pylint......................................Failed
+- hook id: pylint_odoo
+- exit code: 16
+
+************* Module tsm_base.__manifest__
+tsm_base/__manifest__.py:10: [C8101(manifest-required-author), ] One of the following authors must be present in manifest: 'Bilbonet'
+tsm_base/__manifest__.py:7: [C8106(manifest-version-format), ] Wrong Version Format "15.0.1.0.0" in manifest file. Regex to match: "(18\.0)\.\d+\.\d+\.\d+$"
+
+Apply code pattern...
+[18] Fields that are required by Python expressions (invisible, column_invisible, readonly, required, context, domain) are now added automatically as invisible and readonly. You can remove these fields from XML views unless they are necessary for specific logic. More details: https://github.com/odoo/odoo/pull/137031.. File /home/bilbonet/odoo18/_ext/bilbonet/bilbonet-tsm/tsm_base/views/tsm_project_views.xml
+[18] Fields that are required by Python expressions (invisible, column_invisible, readonly, required, context, domain) are now added automatically as invisible and readonly. You can remove these fields from XML views unless they are necessary for specific logic. More details: https://github.com/odoo/odoo/pull/137031.. File /home/bilbonet/odoo18/_ext/bilbonet/bilbonet-tsm/tsm_base/views/tsm_task_views.xml
+        1) Reduce the number of commits ('OCA Transbot...'):
+                => https://github.com/OCA/maintainer-tools/wiki/Merge-commits-in-pull-requests
+        2) Adapt the module to the 18.0 version:
+                => https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-18.0#tasks-to-do-in-the-migration
+        3) Include your changes in the existing migration commit:
+                $ git add --all
+                $ git commit --amend
+                $ git push YOUR_REMOTE 18.0-mig-tsm_base --set-upstream
+        4) Create the PR against Bilbonet/bilbonet-tsm:
+                => https://github.com/Bilbonet/bilbonet-tsm/compare/18.0...YOUR_ORG:18.0-mig-tsm_base?expand=1&title=%5B18.0%5D%5BMIG%5D%20tsm_base
+(odoo18-venv) bilbonet@dev ~/odoo18/_ext/bilbonet/bilbonet-tsm (18.0-mig-tsm_base)$
