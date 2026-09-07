@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="tsm_task_report_action" model="ir.actions.report">
+        <field name="name">Print Task</field>
+        <field name="model">tsm.task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tsm_base.tsm_task_report_document</field>
+        <field name="report_file">tsm_base.tsm_task_report_document</field>
+        <field
+            name="print_report_name"
+        >'(' + object.code + ')_' + object.name.replace(' ', '-')</field>
+        <field name="attachment" />
+        <field name="binding_model_id" ref="model_tsm_task" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="tsm_base.tsm_paper_format_report" />
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
+    </record>
+
+    <template id="tsm_task_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="tsm_base.tsm_report_layout">
+                    <div class="page">
+                        <div class="row" name="head_report">
+                            <table
+                                class="table table-bordered table-sm"
+                                style="margin-top:0px;"
+                            >
+                                <tr>
+                                    <td>Client:</td>
+                                    <td>
+                                        <span t-field="o.partner_id" />
+                                    </td>
+                                    <td>Phone:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.phone" /> /
+                                        <span t-field="o.partner_id.mobile" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Address:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.street" />
+                                        <span t-field="o.partner_id.street2" /><br />
+                                        <span t-field="o.partner_id.zip" /> -
+                                        <span t-field="o.partner_id.city" /> -
+                                        <span t-field="o.partner_id.state_id" />
+                                    </td>
+                                    <td>@mail:</td>
+                                    <td>
+                                        <span t-field="o.partner_id.email" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row" name="info_report">
+                            <table class="table table-sm">
+                                <tr class="bg-success">
+                                    <td>
+                                        Task: <span t-field="o.code" /> -
+                                        <span t-field="o.name" />
+                                    </td>
+                                    <td>
+                                        Date: <span
+                                        t-field="o.date_start"
+                                        t-options="{'widget': 'date'}"
+                                    />
+                                    </td>
+                                    <td>
+                                        Technician: <span t-field="o.user_id.name" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row" name="task_body_report">
+                            <span t-field="o.description" />
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

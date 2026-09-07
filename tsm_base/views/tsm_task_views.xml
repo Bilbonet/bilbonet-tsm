@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <!-- Main Menus -->
+    <menuitem
+        id="tsm_main_menu"
+        name="T.S.M"
+        web_icon="tsm_base,static/description/icon.png"
+        groups="group_tsm_manager,group_tsm_user"
+        sequence="50"
+    />
+
+    <menuitem
+        id="tsm_config_menu"
+        name="Configuration"
+        parent="tsm_main_menu"
+        groups="tsm_base.group_tsm_manager"
+        sequence="100"
+    />
+
+    <!-- Tasks views -->
+    <record id="tsm_task_search_view" model="ir.ui.view">
+        <field name="name">tsm.task.search.view</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <search string="Tasks">
+                <field
+                    name="partner_id"
+                    filter_domain="[('partner_id', 'child_of', self)]"
+                />
+                <field
+                    name="name"
+                    string="Tasks Title"
+                    filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
+                />
+                <field name="description" string="Tasks Description" />
+                <field name="project_id" />
+                <field name="user_id" />
+                <filter
+                    string="My Tasks"
+                    name="my_tasks"
+                    domain="[('user_id','=',uid)]"
+                />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+                <separator />
+                <filter
+                    string="Starred"
+                    name="starred"
+                    domain="[('priority','=','1')]"
+                />
+                <filter
+                    string="Unread Messages"
+                    name="message_needaction"
+                    domain="[('message_needaction','=',True)]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Project"
+                        name="project"
+                        context="{'group_by':'project_id'}"
+                    />
+                    <filter
+                        string="Assigned to"
+                        name="User"
+                        context="{'group_by':'user_id'}"
+                    />
+                    <filter
+                        string="Customer"
+                        name="customer"
+                        context="{'group_by':'partner_id'}"
+                    />
+                    <filter
+                        string="Company"
+                        name="Company"
+                        context="{'group_by':'company_id'}"
+                        groups="base.group_multi_company"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="tsm_task_form_view" model="ir.ui.view">
+        <field name="name">tsm.task.form</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <form string="Task" class="o_form_project_tasks">
+                <header>
+                    <button
+                        name="action_task_send"
+                        type="object"
+                        groups="tsm_base.group_tsm_user"
+                        string=" Send by Email"
+                        class="oe_highlight"
+                        icon="fa-envelope"
+                    />
+                    <field
+                        name="stage_id"
+                        widget="statusbar"
+                        options="{'clickable': '1', 'fold_field': 'fold'}"
+                    />
+                </header>
+                <sheet string="Task">
+                    <field name="active" invisible="1" />
+                    <field name="closed" invisible="1" />
+                    <div
+                        class="oe_button_box"
+                        name="button_box"
+                        groups="base.group_user"
+                    />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_title pe-0">
+                        <h2 class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex w-100">
+                                <field
+                                    name="priority"
+                                    widget="priority"
+                                    class="me-3"
+                                    style="flex-basis: 3%"
+                                />
+                                <field
+                                    name="code"
+                                    class="me-3"
+                                    style="flex-basis: 9%"
+                                />
+                                <field
+                                    name="name"
+                                    class="me-3 pe-2"
+                                    placeholder="Task Title..."
+                                />
+                            </div>
+                            <button
+                                type="object"
+                                name="action_inactive"
+                                class="btn btn-link text-danger"
+                                icon="fa-check fa-2x"
+                                title="Active"
+                                Help="Archive Task"
+                                invisible="(not closed or not active)"
+                            />
+                            <button
+                                type="object"
+                                name="action_active"
+                                class="btn btn-link text-success"
+                                icon="fa-undo fa-2x"
+                                title="Inactive"
+                                Help="Unarchive Task"
+                                invisible="active"
+                            />
+                            <field
+                                name="kanban_state"
+                                widget="state_selection"
+                                class=""
+                            />
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" domain="[('active', '=', True)]" />
+                            <field
+                                name="user_id"
+                                class="o_task_user_field"
+                                options="{&quot;no_open&quot;: True}"
+                            />
+                            <field name="partner_id" required="1" />
+                            <field
+                                name="contact_id"
+                                groups="tsm_base.group_tsm_task_contact"
+                            />
+                            <field name="tags_in_task" invisible="1" />
+                            <field
+                                name="tag_ids"
+                                widget="many2many_tags"
+                                options="{'color_field': 'color', 'no_create_edit': True}"
+                                invisible="not tags_in_task"
+                            />
+                        </group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_deadline" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="description_page" string="Description">
+                            <field
+                                name="description"
+                                default_focus="1"
+                                type="html"
+                                options="{'codeview':true}"
+                                placeholder="Task description..."
+                            />
+                            <div class="oe_clear" />
+                        </page>
+                        <page name="extra_info" string="Extra Info">
+                            <group>
+                                <group>
+                                    <field name="privacy_visibility" widget="radio" />
+                                    <field
+                                        name="company_id"
+                                        groups="base.group_multi_company"
+                                        options="{'no_create': True}"
+                                    />
+                                </group>
+                                <group>
+                                    <field
+                                        name="date_assign"
+                                        readonly="1"
+                                        force_save="1"
+                                    />
+                                    <field name="date_end" groups="base.group_no_one" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="tsm_quick_create_task_form" model="ir.ui.view">
+        <field name="name">task.form.quick_create</field>
+        <field name="model">tsm.task</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" string="Task Title" />
+                    <field
+                        name="partner_id"
+                        options="{'no_open': True,'no_create': True}"
+                        required="1"
+                    />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="tsm_task_kanban_view" model="ir.ui.view">
+        <field name="name">tsm.task.kanban</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <kanban
+                highlight_color="color"
+                default_group_by="stage_id"
+                class="o_kanban_small_column"
+                on_create="quick_create"
+                quick_create_view="tsm_base.tsm_quick_create_task_form"
+            >
+                <field name="sequence" invisible="1" />
+                <field name="tags_in_task" invisible="1" />
+                <field name="color" />
+                <field name="priority" />
+                <field
+                    name="stage_id"
+                    options="{&quot;group_by_tooltip&quot;: {&quot;description&quot;: &quot;Stage Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"
+                />
+                <field name="user_id" />
+                <field name="description" />
+                <field name="date_deadline" />
+                <field name="message_needaction_counter" />
+                <field name="active" />
+                <field name="legend_blocked" />
+                <field name="legend_normal" />
+                <field name="legend_done" />
+                <field name="activity_ids" />
+                <field name="activity_state" />
+                <progressbar
+                    field="kanban_state"
+                    colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;}"
+                />
+                <templates>
+                    <t t-name="card">
+                        <div
+                            t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click"
+                        >
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <small class="text-primary">
+                                            <field name="partner_id" />
+                                        </small>
+                                        <hr class="mt0 mb4" />
+                                        <span class="mr-2">
+                                            <a
+                                                name="action_inactive"
+                                                type="object"
+                                                t-if="record.active.raw_value and record.closed.raw_value"
+                                            >
+                                                <i
+                                                    class="fa fa-check"
+                                                    role="img"
+                                                    aria-label="Active"
+                                                    title="Active"
+                                                />
+                                            </a>
+                                            <a
+                                                name="action_active"
+                                                type="object"
+                                                t-if="!record.active.raw_value"
+                                            >
+                                                <i
+                                                    class="fa fa-undo"
+                                                    role="img"
+                                                    aria-label="Inactive"
+                                                    title="Inactive"
+                                                />
+                                            </a>
+                                        </span>
+                                        <t
+                                            t-if="record.active.raw_value == false"
+                                            t-set="muted"
+                                        >text-muted</t>
+                                        <span
+                                            t-attf-class="#{muted || 'o_kanban_record_title'}"
+                                        >
+                                            [<field name="code" />]
+                                            <field name="name" />
+                                        </span>
+                                        <t
+                                            t-if="record.date_deadline.raw_value and record.date_deadline.raw_value lt (new Date())"
+                                            t-set="red"
+                                        >oe_kanban_text_red</t>
+                                        <span t-attf-class="#{red || ''}">
+                                            <i>
+                                                <field name="date_deadline" />
+                                            </i>
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="o_dropdown_kanban dropdown"
+                                        groups="base.group_user"
+                                    >
+                                        <a
+                                            role="button"
+                                            class="dropdown-toggle o-no-caret btn"
+                                            data-toggle="dropdown"
+                                            data-display="static"
+                                            href="#"
+                                            aria-label="Dropdown menu"
+                                            title="Dropdown menu"
+                                        >
+                                            <span class="fa fa-ellipsis-v" />
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <field name="closed" invisible="1" />
+                                            <a
+                                                role="menuitem"
+                                                type="edit"
+                                                class="dropdown-item"
+                                            >Edit Task</a>
+                                            <a
+                                                role="menuitem"
+                                                type="delete"
+                                                class="dropdown-item"
+                                            >Delete</a>
+                                            <div
+                                                role="separator"
+                                                class="dropdown-divider"
+                                            />
+                                            <ul
+                                                class="oe_kanban_colorpicker"
+                                                data-field="color"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="o_kanban_record_body">
+                                    <span style="color:mediumorchid;font-size:0.86em;">
+                                        <i>
+                                            <field name="project_id" />
+                                        </i>
+                                    </span>
+                                    <field
+                                        name="tag_ids"
+                                        widget="many2many_tags"
+                                        options="{'color_field': 'color'}"
+                                        invisible="not tags_in_task"
+                                    />
+                                </div>
+
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority" />
+                                        <field
+                                            name="activity_ids"
+                                            widget="kanban_activity"
+                                        />
+                                        <t
+                                            t-if="record.message_needaction_counter.raw_value"
+                                        >
+                                            <span
+                                                role="alert"
+                                                class="oe_kanban_mail_new"
+                                                title="Unread Messages"
+                                            >
+                                                <i
+                                                    class="fa fa-comments"
+                                                    role="img"
+                                                    aria-label="Unread Messages"
+                                                />
+                                                <t
+                                                    t-out="record.message_needaction_counter.raw_value"
+                                                />
+                                            </span>
+                                        </t>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field
+                                            name="kanban_state"
+                                            widget="state_selection"
+                                            groups="base.group_user"
+                                        />
+                                        <field
+                                            name="user_id"
+                                            widget="many2one_avatar_user"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="tsm_task_tree_view" model="ir.ui.view">
+        <field name="name">tsm.task.list</field>
+        <field name="model">tsm.task</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-danger="date_deadline and (date_deadline&lt;current_date) and active == True"
+                decoration-muted="active == False"
+            >
+                <field name="active" invisible="1" />
+                <field name="closed" invisible="1" />
+                <field name="priority" widget="priority" optional="hide" />
+                <field name="date_start" widget="date" />
+                <field
+                    name="date_deadline"
+                    widget="date"
+                    decoration-bf="1"
+                    optional="hide"
+                />
+                <field name="user_id" />
+                <field name="partner_id" />
+                <field name="contact_id" optional="hide" />
+                <field name="project_id" />
+                <field name="code" />
+                <field name="name" />
+                <field
+                    name="stage_id"
+                    decoration-success="closed == True"
+                    widget="badge"
+                    optional="show"
+                />
+                <field name="sequence" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <!--=================
+        Menus and Actions
+    ==================-->
+    <record id="tsm_task_action_from_menu" model="ir.actions.act_window">
+        <field name="name">TSM: My Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_id" ref="tsm_task_kanban_view" />
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_my_tasks': 1}</field>
+        <field name="search_view_id" ref="tsm_task_search_view" />
+        <field name="help" type="html">
+            <p>
+                Technical Support Management allows you to manage the pipeline of your tasks efficiently.
+                You can track progress, discuss on tasks, attach documents, etc.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="tsm_task_menu"
+        name="Tasks"
+        parent="tsm_base.tsm_main_menu"
+        action="tsm_task_action_from_menu"
+        sequence="1"
+    />
+
+    <menuitem
+        id="tsm_res_partner_menu"
+        name="Customers"
+        parent="tsm_base.tsm_main_menu"
+        action="base.action_partner_form"
+        sequence="10"
+    />
+
+    <!-- Assign/Unassign Followers to Tasks -->
+    <record id="task_follower_assignment_action" model="ir.actions.act_window">
+        <field name="name">Add/Remove Followers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">follower.assignment.wizard</field>
+        <field name="view_mode">form,list</field>
+        <field name="view_id" ref="tsm_base.follower_assignment_wizard_view" />
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="tsm_base.model_tsm_task" />
+    </record>
+</odoo>

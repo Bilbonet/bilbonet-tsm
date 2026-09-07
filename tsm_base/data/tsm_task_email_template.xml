@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="tsm_task_email_template" model="mail.template">
+        <field name="name">TSM Task - Send by Email</field>
+        <field name="model_id" ref="tsm_base.model_tsm_task" />
+        <field name="subject">Task: {{object.name or 'n/a'}}</field>
+        <field
+            name="email_from"
+        >{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field
+            name="partner_to"
+        >{{ object.contact_id.id if object.contact_id.email else object.partner_id.id }}</field>
+        <field
+            name="report_template_ids"
+            eval="[(4, ref('tsm_base.tsm_task_report_action'))]"
+        />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p
+                    style="box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;"
+                >
+        Hello, <span style="font-weight: bold;" t-out="object.partner_id.name or ''" />
+        <br /><br />
+        We inform you about the following task:
+    </p>
+                <p
+                    style="border-left: 4px solid #f2f2f2; margin-left: 30px;padding-left:15px;"
+                >
+       Title: <span style="font-weight: bold;" t-out="object.name or ''" /><br />
+       Task Start: <span
+                    style="font-weight: bold;"
+                    t-out="object.date_start or ''"
+                    t-options="{'widget': 'date'}"
+                /><br />
+       Your contact: <span
+                    style="font-weight: bold;"
+                    t-out="object.user_id.name or ''"
+                />
+    </p>
+                <p>
+        If you have any question, do not hesitate to contact us.<br />
+        Thank you for trusting in us!
+    </p>
+                <t t-if="not is_html_empty(object.user_id.signature)">
+                    <br />
+                    <t t-out="object.user_id.signature or ''">--<br />Bilbonet</t>
+                </t>
+            </div>
+        </field>
+    </record>
+</odoo>

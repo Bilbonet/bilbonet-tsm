@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <!--  Partner Task Button -->
+    <record id="tsm_task_action_from_partner" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">tsm.task</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="tsm_task_search_view" />
+    </record>
+
+    <record id="tsm_task_partner_info_form_view" model="ir.ui.view">
+        <field name="name">tsm.task.res.partner.buttons</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority" eval="60" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    class="oe_stat_button"
+                    type="action"
+                    name="%(tsm_task_action_from_partner)d"
+                    context="{'search_default_partner_id': id, 'default_partner_id': id, 'active_test': False}"
+                    groups="tsm_base.group_tsm_user"
+                    icon="fa-tasks"
+                    invisible="tsm_task_count == 0"
+                >
+                    <field string="Tasks" name="tsm_task_count" widget="statinfo" />
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- Assign/Unassign Followers to Partners -->
+    <record id="partner_follower_assignment_action" model="ir.actions.act_window">
+        <field name="name">Add/Unlink Followers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">follower.assignment.wizard</field>
+        <field name="view_mode">form,list</field>
+        <field name="view_id" ref="tsm_base.follower_assignment_wizard_view" />
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner" />
+    </record>
+</odoo>
