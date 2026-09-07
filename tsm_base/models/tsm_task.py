@@ -2,6 +2,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import SUPERUSER_ID, _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import LazyTranslate
+
+_lt = LazyTranslate(__name__)
 
 
 class TsmTask(models.Model):
@@ -162,7 +165,7 @@ class TsmTask(models.Model):
     )
 
     _sql_constraints = [
-        ("tsm_task_unique_code", "UNIQUE (code)", _("The code must be unique!")),
+        ("tsm_task_unique_code", "UNIQUE (code)", _lt("The code must be unique!")),
     ]
 
     @api.depends("code", "name")
