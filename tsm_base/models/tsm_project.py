@@ -100,7 +100,7 @@ class TsmProject(models.Model):
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
-        default=lambda self: self.env["res.company"]._company_default_get(),
+        default=lambda self: self.env.company,
     )
     task_ids = fields.One2many("tsm.task", "project_id", string="Tasks Related")
     task_count = fields.Integer(compute="_compute_task_count", string="Amount Tasks")

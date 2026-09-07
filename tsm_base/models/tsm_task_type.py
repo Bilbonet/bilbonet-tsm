@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class TsmTaskType(models.Model):
@@ -18,7 +18,7 @@ class TsmTaskType(models.Model):
     )
     legend_blocked = fields.Char(
         "Red Kanban Label",
-        default=lambda s: _("Blocked"),
+        default="Blocked",
         translate=True,
         required=True,
         help="Override the default value displayed for the blocked state for "
@@ -26,7 +26,7 @@ class TsmTaskType(models.Model):
     )
     legend_done = fields.Char(
         "Green Kanban Label",
-        default=lambda s: _("Ready for Next Stage"),
+        default="Ready for Next Stage",
         translate=True,
         required=True,
         help="Override the default value displayed for the done state for "
@@ -34,7 +34,7 @@ class TsmTaskType(models.Model):
     )
     legend_normal = fields.Char(
         "Grey Kanban Label",
-        default=lambda s: _("In Progress"),
+        default="In Progress",
         translate=True,
         required=True,
         help="Override the default value displayed for the normal state for "
