@@ -11,7 +11,7 @@
         <field name="view_mode">kanban,list,form</field>
         <field name="context">{
             'active_test': False,
-            'search_default_project_id': [id],
+            'search_default_project_id': [active_id],
             }</field>
         <field name="search_view_id" ref="tsm_task_search_view" />
         <field name="help" type="html">
@@ -197,18 +197,30 @@
                 <field name="activity_ids" />
                 <field name="activity_state" />
                 <templates>
+                    <t t-name="menu" groups="base.group_user">
+                        <a
+                            role="menuitem"
+                            type="edit"
+                            class="dropdown-item"
+                        >Edit Project</a>
+                        <div role="separator" class="dropdown-divider" />
+                        <field name="color" widget="kanban_color_picker" />
+                    </t>
                     <t t-name="card">
-                        <div
-                            t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon"
-                        >
-                            <div class="o_project_kanban_main">
+                        <main class="d-flex flex-column h-100">
+                            <div class="o_project_kanban_main flex-grow-1 min-w-0">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
-                                        <div class="o_primary">
-                                            <span>
+                                        <div class="o_primary min-w-0">
+                                            <span
+                                                class="fw-bold fs-5 d-block text-truncate"
+                                            >
                                                 <t t-esc="record.name.value" />
                                             </span>
-                                            <span t-if="record.partner_id.value">
+                                            <span
+                                                t-if="record.partner_id.value"
+                                                class="text-muted d-block text-truncate"
+                                            >
                                                 <strong>
                                                     <t
                                                         t-esc="record.partner_id.value"
@@ -218,45 +230,14 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div
-                                    class="o_kanban_card_manage_pane dropdown-menu"
-                                    role="menu"
-                                >
-                                    <div
-                                        class="o_kanban_card_manage_section o_kanban_manage_reports"
-                                    >
-                                        <div role="menuitem">
-                                            <a type="edit">Edit</a>
-                                        </div>
-                                    </div>
-                                    <div
-                                        role="menuitem"
-                                        aria-haspopup="true"
-                                        class="o_no_padding_kanban_colorpicker"
-                                    >
-                                        <ul
-                                            class="oe_kanban_colorpicker"
-                                            data-field="color"
-                                            role="popup"
-                                        />
-                                    </div>
-                                </div>
-                                <a
-                                    class="o_kanban_manage_toggle_button o_left"
-                                    href="#"
-                                >
-                                    <i
-                                        class="fa fa-ellipsis-v"
-                                        role="img"
-                                        aria-label="Manage"
-                                        title="Manage"
-                                    />
-                                </a>
                             </div>
 
-                            <div class="o_kanban_record_bottom">
-                                <div class="oe_kanban_bottom_left">
+                            <footer
+                                class="o_kanban_record_bottom mt-auto pt-1 d-flex align-items-center"
+                            >
+                                <div
+                                    class="oe_kanban_bottom_left d-flex align-items-center gap-1"
+                                >
                                     <field name="priority" widget="priority" />
                                     <field
                                         name="activity_ids"
@@ -291,21 +272,20 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="oe_kanban_bottom_right">
+                                <div
+                                    class="oe_kanban_bottom_right d-flex align-items-center gap-1 ms-auto"
+                                >
                                     <span class="oe_kanban_text_red">
                                         <field name="date_start" widget="date" />
                                     </span>
-                                    <img
-                                        t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
-                                        t-att-title="record.user_id.value"
-                                        t-att-alt="record.user_id.value"
-                                        width="24"
-                                        height="24"
-                                        class="oe_kanban_avatar float-right"
+                                    <field
+                                        name="user_id"
+                                        widget="many2one_avatar_user"
+                                        class="oe_kanban_avatar float-end"
                                     />
                                 </div>
-                            </div>
-                        </div>
+                            </footer>
+                        </main>
                     </t>
                 </templates>
             </kanban>

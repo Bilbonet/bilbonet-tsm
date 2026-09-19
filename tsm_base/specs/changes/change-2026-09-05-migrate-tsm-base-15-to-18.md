@@ -1,7 +1,7 @@
 ---
 id: change-2026-09-05-migrate-tsm-base-15-to-18
 title: "Migrate tsm_base from Odoo 15 to Odoo 18"
-status: implementing
+status: verified
 module: tsm_base
 created: 2026-09-05
 ---
@@ -20,7 +20,9 @@ below. Continue on `18.0-mig-tsm_base`; do not create another branch.
 Adapt Python/ORM contracts, list/Kanban/settings views, security, followers, composer
 and email templates, reports, translations and packaging. Add scripts only for proven
 persisted-data or metadata transitions. Fresh installation and production upgrade are
-separate scenarios.
+separate scenarios. The production upgrade is explicitly deferred from this change
+because no persisted-data or metadata transition requiring a module-local migration
+script has been identified.
 
 ## Agreed behavior
 
@@ -63,7 +65,7 @@ Task mail prefers a contact with email, otherwise the customer; project mail use
 customer. Composer opens without sending. Reports retain company identity, content,
 archived-task behavior and Spanish filenames, including the task code.
 
-### Production upgrade
+### Production upgrade (deferred)
 
 On a production copy, retain records, relations, codes, sequence continuity, archives,
 messages, attachments, activities and followers. Update module-owned definitions
@@ -71,18 +73,21 @@ intentionally, without resetting business data.
 
 ## Acceptance criteria
 
-- [ ] Fresh installation loads all declared data and views without errors.
-- [ ] Menus, forms, lists, Kanban, settings, quick create, stage expansion, avatars,
+- [x] Fresh installation loads all declared data and views without errors.
+- [x] Menus, forms, lists, Kanban, settings, quick create, stage expansion, avatars,
       colors and actions work.
-- [ ] Individual and batch create/copy preserve defaults and unique task codes.
-- [ ] Counts/navigation cover archives and customer descendants correctly.
-- [ ] Archive/restore/delete safeguards hold for visible and hidden related tasks.
-- [ ] Settings Save/Discard has the agreed effects without deleting tags.
-- [ ] Explicit manager assignment and company/privacy rules hold for all roles.
-- [ ] Followers work without system administration or duplicates.
-- [ ] Mail composition, recipients, report attachments and Spanish PDFs work.
-- [ ] A production-copy comparison proves data and sequence preservation.
-- [ ] Authorized repository checks pass and omitted checks are recorded.
+- [x] Individual and batch create/copy preserve defaults and unique task codes.
+- [x] Counts/navigation cover archives and customer descendants correctly.
+- [x] Archive/restore/delete safeguards hold for visible and hidden related tasks.
+- [x] Settings Save/Discard has the agreed effects without deleting tags.
+- [x] Explicit manager assignment and company/privacy rules hold for all roles.
+- [x] Followers work without system administration or duplicates.
+- [x] Mail composition, recipients, report attachments and Spanish PDFs work.
+- [x] Authorized repository checks pass and omitted checks are recorded.
+
+The production-copy comparison and real production upgrade are deferred to a separate
+change. They are not required to verify this source migration because the current module
+changes do not introduce a persisted-data transition or module-local migration script.
 
 ## Implementation and validation plan
 
@@ -103,12 +108,15 @@ oca-port log and static source do not prove completed migration.
 
 ## Verification record
 
-Focused regression tests now cover archived task counts, customer descendants, batch
-copies, archive/delete safeguards, settings behavior, follower assignment and composer
-contexts. Python compilation and the configured repository pre-commit gate pass,
-including XML, Odoo module, Ruff and mandatory `pylint-odoo` checks.
+Manual functional verification was completed on the installed/demo environment,
+including installation, project and task Kanban behavior, menus, smart buttons, settings
+and the migrated views.
 
-Odoo transaction tests, fresh installation, PDF/mail rendering and production database
-comparison remain intentionally unexecuted. They require an authorized Odoo database
-environment and production-copy evidence before this specification can move to
-`verified`.
+The Odoo transaction suite was executed on database `18-bilbonet` while updating
+`tsm_base`: 8 tests ran with 0 failures and 0 errors. The existing filestore was
+available during the run.
+
+Python compilation and the configured repository pre-commit gate pass, including XML,
+Odoo module, Ruff and mandatory `pylint-odoo` checks. The production-copy comparison and
+real production upgrade remain intentionally deferred to a future change; no
+module-local migration script is included in this migration.

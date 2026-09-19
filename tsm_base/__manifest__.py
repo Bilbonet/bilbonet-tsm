@@ -7,7 +7,7 @@
     "version": "18.0.1.0.0",
     "development_status": "Beta",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
-    "author": "Jesus Ramiro, Bilbonet",
+    "author": "Bilbonet",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
     "application": True,
