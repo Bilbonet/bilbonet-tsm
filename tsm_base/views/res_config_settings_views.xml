@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">TSM Task Settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="71" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app name="tsm_base" string="T.S.M" groups="tsm_base.group_tsm_manager">
+                    <block title="TSM Task Settings">
+                        <setting
+                            id="use_tags_in_tasks"
+                            help="Use tags to classify tasks."
+                        >
+                            <field name="default_tags_in_task" />
+                        </setting>
+                        <setting
+                            id="use_contact_in_tasks"
+                            help="Use a contact on tasks."
+                        >
+                            <field name="group_tsm_task_contact" />
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="tsm_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'tsm_base'}</field>
+    </record>
+
+    <menuitem
+        id="tsm_menu_configuration"
+        name="Settings"
+        parent="tsm_config_menu"
+        sequence="0"
+        action="tsm_config_settings_action"
+        groups="tsm_base.group_tsm_manager"
+    />
+</odoo>

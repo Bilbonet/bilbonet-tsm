@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Jesus Ramiro <jesus@bilbonet.net>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+    <t
+        t-name="tsm_base.TaskStatusSelectionField"
+        t-inherit="web.StateSelectionField"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//t[@t-if='props.readonly']/button" position="attributes">
+            <attribute name="t-att-title">label</attribute>
+        </xpath>
+    </t>
+</templates>
