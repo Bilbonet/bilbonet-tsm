@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo import SUPERUSER_ID, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -23,7 +23,7 @@ class TsmTask(models.Model):
         """Read group customization in order to display all the stages in the
         kanban view, even if they are empty
         """
-        return stages.with_user(SUPERUSER_ID).search([], order="sequence, id")
+        return self._read_group_expand_full(stages.with_user(SUPERUSER_ID), domain)
 
     code = fields.Char(string="Task Code", required=True, default="/", readonly=True)
     sequence = fields.Integer(
@@ -51,7 +51,7 @@ class TsmTask(models.Model):
         index=True,
         copy=False,
         group_expand="_read_group_stage_ids",
-        default=_get_default_stage_id,
+        default=lambda self: self._get_default_stage_id(),
     )
     closed = fields.Boolean(related="stage_id.closed", readonly=True)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
@@ -59,21 +59,19 @@ class TsmTask(models.Model):
         comodel_name="tsm.task.tags",
         string="Tags",
     )
-    kanban_state = fields.Selection(
-        selection=[("normal", "Grey"), ("done", "Green"), ("blocked", "Red")],
+    task_status = fields.Selection(
+        selection=[
+            ("on_track", "On Track"),
+            ("at_risk", "At Risk"),
+            ("off_track", "Off Track"),
+            ("on_hold", "On Hold"),
+            ("to_define", "Set Status"),
+            ("done", "Done"),
+        ],
         copy=False,
-        default="normal",
+        default="to_define",
         required=True,
-        help="A task's kanban state indicates special situations "
-        "affecting it:\n"
-        " * Grey is the default situation\n"
-        " * Red indicates something is preventing "
-        "the progress of this task\n"
-        " * Green indicates the task is ready to be "
-        "pulled to the next stage",
-    )
-    kanban_state_label = fields.Char(
-        compute="_compute_kanban_state_label",
+        tracking=True,
     )
     color = fields.Integer(string="Color Index")
     date_start = fields.Date(
@@ -90,24 +88,6 @@ class TsmTask(models.Model):
     )
     date_deadline = fields.Date(string="Deadline", index=True, copy=False)
     date_end = fields.Date(string="Ending Date", index=True, copy=False)
-    legend_blocked = fields.Char(
-        related="stage_id.legend_blocked",
-        string="Kanban Blocked Explanation",
-        readonly=True,
-        related_sudo=False,
-    )
-    legend_done = fields.Char(
-        related="stage_id.legend_done",
-        string="Kanban Valid Explanation",
-        readonly=True,
-        related_sudo=False,
-    )
-    legend_normal = fields.Char(
-        related="stage_id.legend_normal",
-        string="Kanban Ongoing Explanation",
-        readonly=True,
-        related_sudo=False,
-    )
     description = fields.Html(
         string="Task Description",
         sanitize=True,
@@ -170,16 +150,6 @@ class TsmTask(models.Model):
         for task in self:
             task.display_name = f"[{task.code}] {task.name}"
 
-    @api.depends("stage_id", "kanban_state")
-    def _compute_kanban_state_label(self):
-        for task in self:
-            if task.kanban_state == "normal":
-                task.kanban_state_label = task.legend_normal
-            elif task.kanban_state == "blocked":
-                task.kanban_state_label = task.legend_blocked
-            else:
-                task.kanban_state_label = task.legend_done
-
     @api.onchange("project_id")
     def _onchange_project(self):
         if self.project_id:
@@ -193,26 +163,28 @@ class TsmTask(models.Model):
 
     @api.constrains("active")
     def _check_archiving_restrictions(self):
+        """Validate archived tasks and reset their priority and task status.
+
+        Restoring tasks does not require a closed stage or reset their values.
         """
-        Only archive task in closed stages.
-        Constraint should be tested just after archiving a task,
-        but shouldn't be raised when unarchiving a task.
-        """
-        for task in self.filtered(lambda t: not t.active):
-            if not task.closed:
-                raise ValidationError(
-                    _(
-                        "You can not archive a task in a stage not considered closed.\n"
-                        "You can archive tasks in closed stages."
-                    )
+        archived_tasks = self.filtered(lambda task: not task.active)
+        if not archived_tasks:
+            return
+
+        if any(not task.closed for task in archived_tasks):
+            raise ValidationError(
+                self.env._(
+                    "You can not archive a task in a stage not considered closed.\n"
+                    "You can archive tasks in closed stages."
                 )
-            # if task is archived reset some values
-            task.update(
-                {
-                    "priority": "0",
-                    "kanban_state": "normal",
-                }
             )
+
+        archived_tasks.write(
+            {
+                "priority": "0",
+                "task_status": "to_define",
+            }
+        )
 
     def action_task_send(self):
         """

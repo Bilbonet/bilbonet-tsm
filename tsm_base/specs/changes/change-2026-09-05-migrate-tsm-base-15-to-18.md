@@ -20,9 +20,11 @@ below. Continue on `18.0-mig-tsm_base`; do not create another branch.
 Adapt Python/ORM contracts, list/Kanban/settings views, security, followers, composer
 and email templates, reports, translations and packaging. Add scripts only for proven
 persisted-data or metadata transitions. Fresh installation and production upgrade are
-separate scenarios. The production upgrade is explicitly deferred from this change
-because no persisted-data or metadata transition requiring a module-local migration
-script has been identified.
+separate scenarios.
+
+La actualización de producción queda aplazada a un cambio separado. No se incluye un
+script local: antes hay que inspeccionar los datos, las reglas bajo `noupdate` y las
+asignaciones históricas de grupos de cada base.
 
 ## Agreed behavior
 
@@ -48,10 +50,17 @@ descendants without stale accumulation.
 
 ### Archive and deletion
 
-Only tasks in closed stages can be archived; restore is allowed. Archiving resets
-priority to Low and Kanban state to Normal. Projects with active tasks cannot be
-archived. Projects with any task cannot be deleted, including when all tasks are
-archived. Batch operations enforce the same rules.
+Solo se archivan tareas en etapas cerradas; restaurarlas está permitido. El reinicio de
+prioridad y estado visual se define en la especificación vigente de `task_status`. Los
+proyectos con tareas activas no se archivan. Los proyectos con cualquier tarea, activa o
+archivada, no se eliminan. Estas protecciones incluyen tareas privadas que el usuario no
+puede leer y se aplican al lote completo antes de modificarlo. Se comprueba primero el
+permiso sobre los proyectos; detectar la existencia de tareas ocultas no concede acceso
+a su contenido ni permite modificarlas.
+
+El kanban resalta como vencidas las fechas límite anteriores al día actual del cliente
+web, conservando el día calendario de `fields.Date`. Hoy, las fechas futuras y la
+ausencia de fecha límite no se resaltan como vencidas.
 
 ### Settings and access
 
@@ -59,11 +68,17 @@ Save/discard has exactly the agreed tag behavior. Users, managers, two companies
 followers and non-followers respect company, privacy and responsibility rules in menus,
 counts, reports and the follower wizard.
 
-### Mail and reports
+### Correo e informes
 
-Task mail prefers a contact with email, otherwise the customer; project mail uses the
-customer. Composer opens without sending. Reports retain company identity, content,
-archived-task behavior and Spanish filenames, including the task code.
+El correo de tareas prefiere un contacto con dirección de correo y, en su defecto, el
+cliente; el correo de proyectos utiliza el cliente. Se permite conservar un contacto de
+otra cuenta para relaciones entre empresas y sucursales; cambiar el cliente o el
+proyecto no lo limpia ni impone una validación de pertenencia. El compositor se abre sin
+enviar. Los informes conservan la identidad de la compañía, el contenido y el
+comportamiento de las tareas archivadas. El PDF individual de una tarea y su adjunto de
+correo se llaman `código_título_de_la_tarea.pdf`, sin paréntesis; las secuencias de
+espacios en blanco se sustituyen por un guion bajo. La traducción conserva la expresión
+del informe sin sustituir el código por el título.
 
 ### Production upgrade (deferred)
 
@@ -85,9 +100,10 @@ intentionally, without resetting business data.
 - [x] Mail composition, recipients, report attachments and Spanish PDFs work.
 - [x] Authorized repository checks pass and omitted checks are recorded.
 
-The production-copy comparison and real production upgrade are deferred to a separate
-change. They are not required to verify this source migration because the current module
-changes do not introduce a persisted-data transition or module-local migration script.
+La comparación con una copia y la actualización real de producción quedan aplazadas a un
+cambio separado y no forman parte de la evidencia histórica de esta migración de código.
+Las correcciones actuales requieren nueva verificación funcional; no se deduce su
+resultado de las casillas ni del estado histórico de esta especificación.
 
 ## Implementation and validation plan
 
@@ -101,10 +117,19 @@ explicitly authorized.
 
 ## Open points and risks
 
-Before database execution, identify company-less records, cross-company relations,
-historic manager assignments, installed sibling addons and the database migration
-orchestration. Do not silently reassign or delete such data. The current manifest,
-oca-port log and static source do not prove completed migration.
+Antes de ejecutar operaciones de base de datos, inspeccionar registros sin compañía,
+relaciones entre compañías, asignaciones históricas de responsables, addons hermanos
+instalados y la orquestación de la migración. Las validaciones nuevas de compatibilidad
+entre compañías quedan aplazadas; no reasignar ni eliminar datos silenciosamente.
+
+Las seis reglas de seguridad mantienen `noupdate="1"`. Si se conservan sus XML IDs de
+Odoo 15, una actualización ordinaria no sustituye los dominios antiguos sin filtro por
+compañía. Retirar del XML el grupo TSM Manager de `base.default_user` tampoco elimina
+asignaciones existentes. Antes de migrar cada base, contrastar dominios, metadatos
+`noupdate` y grupos históricos. Puede prepararse un procedimiento común, condicionado a
+ese inventario y a la revisión de personalizaciones, sin aplicar una sobrescritura
+indiscriminada. El manifest, el registro de `oca-port` y el código no demuestran la
+migración de producción.
 
 ## Verification record
 
@@ -120,3 +145,35 @@ Python compilation and the configured repository pre-commit gate pass, including
 Odoo module, Ruff and mandatory `pylint-odoo` checks. The production-copy comparison and
 real production upgrade remain intentionally deferred to a future change; no
 module-local migration script is included in this migration.
+
+La evidencia histórica de los PDF no verifica el ajuste actual de su nombre. Se ha
+comprobado por lectura que la descarga individual y los adjuntos de correo usan
+`print_report_name`; el XML y su traducción española contienen la misma expresión. El
+parseo XML y del catálogo y la evaluación aislada de la expresión con valores ficticios
+confirman el código inicial y los guiones bajos, también con espacios repetidos,
+tabulaciones y saltos de línea. Queda pendiente cargar la definición y su traducción en
+Odoo y verificar la descarga y el adjunto de correo en ejecución, con autorización.
+
+Las protecciones de proyectos se han corregido para incluir tareas ocultas mediante
+consultas de existencia acotadas, después de comprobar el acceso al proyecto. Se han
+añadido dos regresiones: usuario normal con una tarea privada oculta, operaciones en
+lote y tarea archivada; y rechazo por permisos antes de comprobar tareas ocultas. Los
+fixtures invalidan `task_ids` antes de leerlo con el usuario limitado para no reutilizar
+la caché poblada como administrador y comprueban la ocultación mediante búsqueda o
+permiso de lectura. La ejecución aportada obtuvo 13 pruebas correctas y tres avisos de
+obsolescencia de `datetime.utcnow()` en el core de correo de Odoo.
+
+La preparación del usuario utiliza `no_reset_password=True` para evitar su invitación
+automática. La asignación de los dos proyectos aplica
+`mail_auto_subscribe_no_notify=True` solo en esa escritura, conservando seguidores y
+tracking y evitando las notificaciones de asignación ajenas a la prueba de permisos. No
+se modifica el core ni se filtran warnings. Queda pendiente repetir la suite tras este
+ajuste para comprobar el resultado y la desaparición de esos avisos; el agente no ha
+ejecutado pruebas de Odoo. El resaltado usa `text-danger fw-bold`, compatible con las
+tarjetas de Odoo 18; `oe_kanban_text_red` solo se define para tarjetas antiguas. La
+sintaxis Python y XML y el lint de Ruff son correctos. La expresión kanban se ha
+evaluado aisladamente con Luxon del core: 80 casos correctos en cinco zonas horarias,
+incluidos ayer, hoy, mañana, ausencia de fecha, cambio de año y año bisiesto. Queda
+pendiente repetir la suite tras el ajuste de notificaciones y comprobar el resaltado en
+el navegador, con autorización. El estado `verified` conserva la evidencia histórica; no
+acredita estas correcciones posteriores.

@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -142,10 +142,18 @@ class TsmProject(models.Model):
     def write(self, vals):
         # First all tasks of the project must be archived
         if "active" in vals and not vals["active"]:
-            actives = self.mapped("task_ids").filtered("active")
-            if actives:
+            self.check_access("write")
+            # Private tasks must block archiving without exposing their content.
+            if (
+                self.env["tsm.task"]
+                .sudo()
+                .with_context(active_test=False)
+                .search_count(
+                    [("project_id", "in", self.ids), ("active", "=", True)], limit=1
+                )
+            ):
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot archive a project with active tasks.\n"
                         "You need to archive all tasks of the project first."
                     )
@@ -159,15 +167,20 @@ class TsmProject(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _unlink_if_tasks_exist(self):
-        for project in self.with_context(active_test=False):
-            if project.task_ids:
-                raise UserError(
-                    _(
-                        "You cannot delete a project with tasks. "
-                        "You can either delete the project's task and then delete the "
-                        "project or simply deactivate the project."
-                    )
+        # unlink() checks project access before this existence-only lookup.
+        if (
+            self.env["tsm.task"]
+            .sudo()
+            .with_context(active_test=False)
+            .search_count([("project_id", "in", self.ids)], limit=1)
+        ):
+            raise UserError(
+                self.env._(
+                    "You cannot delete a project with tasks. "
+                    "You can either delete the project's task and then delete the "
+                    "project or simply deactivate the project."
                 )
+            )
 
     def copy(self, default=None):
         default = dict(default or {})

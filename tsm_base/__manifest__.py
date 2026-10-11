@@ -4,10 +4,10 @@
     "name": "Technical Support Management",
     "summary": "Helps manage work of your technical support team",
     "category": "Management",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "development_status": "Beta",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
-    "author": "Bilbonet",
+    "author": "Bilbonet, Jesus Ramiro",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
     "application": True,
@@ -18,6 +18,13 @@
         "mail",
         "web",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "tsm_base/static/src/fields/task_status_selection/task_status_selection.esm.js",
+            "tsm_base/static/src/fields/task_status_selection/task_status_selection.xml",
+            "tsm_base/static/src/fields/task_status_selection/task_status_selection.scss",
+        ],
+    },
     "data": [
         "security/tsm_security.xml",
         "security/ir.model.access.csv",

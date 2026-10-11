@@ -20,6 +20,16 @@ directly. Preserve task codes, sequence continuity, business records, archived r
 messages, attachments, activities and followers. Verify privacy, company boundaries and
 follower actions with non-administrator users.
 
+Task status is independent of stage closure and archiving. Its selector belongs to this
+addon's backend assets and uses `web`; keep the addon independent of Odoo Project.
+Consult the [task-status spec](specs/changes/change-2026-10-11-task-status.md) before
+changing this boundary or reintroducing stage-specific status labels.
+
+Project archive/delete safeguards must include tasks hidden by record rules without
+exposing their contents. Check project access before using elevated existence checks;
+deletion must also include archived tasks. Contacts from another customer account are
+allowed; do not introduce account-membership validation or automatic contact clearing.
+
 ## Specifications
 
 - Use the shared `odoo-sdd` skill to initialize or adapt the module's SDD method.

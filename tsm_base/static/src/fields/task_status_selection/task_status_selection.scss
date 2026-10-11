@@ -1,0 +1,25 @@
+// Copyright 2026 Jesus Ramiro <jesus@bilbonet.net>
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+.o_status {
+    &.o_tsm_status_success {
+        background-color: $o-success;
+    }
+    &.o_tsm_status_warning {
+        background-color: $o-warning;
+    }
+    &.o_tsm_status_danger {
+        background-color: $o-danger;
+    }
+    &.o_tsm_status_info {
+        background-color: $o-info;
+    }
+    &.o_tsm_status_done {
+        background-color: $primary;
+    }
+}
+
+// Match the purple filter accent provided by the web kanban progress bar.
+.o_tsm_task_kanban .o_column_progress .bg-purple {
+    background-color: purple;
+}

@@ -14,6 +14,10 @@ implementación.
   alcance acordado, escenarios, criterios y evidencia histórica; conserva status:
   verified. La comparación sobre una copia de producción y la actualización real de
   producción están aplazadas fuera de ese alcance.
+- [Estado de la tarea](changes/change-2026-10-11-task-status.md): sustitución del
+  indicador Kanban por `task_status`, con `status: verified` tras la confirmación manual
+  de sus diez criterios; clasificación visual, seguimiento estándar y conservación de
+  las reglas de etapas y archivado.
 - [Decisiones arquitectónicas](decisions/README.md): cuándo documentar una elección
   duradera.
 - Plantillas editables de [cambio](templates/change.md) y

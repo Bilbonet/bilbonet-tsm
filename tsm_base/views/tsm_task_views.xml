@@ -144,7 +144,7 @@
                                 type="object"
                                 name="action_inactive"
                                 class="btn btn-link text-danger"
-                                icon="fa-check fa-2x"
+                                icon="fa-archive fa-2x"
                                 title="Active"
                                 Help="Archive Task"
                                 invisible="(not closed or not active)"
@@ -159,9 +159,9 @@
                                 invisible="active"
                             />
                             <field
-                                name="kanban_state"
-                                widget="state_selection"
-                                class=""
+                                name="task_status"
+                                widget="tsm_task_status_selection"
+                                options="{'hide_label': False}"
                             />
                         </h2>
                     </div>
@@ -254,7 +254,7 @@
             <kanban
                 highlight_color="color"
                 default_group_by="stage_id"
-                class="o_kanban_small_column"
+                class="o_kanban_small_column o_tsm_task_kanban"
                 on_create="quick_create"
                 quick_create_view="tsm_base.tsm_quick_create_task_form"
             >
@@ -272,14 +272,12 @@
                 <field name="message_needaction_counter" />
                 <field name="active" />
                 <field name="closed" invisible="1" />
-                <field name="legend_blocked" />
-                <field name="legend_normal" />
-                <field name="legend_done" />
+                <field name="task_status" />
                 <field name="activity_ids" />
                 <field name="activity_state" />
                 <progressbar
-                    field="kanban_state"
-                    colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;}"
+                    field="task_status"
+                    colors="{&quot;on_track&quot;: &quot;success&quot;, &quot;at_risk&quot;: &quot;warning&quot;, &quot;off_track&quot;: &quot;danger&quot;, &quot;on_hold&quot;: &quot;info&quot;, &quot;done&quot;: &quot;purple&quot;}"
                 />
                 <templates>
                     <t t-name="menu" t-if="!selection_mode" groups="base.group_user">
@@ -297,7 +295,10 @@
                         <field name="color" widget="kanban_color_picker" />
                     </t>
                     <t t-name="card">
-                        <main class="d-flex flex-column h-100">
+                        <main
+                            class="d-flex flex-column h-100"
+                            t-att-class="record.task_status.raw_value === 'done' ? 'opacity-50' : ''"
+                        >
                             <div
                                 class="oe_kanban_content d-flex flex-column flex-grow-1"
                             >
@@ -318,7 +319,7 @@
                                                 t-if="record.active.raw_value and record.closed.raw_value"
                                             >
                                                 <i
-                                                    class="fa fa-check"
+                                                    class="fa fa-archive"
                                                     role="img"
                                                     aria-label="Active"
                                                     title="Active"
@@ -348,9 +349,9 @@
                                             <field name="name" />
                                         </span>
                                         <t
-                                            t-if="record.date_deadline.raw_value and record.date_deadline.raw_value lt (new Date())"
+                                            t-if="record.date_deadline.raw_value and record.date_deadline.raw_value.slice(0, 10) lt luxon.DateTime.local().toISODate()"
                                             t-set="red"
-                                        >oe_kanban_text_red</t>
+                                        >text-danger fw-bold</t>
                                         <span t-attf-class="#{red || ''}">
                                             <i>
                                                 <field name="date_deadline" />
@@ -407,8 +408,8 @@
                                         class="oe_kanban_bottom_right d-flex align-items-center gap-1 ms-auto"
                                     >
                                         <field
-                                            name="kanban_state"
-                                            widget="state_selection"
+                                            name="task_status"
+                                            widget="tsm_task_status_selection"
                                             groups="base.group_user"
                                         />
                                         <field
