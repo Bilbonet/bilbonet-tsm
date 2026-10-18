@@ -115,8 +115,7 @@ Credits
 Authors
 -------
 
-* Bilbonet
-* Jesus Ramiro
+* Jesus Ramiro (Bilbonet)
 
 Contributors
 ------------

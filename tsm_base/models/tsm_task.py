@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import SUPERUSER_ID, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -9,13 +9,6 @@ class TsmTask(models.Model):
     _description = "Tech Support Management Task"
     _order = "date_start desc, id desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-
-    @api.model
-    def _read_group_stage_ids(self, stages, domain):
-        """Read group customization in order to display all the stages in the
-        kanban view, even if they are empty
-        """
-        return self._read_group_expand_full(stages.with_user(SUPERUSER_ID), domain)
 
     code = fields.Char(string="Task Code", required=True, default="/", readonly=True)
     sequence = fields.Integer(
@@ -42,7 +35,7 @@ class TsmTask(models.Model):
         string="Stage",
         index=True,
         copy=False,
-        group_expand="_read_group_stage_ids",
+        group_expand="_read_group_expand_full",
         default=lambda self: self.env["tsm.task.type"].search([], limit=1),
     )
     closed = fields.Boolean(related="stage_id.closed", readonly=True)
