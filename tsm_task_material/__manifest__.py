@@ -10,8 +10,6 @@
     "author": "Jesus Ramiro (Bilbonet),",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
     "preloadable": True,
     "depends": [
         "tsm_base",
@@ -20,6 +18,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "security/tsm_task_material_security.xml",
         "views/tsm_task_view.xml",
         "report/tsm_task_material_report.xml",
         "report/tsm_material_project_report.xml",

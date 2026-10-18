@@ -1,9 +1,7 @@
 # Copyright 2018 - Bilbonet <jesus@bilbonet.net>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from datetime import date
-
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo import Command, api, fields, models
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 
 class TsmTask(models.Model):
@@ -17,7 +15,7 @@ class TsmTask(models.Model):
     )
     create_sale_order = fields.Boolean(
         related="stage_id.create_sale_order",
-        readonly="true",
+        readonly=True,
     )
     sale_autoconfirm = fields.Boolean(
         string="Sale autoconfirm",
@@ -38,21 +36,25 @@ class TsmTask(models.Model):
         help="Untaxed Total of The Order",
     )
 
-    @api.depends("sale_id")
+    @api.depends(
+        "sale_id.amount_untaxed",
+        "sale_id.currency_id",
+        "sale_id.date_order",
+        "company_currency",
+        "company_id",
+    )
     def _compute_sale_amount(self):
         for task in self:
             if task.sale_id:
                 sale = task.sudo().sale_id
-                currency = (
-                    task.company_currency
-                    or task.partner_id.property_product_pricelist.currency_id
-                    or task.env.user.company_id.currency_id
-                )
+                company = task.company_id or task.env.company
+                currency = task.company_currency or company.currency_id
                 task.sale_amount = sale.currency_id._convert(
                     sale.amount_untaxed,
                     currency,
-                    task.company_id,
-                    task.date_start or fields.Date.today(),
+                    company,
+                    fields.Date.to_date(sale.date_order)
+                    or fields.Date.context_today(task),
                 )
             else:
                 task.sale_amount = 0
@@ -76,27 +78,19 @@ class TsmTask(models.Model):
         self.ensure_one()
         if not self.partner_id or not self.material_ids:
             raise ValidationError(
-                _("You must first select a Customer " "and materials for Task: %s!")
-                % self.name
+                self.env._(
+                    "You must first select a Customer and materials for Task: %s!",
+                    self.name,
+                )
             )
 
-        sale = self.env["sale.order"].new(
-            {
-                "partner_id": self.partner_id,
-                "date_order": fields.Date.to_string(date.today()),
-                "origin": self.code,
-                "client_order_ref": "[" + self.code + "] " + self.name,
-                "company_id": self.company_id.id,
-                "user_id": self.user_id.id,
-            }
-        )
-
-        if self.partner_id.property_payment_term_id:
-            sale.payment_term_id = self.partner_id.property_payment_term_id
-        if self.partner_id.property_account_position_id:
-            sale.fiscal_position_id = self.partner_id.property_account_position_id
-
-        return sale._convert_to_write(sale._cache)
+        return {
+            "partner_id": self.partner_id.id,
+            "origin": self.code,
+            "client_order_ref": f"[{self.code}] {self.name}",
+            "company_id": (self.company_id or self.env.company).id,
+            "user_id": self.user_id.id,
+        }
 
     def create_sale(self):
         """
@@ -104,41 +98,68 @@ class TsmTask(models.Model):
         :return: Sale Order created
         """
         self.ensure_one()
-        sale_vals = self._prepare_sale()
-
-        for line in self.material_ids:
-            sale_vals.setdefault("order_line", [])
-            sale_line_vals = line._prepare_sale_line()
-            if sale_line_vals:
-                sale_vals["order_line"].append((0, 0, sale_line_vals))
-        sale = self.env["sale.order"].create(sale_vals)
-        sale.message_post_with_view(
+        self.check_access("write")
+        if not self.env.user.has_group("sales_team.group_sale_manager"):
+            raise AccessError(
+                self.env._("Only sales managers can create a sale order from a task.")
+            )
+        if self.sale_id:
+            raise UserError(self.env._("This task already has a sale order."))
+        if not self.create_sale_order:
+            raise UserError(
+                self.env._("The task stage does not allow creating a sale order.")
+            )
+        task = self.with_company(self.company_id or self.env.company)
+        sale_vals = task._prepare_sale()
+        sale = task.env["sale.order"].create(sale_vals)
+        sale.write(
+            {
+                "order_line": [
+                    Command.create(line._prepare_sale_line(sale))
+                    for line in task.material_ids
+                ]
+            }
+        )
+        sale.message_post_with_source(
             "mail.message_origin_link",
-            values={"self": sale, "origin": self},
-            subtype_id=self.env.ref("mail.mt_note").id,
+            render_values={"self": sale, "origin": task},
+            subtype_xmlid="mail.mt_note",
         )
 
         # Update Task with the values from the sale order
         vals = {"sale_id": sale.id}
-        self.update(vals)
+        task.update(vals)
         # Autoconfirm sale order if it's checked
-        if self.sale_autoconfirm:
+        if task.sale_autoconfirm:
             sale.action_confirm()
 
         return sale
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_sale_order(self):
         for task in self:
             if task.sale_id:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot delete a task with sale order.\n"
                         "You can either delete the task's sale order and then "
                         "delete the task or simply deactivate the task."
                     )
                 )
-        res = super().unlink()
-        return res
+
+    @api.constrains("company_id", "sale_id")
+    def _check_sale_company(self):
+        for task in self:
+            if (
+                task.sale_id
+                and task.company_id
+                and task.sale_id.company_id != task.company_id
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "The task and its sale order must belong to the same company."
+                    )
+                )
 
     @api.constrains("active")
     def _check_archiving_restrictions(self):
@@ -147,12 +168,11 @@ class TsmTask(models.Model):
             for task in self.filtered(lambda t: not t.active):
                 if task.material_ids and not task.sale_id:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "Only sales manager can archive tasks "
                             "with materials and no sale order.\n"
                             "Ask for manager to archive the task.\n\n"
-                            "Task:[{task_code}] - {task_name}"
-                        ).format(
+                            "Task:[%(task_code)s] - %(task_name)s",
                             task_code=task.code,
                             task_name=task.name,
                         )

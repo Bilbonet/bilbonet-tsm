@@ -370,33 +370,159 @@ ul.auto-toc {
 !! source digest: sha256:deabe924f9dddf3e3fa14b93249d586ddfe9a495d9c9077f8c8fc9c30c992fd9
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/Bilbonet/bilbonet-tsm/tree/18.0/tsm_task_material"><img alt="Bilbonet/bilbonet-tsm" src="https://img.shields.io/badge/github-Bilbonet%2Fbilbonet--tsm-lightgray.png?logo=github" /></a></p>
-<p>This module extends the functionality in tasks to record the material
-and quantities spent on them. Also allows to create a sale orders with
-that material.</p>
+<p>Record the products and services used on Technical Support Management
+tasks and generate a sales quotation or confirmed order from the
+recorded lines.</p>
+<p>The module extends <tt class="docutils literal">tsm_base</tt> with:</p>
+<ul class="simple">
+<li>A <em>Material</em> tab with descriptions, quantities, units of measure, unit
+prices, discounts, subtotals and a total amount.</li>
+<li>Sales creation from selected task stages, with optional automatic
+confirmation.</li>
+<li>A link from each task to its sales document, displaying the untaxed
+order amount in the task company’s currency.</li>
+<li>Material details and totals in task and project reports.</li>
+<li>Access to material lines based on the task’s company, privacy and
+assignment, with editing blocked once a sales document is linked.</li>
+</ul>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a><ul>
+<li><a class="reference internal" href="#user-permissions" id="toc-entry-2">User permissions</a></li>
+<li><a class="reference internal" href="#task-stages" id="toc-entry-3">Task stages</a></li>
+<li><a class="reference internal" href="#products-and-customer-settings" id="toc-entry-4">Products and customer settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage" id="toc-entry-5">Usage</a><ul>
+<li><a class="reference internal" href="#record-materials" id="toc-entry-6">Record materials</a></li>
+<li><a class="reference internal" href="#create-a-sales-document" id="toc-entry-7">Create a sales document</a></li>
+<li><a class="reference internal" href="#review-the-order-and-reports" id="toc-entry-8">Review the order and reports</a></li>
+<li><a class="reference internal" href="#editing-archiving-and-deletion" id="toc-entry-9">Editing, archiving and deletion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-10">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-11">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-12">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-13">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-14">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
+<div class="section" id="user-permissions">
+<h2><a class="toc-backref" href="#toc-entry-2">User permissions</a></h2>
+<p>Assign users the appropriate <em>T.S.M</em> access rights:</p>
+<ul class="simple">
+<li><em>User</em>: read materials on visible tasks and manage materials on tasks
+assigned to them, within their allowed companies.</li>
+<li><em>Manager</em>: manage materials on tasks within their allowed companies.</li>
+</ul>
+<p>Creating a sales document additionally requires <em>Sales / Administrator</em>
+access and permission to modify the task. Opening the linked sales
+document requires Sales access and remains subject to the usual Sales
+permissions.</p>
+</div>
+<div class="section" id="task-stages">
+<h2><a class="toc-backref" href="#toc-entry-3">Task stages</a></h2>
+<p>As a T.S.M manager, go to <em>T.S.M &gt; Configuration &gt; Stages</em> and enable
+<em>Create Sale Order</em> on each stage from which users should be able to
+create sales documents. This setting is independent of whether the stage
+is considered closed.</p>
+</div>
+<div class="section" id="products-and-customer-settings">
+<h2><a class="toc-backref" href="#toc-entry-4">Products and customer settings</a></h2>
+<p>Configure the products or services, sales prices, units of measure and
+sales taxes to use on tasks. Units selected on a material line must
+belong to the product’s unit category.</p>
+<p>Configure customer invoice and delivery addresses, payment terms, fiscal
+position and pricelist in the task’s company. Sales uses these settings
+when creating the document. The customer’s pricelist determines the
+order currency; prices and discounts come from the material lines.</p>
+<p>Maintain exchange rates when the task company and order use different
+currencies. On each task, <em>Sale autoconfirm</em> is enabled by default.
+Disable it before creating the sales document if it should remain a
+quotation for review.</p>
+</div>
+</div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>#. Go to <em>T.S.M &gt; Tasks</em> #. Edit or create a new task #. You can see tha
-tab <em>Material</em> and record each material and its quantities spent in the
-task.</p>
-<p>At the top you have the <em>Create Sale</em> button to create a new sale order
-with the recorded material.</p>
+<h1><a class="toc-backref" href="#toc-entry-5">Usage</a></h1>
+<div class="section" id="record-materials">
+<h2><a class="toc-backref" href="#toc-entry-6">Record materials</a></h2>
+<ol class="arabic simple">
+<li>Go to <em>T.S.M &gt; Tasks</em> and open or create a task you can modify.</li>
+<li>Select the customer and check the task’s company.</li>
+<li>Open the <em>Material</em> tab and add a line for each product or service
+used.</li>
+<li>Review its description, quantity, unit, unit price and discount. Drag
+the line handle to change the display order.</li>
+<li>Save the task.</li>
+</ol>
+<p>Selecting a product fills its sales description, unit and sales price,
+including variant price extras. Changing the unit converts the default
+unit price. You can edit the description and price, and enter any agreed
+customer discount directly on the line. Review the price again after
+changing the product or unit.</p>
+<p>Quantities must be greater than zero and discounts cannot exceed 100%.
+Prices and material totals use the task company’s currency. Each
+subtotal is the quantity multiplied by the unit price after discount.</p>
+</div>
+<div class="section" id="create-a-sales-document">
+<h2><a class="toc-backref" href="#toc-entry-7">Create a sales document</a></h2>
+<ol class="arabic simple">
+<li>Move the task to a stage with <em>Create Sale Order</em> enabled.</li>
+<li>As a Sales administrator with permission to modify the task, check
+that a customer and at least one material line are present.</li>
+<li>Review <em>Sale autoconfirm</em>: leave it enabled to confirm the order
+immediately, or disable it to create a draft quotation.</li>
+<li>Click <em>Create sale</em>.</li>
+</ol>
+<p>The button is available when the task has material lines, its stage
+permits sales and no sales document is already linked. A customer is
+required to complete the operation.</p>
+<p>The document uses the task’s company and customer. Lines preserve their
+order, descriptions, products, units, quantities, entered prices and
+discounts. Prices are converted to the order currency at the exchange
+rate for the order date when necessary. Sales computes taxes using the
+product taxes and customer’s fiscal position.</p>
+<p>The task code is recorded as the source document, and the customer
+reference contains the task code and title. The order chatter includes a
+link to the source task.</p>
+</div>
+<div class="section" id="review-the-order-and-reports">
+<h2><a class="toc-backref" href="#toc-entry-8">Review the order and reports</a></h2>
+<p>Sales users can use the task’s sales smart button to open the linked
+document, subject to their Sales permissions. It displays the untaxed
+order amount in the task company’s currency and updates when the order
+amount changes.</p>
+<p>Use <em>Print Task</em> on a task or <em>Print Project Report</em> on its project to
+include the recorded materials. Reports show quantities, units where
+enabled, prices, subtotals and totals. The discount column appears when
+at least one line has a nonzero discount. Each task’s materials use that
+task company’s currency.</p>
+</div>
+<div class="section" id="editing-archiving-and-deletion">
+<h2><a class="toc-backref" href="#toc-entry-9">Editing, archiving and deletion</a></h2>
+<ul class="simple">
+<li>A task can have one linked sales document. While it is linked,
+creating another document and adding, changing or deleting materials
+are blocked. This also applies when the linked document is cancelled.</li>
+<li>Review subsequent sales changes on the sales document; they do not
+update the task’s recorded material lines.</li>
+<li>A task with a linked sales document cannot be deleted. If the sales
+document can be deleted under Sales rules, deleting it removes the
+link and unlocks the materials.</li>
+<li>Archiving requires a stage marked as closed, as in <tt class="docutils literal">tsm_base</tt>. Tasks
+with materials and no linked sales document additionally require Sales
+administrator rights to archive.</li>
+</ul>
 <p><img alt="Task with material" src="https://raw.githubusercontent.com/Bilbonet/bilbonet-tsm/18.0/tsm_task_material/static/description/task_material.png" /></p>
 </div>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-10">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/Bilbonet/bilbonet-tsm/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -404,22 +530,22 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-11">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-12">Authors</a></h2>
 <ul class="simple">
 <li>Jesus Ramiro (Bilbonet)</li>
 <li></li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-13">Contributors</a></h2>
 <ul class="simple">
 <li>Jesus Ramiro <a class="reference external" href="mailto:jesus&#64;bilbonet.net">jesus&#64;bilbonet.net</a></li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-14">Maintainers</a></h2>
 <p>Current maintainer:</p>
 <p><a class="reference external image-reference" href="https://github.com/bilbonet"><img alt="bilbonet" src="https://github.com/bilbonet.png?size=40px" /></a></p>
 <p>This module is part of the <a class="reference external" href="https://github.com/Bilbonet/bilbonet-tsm/tree/18.0/tsm_task_material">Bilbonet/bilbonet-tsm</a> project on GitHub.</p>

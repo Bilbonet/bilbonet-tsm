@@ -18,11 +18,12 @@ configuration.
 
 ## Scope and boundaries
 
-This repository currently contains one addon:
+This repository includes the following addons:
 
-| Module     | Purpose                                                                                                            | Status                    |
-| ---------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| `tsm_base` | Technical-support projects and tasks, with stages, tags, followers, activities, email composition and PDF reports. | Beta / active maintenance |
+| Module              | Purpose                                                                                                            | Status                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| `tsm_base`          | Technical-support projects and tasks, with stages, tags, followers, activities, email composition and PDF reports. | Beta / active maintenance |
+| `tsm_task_material` | Consumed task materials, sale-order generation and material sections in task/project reports.                      | Beta / active maintenance |
 
 The repository includes the addon source, module-local specifications, tests, README
 source fragments and repository tooling. It does not own Odoo core, addons for other
@@ -48,7 +49,7 @@ duplicate those details here.
 
 ## Dependencies and integrations
 
-The repository has no shared integration layer beyond the addon. `tsm_base` declares
+The repository has no shared integration layer beyond its addons. `tsm_base` declares
 these Odoo dependencies in its manifest:
 
 - `base_setup`
@@ -59,6 +60,10 @@ these Odoo dependencies in its manifest:
 The module uses Odoo mail threads, activities, templates, QWeb reports and
 configuration/contact extensions. Review its module-level context before changing
 security, mail, reports, data definitions or model contracts.
+
+`tsm_task_material` extends `tsm_base` and integrates with `sale` and `product`. Its
+material rules must follow task permissions; see
+[`tsm_task_material/AGENTS.md`](tsm_task_material/AGENTS.md).
 
 ## Validation expected by this repository
 

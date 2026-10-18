@@ -6,9 +6,9 @@
         id="tsm_material_project_report"
         inherit_id="tsm_base.tsm_project_report_document"
     >
-        <xpath expr="//p[@name='page-break']" position="before">
+        <xpath expr="//div[@name='tasks']/p[@name='page-break']" position="before">
             <div class="row" t-if="len(t.material_ids) > 0" name="task_material">
-                <t t-set="importe" t-value="0" />
+                <t t-set="material_total" t-value="0" />
                 <!-- Is there a discount on at least one line? -->
                 <t
                     t-set="display_discount"
@@ -22,20 +22,20 @@
                                 style="color:#FFF;"
                             >Material and Services</th>
                             <th
-                                class="text-right"
+                                class="text-end"
                                 style="color:#FFF;font-size:0.8em;"
                             >Amount</th>
                             <th
-                                class="text-right"
+                                class="text-end"
                                 style="color:#FFF;font-size:0.8em;"
                             >Price</th>
                             <th
                                 t-if="display_discount"
-                                class="text-right"
+                                class="text-end"
                                 style="color:#FFF;font-size:0.8em;"
                             >Desc.%</th>
                             <th
-                                class="text-right"
+                                class="text-end"
                                 style="color:#FFF;font-size:0.8em;"
                             >Subtotal</th>
                         </tr>
@@ -45,7 +45,10 @@
                             t-foreach="t.material_ids.sorted(key=lambda b: b.sequence)"
                             t-as="m"
                         >
-                            <t t-set="importe" t-value="importe+m.price_subtotal" />
+                            <t
+                                t-set="material_total"
+                                t-value="material_total + m.price_subtotal"
+                            />
                             <td style="font-size:0.7em;">
                                 <span t-field="m.name" />
                             </td>
@@ -59,7 +62,7 @@
                             <td style="font-size:0.7em;text-align:right;">
                                 <span
                                     t-field="m.price_unit"
-                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
+                                    t-options='{"widget": "monetary", "display_currency": m.company_currency or m.env.company.currency_id}'
                                 />
                             </td>
                             <td
@@ -71,17 +74,17 @@
                             <td style="font-size:0.7em;text-align:right;">
                                 <span
                                     t-field="m.price_subtotal"
-                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
+                                    t-options='{"widget": "monetary", "display_currency": m.company_currency or m.env.company.currency_id}'
                                 />
                             </td>
                         </tr>
                     </tbody>
                     <tfoot style="font-size:0.8em;text-align:right;">
                         <tr>
-                            <th colspan="5">
+                            <th t-att-colspan="5 if display_discount else 4">
                                 <span
-                                    t-esc="importe"
-                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
+                                    t-out="material_total"
+                                    t-options='{"widget": "monetary", "display_currency": t.company_currency or t.env.company.currency_id}'
                                 />
                             </th>
                         </tr>

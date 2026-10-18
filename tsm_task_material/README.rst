@@ -22,24 +22,145 @@ TSM Task Material
 
 |badge1| |badge2| |badge3|
 
-This module extends the functionality in tasks to record the material
-and quantities spent on them. Also allows to create a sale orders with
-that material.
+Record the products and services used on Technical Support Management
+tasks and generate a sales quotation or confirmed order from the
+recorded lines.
+
+The module extends ``tsm_base`` with:
+
+- A *Material* tab with descriptions, quantities, units of measure, unit
+  prices, discounts, subtotals and a total amount.
+- Sales creation from selected task stages, with optional automatic
+  confirmation.
+- A link from each task to its sales document, displaying the untaxed
+  order amount in the task company's currency.
+- Material details and totals in task and project reports.
+- Access to material lines based on the task's company, privacy and
+  assignment, with editing blocked once a sales document is linked.
 
 **Table of contents**
 
 .. contents::
    :local:
 
+Configuration
+=============
+
+User permissions
+----------------
+
+Assign users the appropriate *T.S.M* access rights:
+
+- *User*: read materials on visible tasks and manage materials on tasks
+  assigned to them, within their allowed companies.
+- *Manager*: manage materials on tasks within their allowed companies.
+
+Creating a sales document additionally requires *Sales / Administrator*
+access and permission to modify the task. Opening the linked sales
+document requires Sales access and remains subject to the usual Sales
+permissions.
+
+Task stages
+-----------
+
+As a T.S.M manager, go to *T.S.M > Configuration > Stages* and enable
+*Create Sale Order* on each stage from which users should be able to
+create sales documents. This setting is independent of whether the stage
+is considered closed.
+
+Products and customer settings
+------------------------------
+
+Configure the products or services, sales prices, units of measure and
+sales taxes to use on tasks. Units selected on a material line must
+belong to the product's unit category.
+
+Configure customer invoice and delivery addresses, payment terms, fiscal
+position and pricelist in the task's company. Sales uses these settings
+when creating the document. The customer's pricelist determines the
+order currency; prices and discounts come from the material lines.
+
+Maintain exchange rates when the task company and order use different
+currencies. On each task, *Sale autoconfirm* is enabled by default.
+Disable it before creating the sales document if it should remain a
+quotation for review.
+
 Usage
 =====
 
-#. Go to *T.S.M > Tasks* #. Edit or create a new task #. You can see tha
-tab *Material* and record each material and its quantities spent in the
-task.
+Record materials
+----------------
 
-At the top you have the *Create Sale* button to create a new sale order
-with the recorded material.
+1. Go to *T.S.M > Tasks* and open or create a task you can modify.
+2. Select the customer and check the task's company.
+3. Open the *Material* tab and add a line for each product or service
+   used.
+4. Review its description, quantity, unit, unit price and discount. Drag
+   the line handle to change the display order.
+5. Save the task.
+
+Selecting a product fills its sales description, unit and sales price,
+including variant price extras. Changing the unit converts the default
+unit price. You can edit the description and price, and enter any agreed
+customer discount directly on the line. Review the price again after
+changing the product or unit.
+
+Quantities must be greater than zero and discounts cannot exceed 100%.
+Prices and material totals use the task company's currency. Each
+subtotal is the quantity multiplied by the unit price after discount.
+
+Create a sales document
+-----------------------
+
+1. Move the task to a stage with *Create Sale Order* enabled.
+2. As a Sales administrator with permission to modify the task, check
+   that a customer and at least one material line are present.
+3. Review *Sale autoconfirm*: leave it enabled to confirm the order
+   immediately, or disable it to create a draft quotation.
+4. Click *Create sale*.
+
+The button is available when the task has material lines, its stage
+permits sales and no sales document is already linked. A customer is
+required to complete the operation.
+
+The document uses the task's company and customer. Lines preserve their
+order, descriptions, products, units, quantities, entered prices and
+discounts. Prices are converted to the order currency at the exchange
+rate for the order date when necessary. Sales computes taxes using the
+product taxes and customer's fiscal position.
+
+The task code is recorded as the source document, and the customer
+reference contains the task code and title. The order chatter includes a
+link to the source task.
+
+Review the order and reports
+----------------------------
+
+Sales users can use the task's sales smart button to open the linked
+document, subject to their Sales permissions. It displays the untaxed
+order amount in the task company's currency and updates when the order
+amount changes.
+
+Use *Print Task* on a task or *Print Project Report* on its project to
+include the recorded materials. Reports show quantities, units where
+enabled, prices, subtotals and totals. The discount column appears when
+at least one line has a nonzero discount. Each task's materials use that
+task company's currency.
+
+Editing, archiving and deletion
+-------------------------------
+
+- A task can have one linked sales document. While it is linked,
+  creating another document and adding, changing or deleting materials
+  are blocked. This also applies when the linked document is cancelled.
+- Review subsequent sales changes on the sales document; they do not
+  update the task's recorded material lines.
+- A task with a linked sales document cannot be deleted. If the sales
+  document can be deleted under Sales rules, deleting it removes the
+  link and unlocks the materials.
+- Archiving requires a stage marked as closed, as in ``tsm_base``. Tasks
+  with materials and no linked sales document additionally require Sales
+  administrator rights to archive.
 
 |Task with material|
 

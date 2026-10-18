@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
-     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).--><odoo>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
     <!-- TSM Task Type Form -->
     <record id="tsm_task_type_material_create_sale_order" model="ir.ui.view">
         <field name="name">TSM Task Type tsm.task.type.form</field>
         <field name="model">tsm.task.type</field>
-        <field name="inherit_id" ref="tsm_base.tsm_task_type_form"/>
+        <field name="inherit_id" ref="tsm_base.tsm_task_type_form" />
         <field name="arch" type="xml">
             <field name="closed" position="after">
-                <field name="create_sale_order"/>
+                <field name="create_sale_order" />
             </field>
         </field>
     </record>
@@ -17,45 +18,86 @@
     <record id="tsm_task_form_material_view" model="ir.ui.view">
         <field name="name">TSM material tsm.task.form.material</field>
         <field name="model">tsm.task</field>
-        <field name="inherit_id" ref="tsm_base.tsm_task_form_view"/>
+        <field name="inherit_id" ref="tsm_base.tsm_task_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//notebook/page[@name='extra_info']" position="before">
                 <page name="material_used" string="Material">
                     <field name="material_ids" readonly="sale_id">
                         <list editable="bottom">
-                            <field name="sequence" widget="handle"/>
-                            <field name="product_id"/>
-                            <field name="name" required="True"/>
-                            <field name="quantity"/>
-                            <field name="product_uom_id" required="True" optional="show"/>
-                            <field name="price_unit" widget="monetary" options="{'currency_field': 'company_currency'}"/>
-                            <field name="discount"/>
-                            <field name="price_subtotal" sum="Total Amount" widget="monetary" options="{'currency_field': 'company_currency'}"/>
-                            <field name="company_currency" invisible="1"/>
+                            <field name="company_id" column_invisible="True" />
+                            <field name="sequence" widget="handle" />
+                            <field name="product_id" />
+                            <field name="name" required="True" />
+                            <field name="quantity" />
+                            <field
+                                name="product_uom_category_id"
+                                column_invisible="True"
+                            />
+                            <field
+                                name="product_uom_id"
+                                required="True"
+                                optional="show"
+                            />
+                            <field
+                                name="price_unit"
+                                widget="monetary"
+                                options="{'currency_field': 'company_currency'}"
+                            />
+                            <field name="discount" />
+                            <field
+                                name="price_subtotal"
+                                sum="Total Amount"
+                                widget="monetary"
+                                options="{'currency_field': 'company_currency'}"
+                            />
+                            <field name="company_currency" column_invisible="True" />
                         </list>
                     </field>
                 </page>
             </xpath>
 
             <field name="stage_id" position="before">
-                <field name="sale_id" invisible="1"/>
-                <field name="create_sale_order" invisible="1"/>
-                <button name="create_sale" type="object" string="Create sale" groups="sales_team.group_sale_manager" invisible="((not material_ids or sale_id) or not create_sale_order)"/>
+                <field name="sale_id" invisible="1" />
+                <field name="company_currency" invisible="1" />
+                <field name="create_sale_order" invisible="1" />
+                <button
+                    name="create_sale"
+                    type="object"
+                    string="Create sale"
+                    groups="sales_team.group_sale_manager"
+                    invisible="((not material_ids or sale_id) or not create_sale_order)"
+                />
             </field>
 
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button class="oe_stat_button" type="object" name="action_view_order" icon="fa-eur" invisible="not sale_id">
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_order"
+                    icon="fa-eur"
+                    groups="sales_team.group_sale_salesman"
+                    invisible="not sale_id"
+                >
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
-                            <field name="sale_amount" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                            <field
+                                name="sale_amount"
+                                widget="monetary"
+                                options="{'currency_field': 'company_currency'}"
+                            />
                         </span>
-                        <field name="sale_id" readonly="1"/>
+                        <field name="sale_id" readonly="1" />
                     </div>
                 </button>
             </xpath>
             <!-- Sale Order Autoconfirm -->
             <field name="privacy_visibility" position="after">
-                <field name="sale_autoconfirm" groups="sales_team.group_sale_manager" readonly="sale_id" invisible="not create_sale_order"/>
+                <field
+                    name="sale_autoconfirm"
+                    groups="sales_team.group_sale_manager"
+                    readonly="sale_id"
+                    invisible="not create_sale_order"
+                />
             </field>
         </field>
     </record>
