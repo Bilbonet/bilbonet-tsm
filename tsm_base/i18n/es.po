@@ -189,11 +189,6 @@ msgid "Activity Type Icon"
 msgstr "Icono Tipo Actividad"
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid "Add a description..."
-msgstr "Añadir una descripción..."
-
-#. module: tsm_base
 #: model:ir.actions.act_window,name:tsm_base.task_follower_assignment_action
 msgid "Add/Remove Followers"
 msgstr "[Des]Asignar Seguidores"
@@ -392,7 +387,6 @@ msgid "Delete"
 msgstr "Suprimir"
 
 #. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__description
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_project_form_view
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
 msgid "Description"
@@ -441,13 +435,6 @@ msgstr "Correo electrónico:"
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task__date_end
 msgid "Ending Date"
 msgstr "Fecha de fin"
-
-#. module: tsm_base
-#: model:ir.model.fields,help:tsm_base.field_tsm_task_type__legend_priority
-msgid "Explanation text to help users using the star on tasks in this stage."
-msgstr ""
-"Texto explicativo para ayudar a los usuarios sobre el uso de la estrella en "
-"esta etapa."
 
 #. module: tsm_base
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_form_view
@@ -874,11 +861,6 @@ msgid "Stage"
 msgstr "Etapa"
 
 #. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid "Stage Description and Tooltips"
-msgstr "Descripción de la etapa y textos de ayuda"
-
-#. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__name
 msgid "Stage Name"
 msgstr "Nombre de la etapa"
@@ -892,11 +874,6 @@ msgstr "Etapas"
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_search_view
 msgid "Starred"
 msgstr "Destacado"
-
-#. module: tsm_base
-#: model:ir.model.fields,field_description:tsm_base.field_tsm_task_type__legend_priority
-msgid "Starred Explanation"
-msgstr "Explicación de destacado"
 
 #. module: tsm_base
 #: model:ir.model.fields,field_description:tsm_base.field_tsm_project__date_start
@@ -1187,24 +1164,6 @@ msgstr "Historial de comunicaciones del sitio web"
 #: model_terms:ir.ui.view,arch_db:tsm_base.tsm_report_layout_header
 msgid "Website:"
 msgstr "Sitio Web:"
-
-#. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid ""
-"You can also add a description to help your coworkers understand the meaning"
-" and purpose of the stage."
-msgstr ""
-"También puede añadir una descripción para ayudar a sus compañeros a entender el "
-"significado y el propósito de la etapa."
-
-#. module: tsm_base
-#: model_terms:ir.ui.view,arch_db:tsm_base.tsm_task_type_form
-msgid ""
-"You can also give a tooltip about the use of the stars available in the "
-"kanban and form views."
-msgstr ""
-"También puede añadir un texto de ayuda sobre el uso de las estrellas disponibles en "
-"las vistas kanban y formulario."
 
 #. module: tsm_base
 #. odoo-python

@@ -262,10 +262,7 @@
                 <field name="tags_in_task" invisible="1" />
                 <field name="color" />
                 <field name="priority" />
-                <field
-                    name="stage_id"
-                    options="{&quot;group_by_tooltip&quot;: {&quot;description&quot;: &quot;Stage Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"
-                />
+                <field name="stage_id" />
                 <field name="user_id" />
                 <field name="description" />
                 <field name="date_deadline" />
