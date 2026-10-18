@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tsm_task_material_user,tsm.task.material.user,model_tsm_task_material,tsm_base.group_tsm_user,1,1,1,1

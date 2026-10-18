@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <template
+        id="tsm_task_material_report_document"
+        inherit_id="tsm_base.tsm_task_report_document"
+    >
+        <xpath expr="//div[@name='task_body_report']" position="after">
+            <div class="row" t-if="len(o.material_ids) > 0" name="task_material">
+                <t t-set="material_total" t-value="0" />
+                <!-- Is there a discount on at least one line? -->
+                <t
+                    t-set="display_discount"
+                    t-value="any([l.discount for l in o.material_ids])"
+                />
+                <table class="table table-sm table-striped mt16">
+                    <thead style="background-color: #000;">
+                        <tr class="text-center">
+                            <th
+                                class="text-center"
+                                style="color:#FFF;"
+                            >Material and Services</th>
+                            <th
+                                class="text-end"
+                                style="color:#FFF;font-size:0.8em;"
+                            >Amount</th>
+                            <th
+                                class="text-end"
+                                style="color:#FFF;font-size:0.8em;"
+                            >Price</th>
+                            <th
+                                t-if="display_discount"
+                                class="text-end"
+                                style="color:#FFF;font-size:0.8em;"
+                            >Desc.%</th>
+                            <th
+                                class="text-end"
+                                style="color:#FFF;font-size:0.8em;"
+                            >Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            t-foreach="o.material_ids.sorted(key=lambda b: b.sequence)"
+                            t-as="m"
+                        >
+                            <t
+                                t-set="material_total"
+                                t-value="material_total + m.price_subtotal"
+                            />
+                            <td style="font-size:0.7em;">
+                                <span t-field="m.name" />
+                            </td>
+                            <td style="font-size:0.7em;text-align:right;">
+                                <span t-field="m.quantity" />
+                                <span
+                                    t-field="m.product_uom_id"
+                                    groups="uom.group_uom"
+                                />
+                            </td>
+                            <td style="font-size:0.7em;text-align:right;">
+                                <span
+                                    t-field="m.price_unit"
+                                    t-options='{"widget": "monetary", "display_currency": m.company_currency or m.env.company.currency_id}'
+                                />
+                            </td>
+                            <td
+                                t-if="display_discount"
+                                style="font-size:0.7em;text-align:right;"
+                            >
+                                <span t-field="m.discount" />
+                            </td>
+                            <td style="font-size:0.7em;text-align:right;">
+                                <span
+                                    t-field="m.price_subtotal"
+                                    t-options='{"widget": "monetary", "display_currency": m.company_currency or m.env.company.currency_id}'
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-size:0.8em;text-align:right;">
+                        <tr>
+                            <th t-att-colspan="5 if display_discount else 4">
+                                <span
+                                    t-out="material_total"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_currency or o.env.company.currency_id}'
+                                />
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

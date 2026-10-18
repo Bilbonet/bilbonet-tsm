@@ -1,0 +1,26 @@
+# Copyright 2018 - Bilbonet <jesus@bilbonet.net>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+{
+    "name": "TSM Task Material",
+    "summary": "Record products spent in a Task and create Sale Order",
+    "category": "Management",
+    "version": "18.0.1.0.0",
+    "development_status": "Beta",
+    "website": "https://github.com/Bilbonet/bilbonet-tsm",
+    "author": "Jesus Ramiro (Bilbonet),",
+    "maintainers": ["bilbonet"],
+    "license": "AGPL-3",
+    "preloadable": True,
+    "depends": [
+        "tsm_base",
+        "sale",
+        "product",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/tsm_task_material_security.xml",
+        "views/tsm_task_view.xml",
+        "report/tsm_task_material_report.xml",
+        "report/tsm_material_project_report.xml",
+    ],
+}
