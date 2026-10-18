@@ -10,14 +10,6 @@ class TsmTask(models.Model):
     _order = "date_start desc, id desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    def _get_default_stage_id(self):
-        """Gives default stage_id"""
-        stage_id = self.env["tsm.task.type"].search([], order="sequence", limit=1)
-        if not stage_id:
-            return False
-
-        return stage_id
-
     @api.model
     def _read_group_stage_ids(self, stages, domain):
         """Read group customization in order to display all the stages in the
@@ -51,7 +43,7 @@ class TsmTask(models.Model):
         index=True,
         copy=False,
         group_expand="_read_group_stage_ids",
-        default=lambda self: self._get_default_stage_id(),
+        default=lambda self: self.env["tsm.task.type"].search([], limit=1),
     )
     closed = fields.Boolean(related="stage_id.closed", readonly=True)
     tags_in_task = fields.Boolean(string="Use Tags in Tasks")
