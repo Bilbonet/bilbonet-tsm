@@ -143,7 +143,7 @@ class TsmTask(models.Model):
     @api.constrains("active")
     def _check_archiving_restrictions(self):
         # Only sales manager can archive a task with materials and no sale order
-        if not self.user_has_groups("sales_team.group_sale_manager"):
+        if not self.env.user.has_group("sales_team.group_sale_manager"):
             for task in self.filtered(lambda t: not t.active):
                 if task.material_ids and not task.sale_id:
                     raise ValidationError(
