@@ -18,10 +18,11 @@ Consulta Especificación vigente en ../README.md. -->
 riesgo y la incertidumbre siguiendo ../README.md; no rellenes secciones
 opcionales con «No aplica» ni uses la plantilla como cuestionario. -->
 
-<!-- Antes de presentar esta spec para aprobación, conversa sobre decisiones
-relevantes, supuestos funcionales y debilidades de la propuesta en rondas breves.
-Explica consecuencias y opciones; incorpora las respuestas al mismo borrador.
-Destaca expresamente lo pendiente y su efecto sobre la implementación.
+<!-- Antes del primer borrador, plantea las decisiones relevantes que falten,
+sus consecuencias y opciones; incorpora las respuestas al acuerdo. Deja puntos
+abiertos solo si el usuario acuerda aplazarlos o pide un borrador parcial.
+En ese caso, explica los puntos antes de Criterios de aceptación y delimita
+el alcance pendiente; no uses recomendaciones sin decidir como requisitos.
 Si el cambio ya está completamente definido, no fabriques preguntas. -->
 
 ## Cambio y límites
@@ -32,37 +33,75 @@ conocidos, sin duplicarlos en apartados separados. -->
 
 ## Criterios de aceptación
 
-- [ ] <Criterio observable y verificable>
+- **CA1 — <Título breve>:** <Resultado que debe cumplirse>.
 
-<!-- Añade los criterios necesarios, sin un número fijo. Describe resultados
-observables, no una solución técnica. Usa Dado/Cuando/Entonces cuando aclare
-precondiciones o variantes; no repitas el mismo requisito en dos formatos. -->
+<!-- El usuario conoce la aplicación y el cambio. Expresa cada criterio en una
+o dos frases claras; lleva el detalle de implementación a su sección técnica.
+Añade los criterios necesarios, sin un número fijo. Usa Dado/Cuando/Entonces
+solo cuando aclare el caso; no repitas el requisito en dos formatos. -->
 
 ## Impacto en Odoo
+
+<!-- Parte de la solución más sencilla que cumpla el acuerdo y reutiliza los
+mecanismos existentes de la versión activa de Odoo y del módulo. Explica el
+mecanismo elegido y sus límites relevantes. Si un escenario exige piezas extra
+o complejidad relevante, consulta primero su cobertura y coste de desarrollo,
+mantenimiento y comprobación; incorpora solo lo acordado. Distingue ampliaciones
+opcionales de garantías necesarias de seguridad e integridad. Consulta
+Solución más sencilla y ampliaciones de alcance en ../README.md. -->
 
 <!-- Resume las áreas afectadas y las restricciones relevantes verificadas.
 Desglosa solo lo necesario: modelos/campos, vistas/acciones, seguridad y
 multicompañía, datos, instalación/actualización/migraciones o integraciones.
 No supongas ausencia de impacto porque el cambio tenga pocas líneas. -->
 
-## Verificación
+## Pruebas manuales y aprobación
 
-### Plan
+Prueba cada caso y marca los que funcionen: la casilla marcada confirma que la prueba
+está realizada y es correcta, sin añadir notas. Si algo falla, déjala sin marcar; puedes
+contarlo por chat o en Ajustes pendientes. Cuando termines, confirma el resultado.
 
-<!-- Explica cómo se verificarán los escenarios y criterios de aceptación. -->
+Los CA indican qué debe cumplirse; las pruebas M comprueban esos criterios.
 
-### Resultados
+- [ ] **M1 — <Caso breve>:** <Qué hacer> → <Qué debe ocurrir>. Comprueba: CA1.
 
-<!-- Registra el criterio o escenario comprobado, el método y la evidencia real.
-Indica expresamente lo no ejecutado y lo pendiente. Completar este apartado
-no autoriza pruebas ni operaciones de base de datos. Marca verified solo
-cuando todos los criterios estén comprobados. -->
+**Conformidad del usuario:** pendiente.
+
+<!-- Un caso claro por casilla, con solo los datos necesarios para reproducirlo.
+Divide resultados comprobables por separado. Enumera cada referencia completa:
+«Comprueba: CA1, CA3 y CA12». Una prueba puede cubrir parte de un criterio;
+revisa la cobertura del conjunto. Las comprobaciones de RPC/ORM o datos internos
+van en el plan técnico, no como instrucciones al usuario de la interfaz.
+Cada casilla marcada por el usuario es evidencia suficiente de realización
+correcta. No añadas campos Resultado/Evidencia ni exijas valoraciones,
+justificaciones o notas; las observaciones son opcionales y pueden comunicarse
+por chat o en Ajustes pendientes. Si falla o no se ha realizado, déjala sin
+marcar. Una declaración del usuario también es evidencia válida: marca solo
+las pruebas que confirme como realizadas y correctas, sin inventar datos ni
+exigir capturas o logs por defecto. No dupliques el plan y sus resultados en otros
+apartados. La aprobación de requisitos previa no acredita estas pruebas.
+Al continuar, lee este apartado y las incidencias comunicadas: mantén implementing
+si falta alguna prueba o la conformidad explícita del usuario. Una casilla
+marcada no queda pendiente por carecer de nota. No vuelvas a pedir conformidad
+si ya está registrada para el mismo alcance. -->
+
+## Pruebas automatizadas
+
+**Decisión:** no solicitadas; no se ejecutan por defecto. **Resultado:** no ejecutadas.
+
+<!-- Ejecuta pruebas automatizadas solo con autorización explícita aplicable.
+Si se solicitan, registra aquí cuáles, su resultado y evidencia; mientras estén
+pendientes o fallen, no marques verified. Si no se solicitan, su ausencia no
+bloquea el cierre cuando todos los criterios estén comprobados y exista
+conformidad manual. Si algún criterio no puede comprobarse manualmente,
+señala qué comprobación falta; no lo des por verificado. Conserva aquí también
+otras comprobaciones técnicas realmente realizadas y su evidencia, si existen.
+Completar estos apartados no autoriza operaciones de base de datos. -->
 
 <!-- Añade secciones solo cuando sean útiles: Actores y permisos, Escenarios
-funcionales, Riesgos, Puntos abiertos o una referencia a decisions/. Resuelve
-antes de implementar las dudas que puedan cambiar el comportamiento, alcance,
-seguridad, integridad de datos, compatibilidad o solución. No inventes reglas
-de negocio; deja explícitamente pendiente lo que aún no esté comprobado. -->
+funcionales, Riesgos o una referencia a decisions/. Los puntos abiertos acordados
+se explican antes de los criterios. Conserva el detalle técnico necesario y los
+límites de lo comprobado sin trasladarlos a cada prueba manual. -->
 
 ## Ajustes pendientes
 
@@ -71,7 +110,10 @@ y las pruebas. No requiere buena redacción, identificadores ni campos fijos.
 Al pedir revisar estos ajustes, la IA debe interpretarlos y contrastarlos con
 la especificación y el código pertinente, aclarando solo dudas relevantes.
 Debe incorporar cada punto a los requisitos, criterios, escenarios, Puntos
-abiertos o Verificación, según corresponda, y retirarlo de esta bandeja una
+abiertos o los apartados de pruebas, según corresponda, y retirarlo de esta bandeja una
 vez trasladado fielmente. Trasladar una nota no implica aprobarla, implementarla
 ni verificarla: su situación debe quedar explícita en el apartado de destino.
+Para notas que solo describan ajustes menores ya realizados y mantengan el acuerdo,
+aplica la regla de ajustes menores de ../README.md: informa de su resolución al
+retirarlas, sin convertirlas en requisitos ni en un historial de iteraciones.
 Conserva aquí únicamente las notas aún no procesadas. Consulta ../README.md. -->

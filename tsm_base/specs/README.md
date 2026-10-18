@@ -28,6 +28,13 @@ inglés. Sigue siendo válida; al actualizarla, redacta en español las partes a
 conserva identificadores, estados, requisitos y evidencia. La evidencia histórica no
 equivale a una nueva verificación del módulo.
 
+Las dos specs verificadas conservan su estructura detallada y sus marcas históricas;
+esta adaptación no las reorganiza solo para uniformar encabezados. Al retomarlas, aplica
+las reglas actuales de pruebas y conformidad sin reinterpretar la evidencia existente ni
+exigir notas adicionales a las casillas ya confirmadas. Las comprobaciones pendientes de
+correcciones posteriores siguen identificadas en la spec de migración; su estado
+histórico `verified` no acredita esas correcciones.
+
 ## Preparación y evolución del método
 
 La skill general `odoo-sdd` inicializa esta estructura en un módulo ya creado o adapta
@@ -124,11 +131,11 @@ edición puede consultarse en Git cuando esté disponible.
 
 Conserva la evidencia de verificación necesaria para distinguir lo comprobado de lo
 pendiente. Si una comprobación anterior deja de ser aplicable, indícalo con una nota
-breve en Verificación y señala qué requiere nueva comprobación. Resume antecedentes solo
-cuando expliquen una restricción de datos, compatibilidad o migración. Las decisiones
-arquitectónicas conservan la opción vigente, su justificación y consecuencias útiles,
-con alternativas solo cuando ayuden al mantenimiento; no son un registro de quién dijo
-qué.
+breve junto al resultado afectado y señala qué requiere nueva comprobación. Resume
+antecedentes solo cuando expliquen una restricción de datos, compatibilidad o migración.
+Las decisiones arquitectónicas conservan la opción vigente, su justificación y
+consecuencias útiles, con alternativas solo cuando ayuden al mantenimiento; no son un
+registro de quién dijo qué.
 
 Al adaptar documentos existentes dentro del alcance solicitado, consolida el texto
 afectado con estas reglas sin perder requisitos vigentes ni evidencia útil. No limpies
@@ -162,9 +169,13 @@ Todas las change specs conservan el frontmatter de la plantilla y contienen:
   cambio; sin un número fijo ni duplicación obligatoria en escenarios.
 - **Impacto en Odoo:** áreas afectadas y restricciones pertinentes comprobadas, sin un
   formulario de modelos, campos, vistas y demás áreas no afectadas.
-- **Verificación:** plan ligado a los criterios y resultados con evidencia real,
-  indicando lo pendiente y lo no ejecutado. En draft deja los resultados pendientes
-  salvo que haya evidencia previa aplicable, identificada sin inventar verificaciones.
+- **Pruebas manuales y aprobación:** lista única de pruebas ligadas a los criterios, con
+  acción, resultado esperado y casilla de realización correcta, suficiente como
+  evidencia por sí sola, seguida de la conformidad del usuario. En draft deja las
+  casillas sin marcar salvo evidencia previa aplicable, identificada sin inventar
+  verificaciones.
+- **Pruebas automatizadas:** decisión y resultados. Por defecto, no solicitadas y no
+  ejecutadas; solo se ejecutan con autorización explícita aplicable.
 
 ### Cuándo ampliar
 
@@ -182,7 +193,7 @@ Añade solo los apartados que aclaren el acuerdo o sus riesgos:
   límites que no queden claros en los criterios.
 - Desglose del impacto en seguridad/multicompañía, datos, migraciones, integraciones u
   otras áreas afectadas.
-- Riesgos, medidas necesarias y puntos abiertos que requieran una decisión.
+- Riesgos, medidas necesarias y puntos abiertos cuyo aplazamiento se haya acordado.
 - Referencias a decisions/ cuando exista una elección arquitectónica duradera, no para
   cada elección técnica rutinaria.
 
@@ -212,19 +223,28 @@ campos ni modificar cómo se guarda o edita la referencia.
 
 ## Criterios de aceptación
 
-- [ ] Cada fila muestra la referencia del registro; si está vacía, queda vacía.
-- [ ] Se mantienen la edición existente y los permisos de acceso vigentes.
+- Cada fila muestra la referencia del registro; si está vacía, queda vacía.
+- Se mantienen la edición existente y los permisos de acceso vigentes.
 
 ## Impacto en Odoo
 
 Vista de listado existente; campo ya disponible. Sin nuevos modelos ni permisos.
 
-## Verificación
+## Pruebas manuales y aprobación
 
-Plan: comprobar registros con y sin referencia, la edición existente y el acceso con los
-roles afectados, según las autorizaciones vigentes.
+Marca cada casilla tras realizar la prueba y comprobar el resultado esperado. La casilla
+marcada basta para confirmar el resultado correcto; no requiere notas.
 
-Resultados: pendiente; no se han ejecutado comprobaciones.
+- [ ] Abrir el listado con referencias rellenas y vacías → cada fila muestra su valor
+      correspondiente.
+- [ ] Editar la referencia como antes → la edición conserva su funcionamiento.
+- [ ] Acceder con los roles afectados → se mantienen los permisos vigentes.
+
+**Conformidad del usuario:** pendiente.
+
+## Pruebas automatizadas
+
+**Decisión:** no solicitadas; no se ejecutan por defecto. **Resultado:** no ejecutadas.
 ```
 
 En cambio, una aprobación con distintos roles y compañías ampliaría ese mismo núcleo con
@@ -233,6 +253,56 @@ efectos sobre el estado o los datos. El plan comprobaría esos criterios, no sol
 aparezca el botón. Una decisión aparte sería necesaria únicamente si hay una elección
 arquitectónica que conservar.
 
+## Solución más sencilla y ampliaciones de alcance
+
+Por defecto, busca y recomienda la solución más sencilla, mantenible y comprensible que
+cumpla el alcance acordado. Comprueba primero qué ofrecen la versión activa de Odoo y el
+módulo: ORM, campos y sus atributos, restricciones, permisos, reglas de registro,
+vistas, acciones y puntos de extensión existentes. Reutiliza el mecanismo adecuado antes
+de añadir lógica propia, dependencias, capas o abstracciones. Valora la claridad y el
+mantenimiento del conjunto; tener menos líneas no demuestra que una solución sea más
+sencilla.
+
+Delimita los usos y vías de entrada que necesita el cambio. Una petición sobre la
+interfaz no incorpora automáticamente una integración externa ni obliga a crear una API.
+Detectar una variante posible tampoco la convierte en requisito. Propón cobertura
+adicional solo ante un caso relevante o un riesgo concreto, sin enumerar escenarios
+hipotéticos para justificar más desarrollo.
+
+Si los mecanismos existentes no bastan y cubrir un escenario exige piezas propias
+adicionales o una complejidad relevante, plantea la decisión antes de incorporarlas como
+requisitos o implementarlas, también si se descubre durante la implementación. Explica
+brevemente:
+
+- Qué resuelve la opción más sencilla y cuál es su límite concreto.
+- Qué escenario exige ampliarla, si forma parte del alcance acordado y qué consecuencia
+  tiene dejarlo sin cubrir.
+- Qué piezas adicionales harían falta y su coste de desarrollo, mantenimiento y
+  comprobación. Describe el esfuerzo cualitativamente si no hay base para estimar horas
+  o importes; no inventes cifras.
+- Qué opción recomiendas y qué decisión necesita el usuario: asumir ese coste, acotar o
+  aplazar el escenario, o revisar el requisito cuando sea necesario.
+
+Espera esa decisión para la parte afectada y continúa el trabajo independiente ya
+autorizado. Aprovecha decisiones y autorizaciones previas para el mismo alcance y coste;
+no pidas aprobar cada elección técnica rutinaria ni cada uso normal del ORM. Documenta
+el alcance elegido en Cambio y límites y el mecanismo y las ampliaciones acordadas en
+Impacto en Odoo, sin añadir un formulario nuevo. Amplía criterios y comprobaciones
+únicamente para la cobertura acordada.
+
+La sencillez debe respetar los permisos, la seguridad y la integridad exigidos por el
+acuerdo. Un comportamiento de la vista o un onchange no acredita por sí solo una
+garantía del modelo. Si una regla debe cumplirse también desde importaciones, RPC u
+otras vías existentes, busca primero el mecanismo de servidor de Odoo que la garantice;
+esto no implica crear una integración nueva. Si hace falta desarrollo adicional, explica
+la carencia y consulta su coste y el alcance antes de continuar. Si se descarta esa
+ampliación, acuerda un alcance viable y declara sus límites; no presentes la garantía
+original como cumplida ni conviertas una protección necesaria en una mejora opcional.
+
+Aplica este criterio al preparar, revisar e implementar specs y al procesar Ajustes
+pendientes. Conserva los acuerdos funcionales existentes; simplificar o ampliar su
+comportamiento requiere resolver la diferencia con el usuario.
+
 ## Ciclo de estados recomendado
 
 draft -> approved -> implementing -> verified -> superseded
@@ -240,8 +310,9 @@ draft -> approved -> implementing -> verified -> superseded
 El ciclo representa el flujo de colaboración:
 
 1. El usuario describe el cambio en un prompt o copia la plantilla templates/change.md.
-2. La IA lee module-contract.md y solo las specs relevantes, y crea o ajusta una change
-   spec con estado draft.
+2. La IA lee module-contract.md y solo las specs relevantes, comprueba los hechos
+   accesibles y conversa sobre las decisiones necesarias antes del primer borrador. Con
+   las respuestas, crea o ajusta una change spec con estado draft.
 3. El usuario revisa el comportamiento, los límites y los criterios de aceptación, junto
    con los escenarios y riesgos cuando sean necesarios. Puede editar el fichero
    directamente o pedir a la IA que lo revise.
@@ -249,9 +320,11 @@ El ciclo representa el flujo de colaboración:
    a approved.
 5. La IA implementa el comportamiento aprobado y puede establecer el estado
    implementing.
-6. Se verifican los criterios de aceptación según la autorización y política vigentes.
-   Registra los resultados; solo pasa a verified si todos los criterios están realmente
-   comprobados. Si no, conserva implementing y lo pendiente.
+6. El usuario realiza y registra las pruebas de Pruebas manuales y aprobación, y da su
+   conformidad explícita. La IA revisa el encaje final con la spec y la vigencia de la
+   evidencia. Solo pasa a verified si todos los criterios están comprobados y las
+   pruebas automatizadas solicitadas, si existen, han terminado correctamente. Si no,
+   conserva implementing y lo pendiente.
 7. Si un cambio posterior sustituye ese comportamiento, se crea la nueva spec y la
    anterior pasa a superseded.
 
@@ -281,6 +354,8 @@ registros de forma reversible.
 Crea una change spec en specs/changes/ usando templates/change.md.
 Parte del núcleo breve y amplía solo lo que requieran el riesgo y las dudas
 reales. Aprovecha el contexto existente y agrupa las preguntas necesarias.
+Antes del primer borrador, plantéame las decisiones que falten para acordarlas.
+Redacta los criterios y las pruebas manuales de forma breve y práctica.
 
 Déjala en status: draft. No implementes todavía el código.
 ```
@@ -320,18 +395,149 @@ Si la spec está aprobada pero todavía no se quiere programar:
 
 ```text
 La spec change-2026-08-05-reversible-archive.md está aprobada.
-Todavía no implementes el código. Revisa si hay puntos abiertos o decisiones
-arquitectónicas que debamos resolver antes de programar.
+Todavía no implementes el código.
 ```
 
-Después de implementar:
+Después de implementar y realizar las pruebas manuales:
 
 ```text
-Verifica la implementación de change-2026-08-05-reversible-archive.md contra
-todos sus criterios de aceptación. Indica qué se ha verificado, qué no se ha
-ejecutado y qué puntos quedan abiertos. Marca la spec como verified solo si
-los criterios están realmente comprobados.
+He realizado todas las pruebas de Pruebas manuales y aprobación de
+change-2026-08-05-reversible-archive.md y sus resultados son correctos.
+Doy mi conformidad a la implementación. Registra esta confirmación como evidencia.
+No he solicitado pruebas automatizadas. Revisa el encaje de la implementación final
+con la spec y actualiza solo las diferencias acordadas que sea necesario reflejar.
+Comprueba si algún ajuste requiere repetir una prueba o queda algún criterio pendiente
+antes de marcar la spec como verified y continuar con el siguiente paso autorizado.
 ```
+
+## Criterios y pruebas para el responsable del cambio
+
+Asume que el usuario conoce la aplicación y la modificación solicitada. Redacta estos
+apartados con lenguaje natural y breve, suficiente para revisar el acuerdo y probarlo.
+Conserva el detalle necesario de diseño, restricciones y diagnóstico en las secciones
+técnicas; no lo reproduzcas dentro de cada criterio o prueba.
+
+Un criterio dice **qué debe cumplirse**; una prueba dice **qué hacer y qué resultado
+comprobar**. Si numeras, usa CA1, CA2, etc. para los criterios y M1, M2, etc. para las
+pruebas. Explica esa relación una sola vez en una frase y escribe cada referencia
+completa: «Comprueba: CA1, CA3 y CA12», evitando «CA1,3,12». Los identificadores
+acompañan a títulos comprensibles. Una prueba puede cubrir varios criterios y un
+criterio puede necesitar varias pruebas; superar una prueba no acredita todas las
+variantes del criterio.
+
+Cada criterio expresa un resultado concreto en una o dos frases. Cada prueba tiene un
+caso reconocible, una acción y un resultado observable. Por ejemplo:
+
+```markdown
+- **CA1 — Guardar antes de añadir:** al añadir un parte, la hoja se guarda y mantiene su
+  estado.
+
+- [ ] **M1 — Añadir a una hoja nueva:** crea una hoja y pulsa Añadir parte → la hoja
+      queda guardada y se abre el alta del parte. Comprueba: CA1.
+```
+
+Indica solo los datos o condiciones necesarios para reproducir el caso. Divide una
+prueba cuando reúna resultados que puedan fallar o corregirse por separado; no combines
+altas, cancelaciones, permisos y concurrencia en una sola casilla. Incluye las variantes
+pertinentes, sin multiplicar todas las combinaciones de roles, estados, empresas y
+dispositivos por defecto. La brevedad no elimina cobertura: comprueba la correspondencia
+con los criterios al preparar el plan.
+
+Pide comprobaciones que el usuario pueda realizar y reconocer en la interfaz. Las que
+necesiten inspeccionar RPC, comandos ORM o datos internos pertenecen al plan técnico,
+con su autorización y resultado reales. No sustituyas una garantía técnica por una
+prueba visual que no la demuestra. Si afecta al cierre, explica brevemente qué
+comprobación falta y acuerda cómo realizarla.
+
+La indicación de uso puede limitarse a: «Prueba cada caso y marca los que funcionen: la
+casilla marcada confirma que la prueba está realizada y es correcta, sin añadir notas.
+Si algo falla, déjala sin marcar; puedes contarlo por chat o en Ajustes pendientes.
+Cuando termines, confirma el resultado». Mantén las reglas completas del método en este
+README; no copies en cada especificación un tutorial de estados, autorizaciones o
+colaboración.
+
+## Pruebas manuales y aprobación
+
+La aprobación de requisitos (approved) permite implementar el alcance acordado. La
+conformidad posterior confirma el resultado de las pruebas manuales; son momentos
+distintos y una no sustituye a la otra.
+
+Mantén en la spec un único apartado visible con este título, inmediatamente después de
+Impacto en Odoo y antes de las pruebas automatizadas. Cada casilla contiene qué hacer y
+qué resultado esperar. Usa listas ordinarias en Criterios de aceptación para que las
+casillas de pruebas sean el lugar inequívoco donde registrar su realización. No
+distribuyas las instrucciones y los resultados manuales entre varios apartados.
+
+El usuario marca [x] solo cuando la prueba se ha realizado y es correcta. La casilla
+marcada es evidencia suficiente: no necesita añadir una valoración, justificación,
+resultado observado ni confirmación escrita por prueba. No añadas campos «Resultado» o
+«Evidencia» a cada caso ni bloquees una prueba marcada porque carezca de nota. Las notas
+y observaciones son opcionales. Si falla o no se ha realizado, conserva [ ]. El usuario puede
+comunicar fallos, dudas o ajustes por chat o en Ajustes pendientes, sin rellenar una nota
+por caso. No exijas capturas, logs ni campos adicionales por defecto. Si el usuario confirma
+las pruebas por chat, la IA marca las que confirme como realizadas y correctas y registra
+su conformidad cuando la haya expresado; no exige editar el fichero además de responder ni
+genera notas redundantes. Una confirmación general cubre toda la lista solo si dice expresamente
+que se han realizado todas las pruebas y son correctas. Una frase como «está bien» o «continúa»
+no acredita por sí sola su ejecución.
+
+Tras implementar, enlaza directamente este apartado e indica que queda pendiente de
+pruebas y conformidad del usuario. Al recibir «continúa», lee lo registrado: si faltan
+pruebas o conformidad, señala únicamente lo pendiente y mantén implementing. Puedes
+continuar trabajo independiente autorizado, pero no cerrar la verificación ni avanzar a
+un paso que dependa de esa conformidad. Si la conformidad ya consta para el mismo
+alcance, no vuelvas a solicitarla.
+
+En Pruebas automatizadas deja explícita la decisión: no solicitadas y no ejecutadas por
+defecto. No conviertas su ejecución en requisito de cierre si no se ha solicitado;
+tampoco presentes esa ausencia como un resultado correcto. Si se autorizan, registra las
+pruebas concretas, resultados y evidencia, y mantén implementing mientras estén
+pendientes o fallen. Si algún criterio necesita una comprobación que las pruebas
+manuales no cubren, señala la carencia y acuerda cómo comprobarlo antes de declarar
+verified. Conserva los controles técnicos o de repositorio exigidos por la política
+aplicable y sus resultados; esta regla no los sustituye ni autoriza operaciones de base
+de datos o Git.
+
+Al adaptar specs anteriores, reúne la verificación manual en este apartado conservando
+la evidencia y el estado reales. No marques pruebas ni atribuyas conformidad como efecto
+de reorganizar el documento. Aplica también la suficiencia de la casilla al continuar
+con specs anteriores: una prueba marcada no necesita una nota adicional. Al adaptar el
+método, retira los campos pendientes de resultado por caso que hayan quedado obsoletos y
+conserva las observaciones útiles existentes. Si un ajuste afecta a una prueba ya
+superada, señala que necesita repetirse y mantén las demás evidencias.
+
+## Ajustes menores durante la implementación y las pruebas
+
+Durante estas iteraciones, aplica los ajustes solicitados que conserven el
+comportamiento acordado sin actualizar la spec por cada petición ni preguntar si deben
+registrarse. Las consultas por sí solas tampoco generan cambios documentales. Valora el
+efecto funcional, no las líneas de código: márgenes, colores, etiquetas o disposición de
+campos suelen ser ajustes menores; cambiar su obligatoriedad, permisos, datos guardados
+o resultados puede alterar el acuerdo. Si el ajuste contradice un requisito explícito,
+trátalo como cambio de alcance.
+
+Cuando cambien requisitos, límites o criterios de aceptación, señala la diferencia y
+resuelve el alcance antes de implementar la parte afectada. Aprovecha las decisiones y
+autorizaciones ya expresadas; pregunta solo si queda algo sin acordar.
+
+Antes de cerrar la validación y continuar con un paso que dependa de ella, revisa que la
+implementación final encaje con la spec. Consolida únicamente las diferencias acordadas
+que necesiten reflejarse en requisitos, criterios o instrucciones de prueba; no añadas
+un inventario de ajustes ni un historial. Si sigue encajando, deja la spec como está.
+Esta revisión pertenece al cierre existente, sin una nueva fase ni otra aprobación para
+el mismo alcance. Una diferencia funcional sin acordar requiere aclaración y no puede
+aprobarse por haber pasado las pruebas.
+
+Comprueba también la vigencia de la evidencia: si un ajuste afecta a una prueba
+superada, señala en ese punto que debe repetirse y conserva las demás evidencias. No
+esperes al cierre para advertir una invalidación ya conocida ni exijas repetir toda la
+lista por un ajuste que no afecta a sus resultados.
+
+Si el usuario escribió en Ajustes pendientes una nota sobre un ajuste menor ya realizado
+que conserva el acuerdo, puedes retirarla al procesarla e informar de su resolución, sin
+trasladarla al cuerpo como requisito o historial. Mantén las notas sin resolver y
+conserva cualquier decisión funcional o evidencia pertinente. Una petición expresa de
+documentar un ajuste prevalece sobre esta regla por defecto.
 
 ## Cuando el comportamiento vuelve a cambiar
 
@@ -362,21 +568,26 @@ Integra cada punto en el lugar adecuado del mismo documento:
 
 - Los comportamientos acordados, en Cambio y límites, Criterios de aceptación y los
   escenarios afectados, resolviendo contradicciones con el texto anterior.
-- Las propuestas sin aprobar y dudas por resolver, en Puntos abiertos, indicando qué
-  decisión falta y sin sustituir silenciosamente los requisitos aprobados.
+- Las propuestas sin aprobar y dudas por resolver, en la conversación antes de
+  incorporarlas como requisitos. Déjalas en Puntos abiertos solo si el usuario acuerda
+  aplazarlas o pide conservar un borrador parcial; indica qué decisión falta sin
+  sustituir silenciosamente los requisitos aprobados.
 - Los ajustes acordados pendientes de implementación, junto a los requisitos afectados o
   en un apartado de trabajo pendiente cuando ayude a su seguimiento.
-- Las comprobaciones necesarias y los resultados reales, en Verificación. Conserva la
+- Las comprobaciones manuales y sus resultados, en Pruebas manuales y aprobación; las
+  automatizadas y otras comprobaciones técnicas, en Pruebas automatizadas. Conserva la
   evidencia anterior e indica qué deja de ser aplicable o necesita repetirse;
   implementar un ajuste no demuestra que esté verificado.
 
 Retira de Ajustes pendientes cada nota una vez incorporada fielmente, aunque su
 resolución continúe pendiente en el apartado de destino. Si solo se procesa una parte,
-conserva únicamente la parte no trasladada. Las dudas pueden salir de la bandeja al
-quedar recogidas explícitamente en Puntos abiertos. No borres una idea sin haberla
-incorporado ni mantengas una copia redundante de las notas procesadas. Una bandeja vacía
-significa que no quedan notas por procesar; puede haber decisiones, implementación o
-verificación pendientes en el cuerpo de la especificación.
+conserva únicamente la parte no trasladada. Las dudas pueden salir de la bandeja cuando
+se resuelvan o se acuerde dejarlas en Puntos abiertos. Para ajustes menores ya
+realizados que conservan el acuerdo, aplica la excepción descrita arriba e informa de su
+resolución. Para las demás notas, no borres una idea sin haberla incorporado ni
+mantengas una copia redundante de las notas procesadas. Una bandeja vacía significa que
+no quedan notas por procesar; puede haber decisiones, implementación o verificación
+pendientes en el cuerpo de la especificación.
 
 Cuando se solicite implementar los ajustes acordados, actualiza también la documentación
 del addon afectada. Actualiza module-contract.md y AGENTS.md solo si cambia su contexto
@@ -393,11 +604,11 @@ implementado y qué decisiones o comprobaciones siguen pendientes.
 
 ## Preparación guiada de la especificación
 
-Antes de presentar la spec para aprobación, conversa con el usuario sobre las decisiones
-abiertas relevantes, los supuestos funcionales que necesiten su aceptación y las
-debilidades detectadas en la propuesta. Revisa internamente las áreas pertinentes; lleva
-a la conversación las que requieren una decisión. No dejes estas cuestiones únicamente
-dentro del documento esperando que el usuario las descubra al leerlo.
+Antes de redactar o entregar el primer borrador de un cambio, conversa sobre las
+decisiones abiertas relevantes, los supuestos funcionales que necesiten su aceptación y
+las debilidades detectadas en la propuesta. Revisa internamente las áreas pertinentes;
+lleva a la conversación las que requieren una decisión. No dejes estas cuestiones
+únicamente dentro del documento esperando que el usuario las descubra al leerlo.
 
 Agrupa cuestiones relacionadas en rondas breves. Explica el caso concreto, sus
 consecuencias y las opciones útiles; recomienda una cuando el contexto lo permita.
@@ -405,16 +616,23 @@ Distingue aclaraciones necesarias, problemas que conviene cubrir y mejoras opcio
 que amplían el alcance. Propón mejoras solo cuando estén directamente relacionadas y
 aporten valor claro o eviten un problema probable.
 
-Incorpora las respuestas al mismo borrador y continúa preguntando solo si revelan nuevas
-decisiones relevantes. No recorras todos los apartados pidiendo confirmación ni repitas
-acuerdos. Si la petición está completamente definida, presenta el borrador directamente,
-sin fabricar preguntas.
+Incorpora las respuestas a los requisitos, criterios y pruebas y continúa preguntando
+solo si revelan nuevas decisiones relevantes. No recorras los apartados pidiendo
+confirmación ni repitas acuerdos. Si la petición está completamente definida, presenta
+el borrador directamente, sin fabricar preguntas.
 
-Puedes preparar y guardar un borrador parcial dentro de la autorización vigente,
-identificando lo pendiente. Para entregar la spec para aprobación, resuelve las
-decisiones que condicionan el comportamiento de la parte afectada o acuerda
-explícitamente su aplazamiento y límites. No presentes como cerrado un cambio con
-decisiones funcionales pendientes.
+Por defecto, el primer borrador recoge las decisiones ya tratadas y resueltas. La
+petición de una especificación no implica querer un borrador con decisiones pendientes.
+Puedes conservar puntos abiertos cuando el usuario lo pida o acuerde explícitamente
+aplazarlos, incluido un borrador parcial solicitado para discutirlos. Resolver estas
+decisiones no equivale a aprobar la especificación completa.
+
+Si se acuerda dejar puntos abiertos, sitúa su apartado antes de Criterios de aceptación,
+explica cada cuestión antes de referenciarla e indica qué parte queda condicionada. Los
+criterios deben describir el acuerdo vigente; no conviertas opciones recomendadas sin
+decidir en requisitos aparentemente cerrados. Conserva las dudas técnicas no comprobadas
+con su límite de evidencia; compruébalas cuando sea posible y plantea al usuario las
+decisiones funcionales que se deriven.
 
 Acompaña el documento con un resumen breve del comportamiento y los límites acordados,
 las decisiones tomadas y cualquier punto todavía abierto, indicando su efecto sobre la
@@ -449,6 +667,9 @@ invariantes, riesgos e instrucciones de trabajo. Actualízalo solo cuando cambie
 contexto estable o la navegación del módulo. No copies en AGENTS.md el contrato
 funcional, las especificaciones de funcionalidades ni el historial de cambios.
 
-No inventes información funcional que no haya sido especificada. Registra las dudas bajo
-Puntos abiertos y acláralas antes de implementar cuando afecten al comportamiento, los
-permisos, la integridad de los datos o la compatibilidad.
+No inventes información funcional que no haya sido especificada. Plantea las dudas
+relevantes durante el análisis y resuélvelas antes del primer borrador; registra Puntos
+abiertos solo con el aplazamiento o borrador parcial acordado. Si aparecen nuevas dudas
+en fases posteriores, resuélvelas antes de implementar la parte afectada. Los
+desconocidos ajenos al cambio en module-contract.md no obligan a abrir un cuestionario
+ni a bloquear esta preparación.

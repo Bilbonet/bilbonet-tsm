@@ -36,15 +36,24 @@ necesario, sin dar por hecho que todo bugfix está exento.
 ## Flujo de trabajo
 
 1. Describe el comportamiento deseado en un prompt o copia manualmente la plantilla.
-2. Pide a la IA que cree o refine el fichero en estado draft.
+2. Antes del primer borrador, acuerda las decisiones relevantes que falten tras
+   comprobar los hechos accesibles. Pide a la IA que cree o refine el fichero en estado
+   draft; conserva puntos abiertos solo si se acuerda aplazarlos o preparar un borrador
+   parcial.
 3. Revisa el comportamiento, los límites y los criterios de aceptación, junto con los
    escenarios, permisos y riesgos que correspondan al cambio.
 4. Aprueba explícitamente los requisitos estableciendo status: approved o pidiendo a la
    IA que lo haga después de tu confirmación.
 5. Pide a la IA que implemente únicamente esa spec aprobada.
-6. Verifica los criterios de aceptación y registra el resultado.
-7. Marca la spec como verified solo cuando el comportamiento se haya comprobado
-   realmente.
+6. Realiza los casos de `Pruebas manuales y aprobación` y marca los correctos: cada
+   casilla marcada es evidencia suficiente, sin notas obligatorias. Comunica los fallos
+   por chat o en `Ajustes pendientes` y expresa por separado tu conformidad con la
+   implementación. Las comprobaciones técnicas conservan su autorización y resultado
+   reales.
+7. Revisa el encaje final con la spec y la vigencia de la evidencia. Marca verified solo
+   con todos los criterios comprobados, conformidad explícita y pruebas automatizadas
+   solicitadas, si existen, terminadas correctamente. Mientras falte alguna comprobación
+   o conformidad, conserva implementing.
 8. Si el comportamiento cambia intencionadamente, actualiza la spec o crea una sustituta
    y marca la anterior como superseded.
 
@@ -58,6 +67,12 @@ mismo alcance. Las pruebas y operaciones Git o de base de datos siguen sus propi
 autorizaciones y políticas. Conserva lo pendiente si los criterios no están comprobados;
 una spec breve no tiene una verificación menor.
 
+Sigue las reglas de [../README.md](../README.md) para elegir la solución más sencilla,
+acordar ampliaciones de alcance y resolver ajustes menores sin documentar cada
+iteración. Las pruebas automatizadas no se solicitan ni ejecutan por defecto; su
+ausencia no bloquea el cierre si no se han solicitado y todos los criterios están
+comprobados. Mantén el detalle de RPC, ORM e inspecciones internas en el plan técnico.
+
 ## Ejemplos de prompts
 
 Crear un borrador:
@@ -69,6 +84,9 @@ Crea o actualiza una change spec en specs/changes/ para esta funcionalidad.
 Usa el núcleo breve de la plantilla y amplía solo las áreas relevantes según
 el riesgo y la incertidumbre. Define criterios observables, agrupa las dudas
 necesarias y deja el estado en draft. No escribas código todavía.
+Antes del primer borrador, plantea las decisiones relevantes que falten.
+Redacta criterios y pruebas manuales breves; deja puntos abiertos solo si
+acordamos aplazarlos o preparar un borrador parcial.
 ```
 
 Aprobar e implementar:
@@ -83,9 +101,11 @@ No inventes comportamientos que no estén documentados.
 Verificar:
 
 ```text
-Comprueba la implementación contra los criterios de aceptación de la change
-spec. Documenta el resultado y marca la spec como verified solo si todo está
-comprobado.
+He realizado todas las pruebas de Pruebas manuales y aprobación y sus resultados
+son correctos. Doy mi conformidad a la implementación. Registra esta confirmación.
+No he solicitado pruebas automatizadas. Revisa el encaje final con la spec y la
+vigencia de la evidencia. Marca verified solo si todos los criterios están
+comprobados; conserva explícitamente cualquier comprobación pendiente.
 ```
 
 ## Nombre y estados
