@@ -77,11 +77,13 @@
                     icon="fa-eur"
                 >
                     <div class="o_field_widget o_stat_info">
-                        <span class="o_stat_value"><field
+                        <span class="o_stat_value">
+                            <field
                                 name="sale_amount"
                                 widget="monetary"
                                 options="{'currency_field': 'company_currency'}"
-                            /></span>
+                            />
+                        </span>
                         <field name="sale_id" readonly="1" />
                     </div>
                 </button>

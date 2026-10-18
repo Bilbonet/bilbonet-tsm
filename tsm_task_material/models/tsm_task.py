@@ -137,7 +137,7 @@ class TsmTask(models.Model):
                         "delete the task or simply deactivate the task."
                     )
                 )
-        res = super(TsmTask, self).unlink()
+        res = super().unlink()
         return res
 
     @api.constrains("active")
