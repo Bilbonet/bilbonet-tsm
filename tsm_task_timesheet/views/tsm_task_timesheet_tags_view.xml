@@ -77,5 +77,4 @@
         action="tsm_task_timesheet_tags_action"
         groups="base.group_system"
     />
-
 </odoo>

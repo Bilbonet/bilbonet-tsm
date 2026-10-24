@@ -8,7 +8,7 @@
         sequence="8"
     />
 
-        <!--
+    <!--
         Timesheet Reports: Views
     -->
     <record id="tsm_task_timesheet_line_pivot" model="ir.ui.view">
@@ -23,7 +23,7 @@
         </field>
     </record>
 
-        <!--
+    <!--
         Timesheet Reports By User: Menus and Actions
     -->
     <record id="tsm_task_timesheet_report_by_user_act" model="ir.actions.act_window">
@@ -37,7 +37,8 @@
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
             Click to record activities.
-            </p><p>
+            </p>
+            <p>
             You can register and track your workings hours by tasks every day.
             </p>
         </field>
@@ -76,8 +77,7 @@
         sequence="10"
     />
 
-
-        <!--
+    <!--
         Timesheet Reports By Task: Menus and Actions
     -->
     <record id="tsm_task_timesheet_report_by_task_act" model="ir.actions.act_window">
@@ -91,7 +91,8 @@
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
             Click to record activities.
-            </p><p>
+            </p>
+            <p>
             You can register and track your workings hours by tasks every day.
             </p>
         </field>

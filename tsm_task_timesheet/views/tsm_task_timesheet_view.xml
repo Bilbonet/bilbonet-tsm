@@ -270,9 +270,10 @@
                             </div>
                             <div class="o_left">
                                 <div>
-                                    <strong>&#160;<t
-                                            t-esc="record.task_id.value"
-                                        /></strong>
+                                    <strong>
+                                        &#160;
+                                        <t t-esc="record.task_id.value" />
+                                    </strong>
                                 </div>
                                 <div class="text-muted">
                                     <span>
@@ -289,19 +290,17 @@
                             </div>
                             <hr class="mt4 mb4" />
                             <div>
-                                <small class="text-primary"><field
-                                        name="task_partner_id"
-                                    /></small>
+                                <small class="text-primary">
+                                    <field name="task_partner_id" />
+                                </small>
                             </div>
                             <span>
                                 <i class="fa fa-calendar" aria-hidden="true" />
                                 <t t-esc="record.date_time.value" />
                             </span>
                             <span class="pull-right">
-                                <strong>Duration: </strong><field
-                                    name="amount"
-                                    widget="float_time"
-                                />
+                                <strong>Duration: </strong>
+                                <field name="amount" widget="float_time" />
                             </span>
                         </div>
                     </t>
@@ -347,7 +346,8 @@
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to record activities.
-            </p><p>
+            </p>
+            <p>
             You can register and track your workings hours by task every day.
         </p>
         </field>
@@ -490,5 +490,4 @@
         groups="tsm_base.group_tsm_manager"
         action="tsm_task_timesheet_all_line_act"
     />
-
 </odoo>

@@ -42,14 +42,14 @@ class TsmTask(models.Model):
                         "and then delete the task or simply deactivate the task."
                     )
                 )
-        res = super(TsmTask, self).unlink()
+        res = super().unlink()
         return res
 
     @api.onchange("project_id")
     def _onchange_project(self):
         for t in self.timesheet_ids:
             t.project_id = self.project_id.id
-        return super(TsmTask, self)._onchange_project()
+        return super()._onchange_project()
 
     @api.onchange("stage_id")
     def _onchange_task_stage(self):
