@@ -20,17 +20,20 @@ configuration.
 
 This repository includes the following addons:
 
-| Module              | Purpose                                                                                                            | Status                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| `tsm_base`          | Technical-support projects and tasks, with stages, tags, followers, activities, email composition and PDF reports. | Beta / active maintenance |
-| `tsm_task_material` | Consumed task materials, sale-order generation and material sections in task/project reports.                      | Beta / active maintenance |
+| Module               | Purpose                                                                                                            | Status                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| `tsm_base`           | Technical-support projects and tasks, with stages, tags, followers, activities, email composition and PDF reports. | Beta / active maintenance |
+| `tsm_task_material`  | Consumed task materials, sale-order generation and material sections in task/project reports.                      | Beta / active maintenance |
+| `tsm_task_timesheet` | Task time entries, elapsed-time controls, tags and pivot/calendar analysis.                                        | Beta / active maintenance |
 
 The repository includes the addon source, module-local specifications, tests, README
 source fragments and repository tooling. It does not own Odoo core, addons for other
 Odoo versions, deployment infrastructure or customer production data.
 
 Detailed functional invariants, permissions, migration constraints and validation focus
-belong in [`tsm_base/AGENTS.md`](tsm_base/AGENTS.md) and its `specs/` directory. Do not
+belong in each addon's `AGENTS.md` and specifications. Read
+[`tsm_base/AGENTS.md`](tsm_base/AGENTS.md) for the shared task/project domain and
+[`tsm_task_timesheet/AGENTS.md`](tsm_task_timesheet/AGENTS.md) for time entries. Do not
 duplicate those details here.
 
 ## Working context and source of truth
@@ -39,11 +42,11 @@ duplicate those details here.
   addon layout. Do not apply API or command assumptions from another Odoo version
   without checking the Odoo 18 source.
 - Follow inherited workspace and global instructions first. This file adds
-  repository-specific context; `tsm_base/AGENTS.md` adds more specific module context.
+  repository-specific context; addon `AGENTS.md` files add more specific context.
 - Treat the module manifest, repository configuration, CI workflows and source
   specifications as authoritative for technical behavior. Do not treat an `oca-port` log
   or an automated migration result as proof of runtime compatibility.
-- Requirements and migration behavior belong in `tsm_base/specs/`; generated
+- Requirements and migration behavior belong in each addon's `specs/`; generated
   `README.rst` files are outputs and must not be edited directly. Update their source
   fragments when documentation changes are requested.
 
@@ -64,6 +67,10 @@ security, mail, reports, data definitions or model contracts.
 `tsm_task_material` extends `tsm_base` and integrates with `sale` and `product`. Its
 material rules must follow task permissions; see
 [`tsm_task_material/AGENTS.md`](tsm_task_material/AGENTS.md).
+
+`tsm_task_timesheet` depends on `tsm_base` and adds time entries and tags. Its ACL and
+record-rule coverage differ from task permissions; review its module context before
+changing privacy or company isolation.
 
 ## Validation expected by this repository
 

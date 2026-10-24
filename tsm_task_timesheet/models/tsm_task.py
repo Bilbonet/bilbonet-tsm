@@ -1,10 +1,6 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from datetime import datetime
-
-import pytz
-
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -32,24 +28,17 @@ class TsmTask(models.Model):
         string="Timesheets",
     )
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_timesheets(self):
         for task in self:
             if task.timesheet_ids:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot delete a task containing "
                         "timesheets. You can either delete all the task's timesheet "
                         "and then delete the task or simply deactivate the task."
                     )
                 )
-        res = super().unlink()
-        return res
-
-    @api.onchange("project_id")
-    def _onchange_project(self):
-        for t in self.timesheet_ids:
-            t.project_id = self.project_id.id
-        return super()._onchange_project()
 
     @api.onchange("stage_id")
     def _onchange_task_stage(self):
@@ -57,38 +46,40 @@ class TsmTask(models.Model):
             for t in self.timesheet_ids:
                 if t.amount == 0:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "There are any timesheet with 00:00 hours in this task.\n"
                             "That is not allowed in stages marked as closed."
                         )
                     )
 
     def create_and_start(self):
-        """
-        Create Task and start timesheet
-        """
+        """Start a timesheet on the saved task and reopen its form."""
+        if not self:
+            raise UserError(
+                self.env._(
+                    "Save a task with a title and a customer before starting work."
+                )
+            )
         self.ensure_one()
-        tz = self.env.context.get("tz", self.env.user.partner_id.tz)
-        description = ("<p><b>[%s]</b><br><br></p>") % (
-            datetime.now(pytz.timezone(tz)).strftime("%d/%m/%Y %H:%M:%S")
-        )
-        self.update({"description": description})
+        if not self.name or not self.partner_id:
+            raise UserError(
+                self.env._("Enter a task title and a customer before starting work.")
+            )
+        timestamp = fields.Datetime.context_timestamp(self, fields.Datetime.now())
+        description = f"<p><b>[{timestamp:%d/%m/%Y %H:%M:%S}]</b><br><br></p>"
+        self.write({"description": description})
 
-        # Create timesheet
-        ts = self.env["tsm.task.timesheet"].new(
+        self.env["tsm.task.timesheet"].create(
             {
                 "task_id": self.id,
                 "name": "/",
             }
         )
-        ts = ts._convert_to_write(ts._cache)
-        self.env["tsm.task.timesheet"].create(ts)
 
         return {
             "type": "ir.actions.act_window",
             "res_model": "tsm.task",
             "res_id": self.id,
-            "view_type": "form",
             "target": "current",
             "view_mode": "form",
             "context": {
@@ -106,7 +97,7 @@ class TsmTask(models.Model):
         for task in self.filtered(lambda t: not t.active):
             if any(not ts.amount for ts in task.timesheet_ids):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "You can not archive a task with timesheets "
                         "that have no time spent."
                     )

@@ -481,3 +481,21 @@ msgid ""
 "You cannot delete a task containing timesheets. You can either delete all "
 "the task's timesheet and then delete the task or simply deactivate the task."
 msgstr ""
+
+#. module: tsm_task_timesheet
+#. odoo-python
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
+msgid "Save a task with a title and a customer before starting work."
+msgstr ""
+
+#. module: tsm_task_timesheet
+#. odoo-python
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
+msgid "Enter a task title and a customer before starting work."
+msgstr ""
+
+#. module: tsm_task_timesheet
+#. odoo-python
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:0
+msgid "The task must belong to the selected project."
+msgstr ""

@@ -22,23 +22,60 @@ TSM tasks timesheet time control
 
 |badge1| |badge2| |badge3|
 
-- Each employee can encode and track their time spent on the different
-  tasks.
-- This module adds a button at task time line level to compute the spent
-  time, in minutes, from start date to the current moment.
-- Finally, it allows to open and close tasks from account analytic
-  lines. The selected closed stage is the first one that is found with
-  the mark "Closed" checked.
+- TSM users can record and track time spent on support tasks.
+- Stop computes elapsed time from the start datetime. Durations are
+  stored in decimal hours and displayed as hours and minutes.
+- Users can open and close tasks from their timesheet lines. Closing
+  selects the first stage found with "Closed" checked and requires
+  nonzero durations on all timesheets of the task.
+- List, kanban, calendar and pivot views support time analysis by task,
+  project and user. This addon uses TSM timesheets, not analytic lines.
 
 **Table of contents**
 
 .. contents::
    :local:
 
+Configuration
+=============
+
+In TSM > Configuration > Settings, select Timesheet Title for free-text
+descriptions or Timesheet Tag for classification. Selecting either
+option in the settings form clears the other.
+
+Leave both options disabled to record time without entering titles or
+tags.
+
+With Timesheet Tag enabled, manage tags in Configuration > Timesheet
+Tags (system access is required for this menu). Only one active tag can
+be marked as the default. The addon provides an initial "-- Undefined
+--" tag.
+
 Usage
 =====
 
 To use this module:
+
+1. Open TSM and create or open a task. Add a line in its Timesheets tab,
+   or open Timesheet > My Timesheets and select a task. In the
+   standalone list or form, you can select a project first to filter the
+   available tasks, or select a task first to fill its project and
+   customer. While a task is selected, only its project is offered.
+   Clear the task before choosing another project. Enable the optional
+   Project column to use it in lists.
+2. Enter a start datetime and duration, or click Stop to calculate
+   elapsed time. Stop requires a start datetime.
+3. Enter a task title and customer in Kanban quick creation, then click
+   Start. Missing required fields are highlighted and must be completed
+   before saving. Start saves the task, adds a running timesheet and
+   opens the task for editing. This also replaces the task description
+   with a timestamp.
+4. Use Open task or Close task from a timesheet to change the task
+   stage. Closing requires all timesheets of that task to have nonzero
+   durations.
+
+Managers also have All Timesheets and Reporting menus. My Timesheets is
+a navigation filter; it does not establish per-user access restrictions.
 
 Bug Tracker
 ===========

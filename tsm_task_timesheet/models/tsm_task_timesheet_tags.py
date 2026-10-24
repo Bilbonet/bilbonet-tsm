@@ -1,6 +1,6 @@
 # Copyright 2018 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -32,13 +32,13 @@ class TsmTaskTimesheeetTags(models.Model):
 
     @api.constrains("default")
     def _check_default(self):
-        if self.default:
-            checked_bool = self.search([("id", "!=", self.id), ("default", "=", True)])
+        for tag in self.filtered("default"):
+            checked_bool = self.search([("id", "!=", tag.id), ("default", "=", True)])
             if checked_bool:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "There's already one Tag checked as default.\n "
-                        "Tag Checked : %s"
+                        "Tag Checked : %s",
+                        checked_bool[0].name,
                     )
-                    % checked_bool[0].name
                 )

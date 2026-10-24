@@ -501,3 +501,21 @@ msgstr ""
 "No puede eliminar una tarea con partes de horas. Puede eliminar todos los "
 "partes de horas de la tarea y luego eliminar la tarea o simplemente "
 "desactivar la tarea."
+
+#. module: tsm_task_timesheet
+#. odoo-python
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
+msgid "Save a task with a title and a customer before starting work."
+msgstr "Guarda una tarea con título y cliente antes de comenzar el trabajo."
+
+#. module: tsm_task_timesheet
+#. odoo-python
+#: code:addons/tsm_task_timesheet/models/tsm_task.py:0
+msgid "Enter a task title and a customer before starting work."
+msgstr "Indica un título y un cliente para la tarea antes de comenzar el trabajo."
+
+#. module: tsm_task_timesheet
+#. odoo-python
+#: code:addons/tsm_task_timesheet/models/tsm_task_timesheet.py:0
+msgid "The task must belong to the selected project."
+msgstr "La tarea debe pertenecer al proyecto seleccionado."

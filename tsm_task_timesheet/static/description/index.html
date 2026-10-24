@@ -371,33 +371,68 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/Bilbonet/bilbonet-tsm/tree/18.0/tsm_task_timesheet"><img alt="Bilbonet/bilbonet-tsm" src="https://img.shields.io/badge/github-Bilbonet%2Fbilbonet--tsm-lightgray.png?logo=github" /></a></p>
 <ul class="simple">
-<li>Each employee can encode and track their time spent on the different
-tasks.</li>
-<li>This module adds a button at task time line level to compute the spent
-time, in minutes, from start date to the current moment.</li>
-<li>Finally, it allows to open and close tasks from account analytic
-lines. The selected closed stage is the first one that is found with
-the mark “Closed” checked.</li>
+<li>TSM users can record and track time spent on support tasks.</li>
+<li>Stop computes elapsed time from the start datetime. Durations are
+stored in decimal hours and displayed as hours and minutes.</li>
+<li>Users can open and close tasks from their timesheet lines. Closing
+selects the first stage found with “Closed” checked and requires
+nonzero durations on all timesheets of the task.</li>
+<li>List, kanban, calendar and pivot views support time analysis by task,
+project and user. This addon uses TSM timesheets, not analytic lines.</li>
 </ul>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
+<p>In TSM &gt; Configuration &gt; Settings, select Timesheet Title for free-text
+descriptions or Timesheet Tag for classification. Selecting either
+option in the settings form clears the other.</p>
+<p>Leave both options disabled to record time without entering titles or
+tags.</p>
+<p>With Timesheet Tag enabled, manage tags in Configuration &gt; Timesheet
+Tags (system access is required for this menu). Only one active tag can
+be marked as the default. The addon provides an initial “– Undefined
+–” tag.</p>
+</div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
 <p>To use this module:</p>
+<ol class="arabic simple">
+<li>Open TSM and create or open a task. Add a line in its Timesheets tab,
+or open Timesheet &gt; My Timesheets and select a task. In the
+standalone list or form, you can select a project first to filter the
+available tasks, or select a task first to fill its project and
+customer. While a task is selected, only its project is offered.
+Clear the task before choosing another project. Enable the optional
+Project column to use it in lists.</li>
+<li>Enter a start datetime and duration, or click Stop to calculate
+elapsed time. Stop requires a start datetime.</li>
+<li>Enter a task title and customer in Kanban quick creation, then click
+Start. Missing required fields are highlighted and must be completed
+before saving. Start saves the task, adds a running timesheet and
+opens the task for editing. This also replaces the task description
+with a timestamp.</li>
+<li>Use Open task or Close task from a timesheet to change the task
+stage. Closing requires all timesheets of that task to have nonzero
+durations.</li>
+</ol>
+<p>Managers also have All Timesheets and Reporting menus. My Timesheets is
+a navigation filter; it does not establish per-user access restrictions.</p>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/Bilbonet/bilbonet-tsm/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -405,22 +440,22 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-4">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-5">Authors</a></h2>
 <ul class="simple">
 <li>Jesus Ramiro (Bilbonet)</li>
 <li></li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-6">Contributors</a></h2>
 <ul class="simple">
 <li>Jesus Ramiro <a class="reference external" href="mailto:jesus&#64;bilbonet.net">jesus&#64;bilbonet.net</a></li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
 <p>Current maintainer:</p>
 <p><a class="reference external image-reference" href="https://github.com/bilbonet"><img alt="bilbonet" src="https://github.com/bilbonet.png?size=40px" /></a></p>
 <p>This module is part of the <a class="reference external" href="https://github.com/Bilbonet/bilbonet-tsm/tree/18.0/tsm_task_timesheet">Bilbonet/bilbonet-tsm</a> project on GitHub.</p>

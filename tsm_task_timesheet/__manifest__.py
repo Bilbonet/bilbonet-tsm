@@ -10,12 +10,17 @@
     "author": "Jesus Ramiro (Bilbonet),",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "application": True,
-    "installable": True,
-    "preloadable": True,
     "depends": [
         "tsm_base",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "tsm_task_timesheet/static/src/views/task_quick_create.esm.js",
+        ],
+        "web.assets_unit_tests": [
+            "tsm_task_timesheet/static/tests/task_quick_create.test.js",
+        ],
+    },
     "data": [
         "security/tsm_timesheet_security.xml",
         "security/ir.model.access.csv",
