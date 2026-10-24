@@ -4,7 +4,7 @@
     "name": "TSM tasks timesheet time control",
     "summary": "Users can encode and track their time spent on the different tasks",
     "category": "Management",
-    "version": "15.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Beta",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
     "author": "Jesus Ramiro (Bilbonet),",

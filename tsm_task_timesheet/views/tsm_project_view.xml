@@ -5,7 +5,7 @@
     <record id="tsm_timesheet_lines_by_project" model="ir.actions.act_window">
         <field name="name">Timesheet Project</field>
         <field name="res_model">tsm.task.timesheet</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="view_id" ref="tsm_task_timesheet_line_tree" />
         <field name="domain">[('project_id', '!=', False)]</field>
         <field

@@ -14,14 +14,14 @@ class TsmTaskTimesheet(models.Model):
     @api.depends("tag_ids")
     def _compute_default_name(self):
         for ts in self:
-            if self.user_has_groups("tsm_task_timesheet.group_tsm_timesheet_title"):
+            if self.env.user.has_group("tsm_task_timesheet.group_tsm_timesheet_title"):
                 ts.name = "/"
-            if self.user_has_groups("tsm_task_timesheet.group_tsm_timesheet_tag"):
+            if self.env.user.has_group("tsm_task_timesheet.group_tsm_timesheet_tag"):
                 if ts.tag_ids:
                     ts.name = ts.tag_ids.name
 
     def _get_default_tag_id(self):
-        if self.user_has_groups("tsm_task_timesheet.group_tsm_timesheet_tag"):
+        if self.env.user.has_group("tsm_task_timesheet.group_tsm_timesheet_tag"):
             tag_id = self.env["tsm.task.timesheet.tags"].search(
                 [("default", "=", True)], limit=1
             )
