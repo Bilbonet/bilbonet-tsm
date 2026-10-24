@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="tsm_task_timesheet_tag" model="tsm.task.timesheet.tags">
+        <field name="name">-- Undefined --</field>
+        <field name="default">1</field>
+    </record>
+</odoo>
