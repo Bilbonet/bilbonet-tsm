@@ -123,27 +123,35 @@ adicionales sin marcar ni a los tests automatizados.
 
 ## Pruebas automatizadas y datos
 
-**Decisión:** tests y operaciones de base de datos no solicitados; no ejecutados. Se
-añade cobertura en `tests/test_tsm_tech_assets.py` para alta por lotes, compañía activa,
-edición con responsables distintos y cambio de usuario, contadores con archivados,
-acceso restringido y cambios de vínculos, copia, inicialización del compositor,
-asignación y retirada de seguidores, rechazo de modelos no admitidos y generación/nombre
-de adjuntos. El renderizador PDF se simula en el test de adjuntos: no valida el motor
-PDF ni el contenido de los informes. Estos tests quedan preparados, no se presentan como
-superados.
+**Ejecución:** no se han ejecutado tests ni operaciones de base de datos locales. El
+workflow `tests` del PR ejecuta la suite sobre OCB 18.0 en una base aislada de CI. El
+resultado del commit vigente se consulta en las
+[verificaciones del PR](https://github.com/Bilbonet/bilbonet-tsm/pull/8/checks). La
+suite incluye diez casos de `tsm_tech_assets`, con cobertura para alta por lotes,
+compañía activa, edición con responsables distintos y cambio de usuario, contadores con
+archivados, acceso restringido y cambios de vínculos, copia, inicialización del
+compositor, asignación y retirada de seguidores, rechazo de modelos no admitidos y
+generación/nombre de adjuntos. El renderizador PDF se simula en el test de adjuntos: no
+valida el motor PDF ni el contenido de los informes.
 
 La revisión estática de los datos de prueba incluye una etapa cerrada explícita para la
 tarea archivada, conforme a la restricción de archivo de `tsm_base`.
 
+La primera ejecución de CI registró 55 tests con un error en el caso de compañía
+predeterminada: la compañía nueva del test no tenía secuencia aplicable y el código
+quedaba vacío. Ese caso usa ahora un código explícito para aislar el valor por defecto
+de compañía; la numeración se comprueba en el caso de alta por lotes. No se altera la
+secuencia productiva ni su política `noupdate`.
+
 El usuario ha actualizado el módulo en su base y ha realizado su revisión de interfaz.
-El agente no ha ejecutado instalaciones, actualizaciones ni operaciones de base de
-datos. Quedan sin evidencia técnica de este agente la instalación limpia, la ejecución
-de tests, el renderizado QWeb/PDF y el envío de correo. La actualización de una copia
-migrada desde Odoo 15 debe comprobar por separado activos, notas, compañías,
-responsables, códigos, secuencia, tipos, tareas archivadas, relaciones, seguidores,
-actividades, reglas y plantillas. No se identifica una transición propia de datos que
-justifique un script adicional; la lectura de fuentes no demuestra la conservación de
-una base real.
+El agente no ha ejecutado instalaciones, actualizaciones ni operaciones de base de datos
+locales. La CI instala dependencias, inicializa su base y ejecuta tests; no equivale a
+actualizar una base de cliente. Quedan sin validar el renderizado QWeb/PDF real y el
+envío de correo. La actualización de una copia migrada desde Odoo 15 debe comprobar por
+separado activos, notas, compañías, responsables, códigos, secuencia, tipos, tareas
+archivadas, relaciones, seguidores, actividades, reglas y plantillas. No se identifica
+una transición propia de datos que justifique un script adicional; la lectura de fuentes
+no demuestra la conservación de una base real.
 
 ## Límites heredados
 

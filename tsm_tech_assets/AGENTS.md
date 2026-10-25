@@ -14,7 +14,9 @@ stock, accounting assets or Odoo Project tasks.
   columns. The reciprocal Many2many fields exclude their links when copying either a
   task or an asset.
 - Codes are required, globally unique and assigned from the `tsm.tech.asset` sequence
-  when `/` is supplied. Preserve the sequence's `noupdate` data.
+  when `/` is supplied. Preserve the sequence's `noupdate` data. Automatic numbering
+  requires a sequence applicable to the active company; the module-owned sequence
+  defaults to the installation company.
 - Task counts include archived tasks and respect the current user's task access. Do not
   elevate reads or count all related tasks without considering disclosure.
 - `can_edit` controls form fields for managers or the asset's responsible user. It is a

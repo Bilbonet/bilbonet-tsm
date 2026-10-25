@@ -51,7 +51,7 @@ class TestTsmTechAssets(TransactionCase):
         asset = (
             self.env["tsm.tech.asset"]
             .with_company(company)
-            .create(self._asset_values())
+            .create(self._asset_values(code="OTHER-COMPANY-ASSET"))
         )
         self.assertEqual(asset.company_id, company)
 
