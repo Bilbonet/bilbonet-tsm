@@ -370,10 +370,11 @@ ul.auto-toc {
 !! source digest: sha256:deb0d43bac53cfe6d0945e4b597631ad86ed20fdf5f31a7d79dd11fe55bbeca0
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/Bilbonet/bilbonet-tsm/tree/18.0/tsm_tech_assets"><img alt="Bilbonet/bilbonet-tsm" src="https://img.shields.io/badge/github-Bilbonet%2Fbilbonet--tsm-lightgray.png?logo=github" /></a></p>
-<p>Technical assets management helps your team control the different
-equipment, software, periferics etc.. You can register any assets and
-save notes about the configurations, users, passwords… You can also
-asign the assets to the tasks and know the historial of each asset.</p>
+<p>Manage customer technical assets, including equipment, software and
+peripherals. Keep technical and configuration notes, classify assets by
+type, and link them to TSM tasks to consult their service history.
+Assets support followers, activities, email templates and summary or
+detailed PDF reports.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -389,7 +390,25 @@ asign the assets to the tasks and know the historial of each asset.</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>To use this module:</p>
+<ol class="arabic simple">
+<li>As a TSM manager, open the technical asset types in TSM
+configuration. Add or edit each type’s name directly in the list.</li>
+<li>Open <strong>TSM &gt; Tech Assets</strong> and create an asset with a title,
+customer, type and responsible user. Add technical and configuration
+notes and choose its privacy.</li>
+<li>In a task, use <strong>Add</strong> in the technical assets field to select
+related assets. The selection is filtered by the task customer’s
+hierarchy.</li>
+<li>Click an asset card to open its form in a dialog. Use the diagonal
+triangle to open the full form, or the red cross to remove the link
+from the task. Removing this link does not delete the asset.</li>
+<li>From an asset, use the tasks button to consult its related tasks,
+including archived tasks allowed by your access rights. Use the email
+button or print actions to share its details or reports.</li>
+</ol>
+<p>TSM users can read asset types; TSM managers maintain them. Asset
+visibility and operations follow the module’s existing privacy and
+follower rules.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>

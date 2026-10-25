@@ -3,3 +3,4 @@
 
 from . import tsm_tech_asset
 from . import tsm_task
+from . import follower_assignment_wizard

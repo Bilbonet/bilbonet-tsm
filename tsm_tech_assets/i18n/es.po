@@ -907,3 +907,8 @@ msgid ""
 msgstr ""
 "{{ '(' + object.code + ')_' + (object.name or 'Elemento_Técnico').replace(' ', "
 "'-') }}"
+
+#. module: tsm_tech_assets
+#: model_terms:ir.ui.view,arch_db:tsm_tech_assets.tsm_task_tech_asset_form_view
+msgid "Remove from task"
+msgstr "Desvincular de la tarea"

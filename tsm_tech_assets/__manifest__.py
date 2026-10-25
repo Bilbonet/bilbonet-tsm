@@ -2,7 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Client Technical Assets Management",
-    "summary": "Helps your team control the different technical equipments of your clients",
+    "summary": (
+        "Helps your team control the different technical equipments of your clients"
+    ),
     "category": "Management",
     "version": "18.0.1.0.0",
     "development_status": "Beta",
@@ -10,9 +12,6 @@
     "author": "Jesus Ramiro (Bilbonet),",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
-    "preloadable": True,
     "depends": [
         "tsm_base",
     ],

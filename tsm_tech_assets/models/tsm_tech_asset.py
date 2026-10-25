@@ -1,6 +1,6 @@
 # Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class TsmTechAsset(models.Model):
@@ -9,30 +9,24 @@ class TsmTechAsset(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "priority desc, sequence, id desc"
 
+    @api.depends("task_ids")
+    @api.depends_context("uid", "allowed_company_ids")
     def _compute_task_count(self):
+        task_model = self.env["tsm.task"].with_context(active_test=False)
         for asset in self:
-            asset.task_count = self.env["tsm.task"].search(
-                [
-                    ("asset_ids", "in", asset.id),
-                    "|",
-                    ("active", "=", True),
-                    ("active", "=", False),
-                ],
-                count=True,
-            )
+            asset.task_count = task_model.search_count([("asset_ids", "in", asset.ids)])
 
+    @api.depends("user_id")
+    @api.depends_context("uid")
     def _compute_can_edit(self):
-        can_edit = (
-            self.env.user.sudo().has_group("tsm_base.group_tsm_manager")
-            or self.env.user.id == self.user_id.id
-        )
+        is_manager = self.env.user.has_group("tsm_base.group_tsm_manager")
         for asset in self:
-            asset.can_edit = can_edit
+            asset.can_edit = is_manager or self.env.user == asset.user_id
 
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
-        default=lambda self: self.env["res.company"]._company_default_get(),
+        default=lambda self: self.env.company,
     )
     active = fields.Boolean(
         default=True,
@@ -143,7 +137,7 @@ class TsmTechAsset(models.Model):
     )
 
     _sql_constraints = [
-        ("tsm_tech_asset_unique_code", "UNIQUE (code)", _("The code must be unique!")),
+        ("tsm_tech_asset_unique_code", "UNIQUE (code)", "The code must be unique!"),
     ]
 
     def action_tech_asset_send(self):
@@ -158,7 +152,7 @@ class TsmTechAsset(models.Model):
         )
         ctx = {
             "default_model": "tsm.tech.asset",
-            "default_res_id": self.id,
+            "default_res_ids": self.ids,
             "default_use_template": bool(template_id),
             "default_template_id": template_id,
             "default_composition_mode": "comment",
@@ -187,7 +181,6 @@ class TsmTechAsset(models.Model):
             "res_model": "tsm.tech.asset",
             "res_id": self.id,
             "view_mode": "form",
-            "view_type": "form",
             "target": "current",
         }
 

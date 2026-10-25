@@ -25,6 +25,7 @@ This repository includes the following addons:
 | `tsm_base`           | Technical-support projects and tasks, with stages, tags, followers, activities, email composition and PDF reports. | Beta / active maintenance |
 | `tsm_task_material`  | Consumed task materials, sale-order generation and material sections in task/project reports.                      | Beta / active maintenance |
 | `tsm_task_timesheet` | Task time entries, elapsed-time controls, tags and pivot/calendar analysis.                                        | Beta / active maintenance |
+| `tsm_tech_assets`    | Customer technical assets, configuration notes, task links, email and PDF reports.                                 | Beta / active maintenance |
 
 The repository includes the addon source, module-local specifications, tests, README
 source fragments and repository tooling. It does not own Odoo core, addons for other
@@ -71,6 +72,10 @@ material rules must follow task permissions; see
 `tsm_task_timesheet` depends on `tsm_base` and adds time entries and tags. Its ACL and
 record-rule coverage differ from task permissions; review its module context before
 changing privacy or company isolation.
+
+`tsm_tech_assets` depends on `tsm_base` and links customer assets to tasks. Its privacy
+rules, shared task relation and report/email boundaries are documented in
+[`tsm_tech_assets/AGENTS.md`](tsm_tech_assets/AGENTS.md).
 
 ## Validation expected by this repository
 

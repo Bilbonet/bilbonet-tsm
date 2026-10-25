@@ -22,10 +22,11 @@ Client Technical Assets Management
 
 |badge1| |badge2| |badge3|
 
-Technical assets management helps your team control the different
-equipment, software, periferics etc.. You can register any assets and
-save notes about the configurations, users, passwords... You can also
-asign the assets to the tasks and know the historial of each asset.
+Manage customer technical assets, including equipment, software and
+peripherals. Keep technical and configuration notes, classify assets by
+type, and link them to TSM tasks to consult their service history.
+Assets support followers, activities, email templates and summary or
+detailed PDF reports.
 
 **Table of contents**
 
@@ -35,7 +36,24 @@ asign the assets to the tasks and know the historial of each asset.
 Usage
 =====
 
-To use this module:
+1. As a TSM manager, open the technical asset types in TSM
+   configuration. Add or edit each type's name directly in the list.
+2. Open **TSM > Tech Assets** and create an asset with a title,
+   customer, type and responsible user. Add technical and configuration
+   notes and choose its privacy.
+3. In a task, use **Add** in the technical assets field to select
+   related assets. The selection is filtered by the task customer's
+   hierarchy.
+4. Click an asset card to open its form in a dialog. Use the diagonal
+   triangle to open the full form, or the red cross to remove the link
+   from the task. Removing this link does not delete the asset.
+5. From an asset, use the tasks button to consult its related tasks,
+   including archived tasks allowed by your access rights. Use the email
+   button or print actions to share its details or reports.
+
+TSM users can read asset types; TSM managers maintain them. Asset
+visibility and operations follow the module's existing privacy and
+follower rules.
 
 Bug Tracker
 ===========
