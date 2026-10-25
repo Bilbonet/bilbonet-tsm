@@ -1,0 +1,210 @@
+# Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo import api, fields, models
+
+
+class TsmTechAsset(models.Model):
+    _name = "tsm.tech.asset"
+    _description = "Cliente Technical Assets Management"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "priority desc, sequence, id desc"
+
+    @api.depends("task_ids")
+    @api.depends_context("uid", "allowed_company_ids")
+    def _compute_task_count(self):
+        task_model = self.env["tsm.task"].with_context(active_test=False)
+        for asset in self:
+            asset.task_count = task_model.search_count([("asset_ids", "in", asset.ids)])
+
+    @api.depends("user_id")
+    @api.depends_context("uid")
+    def _compute_can_edit(self):
+        is_manager = self.env.user.has_group("tsm_base.group_tsm_manager")
+        for asset in self:
+            asset.can_edit = is_manager or self.env.user == asset.user_id
+
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        default=lambda self: self.env.company,
+    )
+    active = fields.Boolean(
+        default=True,
+        copy=False,
+        tracking=True,
+        help="If the active field is set to False, it will allow you to hide"
+        " the asset without removing it.",
+    )
+    code = fields.Char(
+        string="Tech Asset Code",
+        default="/",
+        required=True,
+        copy=False,
+    )
+    sequence = fields.Integer(
+        index=True,
+        default=10,
+        help="Gives the sequence order when displaying a list of assets.",
+    )
+    priority = fields.Selection(
+        selection=[
+            ("0", "Low"),
+            ("1", "Normal"),
+        ],
+        default="0",
+        index=True,
+        help="Sequence of the asset when displaying assets",
+    )
+    date = fields.Date(
+        default=fields.Date.context_today,
+        index=True,
+        copy=False,
+    )
+    name = fields.Char(
+        string="Asset Title",
+        tracking=20,
+        required=True,
+        index=True,
+    )
+    tech_notes = fields.Html(
+        string="Technical Notes",
+        sanitize=True,
+        strip_style=False,
+        translate=False,
+        help="Details, notes and aclarations about the asset.",
+    )
+    config_notes = fields.Html(
+        string="Configuration Notes",
+        sanitize=True,
+        strip_style=False,
+        translate=False,
+        help="Configurations, notes about the assets.",
+    )
+    user_id = fields.Many2one(
+        "res.users",
+        string="Responsible",
+        default=lambda self: self.env.uid,
+        required=True,
+        copy=False,
+        index=True,
+        tracking=30,
+    )
+    partner_id = fields.Many2one(
+        comodel_name="res.partner",
+        string="Customer",
+        required=True,
+    )
+    type_id = fields.Many2one(
+        comodel_name="tsm.tech.asset.type",
+        string="Type",
+        required=True,
+        index=True,
+        tracking=40,
+        change_default=True,
+    )
+    task_ids = fields.Many2many(
+        comodel_name="tsm.task",
+        relation="tsm_task_tsm_tech_asset_rel",
+        column1="tsm_tech_asset_id",
+        column2="tsm_task_id",
+        string="Tasks",
+        context={"active_test": False},
+        copy=False,
+    )
+    task_count = fields.Integer(
+        compute="_compute_task_count", string="Amount Tasks", readonly=True
+    )
+    privacy_visibility = fields.Selection(
+        selection=[
+            ("followers", "On invitation only"),
+            ("employees", "Visible by all employees"),
+        ],
+        string="Privacy",
+        required=True,
+        default="followers",
+        help="Holds visibility of the tech asset:\n"
+        "- On invitation only: Employees may only "
+        "see the followed tech asset\n"
+        "- Visible by all employees: All employees "
+        "may see tech asset\n",
+    )
+    can_edit = fields.Boolean(
+        compute="_compute_can_edit",
+        string="Security: only managers can edit",
+        default=True,
+        help="This field is for security purpose. "
+        "Only members of managers group can modify some fields.",
+    )
+
+    _sql_constraints = [
+        ("tsm_tech_asset_unique_code", "UNIQUE (code)", "The code must be unique!"),
+    ]
+
+    def action_tech_asset_send(self):
+        """
+        This function opens a wizard to compose an email,
+        with the tech asset template message loaded by default
+        """
+        self.ensure_one()
+        template_id = self.env["ir.model.data"]._xmlid_to_res_id(
+            "tsm_tech_assets.tsm_tech_asset_email_template",
+            raise_if_not_found=False,
+        )
+        ctx = {
+            "default_model": "tsm.tech.asset",
+            "default_res_ids": self.ids,
+            "default_use_template": bool(template_id),
+            "default_template_id": template_id,
+            "default_composition_mode": "comment",
+            "force_email": True,
+        }
+        return {
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "mail.compose.message",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": ctx,
+        }
+
+    def action_inactive(self):
+        return self.write({"active": False})
+
+    def action_active(self):
+        return self.write({"active": True})
+
+    def open_child_form(self):
+        """Open child contact form from the parent partner form view"""
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "tsm.tech.asset",
+            "res_id": self.id,
+            "view_mode": "form",
+            "target": "current",
+        }
+
+    # -------------------------------------------------------
+    # CRUD overrides
+    # -------------------------------------------------------
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Assign new code
+        for vals in vals_list:
+            if vals.get("code", "/") == "/":
+                vals["code"] = self.env["ir.sequence"].next_by_code("tsm.tech.asset")
+
+        return super().create(vals_list)
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {})
+        default["name"] = f"{self.name} (copy)"
+        return super().copy(default)
+
+
+class TsmTechAssetType(models.Model):
+    _name = "tsm.tech.asset.type"
+    _description = "Types of assets"
+
+    name = fields.Char(string="Type of asset", required=True)
