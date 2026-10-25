@@ -80,8 +80,16 @@ class TestTsmTaskMaterial(TransactionCase):
         shipping = self.env["res.partner"].create(
             {"name": "Delivery", "parent_id": self.customer.id, "type": "delivery"}
         )
+        if not self.env.company.account_fiscal_country_id:
+            self.env.company.account_fiscal_country_id = self.env.ref("base.es")
+        tax_group = self.env["account.tax.group"].create({"name": "Material Tax Group"})
         tax = self.env["account.tax"].create(
-            {"name": "Material Tax", "amount": 10.0, "company_id": self.env.company.id}
+            {
+                "name": "Material Tax",
+                "amount": 10.0,
+                "company_id": self.env.company.id,
+                "tax_group_id": tax_group.id,
+            }
         )
         self.product.taxes_id = tax
         task = self._create_task()
