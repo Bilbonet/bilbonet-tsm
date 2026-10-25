@@ -201,13 +201,13 @@ class TsmTechAsset(models.Model):
             if vals.get("code", "/") == "/":
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.tech.asset")
 
-        return super(TsmTechAsset, self).create(vals_list)
+        return super().create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
         default["name"] = f"{self.name} (copy)"
-        return super(TsmTechAsset, self).copy(default)
+        return super().copy(default)
 
 
 class TsmTechAssetType(models.Model):

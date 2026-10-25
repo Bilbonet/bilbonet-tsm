@@ -3,7 +3,7 @@
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <!-- Tasks From Asset -->
-     <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
+    <record id="tsm_tasks_from_tech_asset_action" model="ir.actions.act_window">
         <field name="name">Tasks</field>
         <field name="res_model">tsm.task</field>
         <field name="view_mode">tree,kanban,form</field>
@@ -64,10 +64,8 @@
                         bg_color="bg-danger"
                         attrs="{'invisible': [('active', '=', True)]}"
                     />
-                    <field
-                        name="write_date"
-                        invisible="1"
-                    /><!-- To make invisible on create -->
+                    <field name="write_date" invisible="1" />
+                    <!-- To make invisible on create -->
                     <div class="oe_title pe-0">
                         <h2 class="d-flex justify-content-between align-items-center">
                             <div class="d-flex w-100">
@@ -207,12 +205,11 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_content oe_kanban_global_click">
-
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings">
-                                    <small class="text-primary"><field
-                                            name="partner_id"
-                                        /></small>
+                                    <small class="text-primary">
+                                        <field name="partner_id" />
+                                    </small>
                                     <hr class="mt0 mb4" />
                                     <t
                                         t-if="record.active.raw_value == false"
@@ -474,5 +471,4 @@
         parent="tsm_base.tsm_config_menu"
         sequence="10"
     />
-
 </odoo>
