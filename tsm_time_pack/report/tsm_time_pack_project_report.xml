@@ -42,34 +42,36 @@
                                 <td>Total Time:</td>
                                 <td class="text-right text-secondary">
                                     <!--<strong><span t-esc="time_total" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/></strong>-->
-                                    <strong><span
-                                            t-esc="time_total"
-                                            t-options="{'widget': 'float_time'}"
-                                        /></strong> hours
+                                    <strong>
+                                    <span
+                                        t-esc="time_total"
+                                        t-options="{'widget': 'float_time'}"
+                                    />
+                                </strong> hours
                                 </td>
                             </tr>
                             <tr t-if="time_tp_discount > 0">
                                 <td>Discounted <span
-                                        style="font-size:0.8em;"
-                                        class="fa fa-2x fa-arrow-circle-down text-danger"
-                                    />:</td>
+                                    style="font-size:0.8em;"
+                                    class="fa fa-2x fa-arrow-circle-down text-danger"
+                                />:</td>
                                 <td class="text-right text-danger">
                                     <span
-                                        t-esc="time_tp_discount"
-                                        t-options="{'widget': 'float_time'}"
-                                    /> hours
+                                    t-esc="time_tp_discount"
+                                    t-options="{'widget': 'float_time'}"
+                                /> hours
                                 </td>
                             </tr>
                             <tr t-if="time_tp_nodiscount > 0">
                                 <td>Complimentary <span
-                                        style="font-size:0.8em;"
-                                        class="fa fa-2x fa-arrow-circle-right"
-                                    />:</td>
+                                    style="font-size:0.8em;"
+                                    class="fa fa-2x fa-arrow-circle-right"
+                                />:</td>
                                 <td class="text-right">
                                     <span
-                                        t-esc="time_tp_nodiscount"
-                                        t-options="{'widget': 'float_time'}"
-                                    /> hours
+                                    t-esc="time_tp_nodiscount"
+                                    t-options="{'widget': 'float_time'}"
+                                /> hours
                                 </td>
                             </tr>
                         </tbody>
@@ -112,10 +114,8 @@
                                 />
                             </td>
                             <td style="font-size:0.7em;">
-                                <span
-                                    t-if="ts.name != '/'"
-                                    t-field="ts.name"
-                                /><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                <span t-if="ts.name != '/'" t-field="ts.name" />
+                                <!-- If name of the timesheet not have default value, then is printed in the report-->
                                 <span
                                     t-if="ts.name == '/'"
                                     t-field="ts.tag_ids"
@@ -123,10 +123,8 @@
                                 />
                             </td>
                             <td style="font-size:0.7em;text-align:right;">
-                                <t
-                                    t-set="time_total"
-                                    t-value="time_total+ts.amount"
-                                /><!--Contamos el tiempo empleado-->
+                                <t t-set="time_total" t-value="time_total+ts.amount" />
+                                <!--Contamos el tiempo empleado-->
                                 <span
                                     t-field="ts.amount"
                                     t-options="{'widget': 'float_time'}"
@@ -157,12 +155,12 @@
                             </th>
                             <th colspan="99" style="text-align:right;width: 15%;">
                                 <span
-                                    class="fa fa-arrow-circle-down text-danger"
-                                /> Discounts Time<br />
+                                class="fa fa-arrow-circle-down text-danger"
+                            /> Discounts Time<br />
                                 <span
-                                    class="fa fa-arrow-circle-right"
-                                    style="margin-left: 5px;"
-                                /> Complimentary time
+                                class="fa fa-arrow-circle-right"
+                                style="margin-left: 5px;"
+                            /> Complimentary time
                             </th>
                         </tr>
                     </tfoot>

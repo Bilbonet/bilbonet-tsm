@@ -8,7 +8,7 @@
         parent="tsm_base.tsm_main_menu"
         sequence="6"
     />
-        <!-- ===============
+    <!-- ===============
         Time Packs: Views
     ================= -->
     <record id="tsm_time_pack_form_view" model="ir.ui.view">
@@ -49,11 +49,13 @@
                             icon="fa-eur"
                         >
                             <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_value"><field
+                                <span class="o_stat_value">
+                                    <field
                                         name="sale_amount"
                                         widget="monetary"
                                         options="{'currency_field': 'company_currency'}"
-                                    /></span>
+                                    />
+                                </span>
                                 <field name="sale_id" readonly="1" />
                             </div>
                         </button>
@@ -172,7 +174,7 @@
                                 </tree>
                             </field>
                             <group>
-                                    <group
+                                <group
                                     name="task_hours"
                                     class="oe_subtotal_footer oe_right"
                                 >
@@ -192,7 +194,7 @@
                                         class="oe_subtotal_footer_separator"
                                         readonly="1"
                                     />
-                                    </group>
+                                </group>
                             </group>
                         </page>
                         <page name="description_page" string="Description">
@@ -357,7 +359,7 @@
             <kanban class="o_kanban_mobile">
                 <field name="date_start" />
                 <field name="user_id" />
-                    <field name="code" />
+                <field name="code" />
                 <field name="name" />
                 <field name="contracted_hours" />
                 <templates>
@@ -377,16 +379,20 @@
                                 <div class="col-xs-10">
                                     <div>
                                         <strong>[<t
-                                                t-esc="record.code.value"
-                                            />] </strong>
+                                            t-esc="record.code.value"
+                                        />] </strong>
                                         <t t-esc="record.name.value" />
                                     </div>
                                     <div class="text-muted">
                                         <span style="font-size:1.7em;">
-                                            <strong><font color="#f00"><field
+                                            <strong>
+                                                <font color="#f00">
+                                                    <field
                                                         name="remaining_hours"
                                                         widget="float_time"
-                                                    /></font></strong>
+                                                    />
+                                                </font>
+                                            </strong>
                                         </span>
                                     </div>
                                 </div>
@@ -397,10 +403,8 @@
                                 <t t-esc="record.date_start.value" />
                             </span>
                             <span class="pull-right">
-                                <strong>Contracted Hours: </strong><field
-                                    name="contracted_hours"
-                                    widget="float_time"
-                                />
+                                <strong>Contracted Hours: </strong>
+                                <field name="contracted_hours" widget="float_time" />
                             </span>
                         </div>
                     </t>
@@ -409,7 +413,7 @@
         </field>
     </record>
 
-        <!-- ============================
+    <!-- ============================
         My Time Packs: Menus & Actions
     ============================== -->
     <record id="tsm_time_pack_mine_act" model="ir.actions.act_window">
@@ -452,7 +456,7 @@
         action="tsm_time_pack_mine_act"
     />
 
-        <!-- ===================
+    <!-- ===================
         All Time Packs: Views
     ===================== -->
     <record id="tsm_time_pack_all_tree_view" model="ir.ui.view">
@@ -486,7 +490,7 @@
         </field>
     </record>
 
-        <!--
+    <!--
         All Time Packs: Menus & Actions
     -->
     <record id="tsm_time_pack_all_act" model="ir.actions.act_window">

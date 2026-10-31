@@ -27,7 +27,7 @@
                                 style="color:#fff;"
                             >Time Pack</th>
                         </tr>
-                     </thead>
+                    </thead>
                     <tbody>
                         <tr
                             t-foreach="o.timesheet_ids.sorted(key=lambda b: b.date_time)"
@@ -40,10 +40,8 @@
                                 />
                             </td>
                             <td style="font-size:0.7em;">
-                                <span
-                                    t-if="t.name != '/'"
-                                    t-field="t.name"
-                                /><!-- If name of the timesheet not have default value, then is printed in the report-->
+                                <span t-if="t.name != '/'" t-field="t.name" />
+                                <!-- If name of the timesheet not have default value, then is printed in the report-->
                                 <span
                                     t-if="t.name == '/'"
                                     t-field="t.tag_ids"
@@ -85,12 +83,12 @@
                                 style="text-align:right;width: 15%;"
                             >
                                 <span
-                                    class="fa fa-arrow-circle-down text-danger"
-                                /> Discounts Time<br />
+                                class="fa fa-arrow-circle-down text-danger"
+                            /> Discounts Time<br />
                                 <span
-                                    class="fa fa-arrow-circle-right"
-                                    style="margin-left: 5px;"
-                                /> Complimentary time
+                                class="fa fa-arrow-circle-right"
+                                style="margin-left: 5px;"
+                            /> Complimentary time
                             </th>
                         </tr>
                     </tfoot>

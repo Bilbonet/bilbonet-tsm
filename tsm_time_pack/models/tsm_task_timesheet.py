@@ -32,7 +32,7 @@ class TsmTaskTimesheet(models.Model):
                 if tp:
                     vals.update({"timepack_id": tp.id})
 
-        return super(TsmTaskTimesheet, self).create(vals_list)
+        return super().create(vals_list)
 
     def view_time_pack(self):
         self.ensure_one()

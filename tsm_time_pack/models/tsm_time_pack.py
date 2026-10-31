@@ -39,7 +39,7 @@ class TsmTimePack(models.Model):
         duration = timedelta(hours=hours)
         total_minutes = int(duration.total_seconds() // 60)
         h, m = divmod(total_minutes, 60)
-        return "{:02d}:{:02d}".format(h, m)
+        return f"{h:02d}:{m:02d}"
 
     company_id = fields.Many2one(
         comodel_name="res.company",
@@ -447,7 +447,7 @@ class TsmTimePack(models.Model):
             if vals.get("code", "/") == "/":
                 vals["code"] = self.env["ir.sequence"].next_by_code("tsm.time.pack")
 
-        return super(TsmTimePack, self).create(vals_list)
+        return super().create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()
