@@ -41,5 +41,5 @@ class TsmTaskTimesheet(models.Model):
             "res_model": "tsm.time.pack",
             "res_id": self.timepack_id.id,
             "view_type": "form",
-            "view_mode": "form,tree",
+            "view_mode": "form,list",
         }
