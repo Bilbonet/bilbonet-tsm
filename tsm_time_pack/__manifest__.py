@@ -10,9 +10,6 @@
     "author": "Jesus Ramiro (Bilbonet),",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
-    "preloadable": True,
     "depends": [
         "product",
         "tsm_task_timesheet",

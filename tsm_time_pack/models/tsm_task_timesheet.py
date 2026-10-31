@@ -10,7 +10,7 @@ class TsmTaskTimesheet(models.Model):
         comodel_name="tsm.time.pack", string="Time Packs", index=True
     )
     discount_time = fields.Boolean(
-        default="True",
+        default=True,
         help="Indicate if discount the time from the time pack",
     )
 
@@ -18,9 +18,12 @@ class TsmTaskTimesheet(models.Model):
     def create(self, vals_list):
         """If we don't indicate Time Pack in the new Timesheet.
         We search any Time Pack available for the partner"""
+        defaults = self.default_get(["task_id", "timepack_id"])
         for vals in vals_list:
-            if not vals.get("timepack_id", False):
-                task = self.env["tsm.task"].browse(vals["task_id"])
+            task_id = vals.get("task_id", defaults.get("task_id"))
+            timepack_id = vals.get("timepack_id", defaults.get("timepack_id"))
+            if not timepack_id and task_id:
+                task = self.env["tsm.task"].browse(task_id)
                 tp = self.env["tsm.time.pack"].search(
                     [
                         ("partner_id", "=", task.partner_id.id),
@@ -40,6 +43,5 @@ class TsmTaskTimesheet(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "tsm.time.pack",
             "res_id": self.timepack_id.id,
-            "view_type": "form",
             "view_mode": "form,list",
         }

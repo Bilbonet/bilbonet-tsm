@@ -35,12 +35,12 @@
                 </div>
             </div>
             <div class="row">
-                <di class="col-sm-3">
+                <div class="col-sm-3">
                     <table class="table table-sm">
                         <tbody>
                             <tr>
                                 <td>Total Time:</td>
-                                <td class="text-right text-secondary">
+                                <td class="text-end text-secondary">
                                     <!--<strong><span t-esc="time_total" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/></strong>-->
                                     <strong>
                                     <span
@@ -55,7 +55,7 @@
                                     style="font-size:0.8em;"
                                     class="fa fa-2x fa-arrow-circle-down text-danger"
                                 />:</td>
-                                <td class="text-right text-danger">
+                                <td class="text-end text-danger">
                                     <span
                                     t-esc="time_tp_discount"
                                     t-options="{'widget': 'float_time'}"
@@ -67,7 +67,7 @@
                                     style="font-size:0.8em;"
                                     class="fa fa-2x fa-arrow-circle-right"
                                 />:</td>
-                                <td class="text-right">
+                                <td class="text-end">
                                     <span
                                     t-esc="time_tp_nodiscount"
                                     t-options="{'widget': 'float_time'}"
@@ -76,7 +76,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </di>
+                </div>
             </div>
         </xpath>
         <xpath expr="//div[@name='task_description']" position="after">
@@ -94,10 +94,8 @@
                                 style="color:#fff;"
                             >Spent Time Detail</th>
                             <th
-                                t-foreach="t.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]"
-                                t-as="tp"
-                                t-if="tp.timepack_id"
-                                class="text-right"
+                                t-if="t.timesheet_ids.timepack_id"
+                                class="text-end"
                                 style="color:#fff;"
                             >Time Pack</th>
                         </tr>

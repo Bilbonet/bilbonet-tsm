@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from datetime import date, timedelta
 
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 
 class TsmTimePack(models.Model):
@@ -12,22 +12,29 @@ class TsmTimePack(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "date_start, id desc"
 
-    @api.depends("sale_id")
+    @api.depends(
+        "sale_id.amount_untaxed",
+        "sale_id.currency_id",
+        "company_id",
+        "company_currency",
+        "date_start",
+    )
     def _compute_sale_amount(self):
         for record in self:
             sale = record.sudo().sale_id
-            currency = (
-                record.partner_id.property_product_pricelist.currency_id
-                or record.company_currency
-                or record.env.user.company_id.currency_id
-            )
-            record.sale_amount = sale.currency_id._convert(
-                sale.amount_untaxed,
-                currency,
-                record.company_id,
-                record.date_start or fields.Date.today(),
+            company = record.company_id or record.env.company
+            record.sale_amount = (
+                sale.currency_id._convert(
+                    sale.amount_untaxed,
+                    record.company_currency or company.currency_id,
+                    company,
+                    record.date_start or fields.Date.today(),
+                )
+                if sale
+                else 0.0
             )
 
+    @api.depends_context("uid")
     def _compute_can_edit(self):
         can_edit = self.env.user.has_group("tsm_base.group_tsm_manager")
         for tp in self:
@@ -44,7 +51,7 @@ class TsmTimePack(models.Model):
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
-        default=lambda self: self.env["res.company"]._company_default_get(),
+        default=lambda self: self.env.company,
     )
     active = fields.Boolean(
         default=True,
@@ -141,7 +148,7 @@ class TsmTimePack(models.Model):
         compute="_compute_hours",
         readonly=True,
         store=True,
-        group_operator="avg",
+        aggregator="avg",
     )
     product_id = fields.Many2one(comodel_name="product.product", string="Product")
     description_sale = fields.Text()
@@ -189,7 +196,7 @@ class TsmTimePack(models.Model):
     )
 
     _sql_constraints = [
-        ("tsm_time_pack_unique_code", "UNIQUE (code)", _("The code must be unique!")),
+        ("tsm_time_pack_unique_code", "UNIQUE (code)", "The code must be unique!"),
     ]
 
     @api.depends(
@@ -232,16 +239,15 @@ class TsmTimePack(models.Model):
             if progress >= 90:
                 cont_hours = self._format_hours(time.contracted_hours)
                 consu_hours = self._format_hours(consumed_hours)
-                txt_msg = _(
-                    "<h6>Contracted Hours: {cont_hours}</h6>"
-                    "<h6>Consumed Hours: {consu_hours}</h6>"
-                    '<h4 class="text-danger">Progress: {progress} %</h4>'
-                ).format(
+                txt_msg = self.env._(
+                    "<h6>Contracted Hours: %(cont_hours)s</h6>"
+                    "<h6>Consumed Hours: %(consu_hours)s</h6>"
+                    '<h4 class="text-danger">Progress: %(progress)s %%</h4>',
                     cont_hours=cont_hours,
                     consu_hours=consu_hours,
                     progress=progress,
                 )
-                title_msg = _("Time Pack %s Warning!!") % (time.code)
+                title_msg = self.env._("Time Pack %s Warning!!", time.code)
                 user_msg = {
                     "message": txt_msg,
                     "title": title_msg,
@@ -262,8 +268,7 @@ class TsmTimePack(models.Model):
         )
         ctx = {
             "default_model": "tsm.time.pack",
-            "default_res_id": self.id,
-            "default_use_template": bool(template_id),
+            "default_res_ids": self.ids,
             "default_template_id": template_id,
             "default_composition_mode": "comment",
             "force_email": True,
@@ -289,7 +294,7 @@ class TsmTimePack(models.Model):
         user = self.env.user
         if not user.has_group("sales_team.group_sale_manager"):
             raise ValidationError(
-                _(
+                self.env._(
                     "Only managers can archive a time pack.\n"
                     "Please, contact them to do this."
                 )
@@ -308,17 +313,20 @@ class TsmTimePack(models.Model):
 
     @api.constrains("quantity")
     def _check_quantity(self):
-        if not self.quantity > 0.0:
-            raise ValidationError(
-                _("Quantity of hours contracted must be greater than 0.")
-            )
-        else:
-            self.contracted_hours = self.quantity
+        for pack in self:
+            if not pack.quantity > 0.0:
+                raise ValidationError(
+                    self.env._("Quantity of hours contracted must be greater than 0.")
+                )
+            pack.contracted_hours = pack.quantity
 
     @api.constrains("discount")
     def _check_discount(self):
-        if self.discount > 100:
-            raise ValidationError(_("Discount should be less or equal to 100"))
+        for pack in self:
+            if pack.discount > 100:
+                raise ValidationError(
+                    self.env._("Discount should be less or equal to 100")
+                )
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
@@ -345,8 +353,11 @@ class TsmTimePack(models.Model):
 
     def _prepare_sale_line(self):
         self.ensure_one()
-        name = _("{description_sale}\n Time Pack: [{code}] {name}").format(
-            description_sale=self.description_sale, code=self.code, name=self.name or ""
+        name = self.env._(
+            "%(description_sale)s\n Time Pack: [%(code)s] %(name)s",
+            description_sale=self.description_sale,
+            code=self.code,
+            name=self.name or "",
         )
 
         sale_line_vals = {
@@ -358,21 +369,21 @@ class TsmTimePack(models.Model):
             "discount": self.discount,
         }
         sale_line = self.env["sale.order.line"].new(sale_line_vals)
-        return sale_line._convert_to_write(sale_line._cache)
+        return sale_line._convert_to_write(dict(sale_line._cache))
 
     def _prepare_sale(self):
         self.ensure_one()
         if not self.partner_id or not self.product_id:
             raise ValidationError(
-                _(
+                self.env._(
                     "You must first select a Customer and a Product for\n"
-                    "Time Pack: %s"
+                    "Time Pack: %s",
+                    self.code,
                 )
-                % self.code
             )
 
-        client_ref = _("Time Pack: [{code}] {name}").format(
-            code=self.code, name=self.name or ""
+        client_ref = self.env._(
+            "Time Pack: [%(code)s] %(name)s", code=self.code, name=self.name or ""
         )
 
         sale = self.env["sale.order"].new(
@@ -393,7 +404,7 @@ class TsmTimePack(models.Model):
         if self.partner_id.property_product_pricelist.id:
             sale.pricelist_id = self.partner_id.property_product_pricelist.id
 
-        return sale._convert_to_write(sale._cache)
+        return sale._convert_to_write(dict(sale._cache))
 
     def create_sale(self):
         """
@@ -401,6 +412,15 @@ class TsmTimePack(models.Model):
         :return: Sele Order created
         """
         self.ensure_one()
+        self.check_access("write")
+        if not self.env.user.has_group("sales_team.group_sale_manager"):
+            raise AccessError(
+                self.env._(
+                    "Only sales managers can create a sale order from a time pack."
+                )
+            )
+        if self.sale_id:
+            raise UserError(self.env._("This time pack already has a sale order."))
         sale_vals = self._prepare_sale()
 
         sale_vals.setdefault("order_line", [])
@@ -408,9 +428,9 @@ class TsmTimePack(models.Model):
         if sale_line_vals:
             sale_vals["order_line"].append((0, 0, sale_line_vals))
         sale = self.env["sale.order"].create(sale_vals)
-        sale.message_post_with_view(
+        sale.message_post_with_source(
             "mail.message_origin_link",
-            values={"self": sale, "origin": self},
+            render_values={"self": sale, "origin": self},
             subtype_id=self.env.ref("mail.mt_note").id,
         )
 
@@ -449,18 +469,15 @@ class TsmTimePack(models.Model):
 
         return super().create(vals_list)
 
-    def copy(self, default=None):
-        self.ensure_one()
-        default = dict(default or {})
-        default["code"] = self.env["ir.sequence"].next_by_code("tsm.time.pack")
-        return super().copy(default)
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        for vals in vals_list:
+            vals["code"] = self.env["ir.sequence"].next_by_code("tsm.time.pack")
+        return vals_list
 
-    def name_get(self):
-        """Get the proper display name formatted as 'code, name'."""
-        result = []
+    @api.depends("code", "name")
+    def _compute_display_name(self):
         for rec in self:
-            name = "[%s]" % (rec.code)
-            if rec.name:
-                name = "[%s] %s" % (rec.code, rec.name)
-            result.append((rec.id, name))
-        return result
+            rec.display_name = (
+                f"[{rec.code}] {rec.name}" if rec.name else f"[{rec.code}]"
+            )

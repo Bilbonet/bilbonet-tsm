@@ -97,7 +97,7 @@
                                         <table class="table table-sm table-borderless">
                                             <tr>
                                                 <td>Contracted:</td>
-                                                <td class="text-right text-primary">
+                                                <td class="text-end text-primary">
                                                     <span
                                                     t-field="o.contracted_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -108,7 +108,7 @@
                                                 <td>Consumed <span
                                                     class="fa fa-arrow-circle-down text-danger"
                                                 /> :</td>
-                                                <td class="text-right text-danger">
+                                                <td class="text-end text-danger">
                                                     <span
                                                     t-field="o.consumed_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -120,7 +120,7 @@
                                                 class="border-black"
                                             >
                                                 <td>Remainig:</td>
-                                                <td class="text-right text-success">
+                                                <td class="text-end text-success">
                                                     <span
                                                     t-field="o.remaining_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -132,7 +132,7 @@
                                                 class="border-black text-danger"
                                             >
                                                 <td>Exceded:</td>
-                                                <td class="text-right text-danger">
+                                                <td class="text-end text-danger">
                                                     <span
                                                     t-field="o.remaining_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -151,7 +151,7 @@
                                                 <td>Complimentary <span
                                                     class="fa fa-arrow-circle-right"
                                                 /> :</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <span
                                                     t-field="o.complimentary_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -172,7 +172,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    t-if="len(o.description) &gt; 11"
+                                    t-if="len(o.description or '') &gt; 11"
                                     class="col-auto mt16"
                                 >
                                     <strong>Notes:</strong>
@@ -363,7 +363,7 @@
                                         <table class="table table-sm table-borderless">
                                             <tr>
                                                 <td>Contracted:</td>
-                                                <td class="text-right text-primary">
+                                                <td class="text-end text-primary">
                                                     <span
                                                     t-field="o.contracted_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -374,7 +374,7 @@
                                                 <td>Consumed <span
                                                     class="fa fa-arrow-circle-down text-danger"
                                                 /> :</td>
-                                                <td class="text-right text-danger">
+                                                <td class="text-end text-danger">
                                                     <span
                                                     t-field="o.consumed_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -386,7 +386,7 @@
                                                 class="border-black"
                                             >
                                                 <td>Remainig:</td>
-                                                <td class="text-right text-success">
+                                                <td class="text-end text-success">
                                                     <span
                                                     t-field="o.remaining_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -398,7 +398,7 @@
                                                 class="border-black text-danger"
                                             >
                                                 <td>Exceded:</td>
-                                                <td class="text-right text-danger">
+                                                <td class="text-end text-danger">
                                                     <span
                                                     t-field="o.remaining_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -417,7 +417,7 @@
                                                 <td>Complimentary <span
                                                     class="fa fa-arrow-circle-right"
                                                 /> :</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <span
                                                     t-field="o.complimentary_hours"
                                                     t-options="{'widget': 'float_time'}"
@@ -438,7 +438,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    t-if="len(o.description) &gt; 11"
+                                    t-if="len(o.description or '') &gt; 11"
                                     class="col-auto mt16"
                                 >
                                     <strong>Notes:</strong>
@@ -533,7 +533,7 @@
                         <t t-set="timesheet_tasks" t-value="[]" />
                         <t t-set="timesheet_sorted" t-value="[]" />
                         <t
-                            t-foreach="o.timesheet_ids.sudo().sorted(key=lambda b: b.task_id.code)"
+                            t-foreach="o.timesheet_ids.sudo().filtered('task_id').sorted(key=lambda b: b.task_id.code)"
                             t-as="tt"
                         >
                             <t
@@ -661,7 +661,7 @@
                                                     style="margin-left: 5px;"
                                                 /> Complimentary time
                                                     <span
-                                                    t-field="o.total_hours_spent"
+                                                    t-out="total"
                                                     t-options="{'widget': 'float_time'}"
                                                     style="font-size:1.2em;margin-left: 15px;"
                                                 />

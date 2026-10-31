@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
-     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).--><odoo>
-    <menuitem id="tsm_time_pack_menu" name="Time Packs" parent="tsm_base.tsm_main_menu" sequence="6"/>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <menuitem
+        id="tsm_time_pack_menu"
+        name="Time Packs"
+        parent="tsm_base.tsm_main_menu"
+        sequence="6"
+    />
     <!-- ===============
         Time Packs: Views
     ================= -->
@@ -10,101 +16,225 @@
         <field name="model">tsm.time.pack</field>
         <field name="arch" type="xml">
             <form string="Time Packs">
-                <field name="company_id" invisible="1"/>
-                <field name="can_edit" invisible="1"/>
-                <field name="sale_id" invisible="1"/>
+                <field name="company_id" invisible="1" />
+                <field name="can_edit" invisible="1" />
+                <field name="sale_id" invisible="1" />
                 <header>
-                    <button name="action_time_pack_send" type="object" string=" Send by Email" class="oe_highlight" icon="fa-envelope" groups="tsm_base.group_tsm_user" invisible="code == '/'"/>
-                    <button name="create_sale" type="object" string="Create sale" groups="sales_team.group_sale_manager" invisible="(code == '/' or sale_id)"/>
+                    <button
+                        name="action_time_pack_send"
+                        type="object"
+                        string=" Send by Email"
+                        class="oe_highlight"
+                        icon="fa-envelope"
+                        groups="tsm_base.group_tsm_user"
+                        invisible="code == '/'"
+                    />
+                    <button
+                        name="create_sale"
+                        type="object"
+                        string="Create sale"
+                        groups="sales_team.group_sale_manager"
+                        invisible="(code == '/' or sale_id)"
+                    />
                 </header>
                 <sheet string="Task">
-                    <field name="active" invisible="1"/>
+                    <field name="active" invisible="1" />
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" type="object" groups="tsm_base.group_tsm_manager" name="action_view_order" icon="fa-eur" invisible="not sale_id">
+                        <button
+                            class="oe_stat_button"
+                            type="object"
+                            groups="tsm_base.group_tsm_manager"
+                            name="action_view_order"
+                            icon="fa-eur"
+                            invisible="not sale_id"
+                        >
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value">
-                                    <field name="sale_amount" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                    <field
+                                        name="sale_amount"
+                                        widget="monetary"
+                                        options="{'currency_field': 'company_currency'}"
+                                    />
                                 </span>
-                                <field name="sale_id" readonly="1"/>
+                                <field name="sale_id" readonly="1" />
                             </div>
                         </button>
                     </div>
-                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
 
                     <div class="oe_title pe-0">
                         <h2 class="d-flex justify-content-between align-items-center">
                             <div class="d-flex w-100">
-                                <field name="code" class="me-3" style="flex-basis: 15%" invisible="code == '/'"/>
-                                <field name="name" class="o_task_name me-3 pe-2" placeholder="Time Pack Title..."/>
+                                <field
+                                    name="code"
+                                    class="me-3"
+                                    style="flex-basis: 15%"
+                                    invisible="code == '/'"
+                                />
+                                <field
+                                    name="name"
+                                    class="o_task_name me-3 pe-2"
+                                    placeholder="Time Pack Title..."
+                                />
                             </div>
-                            <button type="object" name="action_inactive" class="btn btn-link text-danger" icon="fa-check fa-2x" title="Active" groups="tsm_base.group_tsm_manager" Help="Archive Time Pack" invisible="not active"/>
-                            <button type="object" name="action_active" class="btn btn-link text-success" icon="fa-undo fa-2x" title="Inactive" groups="tsm_base.group_tsm_manager" Help="Unarchive Time Pack" invisible="active"/>
+                            <button
+                                type="object"
+                                name="action_inactive"
+                                class="btn btn-link text-danger"
+                                icon="fa-check fa-2x"
+                                title="Active"
+                                groups="tsm_base.group_tsm_manager"
+                                help="Archive Time Pack"
+                                invisible="not active"
+                            />
+                            <button
+                                type="object"
+                                name="action_active"
+                                class="btn btn-link text-success"
+                                icon="fa-undo fa-2x"
+                                title="Inactive"
+                                groups="tsm_base.group_tsm_manager"
+                                help="Unarchive Time Pack"
+                                invisible="active"
+                            />
                         </h2>
                     </div>
 
                     <group>
                         <group>
-                            <field name="partner_id" options="{&quot;no_create&quot;: True}" readonly="not can_edit"/>
+                            <field
+                                name="partner_id"
+                                options="{&quot;no_create&quot;: True}"
+                                readonly="not can_edit"
+                            />
                         </group>
                         <group>
-                            <field name="privacy_visibility" widget="radio" readonly="not can_edit"/>
-                            <field name="date_start" readonly="not can_edit"/>
-                            <field name="date_end" readonly="not can_edit"/>
+                            <field
+                                name="privacy_visibility"
+                                widget="radio"
+                                readonly="not can_edit"
+                            />
+                            <field name="date_start" readonly="not can_edit" />
+                            <field name="date_end" readonly="not can_edit" />
                         </group>
                     </group>
                     <notebook>
                         <page string="Timesheets">
                             <group>
                                 <group>
-                                    <field name="contracted_hours" widget="float_time" readonly="not can_edit"/>
-                                    <field name="remaining_hours" widget="float_time"/>
+                                    <field
+                                        name="contracted_hours"
+                                        widget="float_time"
+                                        readonly="not can_edit"
+                                    />
+                                    <field name="remaining_hours" widget="float_time" />
                                 </group>
                                 <group>
-                                    <field name="progress" widget="progressbar"/>
+                                    <field name="progress" widget="progressbar" />
                                 </group>
                             </group>
                             <field name="timesheet_ids">
-                                <list default_order="date_time" editable="bottom" create="false" delete="false">
-                                    <field name="date_time" required="1" readonly="1"/>
-                                    <field name="user_id" required="1" readonly="1"/>
-                                    <field name="task_id" required="1" readonly="1"/>
-                                    <field name="name" required="1" groups="tsm_task_timesheet.group_tsm_timesheet_title"/>
-                                    <field name="tag_ids" required="1" groups="tsm_task_timesheet.group_tsm_timesheet_tag" options="{'no_create': True, 'no_open': True}"/>
-                                    <field name="amount" string="Duration" widget="float_time"/>
-                                    <field name="discount_time"/>
+                                <list
+                                    default_order="date_time"
+                                    editable="bottom"
+                                    create="false"
+                                    delete="false"
+                                >
+                                    <field name="date_time" required="1" readonly="1" />
+                                    <field name="user_id" required="1" readonly="1" />
+                                    <field name="task_id" required="1" readonly="1" />
+                                    <field
+                                        name="name"
+                                        required="1"
+                                        groups="tsm_task_timesheet.group_tsm_timesheet_title"
+                                    />
+                                    <field
+                                        name="tag_ids"
+                                        required="1"
+                                        groups="tsm_task_timesheet.group_tsm_timesheet_tag"
+                                        options="{'no_create': True, 'no_open': True}"
+                                    />
+                                    <field
+                                        name="amount"
+                                        string="Duration"
+                                        widget="float_time"
+                                    />
+                                    <field name="discount_time" />
                                 </list>
                             </field>
                             <group>
-                                <group name="task_hours" class="oe_subtotal_footer oe_right">
-                                    <field name="consumed_hours" widget="float_time" readonly="1"/>
-                                    <field name="complimentary_hours" widget="float_time" readonly="1"/>
-                                    <field name="total_hours_spent" widget="float_time" class="oe_subtotal_footer_separator" readonly="1"/>
+                                <group
+                                    name="task_hours"
+                                    class="oe_subtotal_footer oe_right"
+                                >
+                                    <field
+                                        name="consumed_hours"
+                                        widget="float_time"
+                                        readonly="1"
+                                    />
+                                    <field
+                                        name="complimentary_hours"
+                                        widget="float_time"
+                                        readonly="1"
+                                    />
+                                    <field
+                                        name="total_hours_spent"
+                                        widget="float_time"
+                                        class="oe_subtotal_footer_separator"
+                                        readonly="1"
+                                    />
                                 </group>
                             </group>
                         </page>
                         <page name="description_page" string="Description">
-                            <field name="description" options="{'codeview':true}"/>
-                            <div class="oe_clear"/>
+                            <field name="description" options="{'codeview':true}" />
+                            <div class="oe_clear" />
                         </page>
                         <page name="sale_page" string="Sale Operation">
                             <group>
                                 <group>
-                                    <field name="product_id" domain="[('service_time_pack', '=', True)]" options="{&quot;no_create&quot;: True, &quot;no_open&quot;: True}" readonly="(sale_id or not can_edit)"/>
-                                    <field name="quantity" readonly="(sale_id or not can_edit)"/>
-                                    <field name="price_unit" widget="monetary" options="{'currency_field': 'company_currency'}" readonly="(sale_id or not can_edit)"/>
-                                    <field name="discount" readonly="(sale_id or not can_edit)"/>
-                                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'company_currency'}" readonly="(sale_id or not can_edit)"/>
-                                    <field name="company_currency" invisible="1"/>
+                                    <field
+                                        name="product_id"
+                                        domain="[('service_time_pack', '=', True)]"
+                                        options="{&quot;no_create&quot;: True, &quot;no_open&quot;: True}"
+                                        readonly="(sale_id or not can_edit)"
+                                    />
+                                    <field
+                                        name="quantity"
+                                        readonly="(sale_id or not can_edit)"
+                                    />
+                                    <field
+                                        name="price_unit"
+                                        widget="monetary"
+                                        options="{'currency_field': 'company_currency'}"
+                                        readonly="(sale_id or not can_edit)"
+                                    />
+                                    <field
+                                        name="discount"
+                                        readonly="(sale_id or not can_edit)"
+                                    />
+                                    <field
+                                        name="price_subtotal"
+                                        widget="monetary"
+                                        options="{'currency_field': 'company_currency'}"
+                                        readonly="(sale_id or not can_edit)"
+                                    />
+                                    <field name="company_currency" invisible="1" />
                                 </group>
                                 <group groups="tsm_base.group_tsm_manager">
-                                    <field name="description_sale" readonly="sale_id"/>
-                                    <field name="sale_autoconfirm" readonly="sale_id"/>
+                                    <field name="description_sale" readonly="sale_id" />
+                                    <field name="sale_autoconfirm" readonly="sale_id" />
                                 </group>
                             </group>
                         </page>
                     </notebook>
                 </sheet>
-                <chatter/>
+                <chatter />
             </form>
         </field>
     </record>
@@ -113,17 +243,44 @@
         <field name="name">TSM Time Pack tsm.time.pack.list</field>
         <field name="model">tsm.time.pack</field>
         <field name="arch" type="xml">
-            <list decoration-muted="active == False" decoration-success="progress &lt; 50 and active == True" decoration-danger="progress &gt; 90 and active == True">
-                <field name="active" invisible="1"/>
-                <field name="date_start"/>
-                <field name="partner_id"/>
-                <field name="code"/>
-                <field name="name"/>
-                <field name="contracted_hours" string="Contracted (Hours)" sum="Total time" widget="float_time"/>
-                <field name="consumed_hours" string="Consumed (Hours)" sum="Consumed Time" widget="float_time" optional="show"/>
-                <field name="remaining_hours" string="Left (Hours)" sum="Left Time" widget="float_time" optional="show"/>
-                <field name="progress" widget="progressbar" optional="hide"/>
-                <field name="complimentary_hours" string="Comple. (Hours)" sum="Complementary Time" widget="float_time" optional="hide"/>
+            <list
+                decoration-muted="active == False"
+                decoration-success="progress &lt; 50 and active == True"
+                decoration-danger="progress &gt; 90 and active == True"
+            >
+                <field name="active" column_invisible="True" />
+                <field name="date_start" />
+                <field name="partner_id" />
+                <field name="code" />
+                <field name="name" />
+                <field
+                    name="contracted_hours"
+                    string="Contracted (Hours)"
+                    sum="Total time"
+                    widget="float_time"
+                />
+                <field
+                    name="consumed_hours"
+                    string="Consumed (Hours)"
+                    sum="Consumed Time"
+                    widget="float_time"
+                    optional="show"
+                />
+                <field
+                    name="remaining_hours"
+                    string="Left (Hours)"
+                    sum="Left Time"
+                    widget="float_time"
+                    optional="show"
+                />
+                <field name="progress" widget="progressbar" optional="hide" />
+                <field
+                    name="complimentary_hours"
+                    string="Comple. (Hours)"
+                    sum="Complementary Time"
+                    widget="float_time"
+                    optional="hide"
+                />
             </list>
         </field>
     </record>
@@ -133,18 +290,43 @@
         <field name="model">tsm.time.pack</field>
         <field name="arch" type="xml">
             <search string="Time Packs">
-                <field name="partner_id"/>
-                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
-                <field name="user_id"/>
-                <filter name="mine" string="My Time Packs" domain="[('user_id', '=', uid)]"/>
-                <separator/>
-                <filter name="sale_order" string="No Sale Order" domain="[('sale_id', '=', False)]"/>
-                <separator/>
-                <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
-                <separator/>
+                <field name="partner_id" />
+                <field
+                    name="name"
+                    filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
+                />
+                <field name="user_id" />
+                <filter
+                    name="mine"
+                    string="My Time Packs"
+                    domain="[('user_id', '=', uid)]"
+                />
+                <separator />
+                <filter
+                    name="sale_order"
+                    string="No Sale Order"
+                    domain="[('sale_id', '=', False)]"
+                />
+                <separator />
+                <filter
+                    name="inactive"
+                    string="Archived"
+                    domain="[('active','=',False)]"
+                />
+                <separator />
                 <group expand="0" string="Group By">
-                    <filter string="User" name="groupby_user" domain="[]" context="{'group_by':'user_id'}"/>
-                    <filter string="Date Start" name="date_start" domain="[]" context="{'group_by':'date_start'}"/>
+                    <filter
+                        string="User"
+                        name="groupby_user"
+                        domain="[]"
+                        context="{'group_by':'user_id'}"
+                    />
+                    <filter
+                        string="Date Start"
+                        name="date_start"
+                        domain="[]"
+                        context="{'group_by':'date_start'}"
+                    />
                 </group>
             </search>
         </field>
@@ -155,42 +337,52 @@
         <field name="model">tsm.time.pack</field>
         <field name="arch" type="xml">
             <kanban class="o_kanban_mobile">
-                <field name="date_start"/>
-                <field name="user_id"/>
-                <field name="code"/>
-                <field name="name"/>
-                <field name="contracted_hours"/>
+                <field name="date_start" />
+                <field name="user_id" />
+                <field name="code" />
+                <field name="name" />
+                <field name="contracted_hours" />
                 <templates>
                     <t t-name="card">
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="row">
-                                <div class="col-xs-2">
-                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="40" height="40" class="oe_kanban_avatar pull-left"/>
+                                <div class="col-2">
+                                    <field
+                                        name="user_id"
+                                        widget="many2one_avatar_user"
+                                        readonly="True"
+                                        options="{'no_open': True}"
+                                    />
                                 </div>
-                                <div class="col-xs-10">
+                                <div class="col-10">
                                     <div>
-                                        <strong>[<t t-esc="record.code.value"/>] </strong>
-                                        <t t-esc="record.name.value"/>
+                                        <strong>[<t
+                                            t-esc="record.code.value"
+                                        />] </strong>
+                                        <t t-esc="record.name.value" />
                                     </div>
                                     <div class="text-muted">
                                         <span style="font-size:1.7em;">
                                             <strong>
                                                 <font color="#f00">
-                                                    <field name="remaining_hours" widget="float_time"/>
+                                                    <field
+                                                        name="remaining_hours"
+                                                        widget="float_time"
+                                                    />
                                                 </font>
                                             </strong>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <hr class="mt4 mb4"/>
+                            <hr class="mt4 mb4" />
                             <span>
-                                <i class="fa fa-calendar" aria-hidden="true"/>
-                                <t t-esc="record.date_start.value"/>
+                                <i class="fa fa-calendar" aria-hidden="true" />
+                                <t t-esc="record.date_start.value" />
                             </span>
-                            <span class="pull-right">
+                            <span class="float-end">
                                 <strong>Contracted Hours: </strong>
-                                <field name="contracted_hours" widget="float_time"/>
+                                <field name="contracted_hours" widget="float_time" />
                             </span>
                         </div>
                     </t>
@@ -205,9 +397,9 @@
     <record id="tsm_time_pack_mine_act" model="ir.actions.act_window">
         <field name="name">My Time Packages</field>
         <field name="res_model">tsm.time.pack</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="domain">[('user_id', '=', uid)]</field>
-        <field name="view_id" ref="tsm_time_pack_search_view"/>
+        <field name="search_view_id" ref="tsm_time_pack_search_view" />
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to add a time pack.</p>
@@ -216,26 +408,31 @@
 
     <record id="tsm_time_pack_mine_tree_act" model="ir.actions.act_window.view">
         <field name="view_mode">list</field>
-        <field name="sequence" eval="4"/>
-        <field name="view_id" ref="tsm_time_pack_tree_view"/>
-        <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
+        <field name="sequence" eval="4" />
+        <field name="view_id" ref="tsm_time_pack_tree_view" />
+        <field name="act_window_id" ref="tsm_time_pack_mine_act" />
     </record>
 
     <record id="tsm_time_pack_mine_form_act" model="ir.actions.act_window.view">
         <field name="view_mode">form</field>
-        <field name="sequence" eval="5"/>
-        <field name="view_id" ref="tsm_time_pack_form_view"/>
-        <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
+        <field name="sequence" eval="5" />
+        <field name="view_id" ref="tsm_time_pack_form_view" />
+        <field name="act_window_id" ref="tsm_time_pack_mine_act" />
     </record>
 
     <record id="tsm_time_pack_mine_kanban_act" model="ir.actions.act_window.view">
         <field name="view_mode">kanban</field>
-        <field name="sequence" eval="6"/>
-        <field name="view_id" ref="tsm_time_pack_mine_kanban_view"/>
-        <field name="act_window_id" ref="tsm_time_pack_mine_act"/>
+        <field name="sequence" eval="6" />
+        <field name="view_id" ref="tsm_time_pack_mine_kanban_view" />
+        <field name="act_window_id" ref="tsm_time_pack_mine_act" />
     </record>
 
-    <menuitem id="tsm_time_pack_mine_menu" name="My Time Packs" parent="tsm_time_pack_menu" action="tsm_time_pack_mine_act"/>
+    <menuitem
+        id="tsm_time_pack_mine_menu"
+        name="My Time Packs"
+        parent="tsm_time_pack_menu"
+        action="tsm_time_pack_mine_act"
+    />
 
     <!-- ===================
         All Time Packs: Views
@@ -243,12 +440,12 @@
     <record id="tsm_time_pack_all_tree_view" model="ir.ui.view">
         <field name="name">TSM Time Pack All tsm.time.pack.all.list</field>
         <field name="model">tsm.time.pack</field>
-        <field name="inherit_id" ref="tsm_time_pack_tree_view"/>
+        <field name="inherit_id" ref="tsm_time_pack_tree_view" />
         <field name="mode">primary</field>
         <field name="priority">10</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='date_start']" position="after">
-                <field name="user_id"/>
+                <field name="user_id" />
             </xpath>
         </field>
     </record>
@@ -256,12 +453,17 @@
     <record id="tsm_time_pack_all_form_view" model="ir.ui.view">
         <field name="name">TSM Time Pack All tsm.time.pack.all.form</field>
         <field name="model">tsm.time.pack</field>
-        <field name="inherit_id" ref="tsm_time_pack_form_view"/>
+        <field name="inherit_id" ref="tsm_time_pack_form_view" />
         <field name="mode">primary</field>
         <field name="priority">10</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="before">
-                <field name="user_id" class="o_task_user_field" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="not can_edit"/>
+                <field
+                    name="user_id"
+                    class="o_task_user_field"
+                    options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                    readonly="not can_edit"
+                />
             </xpath>
         </field>
     </record>
@@ -272,33 +474,40 @@
     <record id="tsm_time_pack_all_act" model="ir.actions.act_window">
         <field name="name">All Time Packages</field>
         <field name="res_model">tsm.time.pack</field>
-        <field name="search_view_id" ref="tsm_time_pack_search_view"/>
-        <field name="domain"/>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="tsm_time_pack_search_view" />
+        <field name="domain" />
         <field name="context">{
             'search_default_groupby_user':1
         }</field>
     </record>
 
     <record id="tsm_time_pack_all_view_tree_act" model="ir.actions.act_window.view">
-        <field name="sequence" eval="4"/>
+        <field name="sequence" eval="4" />
         <field name="view_mode">list</field>
-        <field name="view_id" ref="tsm_time_pack_all_tree_view"/>
-        <field name="act_window_id" ref="tsm_time_pack_all_act"/>
+        <field name="view_id" ref="tsm_time_pack_all_tree_view" />
+        <field name="act_window_id" ref="tsm_time_pack_all_act" />
     </record>
 
     <record id="tsm_time_pack_all_view_form_act" model="ir.actions.act_window.view">
-        <field name="sequence" eval="4"/>
+        <field name="sequence" eval="4" />
         <field name="view_mode">form</field>
-        <field name="view_id" ref="tsm_time_pack_all_form_view"/>
-        <field name="act_window_id" ref="tsm_time_pack_all_act"/>
+        <field name="view_id" ref="tsm_time_pack_all_form_view" />
+        <field name="act_window_id" ref="tsm_time_pack_all_act" />
     </record>
 
     <record id="tsm_time_pack_all_view_kanban_act" model="ir.actions.act_window.view">
-        <field name="sequence" eval="6"/>
+        <field name="sequence" eval="6" />
         <field name="view_mode">kanban</field>
-        <field name="view_id" ref="tsm_time_pack_mine_kanban_view"/>
-        <field name="act_window_id" ref="tsm_time_pack_all_act"/>
+        <field name="view_id" ref="tsm_time_pack_mine_kanban_view" />
+        <field name="act_window_id" ref="tsm_time_pack_all_act" />
     </record>
 
-    <menuitem id="tsm_time_pack_all_menu" name="All Time Packs" parent="tsm_time_pack_menu" groups="tsm_base.group_tsm_user" action="tsm_time_pack_all_act"/>
+    <menuitem
+        id="tsm_time_pack_all_menu"
+        name="All Time Packs"
+        parent="tsm_time_pack_menu"
+        groups="tsm_base.group_tsm_user"
+        action="tsm_time_pack_all_act"
+    />
 </odoo>

@@ -20,10 +20,8 @@
                                 style="color:#fff;"
                             >Spent Time Detail</th>
                             <th
-                                t-foreach="o.timesheet_ids.sorted(lambda p: p.timepack_id, reverse=True)[0]"
-                                t-as="tp"
-                                t-if="tp.timepack_id"
-                                class="text-right"
+                                t-if="o.timesheet_ids.timepack_id"
+                                class="text-end"
                                 style="color:#fff;"
                             >Time Pack</th>
                         </tr>
@@ -78,7 +76,7 @@
                                 />
                             </th>
                             <th
-                                t-if="t.timepack_id"
+                                t-if="o.timesheet_ids.timepack_id"
                                 colspan="99"
                                 style="text-align:right;width: 15%;"
                             >

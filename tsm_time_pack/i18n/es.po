@@ -221,8 +221,8 @@ msgstr ""
 #. module: tsm_time_pack
 #: code:addons/tsm_time_pack/models/tsm_time_pack.py:0
 #, python-format
-msgid "<h6>Contracted Hours: %s</h6><h6>Consumed Hours: %s</h6><h4 class=\"text-danger\">Progress: %s %%</h4>"
-msgstr "<h6>Horas Contratadas: %s</h6><h6>Horas Consumidas: %s</h6><h4 class=\"text-danger\">Progreso: %s %%</h4>"
+msgid "<h6>Contracted Hours: %(cont_hours)s</h6><h6>Consumed Hours: %(consu_hours)s</h6><h4 class=\"text-danger\">Progress: %(progress)s %%</h4>"
+msgstr "<h6>Horas Contratadas: %(cont_hours)s</h6><h6>Horas Consumidas: %(consu_hours)s</h6><h4 class=\"text-danger\">Progreso: %(progress)s %%</h4>"
 
 #. module: tsm_time_pack
 #: model_terms:ir.ui.view,arch_db:tsm_time_pack.tsm_time_pack_report_detailed_document
@@ -980,8 +980,8 @@ msgstr "Titulo Bolsa Horas..."
 #. module: tsm_time_pack
 #: code:addons/tsm_time_pack/models/tsm_time_pack.py:0
 #, python-format
-msgid "Time Pack: [{code}] {name}"
-msgstr "Bolsa Horas: [{code}] {name}"
+msgid "Time Pack: [%(code)s] %(name)s"
+msgstr "Bolsa Horas: [%(code)s] %(name)s"
 
 #. module: tsm_time_pack
 #: model:ir.model.fields,field_description:tsm_time_pack.field_tsm_task_timesheet__timepack_id
@@ -1116,11 +1116,11 @@ msgstr "horas"
 #: code:addons/tsm_time_pack/models/tsm_time_pack.py:0
 #, python-format
 msgid ""
-"{description_sale}\n"
-" Time Pack: [{code}] {name}"
+"%(description_sale)s\n"
+" Time Pack: [%(code)s] %(name)s"
 msgstr ""
-"{description_sale}\n"
-" Bolsa Horas: [{code}] {name}"
+"%(description_sale)s\n"
+" Bolsa Horas: [%(code)s] %(name)s"
 
 #. module: tsm_time_pack
 #: model:mail.template,report_name:tsm_time_pack.tsm_time_pack_email_template

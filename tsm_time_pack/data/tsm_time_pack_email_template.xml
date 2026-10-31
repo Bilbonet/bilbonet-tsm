@@ -7,18 +7,15 @@
         <field name="model_id" ref="tsm_time_pack.model_tsm_time_pack" />
         <field
             name="subject"
-        >{{ object.company_id.partner_id.comercial }} Time Pack ({{ object.code + ' - ' + object.name if object.name else object.code }})</field>
+        >{{ object.company_id.name }} Time Pack ({{ object.code + ' - ' + object.name if object.name else object.code }})</field>
         <field
             name="email_from"
         >{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
         <field
-            name="report_template"
-            ref="tsm_time_pack.tsm_time_pack_report_detailed_action"
+            name="report_template_ids"
+            eval="[(6, 0, [ref('tsm_time_pack.tsm_time_pack_report_detailed_action')])]"
         />
-        <field
-            name="report_name"
-        >{{ '(' + object.code + ')_' + (object.name or 'Time Pack').replace(' ', '-') }}</field>
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">
@@ -66,10 +63,11 @@
                                         <td
                                             style="width:100px;padding:5px"
                                         >Contracted:</td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                 <span
                                             style="font-weight: bold;"
-                                            t-out="('%d:%02d' % (object.contracted_hours,(object.contracted_hours*60)%60))"
+                                            t-out="object.contracted_hours"
+                                            t-options="{'widget': 'float_time'}"
                                         /> hours
                             </td>
                                     </tr>
@@ -77,10 +75,11 @@
                                         <td
                                             style="width:100px;padding:5px"
                                         >Consumed:</td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                 <span
                                             style="font-weight: bold;"
-                                            t-out="('%d:%02d' % (object.consumed_hours,(object.consumed_hours*60)%60))"
+                                            t-out="object.consumed_hours"
+                                            t-options="{'widget': 'float_time'}"
                                         /> hours
                             </td>
                                     </tr>
@@ -89,10 +88,11 @@
                                             <td
                                                 style="width:100px;padding:5px"
                                             >Remainig:</td>
-                                            <td class="text-right">
+                                            <td class="text-end">
                                     <span
                                                 style="font-weight: bold;"
-                                                t-out="('%d:%02d' % (object.remaining_hours,(object.remaining_hours*60)%60))"
+                                                t-out="object.remaining_hours"
+                                                t-options="{'widget': 'float_time'}"
                                             /> hours
                                 </td>
                                         </tr>
@@ -102,10 +102,11 @@
                                             <td
                                                 style="width:100px;padding:5px"
                                             >Exceded:</td>
-                                            <td class="text-right">
+                                            <td class="text-end">
                                     <span
                                                 style="font-weight: bold;"
-                                                t-out="('%d:%02d' % (object.remaining_hours,(60-(object.remaining_hours*60)%60)))"
+                                                t-out="object.remaining_hours"
+                                                t-options="{'widget': 'float_time'}"
                                             /> hours
                                 </td>
                                         </tr>
@@ -124,7 +125,8 @@
                                             <td>
                                 <span
                                                 style="font-weight: bold;"
-                                                t-out="('%d:%02d' % (object.complimentary_hours,(object.complimentary_hours*60)%60))"
+                                                t-out="object.complimentary_hours"
+                                                t-options="{'widget': 'float_time'}"
                                             /> hours
                             </td>
                                         </tr>
