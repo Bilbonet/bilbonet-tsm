@@ -5,8 +5,9 @@ de noviembre de 2026.
 
 Se completa la migración del módulo de Odoo 15.0 a 18.0, con correcciones de
 compatibilidad y de operativa. La comprobación manual de los flujos revisados es
-correcta. La suite automatizada, la instalación limpia y la actualización de una copia
-migrada mantienen su verificación independiente pendiente. Se incluye la
+correcta. La suite local del módulo pasa sus nueve pruebas. La instalación limpia del
+conjunto se comprueba en CI; la actualización de una copia migrada de 15.0 mantiene su
+verificación independiente pendiente. Se incluye la
 [edición nativa de líneas pendientes](changes/change-2026-11-01-remove-pending-settlement-lines.md)
 de hojas TSM sin facturar, conservando el origen y las reglas de período OCA. El
 manifiesto utiliza `account_commission_oca` y omite claves opcionales redundantes.
@@ -149,8 +150,9 @@ campos, métodos Python, acciones, controles de borrado o traducciones para esta
 operación. Se aplican las ACL y el mecanismo ORM habituales de OCA.
 
 La validación estática del ajuste XML se registra en la especificación de edición. La
-comprobación manual de edición y borrado nativos es correcta. La suite automatizada y la
-actualización de una copia migrada mantienen su verificación independiente pendiente.
+comprobación manual de edición y borrado nativos es correcta. La suite local pasa sus
+nueve pruebas; la actualización de una copia migrada mantiene su verificación
+independiente pendiente.
 
 ## Pruebas automatizadas y operaciones de base de datos
 
@@ -162,22 +164,28 @@ liquidación TSM, de factura y manuales; conservación de agente, comisión y pr
 específico en la serialización onchange de las tres vistas afectadas. No se importan
 tests desde la raíz del addon.
 
-**Estado:** tests Odoo no solicitados expresamente y no ejecutados. Solo se ha
-comprobado su sintaxis y han pasado los hooks estáticos. El agente no ha instalado ni
-actualizado módulos, creado o inicializado bases, ejecutado migraciones ni contabilizado
-o enviado facturas. La presencia de dependencias en disco no demuestra que estén
-instaladas y operativas.
+**Resultado automatizado local:** 9 pruebas del módulo correctas, 0 fallos y 0 errores,
+con Odoo 18 y el entorno `odoo18-venv`, en una base temporal aislada. Se ejecuta
+`--test-tags=/tsm_timesheet_commission` con actualización exclusiva del módulo en esa
+base. No se utiliza la base de trabajo ni una base de producción.
 
-Cuando se autorice, ejecutar la suite del módulo en una base Odoo 18 aislada y comprobar
-por separado instalación limpia y actualización de una copia migrada. Las pruebas
-internas de coexistencia usan registros en memoria y no acreditan el recorrido completo
-de facturación ni la generación PDF.
+El caso de tarea cerrada materializa los agentes calculados con `env.flush_all()` antes
+de consultar sus líneas desde el asistente. Así reproduce el final de la llamada RPC de
+alta del parte y comprueba realmente el bloqueo por etapa. La etiqueta del importe pasa
+a `Commission Amount` para evitar la duplicidad con el estado de comisión; se conserva
+la traducción española y no cambian los cálculos.
+
+El pipeline de GitHub ejecuta por separado instalación limpia y la batería conjunta con
+OCB 18.0. El resultado del commit final se comprueba antes de integrar el PR. La
+actualización de datos reales migrados de 15.0 continúa pendiente. Las pruebas internas
+de coexistencia usan registros en memoria y no acreditan el recorrido completo de
+facturación ni la generación PDF.
 
 ## Pruebas manuales y aprobación
 
-Comprobaciones manuales de la operativa realizadas con resultado correcto. La suite
-automatizada y la actualización de una copia migrada no quedan acreditadas por este
-resultado.
+Comprobaciones manuales de la operativa realizadas con resultado correcto. La ejecución
+automatizada se registra en el apartado anterior; la actualización de una copia migrada
+no queda acreditada por las comprobaciones manuales.
 
 - [x] **Configuración:** asignar a un agente comisiones general y TSM distintas → se
       guardan ambas; la TSM permite producto, porcentaje/tramos y estado de tarea.
@@ -211,9 +219,9 @@ resultado.
       conservan accesos y restricciones previstos; comprobar además lectura de datos de
       otros usuarios, compañías y tareas privadas con los permisos reales.
 
-**Resultado de la verificación manual funcional:** correcto. Se mantienen independientes
-la ejecución de tests automatizados, la instalación limpia y la actualización de una
-copia migrada, que no se han comprobado específicamente.
+**Resultado de la verificación manual funcional:** correcto. La ejecución automatizada
+tiene su evidencia separada. La actualización de una copia migrada de 15.0 no se ha
+comprobado específicamente.
 
 ## Límites heredados
 

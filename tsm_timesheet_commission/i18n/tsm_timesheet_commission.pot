@@ -74,13 +74,13 @@ msgstr ""
 
 #. module: tsm_timesheet_commission
 #: model:ir.model,name:tsm_timesheet_commission.model_commission
-#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_amount
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_status
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__commission_id
 msgid "Commission"
 msgstr ""
 
 #. module: tsm_timesheet_commission
+#: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet__commission_amount
 #: model:ir.model.fields,field_description:tsm_timesheet_commission.field_tsm_task_timesheet_agent__amount
 msgid "Commission Amount"
 msgstr ""

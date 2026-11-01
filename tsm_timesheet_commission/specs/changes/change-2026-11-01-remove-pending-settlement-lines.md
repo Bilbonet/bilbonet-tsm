@@ -39,5 +39,7 @@ Vista compuesta estáticamente con OCA y su extensión contable: correcta. Se co
 `editable="top"`, la eliminación estándar y la condición original de cabecera. La
 expresión de solo lectura se comprueba para tipos TSM, manual y factura de venta y sus
 estados. Sintaxis Python y `git diff --check` correctos. No hay campos, acciones ni
-validaciones de borrado específicos para esta operación. Pruebas Odoo y operaciones de
-base de datos: no solicitadas ni ejecutadas.
+validaciones de borrado específicos para esta operación. La suite local del módulo se ha
+ejecutado en una base temporal aislada: nueve pruebas correctas, sin fallos ni errores.
+No se ha usado la base de trabajo; la edición del cliente se comprueba mediante las
+pruebas manuales.

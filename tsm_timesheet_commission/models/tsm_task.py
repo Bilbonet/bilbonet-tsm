@@ -75,7 +75,6 @@ class TsmTaskTimesheet(models.Model):
         "res.currency", related="company_id.currency_id", store=True, readonly=True
     )
     commission_amount = fields.Monetary(
-        string="Commission",
         compute="_compute_commission_amount",
         currency_field="currency_id",
         store=True,

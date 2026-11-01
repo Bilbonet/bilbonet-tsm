@@ -74,4 +74,6 @@ datos.
 
 ## Pruebas automatizadas
 
-**Decisión:** no solicitadas; no se ejecutan por defecto. **Resultado:** no ejecutadas.
+**Resultado:** suite local del módulo ejecutada en base temporal aislada: nueve pruebas
+correctas, sin fallos ni errores. La verificación del cliente se mantiene en las pruebas
+manuales. Véase `../migration-review.md`.

@@ -179,6 +179,8 @@ class TestTimesheetCommission(TransactionCase):
     def test_closed_task_gate(self):
         self.commission.task_stage = "closed"
         line = self._timesheet()
+        # Persist computed agents before the wizard searches their model.
+        self.env.flush_all()
         self.assertFalse(self._settle())
         self.task.stage_id = self.closed_stage
         self.assertTrue(self._settle())
