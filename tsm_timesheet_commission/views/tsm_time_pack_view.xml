@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="commission_tsm_time_pack_form_view" model="ir.ui.view">
+        <field name="name">tsm.time.pack Commission</field>
+        <field name="model">tsm.time.pack</field>
+        <field name="inherit_id" ref="tsm_time_pack.tsm_time_pack_form_view" />
+        <field name="arch" type="xml">
+            <!-- Protect timesheet fields while any commission is settled. -->
+            <xpath expr="//field[@name='timesheet_ids']/list" position="inside">
+                <field name="any_settled" column_invisible="1" />
+                <!-- Keep agent values in onchange responses for unsaved timesheets. -->
+                <field name="agent_ids" column_invisible="1">
+                    <list>
+                        <field name="agent_id" />
+                        <field name="commission_id" />
+                        <field name="specific_price" />
+                        <field name="price_unit" />
+                    </list>
+                </field>
+            </xpath>
+            <xpath
+                expr="//field[@name='timesheet_ids']//field[@name='amount']"
+                position="attributes"
+            >
+                <attribute name="readonly">any_settled</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='timesheet_ids']//field[@name='discount_time']"
+                position="attributes"
+            >
+                <attribute name="readonly">any_settled</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

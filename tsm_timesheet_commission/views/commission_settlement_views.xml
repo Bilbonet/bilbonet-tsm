@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="view_settlement_form" model="ir.ui.view">
+        <field name="name">Settlements - Add task stuff</field>
+        <field name="model">commission.settlement</field>
+        <field name="inherit_id" ref="commission_oca.view_settlement_form" />
+        <!-- Clear legacy record-level groups when updating the inherited view. -->
+        <field name="groups_id" eval="[(5, 0, 0)]" />
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <field name="line_ids" position="attributes">
+                <attribute name="readonly">
+                    state != 'settled' if settlement_type == 'timesheet' else not can_edit
+                </attribute>
+            </field>
+            <xpath
+                expr="//field[@name='line_ids']/list/field[@name='date']"
+                position="after"
+            >
+                <field
+                    name="partner_id"
+                    groups="tsm_base.group_tsm_user"
+                    column_invisible="parent.settlement_type != 'timesheet'"
+                />
+                <field
+                    name="task_id"
+                    groups="tsm_base.group_tsm_user"
+                    column_invisible="parent.settlement_type != 'timesheet'"
+                />
+                <field
+                    name="timesheet_line_id"
+                    groups="tsm_base.group_tsm_user"
+                    column_invisible="parent.settlement_type != 'timesheet'"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_settlement_search" model="ir.ui.view">
+        <field name="model">commission.settlement</field>
+        <field name="inherit_id" ref="commission_oca.view_settlement_search" />
+        <field name="arch" type="xml">
+            <filter name="group_agent" position="after">
+                <filter
+                    string="Settlement Type"
+                    name="group_type"
+                    context="{'group_by': 'settlement_type'}"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>

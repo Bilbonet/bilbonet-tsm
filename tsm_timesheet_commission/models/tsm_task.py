@@ -1,0 +1,310 @@
+# Copyright 2024 Bilbonet <jesus@bilbonet.net>
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+from odoo import api, exceptions, fields, models
+from odoo.exceptions import UserError
+from odoo.osv import expression
+
+
+class TsmTask(models.Model):
+    _inherit = "tsm.task"
+
+    commission_total = fields.Float(
+        string="Commissions",
+        compute="_compute_commission_total",
+        store=True,
+    )
+    partner_agent_ids = fields.Many2many(
+        string="Agents",
+        comodel_name="res.partner",
+        compute="_compute_agents",
+        search="_search_agents",
+    )
+    settlement_count = fields.Integer(compute="_compute_settlement")
+    settlement_ids = fields.One2many(
+        comodel_name="commission.settlement",
+        string="Settlements",
+        compute="_compute_settlement",
+    )
+
+    def _compute_settlement(self):
+        for task in self:
+            settlements = task.timesheet_ids.settlement_id
+            task.settlement_ids = settlements
+            task.settlement_count = len(settlements)
+
+    @api.depends("timesheet_ids.agent_ids.agent_id")
+    def _compute_agents(self):
+        for task in self:
+            task.partner_agent_ids = [
+                (6, 0, task.mapped("timesheet_ids.agent_ids.agent_id").ids)
+            ]
+
+    @api.model
+    def _search_agents(self, operator, value):
+        tts_agents = self.env["tsm.task.timesheet.agent"].search(
+            [("agent_id", operator, value)]
+        )
+        return [("id", "in", tts_agents.mapped("object_id.task_id").ids)]
+
+    @api.depends("timesheet_ids.agent_ids.amount")
+    def _compute_commission_total(self):
+        for record in self:
+            record.commission_total = 0.0
+            for line in record.timesheet_ids:
+                record.commission_total += sum(x.amount for x in line.agent_ids)
+
+    def recompute_lines_agents(self):
+        self.mapped("timesheet_ids").recompute_agents()
+
+
+class TsmTaskTimesheet(models.Model):
+    _inherit = [
+        "tsm.task.timesheet",
+        "commission.mixin",
+    ]
+    _name = "tsm.task.timesheet"
+
+    agent_ids = fields.One2many(comodel_name="tsm.task.timesheet.agent")
+    any_settled = fields.Boolean(compute="_compute_any_settled")
+    settlement_id = fields.Many2one(
+        comodel_name="commission.settlement",
+        copy=False,
+        help="Settlement that generates this invoice line",
+    )
+    currency_id = fields.Many2one(
+        "res.currency", related="company_id.currency_id", store=True, readonly=True
+    )
+    commission_amount = fields.Monetary(
+        compute="_compute_commission_amount",
+        currency_field="currency_id",
+        store=True,
+        readonly=True,
+    )
+
+    @api.depends("agent_ids", "agent_ids.settled")
+    def _compute_any_settled(self):
+        for record in self:
+            record.any_settled = any(record.mapped("agent_ids.settled"))
+
+    def _filter_commission_applicable_lines(self):
+        return self.filtered(
+            lambda x: x.timepack_id and x.discount_time and x.amount > 0
+        )
+
+    def _prepare_agent_vals(self, agent):
+        vals = super()._prepare_agent_vals(agent)
+        vals["commission_id"] = agent.tsm_commission_id.id
+        return vals
+
+    @api.depends("task_id.partner_id")
+    def _compute_agent_ids(self):
+        self.agent_ids = False  # for resetting previous agents
+        for record in self.filtered(lambda x: x.task_id.partner_id):
+            if not record.commission_free:
+                agents = record.task_id.partner_id.agent_ids.filtered(
+                    lambda agent: not agent.tsm_commission_id.settlement_type
+                    or agent.tsm_commission_id.settlement_type == "timesheet"
+                )
+                record.agent_ids = [
+                    (0, 0, record._prepare_agent_vals(agent)) for agent in agents
+                ]
+
+    @api.depends("agent_ids.amount")
+    def _compute_commission_amount(self):
+        for record in self:
+            record.commission_amount = sum(record.agent_ids.mapped("amount"))
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_settled(self):
+        """Prevent deletion of timesheets with settled commissions."""
+        if any(self.mapped("agent_ids.settled")):
+            raise UserError(
+                self.env._(
+                    "You can't delete a timesheet with settled commission lines."
+                )
+            )
+
+
+class TsmTaskTimesheetAgent(models.Model):
+    _inherit = "commission.line.mixin"
+    _name = "tsm.task.timesheet.agent"
+    _description = "Agent detail of commission line in timesheets"
+
+    def _domain_agent_id(self):
+        domain = [("agent", "=", True)]
+        if not self.env.user.has_group("commission_oca.group_commission_manager"):
+            return expression.AND(
+                [
+                    domain,
+                    [
+                        ("id", "=", self.env.user.partner_id.id),
+                    ],
+                ]
+            )
+        return domain
+
+    object_id = fields.Many2one(comodel_name="tsm.task.timesheet")
+    agent_id = fields.Many2one(
+        comodel_name="res.partner",
+        domain=lambda self: self._domain_agent_id(),
+        ondelete="restrict",
+        required=True,
+    )
+    task_id = fields.Many2one(
+        string="Task",
+        comodel_name="tsm.task",
+        related="object_id.task_id",
+        store=True,
+    )
+    invoice_date = fields.Date(
+        string="Timesheet Date",
+        compute="_compute_invoice_date",
+        store=True,
+        readonly=True,
+    )
+    settlement_line_ids = fields.One2many(
+        comodel_name="commission.settlement.line",
+        inverse_name="timesheet_agent_line_id",
+    )
+    settled = fields.Boolean(compute="_compute_settled", store=True)
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        compute="_compute_company",
+        store=True,
+    )
+    timepack_id = fields.Many2one(
+        comodel_name="tsm.time.pack",
+        string="Timepack",
+        readonly=True,
+        related="object_id.timepack_id",
+    )
+    product_id = fields.Many2one(
+        comodel_name="product.product",
+        string="Product",
+        compute="_compute_product_id",
+        store=True,
+    )
+    specific_price = fields.Float()
+    price_unit = fields.Float(
+        string="Price",
+        store=True,
+        readonly=False,
+        default=0.0,
+        digits="Product Price",
+        help="Hour price at which the commission is calculated.",
+    )
+    currency_id = fields.Many2one(
+        comodel_name="res.currency",
+        string="Currency",
+        readonly=True,
+        related="company_id.currency_id",
+    )
+
+    @api.depends("agent_id")
+    def _compute_commission_id(self):
+        for record in self:
+            record.commission_id = record.agent_id.tsm_commission_id
+
+    @api.depends("object_id.date_time")
+    def _compute_invoice_date(self):
+        """Change Datetime to Date"""
+        for line in self:
+            line.invoice_date = fields.Date.to_date(line.object_id.date_time)
+
+    @api.depends(
+        "commission_id.timesheet_product_id",
+        "object_id.timepack_id.product_id",
+    )
+    def _compute_product_id(self):
+        for line in self:
+            if line.object_id.timepack_id:
+                line.product_id = line.object_id.timepack_id.product_id
+            else:
+                line.product_id = line.commission_id.timesheet_product_id
+
+    def _compute_price_unit(self):
+        for line in self:
+            if line.specific_price:
+                line.price_unit = line.specific_price
+            else:
+                if line.object_id.timepack_id:
+                    if line.object_id.discount_time:
+                        line.price_unit = line.object_id.timepack_id.price_unit
+                    else:
+                        line.price_unit = 0.0
+                elif not line.object_id.timepack_id:
+                    line.price_unit = line.commission_id.timesheet_product_id.list_price
+
+    @api.onchange("price_unit")
+    def _inverse_price_unit(self):
+        """Store the specific price when price unit change manually."""
+        self.ensure_one()
+        self.specific_price = self.price_unit
+
+    @api.depends(
+        "commission_id",
+        "price_unit",
+        "specific_price",
+        "product_id",
+        "object_id.timepack_id",
+        "object_id.amount",
+        "object_id.discount_time",
+    )
+    def _compute_amount(self):
+        for line in self:
+            timesheet_line = line.object_id
+            if line.specific_price:
+                subtotal = line.specific_price * timesheet_line.amount
+            else:
+                line._compute_price_unit()
+                subtotal = line.price_unit * timesheet_line.amount
+            line.amount = line._get_commission_amount(
+                line.commission_id,
+                subtotal,
+                line.product_id,
+                timesheet_line.amount,
+            )
+
+    @api.depends(
+        "settlement_line_ids",
+        "settlement_line_ids.settlement_id.state",
+        "task_id",
+        "task_id.stage_id",
+    )
+    def _compute_settled(self):
+        # Count lines of not open or paid invoices as settled for not
+        # being included in settlements
+        for line in self:
+            line.settled = any(
+                x.settlement_id.state != "cancel" for x in line.settlement_line_ids
+            )
+
+    @api.depends("object_id", "object_id.company_id")
+    def _compute_company(self):
+        for line in self:
+            line.company_id = line.object_id.company_id
+
+    @api.constrains("agent_id", "amount")
+    def _check_settle_integrity(self):
+        for record in self:
+            if any(record.mapped("settled")):
+                raise exceptions.ValidationError(
+                    self.env._("You can't modify a settled line"),
+                )
+
+    def _skip_settlement(self):
+        """This function should return False if the commission can be paid.
+
+        :return: bool
+        """
+        self.ensure_one()
+        return (
+            self.commission_id.task_stage == "closed"
+            and not self.task_id.stage_id.closed
+        ) or not self.task_id
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_settled(self):
+        """Prevent deletion of settled agent lines."""
+        if any(self.mapped("settled")):
+            raise UserError(self.env._("You can't delete settled lines."))
