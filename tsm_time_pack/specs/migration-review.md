@@ -4,9 +4,10 @@ Módulo: `tsm_time_pack`. Rama de trabajo: `18.0-mig-tsm_time_pack`. Fecha de re
 31 de octubre de 2026.
 
 La petición autoriza revisar y corregir la migración conservando el comportamiento. Esta
-revisión no constituye aprobación de funciones nuevas ni validación funcional. La
-implementación cuenta con conformidad para commit y publicación de la rama; su
-comprobación funcional en Odoo sigue pendiente.
+revisión no introduce funciones nuevas. El usuario confirma que todas las pruebas
+manuales han resultado correctas y autoriza abrir el PR contra `18.0`. Las pruebas
+automatizadas y la comprobación específica de una base migrada mantienen su estado de
+verificación independiente.
 
 ## Alcance y fuentes
 
@@ -120,13 +121,15 @@ restricciones de venta, moneda, compositor, asunto, adjuntos y HTML de informes.
 
 **Ejecución:** tests de Odoo no solicitados expresamente y no ejecutados. La generación
 PDF se simula en el caso del compositor y el adjunto; ese caso no acredita el motor PDF.
-Las pruebas HTML tampoco acreditan impresión PDF. No se han instalado ni actualizado
-módulos, creado/inicializado bases, ejecutado migraciones ni enviado correos. La
-presencia de dependencias en disco no demuestra que estén instaladas y operativas.
+Las pruebas HTML tampoco acreditan impresión PDF. El agente no ha instalado ni
+actualizado módulos, creado/inicializado bases, ejecutado migraciones ni enviado
+correos. La presencia de dependencias en disco no demuestra que estén instaladas y
+operativas.
 
-Cuando se autorice, ejecutar la suite específica en una base Odoo 18 aislada y comprobar
-por separado instalación limpia y actualización de una copia migrada. Comparar horas,
-partes, clientes, compañías, responsables, códigos, vínculos, seguidores, actividades y
+La verificación manual completa ha sido confirmada por el usuario. Cuando se autorice,
+ejecutar la suite específica en una base Odoo 18 aislada y comprobar por separado
+instalación limpia y actualización de una copia migrada. Comparar horas, partes,
+clientes, compañías, responsables, códigos, vínculos, seguidores, actividades y
 personalizaciones antes y después de la actualización.
 
 ## Pruebas manuales y aprobación
@@ -134,44 +137,46 @@ personalizaciones antes y después de la actualización.
 Marcar cada casilla solo después de realizar la comprobación y obtener el resultado
 esperado. Una casilla marcada basta; las notas son opcionales.
 
-- [ ] **Producto:** abrir un servicio y marcar Timepack → queda seleccionable en un
+- [x] **Producto:** abrir un servicio y marcar Timepack → queda seleccionable en un
       bono; al cambiar a otro tipo se desmarca.
-- [ ] **Alta y copia:** crear dos bonos y duplicarlos → códigos distintos, sin partes ni
+- [x] **Alta y copia:** crear dos bonos y duplicarlos → códigos distintos, sin partes ni
       pedidos copiados y compañía activa correcta.
-- [ ] **Vistas:** abrir Mis bonos y Todos los bonos en lista, formulario y kanban →
+- [x] **Vistas:** abrir Mis bonos y Todos los bonos en lista, formulario y kanban →
       búsqueda, avatares, saldos y navegación funcionan.
-- [ ] **Selección de bono:** crear partes desde tarea y vistas de partes → se asigna el
+- [x] **Selección de bono:** crear partes desde tarea y vistas de partes → se asigna el
       bono activo del cliente cuando no se indica otro; una selección manual se
       conserva. Comprobar también un parte sin tarea.
-- [ ] **Horas:** cargar horas consumidas y de cortesía, modificar duración, cambiar bono
+- [x] **Horas:** cargar horas consumidas y de cortesía, modificar duración, cambiar bono
       y borrar un parte → se actualizan consumo, cortesía y saldo.
-- [ ] **Aviso:** consumir el 90% o más → aparece el aviso previsto; superar las horas
+- [x] **Aviso:** consumir el 90% o más → aparece el aviso previsto; superar las horas
       contratadas muestra saldo negativo sin impedir el registro.
-- [ ] **Ventas:** crear pedido con y sin autoconfirmación → cantidades, precios,
+- [x] **Ventas:** crear pedido con y sin autoconfirmación → cantidades, precios,
       descuento, cliente, origen y estado coinciden con lo introducido. Intentar repetir
       la operación → no se crea otro pedido.
-- [ ] **Moneda:** revisar una venta con tarifa en otra moneda → el total del bono
+- [x] **Moneda:** revisar una venta con tarifa en otra moneda → el total del bono
       corresponde a la moneda de compañía y cambia al editar el pedido.
-- [ ] **Permisos:** comparar usuario TSM, gestor TSM y gestor de ventas, responsable y
+- [x] **Permisos:** comparar usuario TSM, gestor TSM y gestor de ventas, responsable y
       seguidor → se comprueban lectura, edición, creación, venta, archivo y restauración
       con las reglas heredadas.
-- [ ] **Correo:** abrir el compositor → cliente, asunto, remitente, horas y adjunto
+- [x] **Correo:** abrir el compositor → cliente, asunto, remitente, horas y adjunto
       detallado son correctos; el nombre del PDF coincide con el definido en la acción
       del informe detallado. Cancelar no envía.
-- [ ] **Informes:** imprimir resumen y detalle con notas vacías/HTML y varias tareas →
+- [x] **Informes:** imprimir resumen y detalle con notas vacías/HTML y varias tareas →
       no hay error, las horas y subtotales son correctos. Revisar además informes de
       tarea y proyecto, con partes con y sin bono.
 
-**Conformidad del usuario:** recibida para el resultado revisado y para realizar commit
-y subir la rama. No acredita la ejecución de las pruebas sin marcar ni compatibilidad
-funcional completa.
+**Conformidad del usuario:** recibida el 1 de noviembre de 2026. Confirma que todas las
+pruebas manuales de esta lista han resultado correctas y autoriza abrir el PR contra
+`18.0`. No acredita ejecución de la suite automatizada ni una actualización de base
+migrada no documentada expresamente.
 
-## Límites heredados pendientes de evaluación funcional
+## Límites heredados y validación adicional
 
 Las ACL y reglas no aíslan compañías ni propagan privacidad del bono a partes. Hay
 lecturas elevadas en cálculos e informes. La restricción de archivo utiliza un grupo
 distinto del que muestra sus botones y puede intervenir en el alta. La selección
 automática no considera vencimiento ni saldo y la venta no convierte el precio unitario
 entre la moneda del bono y la tarifa del cliente. Se conservan estas políticas
-observadas; cualquier redefinición requiere acordar su comportamiento. Debe evaluarse su
-adecuación al uso real antes de producción.
+observadas; cualquier redefinición requiere acordar su comportamiento. La verificación
+manual confirmada no constituye una prueba exhaustiva de aislamiento ni de conservación
+de datos durante una migración de base.

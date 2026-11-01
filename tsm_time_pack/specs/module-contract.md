@@ -1,7 +1,8 @@
 # Contrato del módulo
 
 Este documento describe hechos comprobados en el código de `tsm_time_pack` para Odoo 18.
-No acredita aprobación histórica de requisitos ni verificación funcional. Consulta
+La verificación manual de la migración está confirmada por el usuario; no se atribuye
+aprobación histórica de requisitos ni ejecución de pruebas automatizadas. Consulta
 [la revisión de migración](migration-review.md) para conocer qué se ha comprobado y qué
 falta por validar.
 
@@ -88,8 +89,9 @@ actividades y reglas en una copia migrada.
 
 ## Riesgos y puntos abiertos
 
-Faltan instalación, actualización de una copia migrada y verificación funcional. La
-privacidad de los bonos no se propaga a partes ni compañías. Deben revisarse las
-lecturas elevadas y el contenido enviado a clientes. La política de archivo, la
-cobertura de permisos y la venta en varias compañías/monedas requieren comprobación; no
-se redefine su política comercial durante esta migración.
+La verificación manual consta en la revisión de migración. No consta ejecución de la
+suite automatizada ni validación específica de la actualización de una copia migrada. La
+privacidad de los bonos no se propaga a partes ni compañías, y hay lecturas elevadas en
+cálculos e informes. Se conservan las políticas de archivo, permisos, selección de bonos
+y venta entre compañías y monedas descritas en este contrato. La verificación manual
+acredita los casos de la revisión, no una prueba exhaustiva de todos los usos.
