@@ -1,38 +1,43 @@
-1.  Go to *T.S.M \> Tasks*
-2.  Edit or create a new task
-3.  In the timesheet tab, in each spent time record, 
-    you have a new button *"icon with several persons represented"*, 
-    to edit commission agents of the line.
-4.  You can add, modify or delete these agents discretely clicking on
-    the button. This icon will be available only if the line
-    hasn't been invoiced yet.
-5.  If you have configured your system for editing lines in a popup
-    window, agents will appear also in this window.
-6.  The agents icon will be in this ocassion visible when the line
-    hasn't been settled.
-7.  You have a button "Regenerate agents" on the bottom of the page
-    "Invoice Lines" for forcing a recompute of all agents from the
-    partner setup. This is needed for example when you have changed the
-    partner on the task having already inserted lines.
+1. Open a task under **T.S.M > Tasks** and add time entries. Customer agents
+   are proposed using their TSM commission.
+2. Use the people icon on a time entry to edit its agents and commissions.
+   Commission managers can also use the additional icon for entries without a
+   time pack or without consumed pack hours.
+3. Automatic hourly prices use the time pack price for consumed hours and zero
+   for complimentary pack hours. Without a pack, they use the commission's
+   hourly product price. A nonzero specific price overrides automatic pricing;
+   zero keeps automatic pricing.
+4. **Regenerate agents** replaces the task's current agent assignments from
+   the customer setup. Settled agents cannot be deleted or regenerated.
 
 ![Task with timesheet and commissions](static/description/task_timesheet_commission.png)
 
-## For invoicing the settlements (only for external agents):
+To settle commissions, open the OCA **Settle Commissions** action, choose
+**Timesheet**, agents and the cutoff date. The wizard processes completed
+settlement periods. Commissions configured for closed tasks wait until the task
+is closed. Entries without a task are skipped.
 
-1.  Go to *Invoicing \> Commissions \> Create Commission Invoices*.
-2.  On the window that appears, you can select following data:
-    - Product. It should be a service product for being coherent.
-    - Journal: To be selected between existing purchase journals.
-    - Date: If you want to choose a specific invoice date. You can leave
-      it blank if you prefer.
-    - Settlements: For selecting specific settlements to invoice. You
-      can leave it blank as well for invoicing all the pending
-      settlements.
+Open **Commissions > Settlements** to review TSM settlements and their source
+time entries. The **Invoices Settlements** list is filtered to sales-invoice
+commissions and does not list TSM settlements. Cancelling a TSM settlement makes
+its agent lines available for settlement again.
 
-If you want to invoice a/some specific settlement/s:
+For external agents, use **Make invoice** on a settlement, or the OCA
+**Create Commission Invoices** action, with the appropriate accounting access.
+Select the purchase journal, service product, optional invoice date and the
+settlements to invoice.
 
-1.  Navigate to *Invoicing \> Commissions \> Invoices Settlements*.
-2.  Select it/them on the list.
-3.  Click on *Action \> Create Commission Invoices*.
-4.  You can as well enter in one settlement, and click on the "Make
-    invoice" button.
+Assigning agents does not lock the timesheet fields controlled by this addon.
+Those fields become read-only when any agent has a non-cancelled settlement.
+Cancelling all settlements for the entry releases those fields again.
+
+Commission managers can edit TSM settlement lines in **Settled** state and remove
+rows using the standard trash icon. Save the sheet to apply the changes. Removing
+a settlement row preserves its time entry and agent, updates the sheet total and
+leaves the source commission pending unless it has another active settlement.
+Other settlement states keep the lines read-only.
+
+Running the settlement wizard again uses the time-entry date. It can reinsert
+the commission into an eligible sheet for that period, or create another sheet
+if the previous sheet has been invoiced. It does not defer it to the following
+month. A time entry remains locked while any agent has a non-cancelled settlement.

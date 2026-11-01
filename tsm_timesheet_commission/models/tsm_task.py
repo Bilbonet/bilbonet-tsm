@@ -1,6 +1,6 @@
 # Copyright 2024 Bilbonet <jesus@bilbonet.net>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 
@@ -32,7 +32,7 @@ class TsmTask(models.Model):
             task.settlement_ids = settlements
             task.settlement_count = len(settlements)
 
-    @api.depends("partner_agent_ids", "timesheet_ids.agent_ids.agent_id")
+    @api.depends("timesheet_ids.agent_ids.agent_id")
     def _compute_agents(self):
         for task in self:
             task.partner_agent_ids = [
@@ -53,33 +53,8 @@ class TsmTask(models.Model):
             for line in record.timesheet_ids:
                 record.commission_total += sum(x.amount for x in line.agent_ids)
 
-    # !Cuando damos las comisiones por facturadas!!!
-    # def action_post(self):
-    #     """Put settlements associated to the invoices in invoiced state."""
-    #     self.mapped("line_ids.settlement_id").write({"state": "invoiced"})
-    #     return super().action_post()
-    # !Esto impide cancelar facturas con comisiones. Adaptar a nuestro caso
-    # def button_cancel(self):
-    #     """Check settled lines and put settlements associated to the invoices in
-    #     exception.
-    #     """
-    #     if any(self.mapped("invoice_line_ids.any_settled")):
-    #         raise exceptions.ValidationError(
-    #             _("You can't cancel an invoice with settled lines"),
-    #         )
-    #     self.mapped("line_ids.settlement_id").write({"state": "except_invoice"})
-    #     return super().button_cancel()
-
     def recompute_lines_agents(self):
         self.mapped("timesheet_ids").recompute_agents()
-
-    # !Si borramos una liquidación de comisiones. Las comisiones pasarán a no liquidadas
-    # def unlink(self):
-    #     """Put 'invoiced' settlements associated to the invoices back in settled state."""
-    #     self.invoice_line_ids.settlement_id.filtered(
-    #         lambda s: s.state == "invoiced"
-    #     ).write({"state": "settled"})
-    #     return super().unlink()
 
 
 class TsmTaskTimesheet(models.Model):
@@ -117,27 +92,38 @@ class TsmTaskTimesheet(models.Model):
             lambda x: x.timepack_id and x.discount_time and x.amount > 0
         )
 
+    def _prepare_agent_vals(self, agent):
+        vals = super()._prepare_agent_vals(agent)
+        vals["commission_id"] = agent.tsm_commission_id.id
+        return vals
+
     @api.depends("task_id.partner_id")
     def _compute_agent_ids(self):
         self.agent_ids = False  # for resetting previous agents
         for record in self.filtered(lambda x: x.task_id.partner_id):
             if not record.commission_free:
-                record.agent_ids = record._prepare_agents_vals_partner(
-                    record.task_id.partner_id, settlement_type="timesheet"
+                agents = record.task_id.partner_id.agent_ids.filtered(
+                    lambda agent: not agent.tsm_commission_id.settlement_type
+                    or agent.tsm_commission_id.settlement_type == "timesheet"
                 )
+                record.agent_ids = [
+                    (0, 0, record._prepare_agent_vals(agent)) for agent in agents
+                ]
 
     @api.depends("agent_ids.amount")
     def _compute_commission_amount(self):
         for record in self:
             record.commission_amount = sum(record.agent_ids.mapped("amount"))
 
-    def unlink(self):
-        """Avoid delete timesheet with settled lines."""
-        if any(x.agent_ids.settled for x in self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_settled(self):
+        """Prevent deletion of timesheets with settled commissions."""
+        if any(self.mapped("agent_ids.settled")):
             raise UserError(
-                _("You can't delete a timesheet with settled commission lines.")
+                self.env._(
+                    "You can't delete a timesheet with settled commission lines."
+                )
             )
-        return super().unlink()
 
 
 class TsmTaskTimesheetAgent(models.Model):
@@ -147,7 +133,7 @@ class TsmTaskTimesheetAgent(models.Model):
 
     def _domain_agent_id(self):
         domain = [("agent", "=", True)]
-        if not self.env.user.has_group("commission.group_commission_manager"):
+        if not self.env.user.has_group("commission_oca.group_commission_manager"):
             return expression.AND(
                 [
                     domain,
@@ -161,7 +147,7 @@ class TsmTaskTimesheetAgent(models.Model):
     object_id = fields.Many2one(comodel_name="tsm.task.timesheet")
     agent_id = fields.Many2one(
         comodel_name="res.partner",
-        domain=_domain_agent_id,
+        domain=lambda self: self._domain_agent_id(),
         ondelete="restrict",
         required=True,
     )
@@ -224,11 +210,11 @@ class TsmTaskTimesheetAgent(models.Model):
     def _compute_invoice_date(self):
         """Change Datetime to Date"""
         for line in self:
-            line.invoice_date = line.object_id.date_time.date()
+            line.invoice_date = fields.Date.to_date(line.object_id.date_time)
 
     @api.depends(
-        "commission_id",
-        "object_id.timepack_id",
+        "commission_id.timesheet_product_id",
+        "object_id.timepack_id.product_id",
     )
     def _compute_product_id(self):
         for line in self:
@@ -259,6 +245,9 @@ class TsmTaskTimesheetAgent(models.Model):
     @api.depends(
         "commission_id",
         "price_unit",
+        "specific_price",
+        "product_id",
+        "object_id.timepack_id",
         "object_id.amount",
         "object_id.discount_time",
     )
@@ -268,7 +257,7 @@ class TsmTaskTimesheetAgent(models.Model):
             if line.specific_price:
                 subtotal = line.specific_price * timesheet_line.amount
             else:
-                self._compute_price_unit()
+                line._compute_price_unit()
                 subtotal = line.price_unit * timesheet_line.amount
             line.amount = line._get_commission_amount(
                 line.commission_id,
@@ -301,7 +290,7 @@ class TsmTaskTimesheetAgent(models.Model):
         for record in self:
             if any(record.mapped("settled")):
                 raise exceptions.ValidationError(
-                    _("You can't modify a settled line"),
+                    self.env._("You can't modify a settled line"),
                 )
 
     def _skip_settlement(self):
@@ -315,8 +304,8 @@ class TsmTaskTimesheetAgent(models.Model):
             and not self.task_id.stage_id.closed
         ) or not self.task_id
 
-    def unlink(self):
-        """Avoid delete settled lines."""
-        if self.settled:
-            raise UserError(_("You can't delete settled lines."))
-        return super().unlink()
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_settled(self):
+        """Prevent deletion of settled agent lines."""
+        if any(self.mapped("settled")):
+            raise UserError(self.env._("You can't delete settled lines."))

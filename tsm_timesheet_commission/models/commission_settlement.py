@@ -51,15 +51,24 @@ class SettlementLine(models.Model):
 
     @api.depends("timesheet_agent_line_id")
     def _compute_date(self):
-        for record in self.filtered("timesheet_agent_line_id"):
+        timesheet_lines = self.filtered("timesheet_agent_line_id")
+        res = super(SettlementLine, self - timesheet_lines)._compute_date()
+        for record in timesheet_lines:
             record.date = record.timesheet_agent_line_id.invoice_date
+        return res
 
     @api.depends("timesheet_agent_line_id")
     def _compute_commission_id(self):
-        for record in self.filtered("timesheet_agent_line_id"):
+        timesheet_lines = self.filtered("timesheet_agent_line_id")
+        res = super(SettlementLine, self - timesheet_lines)._compute_commission_id()
+        for record in timesheet_lines:
             record.commission_id = record.timesheet_agent_line_id.commission_id
+        return res
 
     @api.depends("timesheet_agent_line_id")
     def _compute_settled_amount(self):
-        for record in self.filtered("timesheet_agent_line_id"):
+        timesheet_lines = self.filtered("timesheet_agent_line_id")
+        res = super(SettlementLine, self - timesheet_lines)._compute_settled_amount()
+        for record in timesheet_lines:
             record.settled_amount = record.timesheet_agent_line_id.amount
+        return res

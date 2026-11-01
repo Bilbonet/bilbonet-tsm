@@ -10,12 +10,9 @@
     "author": "Jesus Ramiro (Bilbonet),",
     "maintainers": ["bilbonet"],
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
-    "preloadable": True,
     "depends": [
         "tsm_time_pack",
-        "account_commission",
+        "account_commission_oca",
     ],
     "data": [
         "security/ir.model.access.csv",
