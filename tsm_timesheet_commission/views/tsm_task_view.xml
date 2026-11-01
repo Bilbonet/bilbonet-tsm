@@ -1,118 +1,50 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
-     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
-<odoo>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).--><odoo>
     <!-- This view is needed for proper visualization of the popup / embedded one2many -->
     <record id="view_timesheet_line_agent_tree" model="ir.ui.view">
         <field name="model">tsm.task.timesheet.agent</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
-                <field name="timepack_id" invisible="1" />
-                <field name="specific_price" invisible="1" />
-                <field name="settled" invisible="1" />
-                <field
-                    name="agent_id"
-                    context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}"
-                    attrs="{'readonly': [('settled', '=', True)]}"
-                />
-                <field
-                    name="commission_id"
-                    domain="['|', ('settlement_type', '=', 'timesheet'), ('settlement_type', '=', False)]"
-                    attrs="{'readonly': [('settled', '=', True)]}"
-                />
-                <field
-                    name="price_unit"
-                    attrs="{'readonly': ['|',('timepack_id', '!=', False), ('settled', '=', True)]}"
-                    groups="!commission.group_commission_manager"
-                />
-                <field
-                    name="price_unit"
-                    attrs="{'readonly': [('settled', '=', True)]}"
-                    groups="commission.group_commission_manager"
-                />
-                <field name="amount" />
-            </tree>
+            <list editable="bottom">
+                <field name="timepack_id" invisible="1"/>
+                <field name="specific_price" invisible="1"/>
+                <field name="settled" invisible="1"/>
+                <field name="agent_id" context="{'default_agent': True, 'default_customer': False, 'default_supplier': True}" readonly="settled"/>
+                <field name="commission_id" domain="['|', ('settlement_type', '=', 'timesheet'), ('settlement_type', '=', False)]" readonly="settled"/>
+                <field name="price_unit" groups="!commission.group_commission_manager" readonly="(timepack_id or settled)"/>
+                <field name="price_unit" groups="commission.group_commission_manager" readonly="settled"/>
+                <field name="amount"/>
+            </list>
         </field>
     </record>
 
     <record id="view_timesheet_form_agent" model="ir.ui.view">
         <field name="name">tsm.task.form.agent</field>
         <field name="model">tsm.task</field>
-        <field
-            name="inherit_id"
-            ref="tsm_task_timesheet.tsm_task_form_timesheet_view"
-        />
+        <field name="inherit_id" ref="tsm_task_timesheet.tsm_task_form_timesheet_view"/>
         <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='timesheet_ids']//field[@name='project_id']"
-                position="after"
-            >
-                <field name="commission_free" invisible="1" />
-                <field name="agent_ids" invisible="1" />
-                <field name="any_settled" invisible="1" />
-                <button
-                    name="button_edit_agents"
-                    type="object"
-                    title="Edit agents"
-                    icon="fa-users"
-                    attrs="{
-                        'invisible': ['|', ('timepack_id', '=', False), ('discount_time', '=', False)]
-                    }"
-                />
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='project_id']" position="after">
+                <field name="commission_free" invisible="1"/>
+                <field name="agent_ids" invisible="1"/>
+                <field name="any_settled" invisible="1"/>
+                <button name="button_edit_agents" type="object" title="Edit agents" icon="fa-users" invisible="(not timepack_id or not discount_time)"/>
                 <!-- This button managers can set commission when there's no timepack_id or discount_time -->
-                <button
-                    name="button_edit_agents"
-                    type="object"
-                    tittle="Set commission when there is no timepack or discount time"
-                    icon="fa-users"
-                    style="color: red"
-                    attrs="{
-                        'invisible': [('timepack_id', '!=', False), ('discount_time', '!=', False)]
-                    }"
-                    groups="commission.group_commission_manager"
-                />
-                <field name="commission_status" optional="show" />
+                <button name="button_edit_agents" type="object" tittle="Set commission when there is no timepack or discount time" icon="fa-users" style="color: red" groups="commission.group_commission_manager" invisible="timepack_id and discount_time"/>
+                <field name="commission_status" optional="show"/>
             </xpath>
             <!-- Avoid changes in some fields if there is any commission set -->
-            <xpath
-                expr="//field[@name='timesheet_ids']//field[@name='date_time']"
-                position="attributes"
-            >
-                <attribute
-                    name="attrs"
-                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='timesheet_ids']//field[@name='user_id']"
-                position="attributes"
-            >
-                <attribute
-                    name="attrs"
-                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='timesheet_ids']//field[@name='amount']"
-                position="attributes"
-            >
-                <attribute
-                    name="attrs"
-                >{'readonly': [('agent_ids', '!=', [])]}</attribute>
-            </xpath>
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='date_time']" position="attributes">
+                <attribute name="readonly">agent_ids</attribute></xpath>
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">agent_ids</attribute></xpath>
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='amount']" position="attributes">
+                <attribute name="readonly">agent_ids</attribute></xpath>
             <field name="total_hours" position="after">
-                <field
-                    name="commission_total"
-                    widget="monetary"
-                    options="{'currency_field': 'currency_id'}"
-                />
+                <field name="commission_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             </field>
             <xpath expr="//group[@name='task_hours']" position="before">
                 <group name="group_recompute_commission">
-                    <button
-                        name="recompute_lines_agents"
-                        type="object"
-                        string="Regenerate agents"
-                        groups="commission.group_commission_manager"
-                    />
+                    <button name="recompute_lines_agents" type="object" string="Regenerate agents" groups="commission.group_commission_manager"/>
                 </group>
             </xpath>
         </field>
@@ -121,10 +53,10 @@
     <record id="view_timesheet_filter_agent" model="ir.ui.view">
         <field name="name">view_timesheet_filter_agent</field>
         <field name="model">tsm.task</field>
-        <field name="inherit_id" ref="tsm_base.tsm_task_search_view" />
+        <field name="inherit_id" ref="tsm_base.tsm_task_search_view"/>
         <field name="arch" type="xml">
             <field name="user_id" position="after">
-                <field name="partner_agent_ids" />
+                <field name="partner_agent_ids"/>
             </field>
         </field>
     </record>

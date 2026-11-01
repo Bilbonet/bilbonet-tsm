@@ -4,7 +4,7 @@
     "name": "TSM Timesheet Commissions",
     "summary": "Links TSM Task Timesheet with commissions",
     "category": "Commissions",
-    "version": "15.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Beta",
     "website": "https://github.com/Bilbonet/bilbonet-tsm",
     "author": "Jesus Ramiro (Bilbonet),",

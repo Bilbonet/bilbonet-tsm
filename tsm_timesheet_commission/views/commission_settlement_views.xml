@@ -1,44 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2024 Jesus Ramiro <jesus@bilbonet.net>
-     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
-<odoo>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).--><odoo>
     <record id="view_settlement_form" model="ir.ui.view">
         <field name="name">Settlements - Add task stuff</field>
         <field name="model">commission.settlement</field>
-        <field name="inherit_id" ref="commission.view_settlement_form" />
-        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]" />
+        <field name="inherit_id" ref="commission.view_settlement_form"/>
+        <field name="groups_id" eval="[(4, ref('tsm_base.group_tsm_user'))]"/>
         <field name="priority">90</field>
         <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='line_ids']/tree/field[@name='date']"
-                position="after"
-            >
-                <field
-                    name="partner_id"
-                    attrs="{'column_invisible': [('parent.settlement_type', '!=', 'timesheet')]}"
-                />
-                <field
-                    name="task_id"
-                    attrs="{'column_invisible': [('parent.settlement_type', '!=', 'timesheet')]}"
-                />
-                <field
-                    name="timesheet_line_id"
-                    attrs="{'column_invisible': [('parent.settlement_type', '!=', 'timesheet')]}"
-                />
+            <xpath expr="//field[@name='line_ids']/list/field[@name='date']" position="after">
+                <field name="partner_id" column_invisible="parent.settlement_type != 'timesheet'"/>
+                <field name="task_id" column_invisible="parent.settlement_type != 'timesheet'"/>
+                <field name="timesheet_line_id" column_invisible="parent.settlement_type != 'timesheet'"/>
             </xpath>
         </field>
     </record>
 
     <record id="view_settlement_search" model="ir.ui.view">
         <field name="model">commission.settlement</field>
-        <field name="inherit_id" ref="commission.view_settlement_search" />
+        <field name="inherit_id" ref="commission.view_settlement_search"/>
         <field name="arch" type="xml">
             <filter name="group_agent" position="after">
-                <filter
-                    string="Settlement Type"
-                    name="group_type"
-                    context="{'group_by': 'settlement_type'}"
-                />
+                <filter string="Settlement Type" name="group_type" context="{'group_by': 'settlement_type'}"/>
             </filter>
         </field>
     </record>

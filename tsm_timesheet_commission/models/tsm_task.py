@@ -147,7 +147,7 @@ class TsmTaskTimesheetAgent(models.Model):
 
     def _domain_agent_id(self):
         domain = [("agent", "=", True)]
-        if not self.user_has_groups("commission.group_commission_manager"):
+        if not self.env.user.has_group("commission.group_commission_manager"):
             return expression.AND(
                 [
                     domain,
