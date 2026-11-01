@@ -26,6 +26,7 @@ This repository includes the following addons:
 | `tsm_task_material`  | Consumed task materials, sale-order generation and material sections in task/project reports.                      | Beta / active maintenance |
 | `tsm_task_timesheet` | Task time entries, elapsed-time controls, tags and pivot/calendar analysis.                                        | Beta / active maintenance |
 | `tsm_tech_assets`    | Customer technical assets, configuration notes, task links, email and PDF reports.                                 | Beta / active maintenance |
+| `tsm_time_pack`      | Customer hour packs, timesheet consumption, sale-order generation, email and PDF reports.                          | Beta / active maintenance |
 
 The repository includes the addon source, module-local specifications, tests, README
 source fragments and repository tooling. It does not own Odoo core, addons for other
@@ -76,6 +77,10 @@ changing privacy or company isolation.
 `tsm_tech_assets` depends on `tsm_base` and links customer assets to tasks. Its privacy
 rules, shared task relation and report/email boundaries are documented in
 [`tsm_tech_assets/AGENTS.md`](tsm_tech_assets/AGENTS.md).
+
+`tsm_time_pack` depends on `product`, `tsm_task_timesheet`, `sale` and `web_notify`. Its
+hour balances, sale integration and privacy boundaries are documented in
+[`tsm_time_pack/AGENTS.md`](tsm_time_pack/AGENTS.md).
 
 ## Validation expected by this repository
 

@@ -1,0 +1,483 @@
+# Copyright 2018 Jesus Ramiro <jesus@bilbonet.net>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from datetime import date, timedelta
+
+from odoo import api, fields, models
+from odoo.exceptions import AccessError, UserError, ValidationError
+
+
+class TsmTimePack(models.Model):
+    _name = "tsm.time.pack"
+    _description = "Packs of time to spent in tasks timesheet"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "date_start, id desc"
+
+    @api.depends(
+        "sale_id.amount_untaxed",
+        "sale_id.currency_id",
+        "company_id",
+        "company_currency",
+        "date_start",
+    )
+    def _compute_sale_amount(self):
+        for record in self:
+            sale = record.sudo().sale_id
+            company = record.company_id or record.env.company
+            record.sale_amount = (
+                sale.currency_id._convert(
+                    sale.amount_untaxed,
+                    record.company_currency or company.currency_id,
+                    company,
+                    record.date_start or fields.Date.today(),
+                )
+                if sale
+                else 0.0
+            )
+
+    @api.depends_context("uid")
+    def _compute_can_edit(self):
+        can_edit = self.env.user.has_group("tsm_base.group_tsm_manager")
+        for tp in self:
+            tp.can_edit = can_edit
+
+    @staticmethod
+    def _format_hours(hours):
+        """Return hours formatted as ``HH:MM``"""
+        duration = timedelta(hours=hours)
+        total_minutes = int(duration.total_seconds() // 60)
+        h, m = divmod(total_minutes, 60)
+        return f"{h:02d}:{m:02d}"
+
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        default=lambda self: self.env.company,
+    )
+    active = fields.Boolean(
+        default=True,
+        copy=False,
+        tracking=True,
+        help="If the active field is set to False, it will allow you to hide"
+        " the time pack without removing it.",
+    )
+    code = fields.Char(
+        string="Time Pack Number", required=True, default="/", readonly=True
+    )
+    name = fields.Char(string="Time Pack Title", tracking=20, index=True, copy=False)
+    description = fields.Html(
+        string="Time Pack Description",
+        sanitize=True,
+        strip_style=False,
+        translate=False,
+        copy=False,
+        help="Details, notes and aclarations about the time pack.",
+    )
+    timesheet_ids = fields.One2many(
+        comodel_name="tsm.task.timesheet",
+        inverse_name="timepack_id",
+        string="Timesheets",
+        copy=False,
+    )
+    user_id = fields.Many2one(
+        comodel_name="res.users",
+        string="Assigned to",
+        default=lambda self: self.env.user,
+        required=True,
+        index=True,
+        tracking=30,
+    )
+    partner_id = fields.Many2one(
+        comodel_name="res.partner", string="Customer", required=True
+    )
+    date_start = fields.Date(
+        string="Start Date",
+        required=True,
+        copy=False,
+        default=fields.Date.today,
+        help="Start date of the time pack.",
+    )
+    date_end = fields.Date(string="Ending Date", index=True, copy=False)
+    privacy_visibility = fields.Selection(
+        selection=[
+            ("followers", "On invitation only"),
+            ("employees", "Visible by all employees"),
+        ],
+        string="Privacy",
+        required=True,
+        default="followers",
+        help="Holds visibility of the time packs "
+        "that belong to the current time pack:\n"
+        "- On invitation only: Employees may only "
+        "see the followed time packs\n"
+        "- Visible by all employees: Employees "
+        "may see all time packs\n",
+    )
+    contracted_hours = fields.Float(
+        default=0.0,
+        required=True,
+        help="Time contracted by the client for support and it can be "
+        "consumed in tasks and timesheet.",
+    )
+    consumed_hours = fields.Float(
+        compute="_compute_hours",
+        readonly=True,
+        store=True,
+        help="Computed as: The sum of the timesheet checked " "to discount time.",
+    )
+    remaining_hours = fields.Float(
+        compute="_compute_hours",
+        readonly=True,
+        store=True,
+        digits="Time Pack",
+        help="Computed as: Contracted hours - Consumed hours",
+    )
+    total_hours_spent = fields.Float(
+        compute="_compute_hours",
+        readonly=True,
+        store=True,
+        help="Computed as: Time Spent in tasks.",
+    )
+    complimentary_hours = fields.Float(
+        compute="_compute_hours",
+        string="Complimentary Hours.",
+        readonly=True,
+        store=True,
+        help="Hours spent but not discounted in time pack.",
+    )
+    progress = fields.Float(
+        compute="_compute_hours",
+        readonly=True,
+        store=True,
+        aggregator="avg",
+    )
+    product_id = fields.Many2one(comodel_name="product.product", string="Product")
+    description_sale = fields.Text()
+    quantity = fields.Float(default=1.0, required=True)
+    product_uom_id = fields.Many2one(comodel_name="uom.uom", string="Unit of Measure")
+    price_unit = fields.Float(string="Unit Price", default=0.0, required=True)
+    discount = fields.Float(
+        string="Discount (%)",
+        digits="Discount",
+        help="Discount that is applied in generated sale orders."
+        " It should be less or equal to 100",
+    )
+    price_subtotal = fields.Float(
+        compute="_compute_price_subtotal", string="Sub Total", digits="Product Price"
+    )
+    sale_autoconfirm = fields.Boolean(
+        string="Sale autoconfirm",
+        default=True,
+        help="If it is checked the sale order will be created "
+        "and confirmed automatically",
+    )
+    company_currency = fields.Many2one(
+        comodel_name="res.currency",
+        related="company_id.currency_id",
+        string="Company Currency",
+        readonly=True,
+        help="Utility field to express amount currency",
+    )
+    sale_id = fields.Many2one(
+        comodel_name="sale.order", string="Sale Order", copy=False
+    )
+    sale_amount = fields.Monetary(
+        compute="_compute_sale_amount",
+        string="Amount of The Order",
+        currency_field="company_currency",
+        copy=False,
+        help="Untaxed Total of The Order",
+    )
+    can_edit = fields.Boolean(
+        compute="_compute_can_edit",
+        string="Security: only managers can edit",
+        default=True,
+        help="This field is for security purpose. "
+        "Only members of managers group can modify some fields.",
+    )
+
+    _sql_constraints = [
+        ("tsm_time_pack_unique_code", "UNIQUE (code)", "The code must be unique!"),
+    ]
+
+    @api.depends(
+        "contracted_hours",
+        "timesheet_ids",
+        "timesheet_ids.amount",
+        "timesheet_ids.discount_time",
+    )
+    def _compute_hours(self):
+        """
+        use "sudo" here to allow user (without timesheet user right)
+        to access timesheets.
+
+        Filter timesheet ids checked to discount time
+        """
+        for time in self.sorted(key="id", reverse=True):
+            timesheet_consu_ids = (
+                time.sudo().mapped("timesheet_ids").filtered(lambda x: x.discount_time)
+            )
+
+            total_hours_spent = sum(time.sudo().timesheet_ids.mapped("amount"))
+            consumed_hours = sum(timesheet_consu_ids.mapped("amount"))
+            complimentary_hours = total_hours_spent - consumed_hours
+            remaining_hours = time.contracted_hours - consumed_hours
+            if time.contracted_hours > 0.0:
+                progress = round((100.0 * consumed_hours) / time.contracted_hours, 2)
+            else:
+                progress = 0.0
+
+            time.update(
+                {
+                    "total_hours_spent": total_hours_spent,
+                    "consumed_hours": consumed_hours,
+                    "complimentary_hours": complimentary_hours,
+                    "remaining_hours": remaining_hours,
+                    "progress": progress,
+                }
+            )
+
+            if progress >= 90:
+                cont_hours = self._format_hours(time.contracted_hours)
+                consu_hours = self._format_hours(consumed_hours)
+                txt_msg = self.env._(
+                    "<h6>Contracted Hours: %(cont_hours)s</h6>"
+                    "<h6>Consumed Hours: %(consu_hours)s</h6>"
+                    '<h4 class="text-danger">Progress: %(progress)s %%</h4>',
+                    cont_hours=cont_hours,
+                    consu_hours=consu_hours,
+                    progress=progress,
+                )
+                title_msg = self.env._("Time Pack %s Warning!!", time.code)
+                user_msg = {
+                    "message": txt_msg,
+                    "title": title_msg,
+                    "sticky": False,
+                    "html": True,
+                }
+                self.env.user.notify_danger(**user_msg)
+
+    def action_time_pack_send(self):
+        """
+        This function opens a window to compose an email,
+        with the time pack template message loaded by default
+        """
+        self.ensure_one()
+        template_id = self.env["ir.model.data"]._xmlid_to_res_id(
+            "tsm_time_pack.tsm_time_pack_email_template",
+            raise_if_not_found=False,
+        )
+        ctx = {
+            "default_model": "tsm.time.pack",
+            "default_res_ids": self.ids,
+            "default_template_id": template_id,
+            "default_composition_mode": "comment",
+            "force_email": True,
+        }
+        return {
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "mail.compose.message",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": ctx,
+        }
+
+    def action_inactive(self):
+        return self.write({"active": False})
+
+    def action_active(self):
+        return self.write({"active": True})
+
+    @api.constrains("active")
+    def _check_archiving_restrictions(self):
+        user = self.env.user
+        if not user.has_group("sales_team.group_sale_manager"):
+            raise ValidationError(
+                self.env._(
+                    "Only managers can archive a time pack.\n"
+                    "Please, contact them to do this."
+                )
+            )
+
+    # -------------------------
+    # == Product & Sale Order ==
+    # -------------------------
+    @api.depends("quantity", "price_unit", "discount")
+    def _compute_price_subtotal(self):
+        for rec in self:
+            subtotal = rec.quantity * rec.price_unit
+            discount = rec.discount / 100
+            subtotal *= 1 - discount
+            rec.price_subtotal = subtotal
+
+    @api.constrains("quantity")
+    def _check_quantity(self):
+        for pack in self:
+            if not pack.quantity > 0.0:
+                raise ValidationError(
+                    self.env._("Quantity of hours contracted must be greater than 0.")
+                )
+            pack.contracted_hours = pack.quantity
+
+    @api.constrains("discount")
+    def _check_discount(self):
+        for pack in self:
+            if pack.discount > 100:
+                raise ValidationError(
+                    self.env._("Discount should be less or equal to 100")
+                )
+
+    @api.onchange("product_id")
+    def _onchange_product_id(self):
+        if self.product_id:
+            vals = {}
+            if not self.product_uom_id or (
+                self.product_id.uom_id.category_id.id
+                != self.product_uom_id.category_id.id
+            ):
+                vals["product_uom_id"] = self.product_id.uom_id
+
+            partner = self.env.user.partner_id
+            product = self.product_id.with_context(
+                lang=partner.lang, partner=partner.id, uom=self.product_uom_id.id
+            )
+
+            description_sale = product.name
+            if product.description_sale:
+                description_sale += "\n" + product.description_sale
+            vals["description_sale"] = description_sale
+
+            vals["price_unit"] = product.list_price
+            self.update(vals)
+
+    def _prepare_sale_line(self):
+        self.ensure_one()
+        name = self.env._(
+            "%(description_sale)s\n Time Pack: [%(code)s] %(name)s",
+            description_sale=self.description_sale,
+            code=self.code,
+            name=self.name or "",
+        )
+
+        sale_line_vals = {
+            "product_id": self.product_id.id,
+            "name": name,
+            "product_uom": self.product_id.uom_id.id,
+            "product_uom_qty": self.quantity,
+            "price_unit": self.price_unit,
+            "discount": self.discount,
+        }
+        sale_line = self.env["sale.order.line"].new(sale_line_vals)
+        return sale_line._convert_to_write(dict(sale_line._cache))
+
+    def _prepare_sale(self):
+        self.ensure_one()
+        if not self.partner_id or not self.product_id:
+            raise ValidationError(
+                self.env._(
+                    "You must first select a Customer and a Product for\n"
+                    "Time Pack: %s",
+                    self.code,
+                )
+            )
+
+        client_ref = self.env._(
+            "Time Pack: [%(code)s] %(name)s", code=self.code, name=self.name or ""
+        )
+
+        sale = self.env["sale.order"].new(
+            {
+                "partner_id": self.partner_id,
+                "date_order": fields.Date.to_string(date.today()),
+                "origin": self.code,
+                "client_order_ref": client_ref,
+                "company_id": self.company_id.id,
+                "user_id": self.user_id.id,
+            }
+        )
+
+        if self.partner_id.property_payment_term_id:
+            sale.payment_term_id = self.partner_id.property_payment_term_id
+        if self.partner_id.property_account_position_id:
+            sale.fiscal_position_id = self.partner_id.property_account_position_id
+        if self.partner_id.property_product_pricelist.id:
+            sale.pricelist_id = self.partner_id.property_product_pricelist.id
+
+        return sale._convert_to_write(dict(sale._cache))
+
+    def create_sale(self):
+        """
+        Create Sale order from Time Pack
+        :return: Sele Order created
+        """
+        self.ensure_one()
+        self.check_access("write")
+        if not self.env.user.has_group("sales_team.group_sale_manager"):
+            raise AccessError(
+                self.env._(
+                    "Only sales managers can create a sale order from a time pack."
+                )
+            )
+        if self.sale_id:
+            raise UserError(self.env._("This time pack already has a sale order."))
+        sale_vals = self._prepare_sale()
+
+        sale_vals.setdefault("order_line", [])
+        sale_line_vals = self._prepare_sale_line()
+        if sale_line_vals:
+            sale_vals["order_line"].append((0, 0, sale_line_vals))
+        sale = self.env["sale.order"].create(sale_vals)
+        sale.message_post_with_source(
+            "mail.message_origin_link",
+            render_values={"self": sale, "origin": self},
+            subtype_id=self.env.ref("mail.mt_note").id,
+        )
+
+        # Update Time Pack with the values from the sale order
+        vals = {"sale_id": sale.id}
+        self.update(vals)
+
+        # Autoconfirm sale order if it's checked
+        if self.sale_autoconfirm:
+            sale.action_confirm()
+
+        return sale
+
+    def action_view_order(self):
+        """
+        This function returns an action that display the order
+        given sale order id.
+        """
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "views": [[False, "form"]],
+            "res_id": self.sale_id.id,
+            "context": {"create": False, "show_sale": True},
+        }
+
+    # ------------------
+    # CRUD overrides
+    # ------------------
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("code", "/") == "/":
+                vals["code"] = self.env["ir.sequence"].next_by_code("tsm.time.pack")
+
+        return super().create(vals_list)
+
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        for vals in vals_list:
+            vals["code"] = self.env["ir.sequence"].next_by_code("tsm.time.pack")
+        return vals_list
+
+    @api.depends("code", "name")
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = (
+                f"[{rec.code}] {rec.name}" if rec.name else f"[{rec.code}]"
+            )
